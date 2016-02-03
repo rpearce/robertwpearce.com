@@ -1,0 +1,5 @@
+{
+  "layoutFile": "layout.html",
+  "outputDir": "_site",
+  "sourceDir": "src"
+}
