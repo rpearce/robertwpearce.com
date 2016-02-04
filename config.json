@@ -1,6 +1,4 @@
 {
-  "layoutFilename": "layout.html",
   "outputDir": "_site",
-  "sourceDir": "src",
-  "viewsDir": "views"
+  "sourceDir": "src"
 }
