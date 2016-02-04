@@ -1,29 +1,54 @@
 import fsp from 'fs-promise';
 import hogan from 'hogan.js';
 import walk from 'walkdir';
-import { join, relative } from 'path';
-import { layoutFile, outputDir, sourceDir } from './config';
+import path from 'path';
+import { layoutFilename, outputDir, sourceDir, viewsDir } from './config';
 
 (async () => {
   try {
+    const viewsPath = path.join(sourceDir, viewsDir);
+
+    /*
+     * Create the initial output directory
+     */
     await fsp.mkdir(outputDir);
 
-    const layout = await fsp.readFile(join(__dirname, sourceDir, layoutFile));
+    /*
+     * Read in and compile the layout file
+     */
+    const layoutPath = path.join(viewsPath, layoutFilename);
+    const layout = await fsp.readFile(layoutPath);
     const layoutTemplate = hogan.compile(layout.toString());
 
-    const walkEmitter = walk(join(__dirname, sourceDir));
-    walkEmitter.on('directory', async (path, stat) => {
-      await fsp.mkdir(join(outputDir, relative(sourceDir, path)))
+    /*
+     * Set up an even emitter for walking the source directory
+     */
+    const walkEmitter = walk(path.join(viewsPath));
+
+    /*
+     * When you come across a directory,
+     * create the same one in the outputDir.
+     */
+    walkEmitter.on('directory', async (dirpath, stat) => {
+      try {
+        await fsp.mkdir(path.join(outputDir, path.relative(viewsPath, dirpath)));
+      } catch (err) {
+        console.error(err);
+      }
     });
 
-    walkEmitter.on('file', async (path, stat) => {
-      const relativePath = relative(sourceDir, path);
-      if (!(relativePath.match(layoutFile))) {
+    /*
+     * When you come across a file that isn't the layout file,
+     * read it, compile it, and write the output to the outputDir.
+     */
+    walkEmitter.on('file', async (filepath, stat) => {
+      const relativePath = path.relative(viewsPath, filepath);
+      if (!(relativePath.match(layoutFilename))) {
         try {
-          const view = await fsp.readFile(path);
+          const view = await fsp.readFile(filepath);
           const viewTemplate = hogan.compile(view.toString());
           const rendered = viewTemplate.render({}, { layout: layoutTemplate });
-          await fsp.writeFile(join(outputDir, relativePath), rendered, 'utf-8');
+          await fsp.writeFile(path.join(outputDir, relativePath), rendered, 'utf-8');
         } catch (err) {
           console.error(err);
         }
