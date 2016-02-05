@@ -20,7 +20,7 @@ const compileLayout = async (filename) => {
   try {
     const layoutPath = path.join(sourceDir, 'layouts', filename);
     const layoutFile = await fsp.readFile(layoutPath);
-    return hogan.compile(layoutFile.toString());
+    return layoutFile.toString();
   } catch (err) {
     console.error(err);
   }
@@ -28,7 +28,10 @@ const compileLayout = async (filename) => {
 
 const writeViews = async () => {
   const viewsDir = path.join(sourceDir, 'views');
+
+  const superLayout = await compileLayout('layout.html');
   const layout = await compileLayout('main.html');
+
   const walkEmitter = walk(viewsDir);
 
   /*
@@ -53,7 +56,7 @@ const writeViews = async () => {
       try {
         const view = await fsp.readFile(filepath);
         const viewTemplate = hogan.compile(view.toString());
-        const rendered = viewTemplate.render({}, { layout });
+        const rendered = viewTemplate.render({}, { layout, superLayout });
         await fsp.writeFile(path.join(outputDir, relativePath), rendered, 'utf-8');
       } catch (err) {
         console.error(err);
@@ -64,9 +67,11 @@ const writeViews = async () => {
 
 const writeBlogPosts = async () => {
   await fsp.mkdir(path.join(outputDir, 'blog'));
-
   const blogDir = path.join(sourceDir, 'blog');
+
+  const superLayout = await compileLayout('layout.html');
   const layout = await compileLayout('blog.html');
+
   const walkEmitter = walk(path.join(blogDir));
 
   /*
@@ -81,7 +86,7 @@ const writeBlogPosts = async () => {
         const { metadata, content } = parseMD(mdContents.toString());
         const templateString = `{{<layout}}{{$title}}${metadata.title}{{/title}}{{$description}}${metadata.description}{{/description}}{{$content}}${content}{{/content}}{{/layout}}`;
         const viewTemplate = hogan.compile(templateString);
-        const rendered = viewTemplate.render({}, { layout });
+        const rendered = viewTemplate.render({}, { layout, superLayout });
         const slug = getSlug(metadata.title);
         await fsp.writeFile(path.join(outputDir, 'blog', `${slug}.html`), rendered, 'utf-8');
       } catch (err) {

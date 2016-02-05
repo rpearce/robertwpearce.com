@@ -1,26 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>{{$title}}{{/title}}</title>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
-    <meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU">
-    <meta name="description" content="{{$description}}{{/description}}">
-
-    <meta property="og:site_name" content="RobertWPearce.com">
-    <meta property="og:url" content="http://robertwpearce.com{{$path}}{{/path}}">
-    <meta property="og:description" content="{{$description}}{{/description}}">
-    <meta property="og:image" content="{{$image}}{{/image}}">
-    <meta property="og:type" content="{{$type}}{{/type}}">
-
-    <link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="/css/app.css">
-    <link rel="canonical" href="http://www.robertwpearce.com/">
-    <link rel="alternate" type="application/rss+xml" title="Robert W. Pearce" href="http://robertwpearce.com/feed.xml">
-  </head>
-  <body>
-    {{$content}}{{/content}}
-  </body>
-</html>
+{{<superLayout}}
+  {{$type}}website{{/type}}
+  {{$superContent}}
+    <p>MAIN LAYOUT</p>
+      {{$content}}{{/content}}
+    <p>MAIN LAYOUT</p>
+  {{/superContent}}
+{{/superLayout}}
