@@ -1,16 +1,16 @@
 import fsp from 'fs-promise';
 import hogan from 'hogan.js';
-import walk from 'walkdir';
+import parseMD from 'parse-md';
 import path from 'path';
+import getSlug from 'speakingurl';
+import walk from 'walkdir';
 import { outputDir, sourceDir } from './config';
-
-const viewsDir = path.join(sourceDir, 'views');
 
 (async () => {
   try {
     await fsp.mkdir(outputDir);
     writeViews();
-    writePosts();
+    writeBlogPosts();
   } catch (err) {
     console.error(err);
   }
@@ -27,6 +27,7 @@ const compileLayout = async (filename) => {
 }
 
 const writeViews = async () => {
+  const viewsDir = path.join(sourceDir, 'views');
   const layout = await compileLayout('main.html');
   const walkEmitter = walk(viewsDir);
 
@@ -53,7 +54,6 @@ const writeViews = async () => {
         const view = await fsp.readFile(filepath);
         const viewTemplate = hogan.compile(view.toString());
         const rendered = viewTemplate.render({}, { layout });
-        console.log(layout);
         await fsp.writeFile(path.join(outputDir, relativePath), rendered, 'utf-8');
       } catch (err) {
         console.error(err);
@@ -62,8 +62,31 @@ const writeViews = async () => {
   });
 }
 
-const writePosts = async () => {
-  //const layout = await compileLayout('blog.html');
+const writeBlogPosts = async () => {
+  await fsp.mkdir(path.join(outputDir, 'blog'));
 
-  //const walkEmitter = walk(path.join(viewsDir));
+  const blogDir = path.join(sourceDir, 'blog');
+  const layout = await compileLayout('blog.html');
+  const walkEmitter = walk(path.join(blogDir));
+
+  /*
+   * When you come across a blog post,
+   * compile it and write it to the output folder.
+   */
+  walkEmitter.on('file', async (filepath, stat) => {
+    const relativePath = path.relative(blogDir, filepath);
+    if (/\.md|\.markdown/.test(relativePath)) {
+      try {
+        const mdContents = await fsp.readFile(filepath);
+        const { metadata, content } = parseMD(mdContents.toString());
+        const templateString = `{{<layout}}{{$title}}${metadata.title}{{/title}}{{$description}}${metadata.description}{{/description}}{{$content}}${content}{{/content}}{{/layout}}`;
+        const viewTemplate = hogan.compile(templateString);
+        const rendered = viewTemplate.render({}, { layout });
+        const slug = getSlug(metadata.title);
+        await fsp.writeFile(path.join(outputDir, 'blog', `${slug}.html`), rendered, 'utf-8');
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  });
 }
