@@ -1,0 +1,11 @@
+.nav--main {
+  margin: $offset-vertical 0;
+  > li {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: $offset-vertical / 2;
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+}

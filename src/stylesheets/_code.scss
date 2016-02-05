@@ -1,0 +1,15 @@
+pre, code {
+  background-color: #F7F7F9;
+  border: 1px solid #E1E1E8;
+}
+code {
+  padding: 0.1em 0.3em;
+}
+.highlight pre {
+  padding: 0.5em 1em;
+  code {
+    padding: 0;
+    background-color: none;
+    border: none;
+  }
+}

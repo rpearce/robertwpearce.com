@@ -1,0 +1,61 @@
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+html,
+body {
+  height: 100%;
+  font-size: $font-size-root;
+}
+body {
+  font-family: $font-family;
+  line-height: $line-height-base;
+  color: $body-color;
+}
+body,
+input,
+button,
+.btn {
+  -webkit-font-smoothing: antialiased;
+}
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: $link-color;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: lighten($link-color, 40%);
+  &:hover {
+    color: darken($link-color, 7%);
+    border-bottom-color: darken($link-color, 7%);
+  }
+}
+img {
+  display: block;
+  border: 0;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+p {
+  line-height: 2.286;
+  &.is-first {
+    margin-top: 0;
+    padding-top: 0;
+  }
+}
+.list--bare {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+hr {
+  width: 100px;
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to left, lighten($gray-light, 15%), $gray-light, lighten($gray-light, 15%));
+}

@@ -1,0 +1,8 @@
+.contact {
+  @extend .row;
+  > li {
+    @extend .size1of3;
+    vertical-align: top;
+    padding: 0 20px 40px 0;
+  }
+}

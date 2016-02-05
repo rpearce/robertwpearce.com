@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Immediate Functions</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU">
+    <meta name="description" content="undefined">
+
+    <meta property="og:site_name" content="RobertWPearce.com">
+    <meta property="og:url" content="http://robertwpearce.com">
+    <meta property="og:description" content="undefined">
+    <meta property="og:image" content="">
+    <meta property="og:type" content="article">
+
+    <link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="canonical" href="http://www.robertwpearce.com/">
+    <link rel="alternate" type="application/rss+xml" title="Robert W. Pearce" href="http://robertwpearce.com/feed.xml">
+  </head>
+  <body>
+    <p>BLOG LAYOUT</p>
+<p><em>This article is intended for JavaScript beginners.</em></p>
+<p>The browser environment is one big JavaScript <code>closure</code> that will encapsulate in its <code>scope</code> all of the code that is to be run. Because of this, any functions or variables that are created in <code>&lt;script&gt;</code> tags or external <code>.js</code> files that are <em>not</em> defined within a function will end up as global variables! And we all know that global varibles are bad. Let&#39;s dig in to this some more.</p>
+<p>Every time you define a function and then define a variable with <code>var</code> inside of that function, that variable <em>only</em> exists inside of that function.
+For example, what is the value of <code>result</code> that is logged to the console?</p>
+<pre><code class="lang-js">// app.js
+function kelvinToFahrenheit(kelvin) {
+var result = Math.round(kelvin * (9/5) - 459.67);
+return result;
+}
+kelvinToFahrenheit(274.3);
+console.log(result);
+</code></pre>
+<p>The correct answer would be <code>undefined</code> (with a nice error), for <code>result</code> only exists within the <code>scope</code> of the <code>kelvinToFahrenheit</code> function. However, the function <code>kelvinToFahrenheit</code> now exists globally.</p>
+<p>Why does this matter? Well, when you include a script on to a web page, its code now becomes part of this global closure. So if you define <code>function kelvinToFahrenheit()</code> without giving it a separate closure or namespace (more on namespaces in a second), then it is now a &quot;global function,&quot; meaning that it exists in the global namespace. If any other library you ever include uses a variable called <code>router</code>, your variable (or that library&#39;s) is going to overwrite whichever came before it and cause massive issues. The same thing is true for variables:</p>
+<pre><code class="lang-js">// app.js
+var currentTempInKelvin = 294.11;
+</code></pre>
+<p>So what are your options?</p>
+<h2 id="immediately-invoked-function-expressions-iifes-">Immediately Invoked Function Expressions (IIFEs)</h2>
+<pre><code class="lang-js">// app.js
+;(function() {
+// your code here
+})();
+</code></pre>
+<p>The semi-colon here is a defensive technique used for when files are concatenated together--if somebody in one file forgets to close their file/library/definition out with a semi-colon, then your code is going to be an extension of theirs.</p>
+<p>The <code>()</code> towards the end is nothing more than the invocation of the immediate function we&#39;ve defined.</p>
+<p>Thus, when you write</p>
+<pre><code class="lang-js">// app.js
+;(function() {
+var currentTempInKelvin = 294.11;
+})();
+</code></pre>
+<p>and then you try to <code>console.log(currentTempInKelvin);</code> from the browser&#39;s JavaScript console, you will get <code>undefined</code>, for <code>currentTempInKelvin</code> now only exists within that anonymous function&#39;s scope. Hurray! No more globals.</p>
+<hr>
+<p>But what if we want to access something in a global fashion? We know about the problems of name-clashing, so let&#39;s also try to reduce that. Let&#39;s combine what you did with the immediate function and do global variables in a less-bad way using <em>namespacing</em>.</p>
+<h2 id="namespacing">Namespacing</h2>
+<p>Namespacing allows us to limit our use of global variables to one global
+by nesting all of our functionality within one global object that we&#39;ll
+call <code>WeatherApp</code>.</p>
+<pre><code class="lang-js">// app.js
+// No var declaration means global!
+;(function() {
+WeatherApp = {
+kelvinToFahrenheit: {}
+};
+})();
+</code></pre>
+<p>or</p>
+<pre><code class="lang-js">// app.js
+;(function() {
+WeatherApp = {};
+WeatherApp.kelvinToFahrenheit = {};
+})();
+</code></pre>
+<p>or (better)</p>
+<pre><code class="lang-js">// app.js
+;(function() {
+window.WeatherApp = {};
+window.WeatherApp.kelvinToFahrenheit = {};
+})();
+</code></pre>
+<p>or (recommended)</p>
+<pre><code class="lang-js">// app.js
+;(function(scope) {
+scope.WeatherApp = {};
+scope.WeatherApp.router = {};
+})(this);
+</code></pre>
+<p>This last method allows you to use this code and pass in any contextual scope. Since <code>this</code> is equivalent to <code>window</code> at the global level, when you run this in the browser, <code>this</code> is <code>window</code>, so <code>WeatherApp</code> will be added to the <code>window</code> global.</p>
+<p>When you leave out the <code>var</code>, you create a global variable, so be careful! I recommend being explicit with to what object you are adding a <code>namespace</code>. If you&#39;re going the global variable route, then you should nest every single thing you&#39;re doing inside of your <code>WeatherApp</code> namespace in order to avoid having more than 1 global variable.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>This is a great pattern to utilize when you have relatively simple
+JavaScript you would like to add to a webpage and not have its contents
+clash with other libraries &amp; code. If your code begins to get too
+complicated for this file, then we can start to look at the <a href="http://wiki.commonjs.org/wiki/Modules/1.1">CommonJS
+module exporting &amp; requiring pattern</a> that is currently implemented by the
+wonderful <a href="http://browserify.org">Browserify</a> library (aka, Node.js but in the browser). I will cover this in the future, but in the
+mean time, leverage the power of immediate functions for great good!</p>
+    <p>BLOG LAYOUT</p>
+  </body>
+</html>

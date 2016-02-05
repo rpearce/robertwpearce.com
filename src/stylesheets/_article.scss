@@ -1,0 +1,29 @@
+article {
+  margin-bottom: 40px;
+  blockquote {
+    text-align: center;
+    em {
+      font-size: $font-size-h3;
+    }
+  }
+}
+.article-indexLink {
+  display: block;
+  border-bottom: none;
+}
+.article-background {
+  position: relative;
+  min-height: 400px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  @media only screen and (max-width: 480px) {
+    min-height: 250px;
+  }
+}
+.article-background-header {
+  position: absolute;
+  bottom: 20px;
+  color: $white;
+  max-width: 600px;
+}
