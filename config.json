@@ -1,4 +1,5 @@
 {
+  "blogDirname": "blog",
   "outputDir": "_site",
   "sourceDir": "src"
 }
