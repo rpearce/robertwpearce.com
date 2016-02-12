@@ -1,8 +1,7 @@
 ---
-layout:   post
-title:    Immediate Functions
-date:     2015-10-06
-bg_image: http://s3.amazonaws.com/rpearce.github.io/js-scope/sunrise.jpg
+title:   Immediate Functions
+date:    2015-10-06
+bgImage: http://s3.amazonaws.com/rpearce.github.io/js-scope/sunrise.jpg
 ---
 
 _This article is intended for JavaScript beginners._

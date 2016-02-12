@@ -1,8 +1,7 @@
 ---
-layout:   post
-title:    Mobile Device Etiquette
-date:     2015-03-09
-bg_image: http://s3.amazonaws.com/rpearce.github.io/mobie-device-etiquette/phone-table.jpg
+title:   Mobile Device Etiquette
+date:    2015-03-09
+bgImage: http://s3.amazonaws.com/rpearce.github.io/mobie-device-etiquette/phone-table.jpg
 ---
 
 A friend and colleague of mine, [Jason Vanderslice](https://twitter.com/javanderslice), and I recently discussed the state of mobile devices with regards to their place in various settings and within our interpersonal relationships. While I would not presume to speak for Jason on most subjects, we agree that mobile device etiquette is something that needs to be taught, spread to others and repeated.

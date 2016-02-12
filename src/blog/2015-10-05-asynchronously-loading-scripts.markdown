@@ -1,8 +1,7 @@
 ---
-layout:   post
-title:    Asynchronously Loading Scripts
-date:     2015-10-05
-bg_image: http://s3.amazonaws.com/rpearce.github.io/loading-scripts/rock-creek-pk.jpg
+title:   Asynchronously Loading Scripts
+date:    2015-10-05
+bgImage: http://s3.amazonaws.com/rpearce.github.io/loading-scripts/rock-creek-pk.jpg
 ---
 
 _This article is intended for HTML & JavaScript beginners._

@@ -1,8 +1,7 @@
 ---
-layout:   post
-title:    On Working Remotely
-date:     2014-10-15
-bg_image: http://s3.amazonaws.com/rpearce.github.io/working-remotely/lavish-habit.jpg
+title:   On Working Remotely
+date:    2014-10-15
+bgImage: http://s3.amazonaws.com/rpearce.github.io/working-remotely/lavish-habit.jpg
 ---
 
 Do you have a remote/virtual/telecommute job? I do. And it rocks.

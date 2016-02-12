@@ -1,8 +1,7 @@
 ---
-layout:   post
-title:    Switching Jobs
-date:     2015-06-04
-bg_image: http://s3.amazonaws.com/rpearce.github.io/switching-jobs/edinburgh.jpg
+title:   Switching Jobs
+date:    2015-06-04
+bgImage: http://s3.amazonaws.com/rpearce.github.io/switching-jobs/edinburgh.jpg
 ---
 
 Self-discipline can take you places you've never dreamed you would go.

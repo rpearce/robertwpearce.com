@@ -1,8 +1,7 @@
 ---
-layout:   post
-title:    Moving To London
-date:     2014-09-01
-bg_image: http://s3.amazonaws.com/rpearce.github.io/moving-to-london/london-tree.jpg
+title:   Moving To London
+date:    2014-09-01
+bgImage: http://s3.amazonaws.com/rpearce.github.io/moving-to-london/london-tree.jpg
 ---
 
 2 months ago I decided I wanted to go to London for an indefinite amount of time.

@@ -1,8 +1,7 @@
 ---
-layout:   post
-title:    Use Bcc
-date:     2015-01-19
-bg_image: http://s3.amazonaws.com/rpearce.github.io/bcc/bcc.jpg
+title:   Use Bcc
+date:    2015-01-19
+bgImage: http://s3.amazonaws.com/rpearce.github.io/bcc/bcc.jpg
 ---
 
 I have a new feature request for email applications: __if there are a multitutde of addresses in the "To:" field, recommend the author use Bcc__ (and give a checkbox with the option to never ask this question again).

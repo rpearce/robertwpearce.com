@@ -1,0 +1,9 @@
+{
+  "exec": "npm run build && npm start",
+  "ext": "js html json scss md markdown",
+  "verbose": true,
+  "watch": [
+    "lib/",
+    "src/"
+  ]
+}

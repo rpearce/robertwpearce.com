@@ -1,9 +1,53 @@
 {{<layout}}
-  {{$title}}INDEX{{/title}}
+  {{$title}}Robert Pearce | Software Developer{{/title}}
   {{$content}}
-    THIS IS THE INDEX
-    {{#posts}}
-      {{slug}}
-    {{/posts}}
+  <main>
+    <section>
+      <p>
+        Hello, my name is Robert Pearce, and I am a freelance software developer.
+      </p>
+    </section>
+
+    <section>
+      <header>
+        <h2>Recommendations</h2>
+      </header>
+      <ul>
+        <li>
+          Sam August
+          <blockquote>
+            Bitters swag put a bird on it bicycle rights forage. Typewriter readymade raw denim, distillery four dollar toast 8-bit bicycle rights gastropub.
+          </blockquote>
+        </li>
+        <li>
+          Sam August
+          <blockquote>
+            Bitters swag put a bird on it bicycle rights forage. Typewriter readymade raw denim, distillery four dollar toast 8-bit bicycle rights gastropub.
+          </blockquote>
+        </li>
+        <li>
+          Sam August
+          <blockquote>
+            Bitters swag put a bird on it bicycle rights forage. Typewriter readymade raw denim, distillery four dollar toast 8-bit bicycle rights gastropub.
+          </blockquote>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <header>
+        <h2>Posts</h2>
+      </header>
+      <ul>
+        {{#posts}}
+        <li>
+          <div><a href="{{url}}">{{title}}</a></div>
+          <div>{{friendlyDate}}</div>
+        </li>
+        {{/posts}}
+      </ul>
+    </section>
+
+  </main>
   {{/content}}
 {{/layout}}

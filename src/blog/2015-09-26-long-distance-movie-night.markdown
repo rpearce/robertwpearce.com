@@ -1,8 +1,7 @@
 ---
-layout:   post
-title:    Long-Distance Movie Night
-date:     2015-09-26
-bg_image: http://s3.amazonaws.com/rpearce.github.io/movie-night/cary_grant.jpg
+title:   Long-Distance Movie Night
+date:    2015-09-26
+bgImage: http://s3.amazonaws.com/rpearce.github.io/movie-night/cary_grant.jpg
 ---
 
 In a long-distance relationship? I currently am, and it sucks, but that will change someday. My SO (significant other), who is an ocean away and five hours ahead, and I were recently celebrating the passing of time and wanted to share a movie night. How were we to do this?

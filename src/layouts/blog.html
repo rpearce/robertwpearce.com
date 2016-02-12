@@ -1,8 +1,30 @@
 {{<superLayout}}
   {{$type}}article{{/type}}
   {{$superContent}}
-    <p>BLOG LAYOUT</p>
-      {{$content}}{{/content}}
-    <p>BLOG LAYOUT</p>
+    <nav class="align--center">
+      <ul class="nav--main list--bare">
+        <li><a href="/">Home</a></li>
+        <li><a href="/hire-me.html">Hire Me</a></li>
+        <li><a href="/blog/index.html">Blog</a></li>
+      </ul>
+    </nav>
+
+    <article class="article">
+      <div class="article-background" style="background-image: url({{$bgImage}}{{/bgImage}})">
+        <div class="overlay"></div>
+        <div class="layout-constrained">
+          <div class="article-background-header">
+            <h1 class="is-first">
+              <a href="">{{$title}}{{/title}}</a>
+            </h1>
+            <small><em>{{$friendlyDate}}{{/friendlyDate}}</em></small>
+          </div>
+        </div>
+      </div>
+      <div class="layout-constrained">
+        {{$content}}{{/content}}
+      </div>
+    </article>
   {{/superContent}}
 {{/superLayout}}
+

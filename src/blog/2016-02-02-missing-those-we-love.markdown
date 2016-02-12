@@ -1,8 +1,7 @@
 ---
-layout:   post
-title:    Missing Those We Love
-date:     2016-02-02
-bg_image: http://s3.amazonaws.com/rpearce.github.io/from_afar.jpg
+title:   Missing Those We Love
+date:    2016-02-02
+bgImage: http://s3.amazonaws.com/rpearce.github.io/from_afar.jpg
 ---
 
 Perspective is a strange thing. It rips us out of our frame of thought, showing us our lives from a different point of view, forcing an evolution of ourselves for which we may not have asked. One such perspective I've encountered numerous times and resisted is the fact that those whom I care about will not always be around; they won't always be back home; they won't always be alive; they won't always wait for me to return. This naturally leads to questions like _where am I now, and what am I really doing here? Why? Is it worth all the lost time with those you care about?_ You hope so. You hope to live without regret and to have lived life to the fullest. But then perspective grabs hold, and while the whiplash is still fresh, turns you on your head.

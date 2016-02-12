@@ -18,8 +18,7 @@ body {
 }
 body,
 input,
-button,
-.btn {
+button {
   -webkit-font-smoothing: antialiased;
 }
 a {
@@ -47,11 +46,6 @@ p {
     margin-top: 0;
     padding-top: 0;
   }
-}
-.list--bare {
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 hr {
   width: 100px;

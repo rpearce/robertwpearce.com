@@ -6,7 +6,8 @@
     "prebuild": "npm run clean",
     "build": "babel-node index.js",
     "clean": "rm -rf _site",
-    "dev": "node devServer.js"
+    "dev": "nodemon",
+    "start": "node devServer.js"
   },
   "keywords": [],
   "author": "Robert Pearce <me@robertwpearce.com> (http://robertwpearce.com)",
@@ -23,6 +24,7 @@
     "koa": "^1.1.2",
     "koa-static": "^2.0.0",
     "node-sass": "^3.4.2",
+    "nodemon": "^1.8.1",
     "parse-md": "^0.1.3",
     "speakingurl": "^9.0.0",
     "walkdir": "0.0.11"

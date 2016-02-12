@@ -1,0 +1,9 @@
+.list--bare {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.list--horz > li {
+  display: inline-block;
+  vertical-align: middle;
+}

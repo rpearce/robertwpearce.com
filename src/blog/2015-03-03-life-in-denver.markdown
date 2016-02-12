@@ -1,8 +1,7 @@
 ---
-layout:   post
-title:    Life in Colorado
-date:     2015-03-03
-bg_image: http://s3.amazonaws.com/rpearce.github.io/colorado/colorado.jpg
+title:   Life in Colorado
+date:    2015-03-03
+bgImage: http://s3.amazonaws.com/rpearce.github.io/colorado/colorado.jpg
 ---
 
 One month ago, with an entire world to travel at my fingertips, I chose to temporarily move to Denver, Colorado. For years I have heard great things about the people, hiking, skiing and beer, so I decided to give them a try.

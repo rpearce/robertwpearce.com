@@ -1,8 +1,7 @@
 ---
-layout:   post
-title:    Exercising In Transit
-date:     2014-09-29
-bg_image: http://s3.amazonaws.com/rpearce.github.io/exercising-in-london/outdoor-gym.jpg
+title:   Exercising In Transit
+date:    2014-09-29
+bgImage: http://s3.amazonaws.com/rpearce.github.io/exercising-in-london/outdoor-gym.jpg
 ---
 
 Many folks who travel are no strangers to a general decline in health (and bank account funds!) while on their adventures. Apart from being less likely to cook their own meals, the general lack of exercise people also experience while on the move in new, unfamiliar places, creates a cycle of unhealthiness that is difficult to break. Since I've moved to London, I have had to consider my options and find a way to maintain a healthy diet while also getting regular,

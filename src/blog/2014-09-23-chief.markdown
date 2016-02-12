@@ -1,8 +1,7 @@
 ---
-layout:   post
-title:    Chief
-date:     2014-09-23
-bg_image: http://s3.amazonaws.com/rpearce.github.io/chief/chief.jpg
+title:   Chief
+date:    2014-09-23
+bgImage: http://s3.amazonaws.com/rpearce.github.io/chief/chief.jpg
 ---
 
 Tonight, I lost a dear friend.

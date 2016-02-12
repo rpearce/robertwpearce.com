@@ -1,8 +1,7 @@
 ---
-layout:   post
-title:    Your product doesn’t judge you; people do.
-date:     2013-08-28
-bg_image: http://s3.amazonaws.com/rpearce.github.io/product-judge/papaya-farm.jpg
+title:   Your product doesn’t judge you; people do.
+date:    2013-08-28
+bgImage: http://s3.amazonaws.com/rpearce.github.io/product-judge/papaya-farm.jpg
 ---
 
 I ran in to [Doug](http://www.infieldhealth.com/about-us/), a fellow entrepreneur in the [1776 startup co-working space](http://1776dc.com/), today at the coffee/water/pb&j oasis. After exchanging a few words, we somehow found our way into a conversation about being in a small company and the battle between focusing on ***sales*** and focusing on ***product***.
