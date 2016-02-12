@@ -2,6 +2,7 @@
 title:   Working In London
 date:    2014-09-03
 bgImage: http://s3.amazonaws.com/rpearce.github.io/working-in-london/clapham-cafe.jpg
+description: What it's been like working in London for a few days.
 ---
 
 I spend the majority of my time writing software for [Articulate](http://www.articulate.com "Articulate"). This isn't the offical mantra, but it is how I think of the company:

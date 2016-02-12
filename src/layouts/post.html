@@ -1,13 +1,7 @@
 {{<superLayout}}
   {{$type}}article{{/type}}
   {{$superContent}}
-    <nav class="align--center">
-      <ul class="nav--main list--bare">
-        <li><a href="/">Home</a></li>
-        <li><a href="/hire-me.html">Hire Me</a></li>
-        <li><a href="/blog/index.html">Blog</a></li>
-      </ul>
-    </nav>
+    {{> nav }}
 
     <article class="article">
       <div class="article-background" style="background-image: url({{$bgImage}}{{/bgImage}})">
@@ -15,7 +9,7 @@
         <div class="layout-constrained">
           <div class="article-background-header">
             <h1 class="is-first">
-              <a href="">{{$title}}{{/title}}</a>
+              <a href="{{$url}}{{/url}}">{{$title}}{{/title}}</a>
             </h1>
             <small><em>{{$friendlyDate}}{{/friendlyDate}}</em></small>
           </div>

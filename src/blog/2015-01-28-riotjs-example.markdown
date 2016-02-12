@@ -2,6 +2,7 @@
 title:   RiotJS Example
 date:    2015-01-28
 bgImage: http://s3.amazonaws.com/rpearce.github.io/riotjs/riotjs.jpg
+description: A quick-dive in to RiotJS, with examples.
 ---
 
 When I look at any of the myriad JavaScript UI libraries out there, I now ask two questions:

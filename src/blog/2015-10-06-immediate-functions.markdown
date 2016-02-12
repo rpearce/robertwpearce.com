@@ -2,6 +2,7 @@
 title:   Immediate Functions
 date:    2015-10-06
 bgImage: http://s3.amazonaws.com/rpearce.github.io/js-scope/sunrise.jpg
+description: Beginner-friendly introduction to immediate functions.
 ---
 
 _This article is intended for JavaScript beginners._

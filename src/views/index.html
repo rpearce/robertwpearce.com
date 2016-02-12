@@ -1,5 +1,4 @@
 {{<layout}}
-  {{$title}}Robert Pearce | Software Developer{{/title}}
   {{$content}}
   <main>
     <section>
@@ -38,14 +37,7 @@
       <header>
         <h2>Posts</h2>
       </header>
-      <ul>
-        {{#posts}}
-        <li>
-          <div><a href="{{url}}">{{title}}</a></div>
-          <div>{{friendlyDate}}</div>
-        </li>
-        {{/posts}}
-      </ul>
+      {{> postsIndex}}
     </section>
 
   </main>

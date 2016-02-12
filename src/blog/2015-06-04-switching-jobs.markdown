@@ -2,6 +2,7 @@
 title:   Switching Jobs
 date:    2015-06-04
 bgImage: http://s3.amazonaws.com/rpearce.github.io/switching-jobs/edinburgh.jpg
+description: Announcement of switching jobs from Articulate to The Iron Yard.
 ---
 
 Self-discipline can take you places you've never dreamed you would go.

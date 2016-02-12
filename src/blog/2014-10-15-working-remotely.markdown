@@ -2,6 +2,7 @@
 title:   On Working Remotely
 date:    2014-10-15
 bgImage: http://s3.amazonaws.com/rpearce.github.io/working-remotely/lavish-habit.jpg
+description: You can work remotely, too! Here's how.
 ---
 
 Do you have a remote/virtual/telecommute job? I do. And it rocks.

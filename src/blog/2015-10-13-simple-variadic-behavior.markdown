@@ -2,6 +2,7 @@
 title:   Simple Variadic Behavior
 date:    2015-10-13
 bgImage: http://s3.amazonaws.com/rpearce.github.io/variadic/waterfall.jpg
+description: Beginner-friendly introduction to variadic behavior.
 ---
 
 Recently, I have started working on my own static site generator, [statik-js](https://github.com/rpearce/statik-js), to accomodate my markdown blog posting & static site needs. Another benefit is that I get to work on my Node.js and ES2015+ JavaScript skills. While I am reinventing the wheel on some levels, it is good practice.

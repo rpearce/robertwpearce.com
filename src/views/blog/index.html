@@ -1,6 +1,10 @@
 {{<layout}}
-  {{$title}}meh{{/title}}
+  {{$title}}Blog{{/title}}
   {{$content}}
-    meh
+  {{> nav }}
+
+  <main>
+    {{> postsIndex }}
+  </main>
   {{/content}}
 {{/layout}}
