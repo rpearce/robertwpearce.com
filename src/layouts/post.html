@@ -1,24 +1,26 @@
 {{<superLayout}}
   {{$type}}article{{/type}}
   {{$superContent}}
-    {{> nav }}
 
-    <article class="article">
-      <div class="article-background" style="background-image: url({{$bgImage}}{{/bgImage}})">
-        <div class="overlay"></div>
-        <div class="layout-constrained">
-          <div class="article-background-header">
-            <h1 class="is-first">
-              <a href="{{$url}}{{/url}}">{{$title}}{{/title}}</a>
-            </h1>
-            <small><em>{{$friendlyDate}}{{/friendlyDate}}</em></small>
-          </div>
+  {{> nav }}
+
+  <article class="article">
+    <div class="article-background" style="background-image: url({{$bgImage}}{{/bgImage}})">
+      <div class="overlay"></div>
+      <div class="layout--constrained">
+        <div class="article-background-header">
+          <h1 class="heading--trim">
+            <a href="{{$url}}{{/url}}">{{$title}}{{/title}}</a>
+          </h1>
+          <small><em>{{$friendlyDate}}{{/friendlyDate}}</em></small>
         </div>
       </div>
-      <div class="layout-constrained">
-        {{$content}}{{/content}}
-      </div>
-    </article>
+    </div>
+    <div class="layout--constrained">
+      {{$content}}{{/content}}
+    </div>
+  </article>
+
   {{/superContent}}
 {{/superLayout}}
 

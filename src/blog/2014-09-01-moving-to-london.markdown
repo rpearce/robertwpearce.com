@@ -54,6 +54,6 @@ When I finished riding a number of trains and other ground transportation, I arr
 
 Soon thereafter, I decided to get to know my new area better. My solution? _Go on a run and get lost._ Here is my fitbit from that day:
 
-<img data-lazy-image="https://s3.amazonaws.com/rpearce.github.io/moving-to-london/fitbit.jpg" alt="fitbit data" title="fitbit data" width="300" />
+<img src="https://s3.amazonaws.com/rpearce.github.io/moving-to-london/fitbit.jpg" alt="fitbit data" title="fitbit data" width="300" />
 
 You could say I got lost. I like to think I was &quot;exploring.&quot; Nevertheless, I had a fantastic time and look forward to many more.

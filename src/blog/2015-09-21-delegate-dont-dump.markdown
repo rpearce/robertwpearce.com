@@ -14,7 +14,7 @@ Why did this happen?
 ## You are the hinge
 When someone reaches out to you and asks a question, and you believe someone else has the answer, then you are now effectively a hinge between these 2 people.
 
-<img data-lazy-image="http://s3.amazonaws.com/rpearce.github.io/delegate/hinge.svg" alt="Hinge graphic" title="Hinge graphic" />
+<img src="http://s3.amazonaws.com/rpearce.github.io/delegate/hinge.svg" alt="Hinge graphic" title="Hinge graphic" />
 
 You are what connects that person's problem with his/her solution. When you do not _act_ as a hinge does and connect the two different parties, then both remain separate (read: you will now spend significantly more time than you would have originally spent figuring out a solution).
 

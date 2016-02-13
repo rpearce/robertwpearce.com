@@ -1,10 +1,16 @@
 {{<layout}}
   {{$title}}Blog{{/title}}
   {{$content}}
-  {{> nav }}
 
+  {{> nav }}
   <main>
-    {{> postsIndex }}
+    <div class="layout--constrained">
+      <header>
+        <h1 class="heading--fatBottomBorder">Blog Posts</h1>
+      </header>
+      {{> postsIndex }}
+    </div>
   </main>
+
   {{/content}}
 {{/layout}}

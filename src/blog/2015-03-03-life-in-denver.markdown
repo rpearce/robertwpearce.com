@@ -35,20 +35,20 @@ There are &gt;200 breweries in Denver. 'Nuff said. These people like to have a g
 ## Remote Working
 My employer, [Articulate](https://www.articulate.com/), has paid for me to work three days per week out of the [Density CoWorking](http://densitycoworking.com/) spot. Density is located in a fun neighborhood about one block from the [Marczyk Food Market](http://marczykfinefoods.com/). You know a place is cool when they have wall-mounted unicorn decor:
 
-<img data-lazy-image="https://s3.amazonaws.com/rpearce.github.io/colorado/unicorn.jpg" alt="Unicorn" title="Unicorn" />
+<img src="https://s3.amazonaws.com/rpearce.github.io/colorado/unicorn.jpg" alt="Unicorn" title="Unicorn" />
 
 There are heaps of unique and delicious coffee shops to work from, as well. My favorite, thus far, is the [Denver Bike Cafe](http://denverbicyclecafe.com/) on 17th Street.
 
-<img data-lazy-image="https://s3.amazonaws.com/rpearce.github.io/colorado/denverbicyclecafe.jpg" alt="Denver Bicycle Shop" title="Denver Bicycle Shop" />
+<img src="https://s3.amazonaws.com/rpearce.github.io/colorado/denverbicyclecafe.jpg" alt="Denver Bicycle Shop" title="Denver Bicycle Shop" />
 
 ## Skiing
 While skiing in Denver could be fun after a heavy snow, the mountains are nearby and ripe for adventure. I'll let the pictures speak for themselves.
 
-<img data-lazy-image="https://s3.amazonaws.com/rpearce.github.io/colorado/tippytop.jpg" alt="Top of Breckenridge" title="Top of Breckenridge" />
+<img src="https://s3.amazonaws.com/rpearce.github.io/colorado/tippytop.jpg" alt="Top of Breckenridge" title="Top of Breckenridge" />
 <br />
-<img data-lazy-image="https://s3.amazonaws.com/rpearce.github.io/colorado/america.jpg" alt="Flag at top of Breck" title="Flag at top of Breck" />
+<img src="https://s3.amazonaws.com/rpearce.github.io/colorado/america.jpg" alt="Flag at top of Breck" title="Flag at top of Breck" />
 <br />
-<img data-lazy-image="https://s3.amazonaws.com/rpearce.github.io/colorado/crepes.jpg" alt="Crepes a la Carte" title="Crepes a la Carte" />
+<img src="https://s3.amazonaws.com/rpearce.github.io/colorado/crepes.jpg" alt="Crepes a la Carte" title="Crepes a la Carte" />
 
 ## Wrap up
 I have only begun to scratch the surface with all that Denver has to offer and look forward to another month here.

@@ -10,7 +10,7 @@
     <meta name="description" content="Beginner-friendly introduction to variadic behavior.">
 
     <meta property="og:site_name" content="RobertWPearce.com">
-    <meta property="og:url" content="http://robertwpearce.com/blog/simple-variadic-behavior.html">
+    <meta property="og:url" content="http://robertwpearce.com//blog/simple-variadic-behavior.html">
     <meta property="og:description" content="Beginner-friendly introduction to variadic behavior.">
     <meta property="og:image" content="">
     <meta property="og:type" content="article">
@@ -21,27 +21,30 @@
     <!--<link rel="alternate" type="application/rss+xml" title="Robert W. Pearce" href="http://robertwpearce.com/feed.xml">-->
   </head>
   <body>
-    <nav class="align--center">
-      <ul class="nav--main list--bare">
+
+  <nav>
+    <div class="layout--constrained">
+      <ul class="nav--main list--bare list--horz">
         <li><a href="/">Home</a></li>
         <li><a href="/hire-me.html">Hire Me</a></li>
         <li><a href="/blog/index.html">Blog</a></li>
       </ul>
-    </nav>
+    </div>
+  </nav>
 
-    <article class="article">
-      <div class="article-background" style="background-image: url(http://s3.amazonaws.com/rpearce.github.io/variadic/waterfall.jpg)">
-        <div class="overlay"></div>
-        <div class="layout-constrained">
-          <div class="article-background-header">
-            <h1 class="is-first">
-              <a href="">Simple Variadic Behavior</a>
-            </h1>
-            <small><em>Oct 13, 2015</em></small>
-          </div>
+  <article class="article">
+    <div class="article-background" style="background-image: url(http://s3.amazonaws.com/rpearce.github.io/variadic/waterfall.jpg)">
+      <div class="overlay"></div>
+      <div class="layout--constrained">
+        <div class="article-background-header">
+          <h1 class="heading--trim">
+            <a href="">Simple Variadic Behavior</a>
+          </h1>
+          <small><em>Oct 13, 2015</em></small>
         </div>
       </div>
-      <div class="layout-constrained">
+    </div>
+    <div class="layout--constrained">
 <p>Recently, I have started working on my own static site generator, <a href="https://github.com/rpearce/statik-js">statik-js</a>, to accomodate my markdown blog posting &amp; static site needs. Another benefit is that I get to work on my Node.js and ES2015+ JavaScript skills. While I am reinventing the wheel on some levels, it is good practice.</p>
 <p>My latest problem to solve was how, once I had a <code>.md</code> (Markdown) file&#39;s contents, to go about parsing out the blog post&#39;s metadata (see below: the key/value pairs between the two <code>---</code>s).</p>
 <pre><code>---
@@ -156,8 +159,9 @@ return mem;
 lines.reduce(getMetadataIndices, []);
 </code></pre>
 <p>Surprise! We totally could have, but since <code>reduce</code> was not our first thought when refactoring, we managed to solve our problem in another way. There are 1000 ways to solve problems, and sometimes you don&#39;t think of the best one first, but you can still make the best with what you have at the time and refactor later.</p>
-      </div>
-    </article>
+    </div>
+  </article>
+
   </body>
 </html>
 

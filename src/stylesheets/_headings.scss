@@ -2,11 +2,6 @@
   font-weight: 400;
   line-height: 1.5;
   text-transform: capitalize;
-  &.is-first {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 0;
-  }
   a {
     display: block;
     color: inherit;
@@ -26,22 +21,11 @@ h2 {
 h3 {
   font-size: $font-size-h3;
 }
-.article h2,
-.music h2 {
-  margin-top: 2rem;
+.heading--trim {
+  margin-top: 0;
   margin-bottom: 0;
+  padding-top: 0;
 }
-.article h2:before,
-.music h2:before {
-  content: "";
-  display: block;
-  height: 0;
-  border-top: 5px solid #F2F2F2;
-}
-.article h2:before,
-.music h2:before {
-  margin-bottom: 30px;
-}
-.music h2:after {
-  margin-top: 20px;
+.heading--fatBottomBorder {
+  border-bottom: 10px solid #F2F2F2;
 }

@@ -7,6 +7,17 @@ article {
     }
   }
 }
+.article h2 {
+  margin-top: 2rem;
+  margin-bottom: 0;
+  &:before {
+    content: "";
+    display: block;
+    height: 0;
+    border-top: 5px solid #F2F2F2;
+    margin-bottom: 30px;
+  }
+}
 .article-indexLink {
   display: block;
   border-bottom: none;
