@@ -1,0 +1,20 @@
+.review {
+  position: relative;
+  margin-bottom: 40px;
+}
+.review__author {
+  position: absolute;
+  top: 7px;
+  left: 0;
+  width: 75px;
+  text-align: center;
+}
+.review__authorImg {
+  border-radius: 10%;
+}
+.review__authorName {
+  color: #8F8F8f;
+}
+.review__text {
+  margin: 0 20px 0 100px;
+}
