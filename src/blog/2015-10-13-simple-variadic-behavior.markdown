@@ -5,7 +5,9 @@ bgImage: http://s3.amazonaws.com/rpearce.github.io/variadic/waterfall.jpg
 description: Beginner-friendly introduction to variadic behavior.
 ---
 
-Recently, I have started working on my own static site generator, [statik-js](https://github.com/rpearce/statik-js), to accomodate my markdown blog posting & static site needs. Another benefit is that I get to work on my Node.js and ES2015+ JavaScript skills. While I am reinventing the wheel on some levels, it is good practice.
+<p class="strikethrough">Recently, I have started working on my own static site generator, [react-static](https://github.com/rpearce/react-static), to accomodate my markdown blog posting & static site needs. Another benefit is that I get to work on my Node.js and ES2015+ JavaScript skills. While I am reinventing the wheel on some levels, it is good practice.</p>
+
+__Update__: I made a library, [parse-md](https://www.npmjs.com/package/parse-md), out of some of this behavior in order to address the need of parsing metadata from markdown files.
 
 My latest problem to solve was how, once I had a `.md` (Markdown) file's contents, to go about parsing out the blog post's metadata (see below: the key/value pairs between the two `---`s).
 
