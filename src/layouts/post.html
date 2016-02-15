@@ -5,11 +5,19 @@
   {{> nav }}
 
   <article class="article">
-    <div class="article-background" style="background-image: url({{$bgImage}}{{/bgImage}})">
+    <div class="article__background" style="background-image: url({{$bgImage}}{{/bgImage}})">
       <div class="overlay"></div>
+      <div class="layout--constrained">
+        <div class="article__backgroundHeader">
+          <h1 class="heading--trim">
+            <a href="{{$relativePath}}{{/relativePath}}">{{$title}}{{/title}}</a>
+          </h1>
+          <small><em>{{$friendlyDate}}{{/friendlyDate}}</em></small>
+        </div>
+      </div>
     </div>
-    <div class="layout--constrained layout--pulledUp">
-      <header class="article-header">
+    <div class="layout--constrained">
+      <header class="article__header heading--fatBottomBorder">
         <h1 class="heading--trim">
           <a href="{{$relativePath}}{{/relativePath}}">{{$title}}{{/title}}</a>
         </h1>

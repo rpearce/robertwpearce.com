@@ -21,7 +21,7 @@ article {
   display: block;
   border-bottom: none;
 }
-.article-background {
+.article__background {
   position: relative;
   min-height: 400px;
   background-position: 50% 50%;
@@ -32,13 +32,17 @@ article {
     background-image: none !important;
   }
 }
-.article-header {
-  color: $white;
-  margin-bottom: 40px;
+.article__header {
+  display: none;
   @media only screen and (max-width: 667px) {
+    display: block;
     color: inherit;
-    margin-bottom: inherit;
-    border-bottom: 10px solid #F2F2F2;
     padding-bottom: 20px;
   }
+}
+.article__backgroundHeader {
+  position: absolute;
+  bottom: 20px;
+  color: #fff;
+  max-width: 100%;
 }
