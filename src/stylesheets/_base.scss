@@ -17,12 +17,17 @@ body {
   color: $body-color;
   @media only screen and (max-width: 667px) {
     font-family: $fontFamily--min;
+    margin: 10px;
+    border: 1px solid #f2f2f2;
   }
 }
 body,
 input,
 button {
   -webkit-font-smoothing: antialiased;
+}
+main {
+  padding-bottom: 40px;
 }
 a {
   cursor: pointer;

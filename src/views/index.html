@@ -1,45 +1,40 @@
 {{<layout}}
   {{$content}}
+
   <main>
-    <section>
-      <p>
-        Hello, my name is Robert Pearce, and I am a freelance software developer.
-      </p>
-    </section>
+    <header class="author">
+      <div class="layout--constrained clearfix">
+        <img class="author__image float--right" src="/images/robert-london.jpg" alt="Robert Pearce" title="Robert Pearce in London" />
+        <h1 class="author__name">Robert Pearce</h1>
+        <h2 class="author__title">Freelance Software Developer</h2>
+        <div class="author__links">
+          <a href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a>
+        </div>
+      </div>
+    </header>
 
-    <section>
-      <header>
-        <h2>Recommendations</h2>
-      </header>
-      <ul>
-        <li>
-          Sam August
-          <blockquote>
-            Bitters swag put a bird on it bicycle rights forage. Typewriter readymade raw denim, distillery four dollar toast 8-bit bicycle rights gastropub.
-          </blockquote>
-        </li>
-        <li>
-          Sam August
-          <blockquote>
-            Bitters swag put a bird on it bicycle rights forage. Typewriter readymade raw denim, distillery four dollar toast 8-bit bicycle rights gastropub.
-          </blockquote>
-        </li>
-        <li>
-          Sam August
-          <blockquote>
-            Bitters swag put a bird on it bicycle rights forage. Typewriter readymade raw denim, distillery four dollar toast 8-bit bicycle rights gastropub.
-          </blockquote>
-        </li>
-      </ul>
-    </section>
+    <div class="layout--constrained">
 
-    <section>
-      <header>
-        <h2>Blog Posts</h2>
-      </header>
-      {{> postsIndex}}
-    </section>
+      <section>
+        <header>
+          <h2 class="heading--fatBottomBorder">Recommendations</h2>
+        </header>
+        <ul>
+          <li>Roof party beard pug keytar you probably haven't heard of them forage.</li>
+          <li>Messenger bag PBR&B actually whatever, ennui lumbersexual meditation ramps kinfolk craft beer neutra tumblr. </li>
+          <li>Seitan selvage kale chips offal, semiotics bushwick 90's banh mi cardigan organic beard truffaut bitters synth migas. </li>
+        </ul>
+      </section>
 
+      <section>
+        <header>
+          <h2 class="heading--fatBottomBorder">Blog Posts</h2>
+        </header>
+        {{> postsIndex}}
+      </section>
+
+    </div>
   </main>
+
   {{/content}}
 {{/layout}}

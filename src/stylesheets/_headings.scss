@@ -1,6 +1,6 @@
 #{$headings} {
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.2;
   text-transform: capitalize;
   a {
     display: block;
@@ -12,13 +12,19 @@
     }
   }
 }
-h1 {
+h1,
+.h1 {
   font-size: $fontSize--h1;
+  @media only screen and (max-width: 667px) {
+    font-size: 2rem;
+  }
 }
-h2 {
+h2,
+.h2 {
   font-size: $fontSize--h2;
 }
-h3 {
+h3,
+.h3 {
   font-size: $fontSize--h3;
 }
 .heading--trim {

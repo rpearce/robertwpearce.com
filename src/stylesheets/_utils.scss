@@ -1,6 +1,14 @@
 .align--center {
   text-align: center;
 }
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.float--right {
+  float: right;
+}
 .strikethrough {
   text-decoration: line-through;
 }
