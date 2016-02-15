@@ -35,16 +35,14 @@
   <article class="article">
     <div class="article-background" style="background-image: url(http://s3.amazonaws.com/rpearce.github.io/variadic/waterfall.jpg)">
       <div class="overlay"></div>
-      <div class="layout--constrained">
-        <div class="article-background-header">
-          <h1 class="heading--trim">
-            <a href="">Simple Variadic Behavior</a>
-          </h1>
-          <small><em>Oct 13, 2015</em></small>
-        </div>
-      </div>
     </div>
-    <div class="layout--constrained">
+    <div class="layout--constrained layout--pulledUp">
+      <header class="article-header">
+        <h1 class="heading--trim">
+          <a href="">Simple Variadic Behavior</a>
+        </h1>
+        <small><em>Oct 13, 2015</em></small>
+      </header>
 <p>Recently, I have started working on my own static site generator, <a href="https://github.com/rpearce/statik-js">statik-js</a>, to accomodate my markdown blog posting &amp; static site needs. Another benefit is that I get to work on my Node.js and ES2015+ JavaScript skills. While I am reinventing the wheel on some levels, it is good practice.</p>
 <p>My latest problem to solve was how, once I had a <code>.md</code> (Markdown) file&#39;s contents, to go about parsing out the blog post&#39;s metadata (see below: the key/value pairs between the two <code>---</code>s).</p>
 <pre><code>---

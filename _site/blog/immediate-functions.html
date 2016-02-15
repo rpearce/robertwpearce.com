@@ -35,16 +35,14 @@
   <article class="article">
     <div class="article-background" style="background-image: url(http://s3.amazonaws.com/rpearce.github.io/js-scope/sunrise.jpg)">
       <div class="overlay"></div>
-      <div class="layout--constrained">
-        <div class="article-background-header">
-          <h1 class="heading--trim">
-            <a href="">Immediate Functions</a>
-          </h1>
-          <small><em>Oct 6, 2015</em></small>
-        </div>
-      </div>
     </div>
-    <div class="layout--constrained">
+    <div class="layout--constrained layout--pulledUp">
+      <header class="article-header">
+        <h1 class="heading--trim">
+          <a href="">Immediate Functions</a>
+        </h1>
+        <small><em>Oct 6, 2015</em></small>
+      </header>
 <p><em>This article is intended for JavaScript beginners.</em></p>
 <p>The browser environment is one big JavaScript <code>closure</code> that will encapsulate in its <code>scope</code> all of the code that is to be run. Because of this, any functions or variables that are created in <code>&lt;script&gt;</code> tags or external <code>.js</code> files that are <em>not</em> defined within a function will end up as global variables! And we all know that global varibles are bad. Let&#39;s dig in to this some more.</p>
 <p>Every time you define a function and then define a variable with <code>var</code> inside of that function, that variable <em>only</em> exists inside of that function.

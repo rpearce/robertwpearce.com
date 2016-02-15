@@ -9,12 +9,15 @@ html {
 html,
 body {
   height: 100%;
-  font-size: $font-size-root;
+  font-size: $fontSize--root;
 }
 body {
-  font-family: $font-family;
-  line-height: $line-height-base;
+  font-family: $fontFamily;
+  line-height: $lineHeight--base;
   color: $body-color;
+  @media only screen and (max-width: 667px) {
+    font-family: $fontFamily--min;
+  }
 }
 body,
 input,

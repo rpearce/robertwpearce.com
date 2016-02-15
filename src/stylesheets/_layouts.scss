@@ -2,10 +2,17 @@
   width: 600px;
   margin-left: auto;
   margin-right: auto;
-
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 667px) {
     width: auto;
     margin-left: 8px;
     margin-right: 8px;
+  }
+}
+.layout--pulledUp {
+  -webkit-transform: translateY(-110px);
+  transform: translateY(-110px);
+  @media only screen and (max-width: 667px) {
+    -webkit-transform: none;
+    transform: none;
   }
 }

@@ -3,7 +3,7 @@ article {
   blockquote {
     text-align: center;
     em {
-      font-size: $font-size-h3;
+      font-size: $fontSize--h3;
     }
   }
 }
@@ -28,13 +28,18 @@ article {
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;
-  @media only screen and (max-width: 480px) {
-    min-height: 250px;
+  @media only screen and (max-width: 667px) {
+    display: none;
+    background-image: none !important;
   }
 }
-.article-background-header {
-  position: absolute;
-  bottom: 20px;
+.article-header {
   color: $white;
-  max-width: 600px;
+  margin-bottom: 40px;
+  @media only screen and (max-width: 667px) {
+    color: inherit;
+    margin-bottom: inherit;
+    border-bottom: 10px solid #F2F2F2;
+    padding-bottom: 20px;
+  }
 }

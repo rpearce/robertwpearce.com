@@ -7,16 +7,14 @@
   <article class="article">
     <div class="article-background" style="background-image: url({{$bgImage}}{{/bgImage}})">
       <div class="overlay"></div>
-      <div class="layout--constrained">
-        <div class="article-background-header">
-          <h1 class="heading--trim">
-            <a href="{{$url}}{{/url}}">{{$title}}{{/title}}</a>
-          </h1>
-          <small><em>{{$friendlyDate}}{{/friendlyDate}}</em></small>
-        </div>
-      </div>
     </div>
-    <div class="layout--constrained">
+    <div class="layout--constrained layout--pulledUp">
+      <header class="article-header">
+        <h1 class="heading--trim">
+          <a href="{{$relativePath}}{{/relativePath}}">{{$title}}{{/title}}</a>
+        </h1>
+        <small><em>{{$friendlyDate}}{{/friendlyDate}}</em></small>
+      </header>
       {{$content}}{{/content}}
     </div>
   </article>
