@@ -6,20 +6,11 @@ article {
     }
   }
 }
-.article h2 {
-  margin-top: 2rem;
-  margin-bottom: 0;
-  &:before {
-    content: "";
-    display: block;
-    height: 0;
-    border-top: 5px solid #F2F2F2;
-    margin-bottom: 30px;
+.article {
+  padding-bottom: 40px;
+  h2 {
+    @extend .heading--bordered;
   }
-}
-.article-indexLink {
-  display: block;
-  border-bottom: none;
 }
 .article__background {
   position: relative;

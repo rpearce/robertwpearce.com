@@ -35,3 +35,12 @@ h3,
 .heading--fatBottomBorder {
   border-bottom: 10px solid #F2F2F2;
 }
+.heading--bordered {
+  &:before {
+    content: "";
+    display: block;
+    height: 0;
+    border-top: 5px solid #F2F2F2;
+    padding-bottom: 20px;
+  }
+}

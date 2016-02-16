@@ -60,40 +60,40 @@ want to consider whether or not this is the best option for you.</p>
 a long while), <code>&lt;script&gt;</code> tags will be used to fetch external JavaScript
 files whose contents will be included on the page. These typically look
 like <code>&lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;</code>. <code>&lt;script&gt;</code> tags are by default &quot;blocking,&quot; meaning that the web page has to pause its download &amp; render cycle, fetch and load the JavaScript and then continue on. Here is what this looks like:</p>
-<pre><code class="lang-html">&lt;html&gt;
-&lt;head&gt;
-&lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;div&gt;My Website&lt;/div&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+<pre><code class="lang-html"><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>html</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>head</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>script</span> <span class="token attr-name" >src</span><span class="token attr-value" ><span class="token punctuation" >=</span><span class="token punctuation" >"</span>app.js<span class="token punctuation" >"</span></span><span class="token punctuation" >></span></span><span class="token script language-javascript" ></span><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>script</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>head</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>body</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>div</span><span class="token punctuation" >></span></span>My Website<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>div</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>body</span><span class="token punctuation" >></span></span>
+<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>html</span><span class="token punctuation" >></span></span>
 </code></pre>
 <p>The worst thing you can do is load multiple scripts in this blocking
 fashion:</p>
-<pre><code class="lang-html">&lt;html&gt;
-&lt;head&gt;
-&lt;script src=&quot;jquery.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;jquery.lightbox.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;some_file.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;div&gt;My Website&lt;/div&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+<pre><code class="lang-html"><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>html</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>head</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>script</span> <span class="token attr-name" >src</span><span class="token attr-value" ><span class="token punctuation" >=</span><span class="token punctuation" >"</span>jquery.js<span class="token punctuation" >"</span></span><span class="token punctuation" >></span></span><span class="token script language-javascript" ></span><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>script</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>script</span> <span class="token attr-name" >src</span><span class="token attr-value" ><span class="token punctuation" >=</span><span class="token punctuation" >"</span>jquery.lightbox.js<span class="token punctuation" >"</span></span><span class="token punctuation" >></span></span><span class="token script language-javascript" ></span><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>script</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>script</span> <span class="token attr-name" >src</span><span class="token attr-value" ><span class="token punctuation" >=</span><span class="token punctuation" >"</span>some_file.js<span class="token punctuation" >"</span></span><span class="token punctuation" >></span></span><span class="token script language-javascript" ></span><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>script</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>script</span> <span class="token attr-name" >src</span><span class="token attr-value" ><span class="token punctuation" >=</span><span class="token punctuation" >"</span>app.js<span class="token punctuation" >"</span></span><span class="token punctuation" >></span></span><span class="token script language-javascript" ></span><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>script</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>head</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>body</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>div</span><span class="token punctuation" >></span></span>My Website<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>div</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>body</span><span class="token punctuation" >></span></span>
+<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>html</span><span class="token punctuation" >></span></span>
 </code></pre>
 <p>so make sure you combine (concatenate) all your JavaScript files in to
 one file. But this is still not ideal, for you have a blocking script
 that will have to download before anything else happens.</p>
 <p>When we throw <code>&lt;script&gt;</code> tags at the end of the <code>&lt;body&gt;</code>, we allow for the page to paint and then go and fetch the JS synchronously (this lets the user see and utilize the page, but the scripts still haven&#39;t finished loading).</p>
-<pre><code class="lang-html">&lt;html&gt;
-&lt;head&gt;&lt;/head&gt;
-&lt;body&gt;
-&lt;div&gt;My Website&lt;/div&gt;
-&lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+<pre><code class="lang-html"><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>html</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>head</span><span class="token punctuation" >></span></span><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>head</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>body</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>div</span><span class="token punctuation" >></span></span>My Website<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>div</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>script</span> <span class="token attr-name" >src</span><span class="token attr-value" ><span class="token punctuation" >=</span><span class="token punctuation" >"</span>app.js<span class="token punctuation" >"</span></span><span class="token punctuation" >></span></span><span class="token script language-javascript" ></span><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>script</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>body</span><span class="token punctuation" >></span></span>
+<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>html</span><span class="token punctuation" >></span></span>
 </code></pre>
 <p>However, since the page is still loading, search engines might punish you for a
 long(er) loading time. What we might need, instead, is the ability to
@@ -103,17 +103,17 @@ loading.</p>
 <p>There are two popular methods for fetch JavaScript in an asynchronous
 manner.</p>
 <p>The first is to simply include the HTML5 <code>async</code> property:</p>
-<pre><code class="lang-html">&lt;script src=&quot;app.js&quot; async&gt;&lt;/script&gt;
+<pre><code class="lang-html"><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>script</span> <span class="token attr-name" >src</span><span class="token attr-value" ><span class="token punctuation" >=</span><span class="token punctuation" >"</span>app.js<span class="token punctuation" >"</span></span> <span class="token attr-name" >async</span><span class="token punctuation" >></span></span><span class="token script language-javascript" ></span><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>script</span><span class="token punctuation" >></span></span>
 </code></pre>
 <p>Or, if you need to support older browsers, add an event listener to the window&#39;s <code>load</code> function to dynamically build a script tag and append it to the page (note how I do not use <code>window.onload =</code>):</p>
-<pre><code class="lang-html">&lt;script&gt;
-window.addEventListener(&#39;load&#39;, buildScriptTag);
-function buildScriptTag() {
-var script = document.createElement(&#39;script&#39;);
-script.src = &#39;app.js&#39;;
-document.body.appendChild(script); // append it wherever you want
-}
-&lt;/script&gt;
+<pre><code class="lang-html"><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>script</span><span class="token punctuation" >></span></span><span class="token script language-javascript" >
+  window<span class="token punctuation" >.</span><span class="token function" >addEventListener</span><span class="token punctuation" >(</span><span class="token string" >'load'</span><span class="token punctuation" >,</span> buildScriptTag<span class="token punctuation" >)</span><span class="token punctuation" >;</span>
+  <span class="token keyword" >function</span> <span class="token function" >buildScriptTag</span><span class="token punctuation" >(</span><span class="token punctuation" >)</span> <span class="token punctuation" >{</span>
+    <span class="token keyword" >var</span> script <span class="token operator" >=</span> document<span class="token punctuation" >.</span><span class="token function" >createElement</span><span class="token punctuation" >(</span><span class="token string" >'script'</span><span class="token punctuation" >)</span><span class="token punctuation" >;</span>
+    script<span class="token punctuation" >.</span>src <span class="token operator" >=</span> <span class="token string" >'app.js'</span><span class="token punctuation" >;</span>
+    document<span class="token punctuation" >.</span>body<span class="token punctuation" >.</span><span class="token function" >appendChild</span><span class="token punctuation" >(</span>script<span class="token punctuation" >)</span><span class="token punctuation" >;</span> <span class="token comment" spellcheck="true">// append it wherever you want</span>
+  <span class="token punctuation" >}</span>
+</span><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>script</span><span class="token punctuation" >></span></span>
 </code></pre>
 <p>Why didn&#39;t I use <code>window.onload =</code> here? When you assign a browser callback trigger a value, it can only have one value! When you add an event listener, you allow the window&#39;s load functionality to have more values in the future.</p>
 <h2 id="conclusion">Conclusion</h2>

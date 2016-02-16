@@ -61,12 +61,12 @@
 <h2 id="installation">Installation</h2>
 <h3 id="project-specific">Project-Specific</h3>
 <p><span class="strikethrough">While I am not a fan of Facebook&#39;s JSX (and don&#39;t use it--more to come in future blog posts on this), Riot&#39;s pre-compiled syntax is much easier to swallow.</span> Given you have a <code>package.json</code> set up, you can easily install the Riot compiler as a development dependency</p>
-<pre><code class="lang-bash">$ npm install riot --save-dev
+<pre><code class="lang-bash">$ npm <span class="token function" >install</span> riot --save-dev
 </code></pre>
 <p>and then set up Riot to run as an NPM script and watch for any changes</p>
-<pre><code class="lang-javascript">&quot;scripts&quot;: {
-&quot;watch:riot&quot;: &quot;riot -w src/ build/&quot;
-}
+<pre><code class="lang-javascript"><span class="token string" >"scripts"</span><span class="token punctuation" >:</span> <span class="token punctuation" >{</span>
+  <span class="token string" >"watch:riot"</span><span class="token punctuation" >:</span> <span class="token string" >"riot -w src/ build/"</span>
+<span class="token punctuation" >}</span>
 </code></pre>
 <p>which is then run by a simple</p>
 <pre><code class="lang-bash">$ npm run watch:riot
@@ -74,7 +74,7 @@
 <p>Alternatively, you can <a href="https://muut.com/riotjs/download.html">download the riot.js library</a> via any of their recommended methods.</p>
 <h3 id="global-installation-alternative-">Global Installation (alternative)</h3>
 <p>If you don&#39;t have a <code>package.json</code> and want to install Riot globally:</p>
-<pre><code class="lang-bash">$ npm install riot -g
+<pre><code class="lang-bash">$ npm <span class="token function" >install</span> riot -g
 $ riot -w src/ build/
 </code></pre>
 <h2 id="tab-example">Tab Example</h2>
@@ -84,28 +84,28 @@ Here is the final product:</p>
 
 <h3 id="step-1-start-with-markup">Step 1: Start With Markup</h3>
 <p>Starting with a blank HTML document, add the <code>&lt;riot-tabs&gt;&lt;/riot-tabs&gt;</code> tag to your document:</p>
-<pre><code class="lang-html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;&lt;/head&gt;
-&lt;body&gt;
-&lt;riot-tabs&gt;&lt;/riot-tabs&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+<pre><code class="lang-html"><span class="token doctype" >&lt;!DOCTYPE html></span>
+<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>html</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>head</span><span class="token punctuation" >></span></span><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>head</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>body</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>riot-tabs</span><span class="token punctuation" >></span></span><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>riot-tabs</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>body</span><span class="token punctuation" >></span></span>
+<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>html</span><span class="token punctuation" >></span></span>
 </code></pre>
 <p>As mentioned previously, we know we need the (very tiny) RiotJS library, so don&#39;t forget to include it:</p>
-<pre><code class="lang-html">&lt;body&gt;
-&lt;riot-tabs&gt;&lt;/riot-tabs&gt;
+<pre><code class="lang-html"><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>body</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>riot-tabs</span><span class="token punctuation" >></span></span><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>riot-tabs</span><span class="token punctuation" >></span></span>
 
-&lt;script src=&quot;path/to/riot-2.0.1.js&quot;&gt;&lt;/script&gt;
-&lt;/body&gt;
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>script</span> <span class="token attr-name" >src</span><span class="token attr-value" ><span class="token punctuation" >=</span><span class="token punctuation" >"</span>path/to/riot-2.0.1.js<span class="token punctuation" >"</span></span><span class="token punctuation" >></span></span><span class="token script language-javascript" ></span><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>script</span><span class="token punctuation" >></span></span>
+<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>body</span><span class="token punctuation" >></span></span>
 </code></pre>
 <p>Easy enough, right? Given Riot doesn&#39;t write our applications for us, we will need to tell Riot to mount some component, which in this case is &quot;tabs.&quot;</p>
-<pre><code class="lang-html">&lt;body&gt;
-&lt;riot-tabs&gt;&lt;/riot-tabs&gt;
+<pre><code class="lang-html"><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>body</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>riot-tabs</span><span class="token punctuation" >></span></span><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>riot-tabs</span><span class="token punctuation" >></span></span>
 
-&lt;script src=&quot;path/to/riot-2.0.1.js&quot;&gt;&lt;/script&gt;
-&lt;script&gt;riot.mount(&#39;riot-tabs&#39;)&lt;/script&gt;
-&lt;/body&gt;
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>script</span> <span class="token attr-name" >src</span><span class="token attr-value" ><span class="token punctuation" >=</span><span class="token punctuation" >"</span>path/to/riot-2.0.1.js<span class="token punctuation" >"</span></span><span class="token punctuation" >></span></span><span class="token script language-javascript" ></span><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>script</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>script</span><span class="token punctuation" >></span></span><span class="token script language-javascript" >riot<span class="token punctuation" >.</span><span class="token function" >mount</span><span class="token punctuation" >(</span><span class="token string" >'riot-tabs'</span><span class="token punctuation" >)</span></span><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>script</span><span class="token punctuation" >></span></span>
+<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>body</span><span class="token punctuation" >></span></span>
 </code></pre>
 <p>When we run this code through the browser, we&#39;re going to receive an error telling us that <code>&#39;tabs&#39;</code> is not a thing. Congrats! Time for Step 2.</p>
 <h3 id="step-2-creating-your-custom-tag">Step 2: Creating Your Custom Tag</h3>
@@ -117,69 +117,69 @@ Here is the final product:</p>
 </code></pre>
 <p>to compile and watch for more changes to the file/folder.</p>
 <p>Back in the <code>tabs.tag</code> file, add this:</p>
-<pre><code class="lang-html">&lt;riot-tabs&gt;
-&lt;h2&gt;Tabs&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li class={ tabItem: true }&gt;Tab 1&lt;/li&gt;
-&lt;li class={ tabItem: true }&gt;Tab 2&lt;/li&gt;
-&lt;li class={ tabItem: true }&gt;Tab 3&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/riot-tabs&gt;
+<pre><code class="lang-html"><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>riot-tabs</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>h2</span><span class="token punctuation" >></span></span>Tabs<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>h2</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>ul</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>li</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" ><span class="token namespace" >tabItem:</span></span> <span class="token attr-name" >true</span> <span class="token attr-name" >}</span><span class="token punctuation" >></span></span>Tab 1<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>li</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>li</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" ><span class="token namespace" >tabItem:</span></span> <span class="token attr-name" >true</span> <span class="token attr-name" >}</span><span class="token punctuation" >></span></span>Tab 2<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>li</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>li</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" ><span class="token namespace" >tabItem:</span></span> <span class="token attr-name" >true</span> <span class="token attr-name" >}</span><span class="token punctuation" >></span></span>Tab 3<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>li</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>ul</span><span class="token punctuation" >></span></span>
+<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>riot-tabs</span><span class="token punctuation" >></span></span>
 </code></pre>
 <p>That looks almost exactly like vanilla HTML, save for the conditional class(es), which we will use later with <code>is-active</code> classes. Also, they are way better than concatenating <code>className</code> strings yourself.</p>
 <p>Refreshing your browser will show you that you now have content that is nested within a <code>&lt;riot-tabs&gt;&lt;/riot-tabs&gt;</code> tag.</p>
 <p>Next up, we can add in the different tabs&#39; contents:</p>
-<pre><code class="lang-html">&lt;riot-tabs&gt;
-&lt;h2&gt;Tabs&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li class={ tabItem: true }&gt;Tab 1&lt;/li&gt;
-&lt;li class={ tabItem: true }&gt;Tab 2&lt;/li&gt;
-&lt;li class={ tabItem: true }&gt;Tab 3&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&quot;tabContent&quot;&gt;
-&lt;div class={ tabContent__item: true }&gt;(1) Lorem ispum dolor...&lt;/div&gt;
-&lt;div class={ tabContent__item: true }&gt;(2) Lorem ispum dolor...&lt;/div&gt;
-&lt;div class={ tabContent__item: true }&gt;(3) Lorem ispum dolor...&lt;/div&gt;
-&lt;/div&gt;
-&lt;/riot-tabs&gt;
+<pre><code class="lang-html"><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>riot-tabs</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>h2</span><span class="token punctuation" >></span></span>Tabs<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>h2</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>ul</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>li</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" ><span class="token namespace" >tabItem:</span></span> <span class="token attr-name" >true</span> <span class="token attr-name" >}</span><span class="token punctuation" >></span></span>Tab 1<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>li</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>li</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" ><span class="token namespace" >tabItem:</span></span> <span class="token attr-name" >true</span> <span class="token attr-name" >}</span><span class="token punctuation" >></span></span>Tab 2<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>li</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>li</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" ><span class="token namespace" >tabItem:</span></span> <span class="token attr-name" >true</span> <span class="token attr-name" >}</span><span class="token punctuation" >></span></span>Tab 3<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>li</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>ul</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>div</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span><span class="token punctuation" >"</span>tabContent<span class="token punctuation" >"</span></span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>div</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" ><span class="token namespace" >tabContent__item:</span></span> <span class="token attr-name" >true</span> <span class="token attr-name" >}</span><span class="token punctuation" >></span></span>(1) Lorem ispum dolor...<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>div</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>div</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" ><span class="token namespace" >tabContent__item:</span></span> <span class="token attr-name" >true</span> <span class="token attr-name" >}</span><span class="token punctuation" >></span></span>(2) Lorem ispum dolor...<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>div</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>div</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" ><span class="token namespace" >tabContent__item:</span></span> <span class="token attr-name" >true</span> <span class="token attr-name" >}</span><span class="token punctuation" >></span></span>(3) Lorem ispum dolor...<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>div</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>div</span><span class="token punctuation" >></span></span>
+<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>riot-tabs</span><span class="token punctuation" >></span></span>
 </code></pre>
 <p>Okay, this is no big deal, so far.</p>
 <p>Being software developers, we hate writing things over and over, so let&#39;s start with the tabs.</p>
-<pre><code class="lang-html">&lt;riot-tabs&gt;
-&lt;h2&gt;Tabs&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li each={ tab, i in tabs } class={ tabItem: true }&gt;{tab.title}&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&quot;tabContent&quot;&gt;
-&lt;div class={ tabContent__item: true }&gt;(1) Lorem ispum dolor...&lt;/div&gt;
-&lt;div class={ tabContent__item: true }&gt;(2) Lorem ispum dolor...&lt;/div&gt;
-&lt;div class={ tabContent__item: true }&gt;(3) Lorem ispum dolor...&lt;/div&gt;
-&lt;/div&gt;
+<pre><code class="lang-html"><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>riot-tabs</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>h2</span><span class="token punctuation" >></span></span>Tabs<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>h2</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>ul</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>li</span> <span class="token attr-name" >each</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" >tab,</span> <span class="token attr-name" >i</span> <span class="token attr-name" >in</span> <span class="token attr-name" >tabs</span> <span class="token attr-name" >}</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" ><span class="token namespace" >tabItem:</span></span> <span class="token attr-name" >true</span> <span class="token attr-name" >}</span><span class="token punctuation" >></span></span>{tab.title}<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>li</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>ul</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>div</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span><span class="token punctuation" >"</span>tabContent<span class="token punctuation" >"</span></span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>div</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" ><span class="token namespace" >tabContent__item:</span></span> <span class="token attr-name" >true</span> <span class="token attr-name" >}</span><span class="token punctuation" >></span></span>(1) Lorem ispum dolor...<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>div</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>div</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" ><span class="token namespace" >tabContent__item:</span></span> <span class="token attr-name" >true</span> <span class="token attr-name" >}</span><span class="token punctuation" >></span></span>(2) Lorem ispum dolor...<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>div</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>div</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" ><span class="token namespace" >tabContent__item:</span></span> <span class="token attr-name" >true</span> <span class="token attr-name" >}</span><span class="token punctuation" >></span></span>(3) Lorem ispum dolor...<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>div</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>div</span><span class="token punctuation" >></span></span>
 
-this.tabs = [
-{ title: &#39;Tab 1&#39; },
-{ title: &#39;Tab 2&#39; },
-{ title: &#39;Tab 3&#39; }
-]
-&lt;/riot-tabs&gt;
+  this.tabs = [
+    { title: 'Tab 1' },
+    { title: 'Tab 2' },
+    { title: 'Tab 3' }
+  ]
+<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>riot-tabs</span><span class="token punctuation" >></span></span>
 </code></pre>
 <p>Riot has a nice each={ item, i in array } attribute, similar to JavaScript&#39;s for ... in ...</p>
 <p>While we&#39;re at it, why not iterate over the content items, as well?</p>
-<pre><code class="lang-html">&lt;riot-tabs&gt;
-&lt;h2&gt;Tabs&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li each={ tab, i in tabs } class=&quot;tabItem&quot;&gt;{tab.title}&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&quot;tabContent&quot;&gt;
-&lt;div each={ tab, i in tabs } class=&quot;tabContent__item&quot;&gt;{tab.content}&lt;/div&gt;
-&lt;/div&gt;
+<pre><code class="lang-html"><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>riot-tabs</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>h2</span><span class="token punctuation" >></span></span>Tabs<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>h2</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>ul</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>li</span> <span class="token attr-name" >each</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" >tab,</span> <span class="token attr-name" >i</span> <span class="token attr-name" >in</span> <span class="token attr-name" >tabs</span> <span class="token attr-name" >}</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span><span class="token punctuation" >"</span>tabItem<span class="token punctuation" >"</span></span><span class="token punctuation" >></span></span>{tab.title}<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>li</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>ul</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>div</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span><span class="token punctuation" >"</span>tabContent<span class="token punctuation" >"</span></span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>div</span> <span class="token attr-name" >each</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" >tab,</span> <span class="token attr-name" >i</span> <span class="token attr-name" >in</span> <span class="token attr-name" >tabs</span> <span class="token attr-name" >}</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span><span class="token punctuation" >"</span>tabContent__item<span class="token punctuation" >"</span></span><span class="token punctuation" >></span></span>{tab.content}<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>div</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>div</span><span class="token punctuation" >></span></span>
 
-this.tabs = [
-{ title: &#39;Tab 1&#39;, content: &quot;(1) Lorem ipsum dolor&quot; },
-{ title: &#39;Tab 2&#39;, content: &quot;(2) Lorem ipsum dolor&quot; },
-{ title: &#39;Tab 3&#39;, content: &quot;(3) Lorem ipsum dolor&quot; }
-]
-&lt;/riot-tabs&gt;
+  this.tabs = [
+    { title: 'Tab 1', content: "(1) Lorem ipsum dolor" },
+    { title: 'Tab 2', content: "(2) Lorem ipsum dolor" },
+    { title: 'Tab 3', content: "(3) Lorem ipsum dolor" }
+  ]
+<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>riot-tabs</span><span class="token punctuation" >></span></span>
 </code></pre>
 <p>Next, we need to set a default &quot;active tab&quot; and &quot;active content.&quot;</p>
 <h3 id="step-3-conditional-classes">Step 3: Conditional Classes</h3>
@@ -189,58 +189,58 @@ this.tabs = [
 <li>set an <code>activeTab</code> property and</li>
 <li>create a function to check if the currently iterated tab is the <code>activeTab</code></li>
 </ul>
-<pre><code class="lang-html">&lt;riot-tabs&gt;
-&lt;h2&gt;Tabs&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li each={ tab, i in tabs } class=&quot;tabItem { is-active: parent.isActiveTab(tab.ref) }&quot;&gt;{tab.title}&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&quot;tabContent&quot;&gt;
-&lt;div each={ tab, i in tabs } class=&quot;tabContent__item { is-active: parent.isActiveTab(tab.ref) }&quot;&gt;{tab.content}&lt;/div&gt;
-&lt;/div&gt;
+<pre><code class="lang-html"><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>riot-tabs</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>h2</span><span class="token punctuation" >></span></span>Tabs<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>h2</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>ul</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>li</span> <span class="token attr-name" >each</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" >tab,</span> <span class="token attr-name" >i</span> <span class="token attr-name" >in</span> <span class="token attr-name" >tabs</span> <span class="token attr-name" >}</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span><span class="token punctuation" >"</span>tabItem { is-active: parent.isActiveTab(tab.ref) }<span class="token punctuation" >"</span></span><span class="token punctuation" >></span></span>{tab.title}<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>li</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>ul</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>div</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span><span class="token punctuation" >"</span>tabContent<span class="token punctuation" >"</span></span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>div</span> <span class="token attr-name" >each</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" >tab,</span> <span class="token attr-name" >i</span> <span class="token attr-name" >in</span> <span class="token attr-name" >tabs</span> <span class="token attr-name" >}</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span><span class="token punctuation" >"</span>tabContent__item { is-active: parent.isActiveTab(tab.ref) }<span class="token punctuation" >"</span></span><span class="token punctuation" >></span></span>{tab.content}<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>div</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>div</span><span class="token punctuation" >></span></span>
 
-this.tabs = [
-{ title: &#39;Tab 1&#39;, ref: &#39;tab1&#39;, content: &quot;(1) Lorem ipsum dolor&quot; },
-{ title: &#39;Tab 2&#39;, ref: &#39;tab2&#39;, content: &quot;(2) Lorem ipsum dolor&quot; },
-{ title: &#39;Tab 3&#39;, ref: &#39;tab3&#39;, content: &quot;(3) Lorem ipsum dolor&quot; }
-]
+  this.tabs = [
+    { title: 'Tab 1', ref: 'tab1', content: "(1) Lorem ipsum dolor" },
+    { title: 'Tab 2', ref: 'tab2', content: "(2) Lorem ipsum dolor" },
+    { title: 'Tab 3', ref: 'tab3', content: "(3) Lorem ipsum dolor" }
+  ]
 
-this.activeTab = &#39;tab1&#39;
+  this.activeTab = 'tab1'
 
-isActiveTab(tab) {
-return this.activeTab === tab
-}
-&lt;/riot-tabs&gt;
+  isActiveTab(tab) {
+    return this.activeTab === tab
+  }
+<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>riot-tabs</span><span class="token punctuation" >></span></span>
 </code></pre>
 <p>Since these are <em>conditional</em> classes, they will either be evaluated as true or false (I believe that anything that is not falsy is considered true; for example, <code>new Date()</code> is considered <code>true</code>). Here, we create a function called <code>isActiveTab</code> and call it from the item itself, but because the function is not scoped to the item, we need to access the <code>parent</code> scope and call the function on that.</p>
 <p>Finally, we need a way to react to <em>events</em>.</p>
 <h3 id="step-4-toggling-the-tabs">Step 4: Toggling the Tabs</h3>
 <p>When we click on a tab, we want that tab to now be active, and we want the corresponding tab content to be displayed. This can be done via an <code>onclick</code> handler that calls a function on the parent called <code>toggleTab</code></p>
-<pre><code class="lang-html">&lt;riot-tabs&gt;
-&lt;h2&gt;Tabs&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li each={ tab, i in tabs } class=&quot;tabItem { is-active: parent.isActiveTab(tab.ref) }&quot; onclick={ parent.toggleTab }&gt;{tab.title}&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&quot;tabContent&quot;&gt;
-&lt;div each={ tab, i in tabs } class=&quot;tabContent__item { is-active: parent.isActiveTab(tab.ref) }&quot;&gt;{tab.content}&lt;/div&gt;
-&lt;/div&gt;
+<pre><code class="lang-html"><span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>riot-tabs</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>h2</span><span class="token punctuation" >></span></span>Tabs<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>h2</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>ul</span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>li</span> <span class="token attr-name" >each</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" >tab,</span> <span class="token attr-name" >i</span> <span class="token attr-name" >in</span> <span class="token attr-name" >tabs</span> <span class="token attr-name" >}</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span><span class="token punctuation" >"</span>tabItem { is-active: parent.isActiveTab(tab.ref) }<span class="token punctuation" >"</span></span> <span class="token attr-name" >onclick</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" >parent.toggleTab</span> <span class="token attr-name" >}</span><span class="token punctuation" >></span></span>{tab.title}<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>li</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>ul</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>div</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span><span class="token punctuation" >"</span>tabContent<span class="token punctuation" >"</span></span><span class="token punctuation" >></span></span>
+    <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;</span>div</span> <span class="token attr-name" >each</span><span class="token attr-value" ><span class="token punctuation" >=</span>{</span> <span class="token attr-name" >tab,</span> <span class="token attr-name" >i</span> <span class="token attr-name" >in</span> <span class="token attr-name" >tabs</span> <span class="token attr-name" >}</span> <span class="token attr-name" >class</span><span class="token attr-value" ><span class="token punctuation" >=</span><span class="token punctuation" >"</span>tabContent__item { is-active: parent.isActiveTab(tab.ref) }<span class="token punctuation" >"</span></span><span class="token punctuation" >></span></span>{tab.content}<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>div</span><span class="token punctuation" >></span></span>
+  <span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>div</span><span class="token punctuation" >></span></span>
 
-this.tabs = [
-{ title: &#39;Tab 1&#39;, ref: &#39;tab1&#39;, content: &quot;(1) Lorem ipsum dolor&quot; },
-{ title: &#39;Tab 2&#39;, ref: &#39;tab2&#39;, content: &quot;(1) Lorem ipsum dolor&quot; },
-{ title: &#39;Tab 3&#39;, ref: &#39;tab3&#39;, content: &quot;(1) Lorem ipsum dolor&quot; }
-]
+  this.tabs = [
+    { title: 'Tab 1', ref: 'tab1', content: "(1) Lorem ipsum dolor" },
+    { title: 'Tab 2', ref: 'tab2', content: "(1) Lorem ipsum dolor" },
+    { title: 'Tab 3', ref: 'tab3', content: "(1) Lorem ipsum dolor" }
+  ]
 
-this.activeTab = &#39;tab1&#39;
+  this.activeTab = 'tab1'
 
-isActiveTab(tab) {
-return this.activeTab === tab
-}
+  isActiveTab(tab) {
+    return this.activeTab === tab
+  }
 
-toggleTab(e) {
-this.activeTab = e.item.tab.ref
-return true
-}
-&lt;/riot-tabs&gt;
+  toggleTab(e) {
+    this.activeTab = e.item.tab.ref
+    return true
+  }
+<span class="token tag" ><span class="token tag" ><span class="token punctuation" >&lt;/</span>riot-tabs</span><span class="token punctuation" >></span></span>
 </code></pre>
 <p>The <code>onclick</code> event handler receives an event object that is packed with information. What we want is the current tab that we are clicking on, and this is accessed through <code>e.item.tab.ref</code>, which is just the <code>ref</code> property on the <code>tab</code> object of the currently iterated <code>item</code>.</p>
 <p>According to the Riot docs, when an event handler is called, Riot will automatically call <code>this.update()</code> and re-render the component. However, I found that after I altered my data, I had to <code>return true</code>.</p>
