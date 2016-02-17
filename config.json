@@ -1,6 +1,5 @@
 {
   "baseURI": "http://robertwpearce.com",
-  "blogDirname": "blog",
   "outputDir": "_site",
   "sourceDir": "src"
 }

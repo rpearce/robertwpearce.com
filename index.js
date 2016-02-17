@@ -1,39 +1,20 @@
-import fs from 'fs';
 import fsp from 'fs-promise';
-import path from 'path';
-import { outputDir, blogDirname } from './config';
-import { readPosts } from './lib/posts';
-import { writePage } from './lib/page';
-import { writeCSS } from './lib/css';
-import { copyImages } from './lib/images';
-import { exec } from 'child_process';
+import { outputDir } from './config';
 
-import homeComponent from './src/components/home/index';
-import postComponent from './src/components/post/index';
+import { copyCNAME } from './lib/cname';
+import { copyImages } from './lib/images';
+import { writeCSS } from './lib/css';
+import { writePages } from './lib/fileUtils';
+import { writePosts } from './lib/fileUtils';
 
 (async () => {
   try {
     await fsp.mkdir(outputDir);
-    exec(`cp CNAME ${outputDir}`, (err) => { if (err !== null) { throw(err) } });
-    writeCSS();
+    copyCNAME();
     copyImages();
-
-    await fsp.mkdir(path.join(outputDir, blogDirname));
-
-    const posts = await readPosts();
-    posts.reverse();
-    const pages = [
-      { component: homeComponent, metadata: homeComponent.metadata, data: { posts } }
-    ];
-
-    for (let post of posts) {
-      pages.push({ component: postComponent, metadata: post.metadata, data: { post } });
-    }
-
-    for (let page of pages) {
-      writePage(page);
-    }
-
+    writeCSS();
+    writePages();
+    writePosts();
   } catch (err) {
     console.error(err);
   }

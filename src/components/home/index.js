@@ -10,7 +10,7 @@ export default {
     type: 'website'
   },
 
-  render({ posts }) {
+  render() {
     return `<main>
       <div class="layout--constrained">
         <header class="author">
@@ -35,7 +35,7 @@ export default {
           <header>
             <h2 class="heading--bordered">Blog Posts</h2>
           </header>
-          ${postsList.render(posts)}
+          ${postsList.render()}
         </section>
       </div>
     </main>`;
