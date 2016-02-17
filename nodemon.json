@@ -3,6 +3,7 @@
   "ext": "js html json scss md markdown",
   "verbose": true,
   "watch": [
+    "index.js",
     "lib/",
     "src/"
   ]

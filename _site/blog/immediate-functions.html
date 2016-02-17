@@ -1,56 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Immediate Functions</title>
+      <html lang="en">
+        <head>
+          <title>Immediate Functions</title>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
-    <meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU">
-    <meta name="description" content="Beginner-friendly introduction to immediate functions.">
+          <meta charset="utf-8">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+          <meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU">
+          <meta name="description" content="Beginner-friendly introduction to immediate functions.">
 
-    <meta property="og:site_name" content="RobertWPearce.com">
-    <meta property="og:url" content="http://robertwpearce.com//blog/immediate-functions.html">
-    <meta property="og:description" content="Beginner-friendly introduction to immediate functions.">
-    <meta property="og:image" content="">
-    <meta property="og:type" content="article">
+          <meta property="og:site_name" content="RobertWPearce.com">
+          <meta property="og:url" content="http://robertwpearce.com/blog/immediate-functions.html">
+          <meta property="og:description" content="Beginner-friendly introduction to immediate functions.">
+          <meta property="og:image" content="undefined">
+          <meta property="og:type" content="article">
 
-    <link href="http://fonts.googleapis.com/css?family=Lato:400" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="/css/app.css">
-    <link rel="canonical" href="http://www.robertwpearce.com//blog/immediate-functions.html">
-    <!--<link rel="alternate" type="application/rss+xml" title="Robert W. Pearce" href="http://robertwpearce.com/feed.xml">-->
-  </head>
-  <body>
-
-  <nav>
-    <div class="layout--constrained">
-      <ul class="nav--main list--bare list--horz">
-        <li><a href="/">Home</a></li>
-        <li><a href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <article class="article">
-    <div class="article__background" style="background-image: url(http://s3.amazonaws.com/rpearce.github.io/js-scope/sunrise.jpg)">
-      <div class="overlay"></div>
-      <div class="article__backgroundHeader">
-        <div class="layout--constrained">
-          <h1 class="heading--trim">
-            <a href="/blog/immediate-functions.html">Immediate Functions</a>
-          </h1>
-          <small><em>Oct 6, 2015</em></small>
-        </div>
+          <link href="http://fonts.googleapis.com/css?family=Lato:400" rel="stylesheet" type="text/css">
+          <link rel="stylesheet" href="/css/app.css">
+          <link rel="canonical" href="http://robertwpearce.com/blog/immediate-functions.html">
+          <!--<link rel="alternate" type="application/rss+xml" title="Robert W. Pearce" href="http://robertwpearce.com/feed.xml">-->
+        </head>
+        <body>
+          <div>
+      <nav>
+      <div class="layout--constrained">
+        <ul class="nav--main list--bare list--horz">
+          <li><a href="/">Home</a></li>
+          <li><a href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a></li>
+        </ul>
       </div>
-    </div>
-    <div class="layout--constrained">
-      <header class="article__header heading--fatBottomBorder">
-        <h1 class="heading--trim">
-          <a href="/blog/immediate-functions.html">Immediate Functions</a>
-        </h1>
-        <small><em>Oct 6, 2015</em></small>
-      </header>
-<p><em>This article is intended for JavaScript beginners.</em></p>
+    </nav>
+      <article class="article">
+        <div class="article__background" style="background-image: url('http://s3.amazonaws.com/rpearce.github.io/js-scope/sunrise.jpg')">
+          <div class="overlay"></div>
+          <header class="article__backgroundHeader">
+            <div class="layout--constrained">
+              <h1 class="heading--trim">
+                <a href="/blog/immediate-functions.html">Immediate Functions</a>
+              </h1>
+              <small><em>Oct 6, 2015</em></small>
+            </div>
+          </header>
+        </div>
+        <div class="layout--constrained">
+          <header class="article__header heading--fatBottomBorder">
+            <h1 class="heading--trim">
+              <a href="/blog/immediate-functions.html">Immediate Functions</a>
+            </h1>
+            <small><em>Oct 6, 2015</em></small>
+          </header>
+          <p><em>This article is intended for JavaScript beginners.</em></p>
 <p>The browser environment is one big JavaScript <code>closure</code> that will encapsulate in its <code>scope</code> all of the code that is to be run. Because of this, any functions or variables that are created in <code>&lt;script&gt;</code> tags or external <code>.js</code> files that are <em>not</em> defined within a function will end up as global variables! And we all know that global varibles are bad. Let&#39;s dig in to this some more.</p>
 <p>Every time you define a function and then define a variable with <code>var</code> inside of that function, that variable <em>only</em> exists inside of that function.
 For example, what is the value of <code>result</code> that is logged to the console?</p>
@@ -128,9 +127,9 @@ complicated for this file, then we can start to look at the <a href="http://wiki
 module exporting &amp; requiring pattern</a> that is currently implemented by the
 wonderful <a href="http://browserify.org">Browserify</a> library (aka, Node.js but in the browser). I will cover this in the future, but in the
 mean time, leverage the power of immediate functions for great good!</p>
+
+        </div>
+      </article>
     </div>
-  </article>
-
-  </body>
-</html>
-
+        </body>
+      </html>
