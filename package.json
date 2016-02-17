@@ -5,7 +5,7 @@
   "scripts": {
     "prebuild": "npm run clean",
     "build": "babel-node lib/writePostsJSON.js && babel-node index.js",
-    "clean": "rm -rf _site",
+    "clean": "rm -rf _site && rm -f posts.json",
     "dev": "nodemon",
     "start": "node devServer.js"
   },
