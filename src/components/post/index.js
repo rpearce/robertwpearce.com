@@ -15,13 +15,13 @@ marked.setOptions({
 
 export default {
   render({ post }) {
-    const { relativePath, title, friendlyDate, bgImage } = post.metadata;
+    const { relativePath, title, friendlyDate, image } = post.metadata;
     const contentMarkup = marked(post.content);
 
     return `<div>
       ${nav.render()}
       <article class="article">
-        <div class="article__background" style="background-image: url('${bgImage}')">
+        <div class="article__background" style="background-image: url('${image}')">
           <div class="overlay"></div>
           <header class="article__backgroundHeader">
             <div class="layout--constrained">

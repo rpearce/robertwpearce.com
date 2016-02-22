@@ -1,7 +1,7 @@
 ---
 title:   RiotJS Example
 date:    2015-01-28
-bgImage: http://s3.amazonaws.com/rpearce.github.io/riotjs/riotjs.jpg
+image: http://s3.amazonaws.com/rpearce.github.io/riotjs/riotjs.jpg
 description: A quick-dive in to RiotJS, with examples.
 ---
 

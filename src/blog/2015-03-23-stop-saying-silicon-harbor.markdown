@@ -1,7 +1,7 @@
 ---
 title:   Stop Saying Silicon Harbor
 date:    2015-03-23
-bgImage: http://s3.amazonaws.com/rpearce.github.io/silicon/morris-island.jpg
+image: http://s3.amazonaws.com/rpearce.github.io/silicon/morris-island.jpg
 description: Charleston, SC techpreneurs need to stop saying Silicon Harbor.
 ---
 

@@ -1,7 +1,7 @@
 ---
 title:   Moving To London
 date:    2014-09-01
-bgImage: http://s3.amazonaws.com/rpearce.github.io/moving-to-london/london-tree.jpg
+image: http://s3.amazonaws.com/rpearce.github.io/moving-to-london/london-tree.jpg
 description: If you can go on an adventure, then what are you waiting for?
 ---
 

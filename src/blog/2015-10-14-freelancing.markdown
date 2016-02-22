@@ -1,7 +1,7 @@
 ---
 title:   Freelancing
 date:    2015-10-14
-bgImage: http://s3.amazonaws.com/rpearce.github.io/toptal/mtn.jpeg
+image: http://s3.amazonaws.com/rpearce.github.io/toptal/mtn.jpeg
 description: Some thoughts on freelancing in the software development business.
 ---
 

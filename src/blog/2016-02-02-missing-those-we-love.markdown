@@ -1,7 +1,7 @@
 ---
 title:   Missing Those We Love
 date:    2016-02-02
-bgImage: http://s3.amazonaws.com/rpearce.github.io/from_afar.jpg
+image: http://s3.amazonaws.com/rpearce.github.io/from_afar.jpg
 description: Missing people in your life? Ask yourself why, and then go see them or give them a call.
 ---
 

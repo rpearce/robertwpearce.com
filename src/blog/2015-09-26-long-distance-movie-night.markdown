@@ -1,7 +1,7 @@
 ---
 title:   Long-Distance Movie Night
 date:    2015-09-26
-bgImage: http://s3.amazonaws.com/rpearce.github.io/movie-night/cary_grant.jpg
+image: http://s3.amazonaws.com/rpearce.github.io/movie-night/cary_grant.jpg
 description: Your significant other and you can do long-distance movie night easily. Here's how.
 ---
 
