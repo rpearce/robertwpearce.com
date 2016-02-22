@@ -1,7 +1,7 @@
 ---
-title:   Immediate Functions
-date:    2015-10-06
-image: http://s3.amazonaws.com/rpearce.github.io/js-scope/sunrise.jpg
+title:       Immediate Functions
+date:        2015-10-06
+image:       /images/sunrise.jpg
 description: Beginner-friendly introduction to immediate functions.
 ---
 

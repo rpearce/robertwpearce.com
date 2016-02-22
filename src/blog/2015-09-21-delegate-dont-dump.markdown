@@ -1,7 +1,7 @@
 ---
-title:   Delegate; Don't Dump
-date:    2015-09-21
-image: http://s3.amazonaws.com/rpearce.github.io/delegate/hinge.svg
+title:       Delegate; Don't Dump
+date:        2015-09-21
+image:       /images/hinge.svg
 description: On being the hinge between someone with a question and someone else with a solution.
 ---
 

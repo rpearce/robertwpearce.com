@@ -1,7 +1,7 @@
 ---
-title:   RiotJS Example
-date:    2015-01-28
-image: http://s3.amazonaws.com/rpearce.github.io/riotjs/riotjs.jpg
+title:       RiotJS Example
+date:        2015-01-28
+image:       /images/riotjs.jpg
 description: A quick-dive in to RiotJS, with examples.
 ---
 

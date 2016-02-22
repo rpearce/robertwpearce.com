@@ -1,7 +1,7 @@
 ---
-title:   Berlin
-date:    2014-09-11
-image: http://s3.amazonaws.com/rpearce.github.io/berlin/startupbootcamp-berlin.jpg
+title:       Berlin
+date:        2014-09-11
+image:       /images/startupbootcamp-berlin.jpg
 description: Reflections on my first trip Berlin.
 ---
 

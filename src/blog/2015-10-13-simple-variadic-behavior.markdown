@@ -1,7 +1,7 @@
 ---
-title:   Simple Variadic Behavior
-date:    2015-10-13
-image: http://s3.amazonaws.com/rpearce.github.io/variadic/waterfall.jpg
+title:       Simple Variadic Behavior
+date:        2015-10-13
+image:       /images/waterfall.jpg
 description: Beginner-friendly introduction to variadic behavior.
 ---
 

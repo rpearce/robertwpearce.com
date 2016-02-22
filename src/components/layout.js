@@ -5,6 +5,7 @@ export default {
   render({ metadata, body }) {
     const { title, description, relativePath, image, type } = metadata;
     const uri = resolve(baseURI, relativePath);
+    const imageURI = image ? resolve(baseURI, image) : resolve(baseURI, '/images/robert-london.jpg');
     const feedURI = resolve(baseURI, 'feed.xml');
 
     return `<!DOCTYPE html>
@@ -21,7 +22,7 @@ export default {
           <meta property="og:site_name" content="RobertWPearce.com">
           <meta property="og:url" content="${uri}">
           <meta property="og:description" content="${description}">
-          <meta property="og:image" content="${image}">
+          <meta property="og:image" content="${imageURI}">
           <meta property="og:type" content="${type}">
 
           <link href="http://fonts.googleapis.com/css?family=Lato:400" rel="stylesheet" type="text/css">

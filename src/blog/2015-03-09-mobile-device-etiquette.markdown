@@ -1,7 +1,7 @@
 ---
-title:   Mobile Device Etiquette
-date:    2015-03-09
-image: http://s3.amazonaws.com/rpearce.github.io/mobie-device-etiquette/phone-table.jpg
+title:       Mobile Device Etiquette
+date:        2015-03-09
+image:       /images/phone-table.jpg
 description: Pay less attention to your device and more to those around you.
 ---
 

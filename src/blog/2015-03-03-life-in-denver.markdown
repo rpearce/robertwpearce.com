@@ -1,7 +1,7 @@
 ---
-title:   Life in Colorado
-date:    2015-03-03
-image: http://s3.amazonaws.com/rpearce.github.io/colorado/colorado.jpg
+title:       Life in Colorado
+date:        2015-03-03
+image:       /images/colorado.jpg
 description: An update from my experiences in Colorado.
 ---
 

@@ -1,7 +1,7 @@
 ---
-title:   Your product doesn’t judge you; people do.
-date:    2013-08-28
-image: http://s3.amazonaws.com/rpearce.github.io/product-judge/papaya-farm.jpg
+title:       Your product doesn’t judge you; people do.
+date:        2013-08-28
+image:       /images/papaya-farm.jpg
 description: Selling sucks, but you need to get your project out in the real world.
 ---
 

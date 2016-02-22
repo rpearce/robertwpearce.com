@@ -1,7 +1,7 @@
 ---
-title:   Exercising In Transit
-date:    2014-09-29
-image: http://s3.amazonaws.com/rpearce.github.io/exercising-in-london/outdoor-gym.jpg
+title:       Exercising In Transit
+date:        2014-09-29
+image:       /images/outdoor-gym.jpg
 description: Exercising while you travel can be difficult -- let's work through this.
 ---
 

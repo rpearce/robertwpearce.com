@@ -1,7 +1,7 @@
 ---
-title:   Switching Jobs
-date:    2015-06-04
-image: http://s3.amazonaws.com/rpearce.github.io/switching-jobs/edinburgh.jpg
+title:       Switching Jobs
+date:        2015-06-04
+image:       /images/edinburgh.jpg
 description: Announcement of switching jobs from Articulate to The Iron Yard.
 ---
 

@@ -1,7 +1,7 @@
 ---
-title:   Asynchronously Loading Scripts
-date:    2015-10-05
-image: http://s3.amazonaws.com/rpearce.github.io/loading-scripts/rock-creek-pk.jpg
+title:       Asynchronously Loading Scripts
+date:        2015-10-05
+image:       /images/rock-creek-pk.jpg
 description: Beginner-friendly introduction to loading scripts on to a web page.
 ---
 

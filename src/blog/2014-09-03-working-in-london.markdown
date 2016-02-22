@@ -1,7 +1,7 @@
 ---
-title:   Working In London
-date:    2014-09-03
-image: http://s3.amazonaws.com/rpearce.github.io/working-in-london/clapham-cafe.jpg
+title:       Working In London
+date:        2014-09-03
+image:       /images/clapham-cafe.jpg
 description: What it's been like working in London for a few days.
 ---
 

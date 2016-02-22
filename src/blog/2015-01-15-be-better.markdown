@@ -1,7 +1,7 @@
 ---
-title:   Be Better
-date:    2015-01-15
-image: http://s3.amazonaws.com/rpearce.github.io/better/primrose_hill.jpg
+title:       Be Better
+date:        2015-01-15
+image:       /images/primrose_hill.jpg
 description: "We are not always the people we strive to be. Many of us want to be better versions of ourselves: wiser, kinder, stronger, skinnier. However, we often find it is ourselves that get in the way of this."
 ---
 
