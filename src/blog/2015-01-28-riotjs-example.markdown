@@ -52,7 +52,7 @@ $ riot -w src/ build/
 I decided to start small and make a tabbing example where clicking a tab shows content related to it underneath.
 Here is the final product:
 
-<iframe class="iframe--example" frameborder="0" src="http://www.robertwpearce.com/riotjs-examples/tabs.html" style="height: 550px;"></iframe>
+<iframe class="iframe--example" frameborder="0" src="https://rpearce.github.io/riotjs-examples/tabs.html" style="height: 550px;"></iframe>
 
 ### Step 1: Start With Markup
 Starting with a blank HTML document, add the `<riot-tabs></riot-tabs>` tag to your document:
