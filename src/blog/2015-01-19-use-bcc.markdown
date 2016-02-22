@@ -9,7 +9,8 @@ I have a new feature request for email applications: __if there are a multitutde
 
 Let us begin with this sage tweet from [Marty Bauer](https://twitter.com/bauermarty):
 
-![Marty's Bcc Tweet](https://s3.amazonaws.com/rpearce.github.io/bcc/marty_tweet.jpg)
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Sending a mass email and not bcc&#39;ing everyone is like a kicker missing an extra point. You had one job.</p>&mdash; Marty Bauer (@bauermarty) <a href="https://twitter.com/bauermarty/status/553279657890816001">January 8, 2015</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## What is Bcc?
 For those of you who've never thought twice about this email field, it stands for _blind carbon copy_. The addresses in this field will not be shared with the other recipients of the email.
