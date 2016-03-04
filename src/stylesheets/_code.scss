@@ -5,11 +5,12 @@ code {
 }
 code {
   padding: 0.1em 0.3em;
-  white-space: pre-wrap;
+  white-space: nowrap;
   pre & {
     padding: 0;
     background-color: none;
     border: none;
+    white-space: inherit;
   }
 }
 pre {

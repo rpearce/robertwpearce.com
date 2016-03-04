@@ -4,6 +4,8 @@ import '../../../node_modules/prismjs/components/prism-ruby';
 import '../../../node_modules/prismjs/components/prism-elixir';
 import '../../../node_modules/prismjs/components/prism-scss';
 import '../../../node_modules/prismjs/components/prism-bash';
+import '../../../node_modules/prismjs/components/prism-makefile';
+import '../../../node_modules/prismjs/components/prism-c';
 import nav from '../nav';
 
 marked.setOptions({
