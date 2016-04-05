@@ -22,6 +22,7 @@ export default {
               <li><a href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a></li>
               <li><a href="https://github.com/rpearce">GitHub</a></li>
               <li><a href="https://www.linkedin.com/in/robertwpearce">LinkedIn</a></li>
+              <li><a href="https://dribbble.com/rpearce">dribbble</a></li>
             </ul>
           </div>
         </header>
