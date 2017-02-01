@@ -1,5 +1,5 @@
 {
-  "baseURI": "http://robertwpearce.com",
+  "baseURI": "https://robertwpearce.com",
   "outputDir": "_site",
   "sourceDir": "src"
 }
