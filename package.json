@@ -10,7 +10,7 @@
     "start": "node devServer.js"
   },
   "keywords": [],
-  "author": "Robert Pearce <me@robertwpearce.com> (http://robertwpearce.com)",
+  "author": "Robert Pearce <me@robertwpearce.com> (https://robertwpearce.com)",
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {

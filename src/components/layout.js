@@ -26,7 +26,7 @@ export default {
           <meta property="og:image" content="${imageURI}">
           <meta property="og:type" content="${type}">
 
-          <link href="http://fonts.googleapis.com/css?family=Lato:400" rel="stylesheet" type="text/css">
+          <link href="//fonts.googleapis.com/css?family=Lato:400" rel="stylesheet" type="text/css">
           <link rel="stylesheet" href="/css/app.css">
           <link rel="canonical" href="${uri}">
           <!--<link rel="alternate" type="application/rss+xml" title="Robert W. Pearce" href="${feedURI}">-->
