@@ -29,19 +29,11 @@ I love _not_ working in an office. I love the freedom. I love being able to walk
 
 Many people I know ask me,
 
-* * *
-
 > _&quot;When are you going to get a real job?&quot;_
-
-* * *
 
 I always respond with, "Oh, I don't know&hellip;" But what I want to say is,
 
-* * *
-
 > &quot;I have a real job. I have a salary, I have benefits and I have responsibility. __Just because your definition of a real job involves long hours, living for weekends and generally hating life does not mean that it is a universal truth by which all must abide.__&quot;
-
-* * *
 
 Instead of spending loads of time during the workday perusing
 [CNN](http://www.cnn.com "CNN")

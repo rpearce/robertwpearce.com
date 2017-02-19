@@ -11,11 +11,7 @@ I have recently switched from one dream job to another one. For the past 1.5 yea
 
 Now, however, I am shifting gears. [The Iron Yard](http://theironyard.com) will be my new home and might well take me to whole new levels of understanding, inter-personal relationships and travel. I will be teaching software in an accelerated course to highly motivated people who, of their own volition, are willing to spend >40 hours per week in my presence (the horror!). The first course will be in Charleston, SC, and other courses will be taught in an undisclosed location overseas (I don't think it's been officially announced).
 
-* * *
-
 > _&quot;But Robert! How does this help you travel?&quot;_
-
-* * *
 
 I'm glad you asked! Each "cohort" (class) is 12 weeks, and apart from the travel associated with being in different teaching locations, the work schedule goes like this: **_3 months on, 1 month off_**.
 

@@ -46,11 +46,7 @@ In the mean time, an interesting "game" has popped up among 20-somethings where 
 ### Step 1: Catch It
 If you have to ask yourself,
 
-* * *
-
 > _&quot;Is it appropriate to take out my phone?&quot;_
-
-* * *
 
 then the answer is probably no.
 

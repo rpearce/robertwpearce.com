@@ -12,11 +12,7 @@ What we agreed on was that being out in the wild, pounding pavement, selling you
 I know this has been written about 1 x 10^255 times, but he said something in this conversation which really hit home:
 
 
-* * *
-
 > ***&quot;Your product doesn’t judge you; people do.&quot;***
-
-* * *
 
 Fact: **It is easier to hide in your product than take the beating that is the outside world.**
 

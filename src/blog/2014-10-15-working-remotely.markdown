@@ -15,21 +15,13 @@ would lose their sense of team; that they would get bored.
 
 Someone once said to me,
 
-* * *
-
 > _&quot;Only boring people get bored.&quot;<br />
 > <small>&mdash; every badass person, ever</small>_
-
-* * *
 
 Let that sink in for a second. Let yourself recognize that you might just be boring.
 While you think about it, read this introduction on boredom from Wikipedia:
 
-* * *
-
 > _&quot;Boredom is an emotional state experienced when an individual is left without anything in particular to do, and not interested in their surroundings.&quot;_
-
-* * *
 
 Comma usage aside, this says _a lot_ about people who get bored. If you have nothing in particular to do, well, that's great, but odds are that you do not have a family or are not contributing to humanity (there's much to do here). Your choice. I would like to focus on the second point: _&quot;and not interested in their surroundings.&quot;_
 
@@ -45,11 +37,7 @@ I write software. You might associate this with sitting in a dark room, chugging
 
 One of the attractions to the job I'm working now is that the company, [Articulate](http://www.articulate.com "Articulate"), has no office and is completely virtual. I recently learned that it is the **2nd largest virtual company in the world**. This means that I have the guidance of an entire company of remote workers. What sort of guidance do they offer?
 
-* * *
-
 > _&quot;Live your life, and do not waste the opportunities and time you have.&quot;_
-
-* * *
 
 So I packed a bag and moved to London. I travel to different areas of town ~4-5 days a week, find wifi, do my work, explore, meet people, go find another place to work and then go exercise at an outdoor gym. Oh, and I've been to Berlin and have Spain, Scotland and Ireland all coming up in the next 1.5 months. And I just got back from five days in Miami.
 

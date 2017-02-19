@@ -12,11 +12,7 @@ There were no external driving factors behind this decision; no significant othe
 I love my family, friends, beaches, the spartina grass (marshes), the plough mud, and the
 odd&mdash;yet wonderful&mdash;assortment of personalities that exist in Charleston.
 
-* * *
-
 > _&quot;If everything is so wonderful, why leave?&quot;_
-
-* * *
 
 Because I can. Because of this list of things I don't have:
 
@@ -36,11 +32,7 @@ I understand that &frac34; of the items on that list are desired by many folks, 
 
 Additionally, and worthy of note, every single person I spoke with about traveling this way said this:
 
-* * *
-
 > _&quot;If I were you, I'd be gone in a second.&quot;_
-
-* * *
 
 I will miss my grandparents, parents, siblings, my dogs, aunts, uncles, cousins, surfing, and everything that makes Charleston great.
 
