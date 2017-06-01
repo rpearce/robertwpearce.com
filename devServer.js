@@ -1,6 +1,6 @@
 var serve = require('koa-static');
 var koa = require('koa');
-var app = koa();
+var app = new koa();
 
 app.use(serve('_site/.'));
 app.listen(3000);
