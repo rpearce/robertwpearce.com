@@ -1,26 +1,14 @@
 {
-  "name": "static-site",
-  "version": "0.0.1",
-  "main": "index.js",
   "scripts": {
-    "prebuild": "npm run clean",
-    "build": "babel-node lib/writePostsJSON.js && babel-node index.js",
-    "clean": "rm -rf _site && rm -f posts.json",
+    "build": "node index.js",
     "dev": "nodemon",
-    "start": "node devServer.js"
+    "start": "node dev.js"
   },
-  "keywords": [],
-  "author": "Robert Pearce <me@robertwpearce.com> (https://robertwpearce.com)",
-  "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
-    "babel": "latest",
-    "babel-cli": "latest",
-    "babel-core": "latest",
-    "babel-preset-es2015": "latest",
-    "babel-preset-stage-0": "latest",
+    "data.task": "latest",
+    "favicon-emoji": "^1.0.4",
     "fs-extra": "latest",
-    "fs-promise": "latest",
+    "html-minifier": "latest",
     "koa": "latest",
     "koa-static": "latest",
     "marked": "latest",
@@ -28,16 +16,8 @@
     "nodemon": "latest",
     "parse-md": "latest",
     "prismjs": "latest",
+    "ramda": "latest",
     "speakingurl": "latest",
-    "walkdir": "latest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rpearce/static-site.git"
-  },
-  "bugs": {
-    "url": "https://github.com/rpearce/static-site/issues"
-  },
-  "homepage": "https://github.com/rpearce/static-site#readme",
-  "description": ""
+    "task-from-fn": "latest"
+  }
 }
