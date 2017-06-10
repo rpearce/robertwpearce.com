@@ -5,10 +5,9 @@ const buildBlogPages = require('./lib/blog')
 const buildSass = require('./lib/sass')
 const homePage = require('./src/js/pages/home')
 const optimizeHtml = require('./lib/html')
-const { chain } = require('ramda')
-const Task = require('data.task')
 
-let css = 
+// Mutation hack
+let css = ''
 
 buildSass('src/sass', 'src/sass/app.scss')
   .map(x => css = x)
