@@ -1,21 +1,36 @@
-import fsp from 'fs-promise';
-import { outputDir } from './config';
+'use strict'
 
-import { copyCNAME } from './lib/cname';
-import { copyImages } from './lib/images';
-import { writeCSS } from './lib/css';
-import { writePages } from './lib/fileUtils';
-import { writePosts } from './lib/fileUtils';
+const build = require('./lib/perform')
+const buildBlogPages = require('./lib/blog')
+const buildSass = require('./lib/sass')
+const homePage = require('./src/js/pages/home')
+const optimizeHtml = require('./lib/html')
+const { chain } = require('ramda')
+const Task = require('data.task')
 
-(async () => {
-  try {
-    await fsp.mkdir(outputDir);
-    copyCNAME();
-    copyImages();
-    writeCSS();
-    writePages();
-    writePosts();
-  } catch (err) {
-    console.error(err);
-  }
-})();
+let css = 
+
+buildSass('src/sass', 'src/sass/app.scss')
+  .map(x => css = x)
+  .chain(_ => buildBlogPages('src/blog'))
+  .chain(posts => {
+    return build({
+      outputDir: 'docs',
+      copyable: [
+        { from: 'src/fonts', to: 'docs/fonts' },
+        { from: 'src/images', to: 'docs/images' },
+        { from: 'src/CNAME', to: 'docs/CNAME' },
+        { from: 'src/favicon.ico', to: 'docs/favicon.ico' }
+      ],
+      writable: [
+        { path: 'docs/index.html', content: optimizeHtml(homePage({ posts })) },
+        { path: 'docs/styles.css', content: css }
+      ].concat(posts.map(x => {
+        return { path: `docs${x.metadata.relativePath}`, content: optimizeHtml(x.content) }
+      }))
+    })
+  })
+  .fork(
+    err => console.error('Error: ', err),
+    data => console.log('Build succeeded:', data)
+  )
