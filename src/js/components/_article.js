@@ -7,7 +7,7 @@ const subscribe = require('./_subscribe')
 function article(metadata, body) {
   const { relativePath, title, friendlyDate, image } = metadata;
 
-  return `<div>
+  return `<main>
     ${nav()}
     <article class="article">
       <div class="article__background" style="background-image: url('${image}')">
@@ -32,7 +32,7 @@ function article(metadata, body) {
       </div>
     </article>
     ${subscribe()}
-  </div>`;
+  </main>`;
 }
 
 module.exports = curry(article)
