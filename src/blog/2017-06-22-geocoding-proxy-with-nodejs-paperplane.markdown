@@ -117,14 +117,13 @@ const { json, logger, methods, mount, parseJson, routes } = require('paperplane'
 
 
 // Application-specific code
-const hello = req =>
-  Promise
-    .resolve('hello world')
-    .then(json)
-
 const endpoints = routes({
   '/': methods({
-    GET: hello
+    GET: req => (
+      Promise
+        .resolve('hello world')
+        .then(json)
+    )
   })
 })
 
@@ -162,20 +161,17 @@ From another terminal window, let's use cURL to see if this works:
 It works!
 
 ## Hello, Location
-Now that we know our server works, let's see if we can get it to echo back a location/address parameter we send it at a route we'll create called `/geocode`:
+Now that we know our server works, let's see if we can get it to echo back a location/address parameter we send it at a route we'll create called `/geocode`. Let's remove our `'/'` endpoint
+and "hello, world!" code and add some for geocoding:
 
 ```js
-const geocode = req =>
-  Promise
-    .resolve(req.params.address)
-    .then(json)
-
 const endpoints = routes({
-  '/': methods({
-    GET: hello
-  }),
   '/geocode/:address': methods({
-    GET: geocode
+    GET: req => (
+      Promise
+        .resolve(req.params.address)
+        .then(json)
+    )
   })
 })
 ```
@@ -195,16 +191,21 @@ We're almost there! Instead of echoing back whatever address the server receives
 package:
 
 ```js
-const geocode = req =>
-  axios({
-    method: 'GET',
-    url: 'https://maps.googleapis.com/maps/api/geocode/json',
-    params: {
-      key: process.env.GEO_KEY,
-      address: req.params.address
-    }
+const endpoints = routes({
+  '/geocode/:address': methods({
+    GET: req => (
+      axios({
+        method: 'GET',
+        url: 'https://maps.googleapis.com/maps/api/geocode/json',
+        params: {
+          key: process.env.GEO_KEY,
+          address: req.params.address
+        }
+      })
+      .then(json)
+    )
   })
-  .then(json)
+})
 ```
 
 In this code, we are using the JavaScript Promise-based axios tool to create a GET request to the geocode API. Take note of our `params` object here; since we're
@@ -230,17 +231,24 @@ access this object key and pass its return value down the chain:
 // add `prop` to the require statement
 const { compose, prop } = require('ramda')
 
-const geocode = req =>
-  axios({
-    method: 'GET',
-    url: 'https://maps.googleapis.com/maps/api/geocode/json',
-    params: {
-      key: process.env.GEO_KEY,
-      address: req.params.address
-    }
+// ...
+
+const endpoints = routes({
+  '/geocode/:address': methods({
+    GET: req => (
+      axios({
+        method: 'GET',
+        url: 'https://maps.googleapis.com/maps/api/geocode/json',
+        params: {
+          key: process.env.GEO_KEY,
+          address: req.params.address
+        }
+      })
+      .then(prop('data'))
+      .then(json)
+    )
   })
-  .then(prop('data'))
-  .then(json)
+})
 ```
 
 If all the stars have aligned and you restart and rerun the command again, you should see
@@ -256,27 +264,11 @@ Hooray! We now have geocode response data for Auckland like:
 * `"formatted_address":"Auckland, New Zealand"`
 * `"location":{"lat":-36.8484597,"lng":174.7633315}`
 
-## All of the Code
-The project itself can be found at [https://github.com/rpearce/geocoding-proxy](https://github.com/rpearce/geocoding-proxy), but here is our `index.js` file in its entirety:
+## Refactoring the Routes
+As you might imagine, having all of the request handling functions inside of paperplane's `routes` function might get difficult to follow and modularize. With that in mind, let's first pull the
+handler function out and into its own function:
 
 ```js
-// Make our .env configuration file available
-require('dotenv').config()
-
-
-// Import libraries
-const http = require('http')
-const axios = require('axios')
-const { compose, prop } = require('ramda')
-const { json, logger, methods, mount, parseJson, routes } = require('paperplane')
-
-
-// Application-specific code
-const hello = req =>
-  Promise
-    .resolve('hello world')
-    .then(json)
-
 const geocode = req =>
   axios({
     method: 'GET',
@@ -290,9 +282,96 @@ const geocode = req =>
   .then(json)
 
 const endpoints = routes({
-  '/': methods({
-    GET: hello
-  }),
+  '/geocode/:address': methods({
+    GET: geocode
+  })
+})
+```
+
+You could now abstract the `geocode` function to another file if you wanted to, as well as the object that is passed to routes (think of a routes file that requires in the different
+handlers it needs).
+
+### Leveraging Ramda
+We can refactor the code above even further and make it a bit more functional and closer to being ["point-free"](https://lucasmreis.github.io/blog/pointfree-javascript) by including a
+few Ramda helpers:
+
+```js
+const { compose, composeP, curryN, path, prop } = require('ramda')
+
+// ...
+
+// Application-specific code
+const getGeocode = curryN(2, (key, address) =>
+  axios({
+    method: 'GET',
+    url: 'https://maps.googleapis.com/maps/api/geocode/json',
+    params: { key, address }
+  })
+  .then(prop('data'))
+})
+
+const geocode = compose(
+  composeP(
+    json,
+    getGeocode(process.env.GEO_KEY),
+  ),
+  path(['params', 'address'])
+)
+
+const endpoints = routes({
+  '/geocode/:address': methods({
+    GET: geocode
+  })
+})
+
+const app = compose(endpoints, parseJson)
+```
+
+This code accomplishes the same goal as before, but now we have accomplished a few things:
+
+1. We no longer access `req.params.address` – what happens if any of those returned `null` or `undefined`? Instead, we use Ramda's [path helper](http://ramdajs.com/docs/#path).
+1. Ramda's [compose](http://ramdajs.com/docs/#compose) rears its head again, allowing us to make a chain of functions. However, note the use of [composeP](http://ramdajs.com/docs/#composeP). The `getGeocode` function returns a `Promise` thanks to `axios`, so we need to use `composeP` to compose our Promise-returning function.
+1. We can use [currying](http://ramdajs.com/docs/#curryN) to accept both `key` and `address` parameters at separate times. This is handy, for we could partially apply our `key` once, store that in a variable and reuse it over and over with different `address`es.
+1. We have decoupled the use of paperplane's `json` helper from `getGeocode` and `axios`, meaning that function can now be leveraged in other ways instead of being hard-set to JSON.
+
+If this scares the hell out of you, fear not! Check out [Andrew van Slaar's Ramda lessons on egghead.io](https://egghead.io/instructors/andrew-van-slaars) and if you're liking what you're
+seeing, [Dr. Boolean's "Mostly Adequate Guide to Functional Programming"](https://github.com/MostlyAdequate/mostly-adequate-guide).
+
+
+## All of the Code
+The project itself can be found at [https://github.com/rpearce/geocoding-proxy](https://github.com/rpearce/geocoding-proxy), but here is our `index.js` file in its entirety:
+
+```js
+// Make our .env configuration file available
+require('dotenv').config()
+
+
+// Import libraries
+const http = require('http')
+const axios = require('axios')
+const { compose, composeP, curryN, path, prop } = require('ramda')
+const { json, logger, methods, mount, parseJson, routes } = require('paperplane')
+
+
+// Application-specific code
+const getGeocode = curryN(2, (key, address) =>
+  axios({
+    method: 'GET',
+    url: 'https://maps.googleapis.com/maps/api/geocode/json',
+    params: { key, address }
+  })
+  .then(prop('data'))
+)
+
+const geocode = compose(
+  composeP(
+    json,
+    getGeocode(process.env.GEO_KEY),
+  ),
+  path(['params', 'address'])
+)
+
+const endpoints = routes({
   '/geocode/:address': methods({
     GET: geocode
   })
