@@ -12,11 +12,7 @@ Since 2007, [The Great Outdoor Gym Company](http://www.tgogc.com/Gyms "The Great
 
 The gyms sport everything from pullup &amp; parallel bars to vertical presses to elliptical machines. Clapham Common, where I exercise, possesses at least three outdoor gyms that are heavily used every day and have surprisingly low maintenance plus resistance to the elements.
 
-* * *
-
 > _&quot;Great; loads of gyms! Now what?&quot;_
-
-* * *
 
 The phrase _weary traveler_ is fairly descriptive of the effects of travel on people. Whether you are walking, sitting or sleeping for a long time, the effects are similar: you are tired! And the last thing you want to do when you're tired is exercise. This needs to change.
 
