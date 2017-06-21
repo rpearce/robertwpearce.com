@@ -6,7 +6,7 @@ module.exports = ({
   cssPath='',
   description='',
   headExtra='',
-  imageUri='',
+  image='',
   lang='en',
   siteName='',
   title='',
@@ -24,7 +24,7 @@ module.exports = ({
       <meta property="og:title" content="${title}">
       <meta property="og:url" content="${uri}">
       <meta property="og:description" content="${description}">
-      <meta property="og:image" content="${imageUri}">
+      <meta property="og:image" content="${image}">
       <meta property="og:type" content="${type}">
 
       <link rel="shortcut icon" href="/favicon.ico">

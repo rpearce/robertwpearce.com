@@ -5,7 +5,7 @@ module.exports = {
   title: `Robert Pearce | Freelance Software Developer`,
   description: `Need to develop or troubleshoot software? You've come to the right place.`,
   uri: `https://robertwpearce.com`,
-  imageUri: `/images/robert-london.jpg`,
+  image: `/images/robert-london.jpg`,
   cssPath: `/styles.css`,
   type: `website`,
   headExtra: `
