@@ -31,5 +31,5 @@ buildSass('src/sass', 'src/sass/app.scss')
   })
   .fork(
     err => console.error('Error: ', err),
-    data => console.log('Build succeeded:', data)
+    data => console.log('Build succeeded')
   )

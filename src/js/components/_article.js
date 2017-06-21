@@ -2,6 +2,7 @@
 
 const { curry } = require('ramda')
 const nav = require('./_nav')
+const subscribe = require('./_subscribe')
 
 function article(metadata, body) {
   const { relativePath, title, friendlyDate, image } = metadata;
@@ -30,6 +31,7 @@ function article(metadata, body) {
         ${body}
       </div>
     </article>
+    ${subscribe()}
   </div>`;
 }
 
