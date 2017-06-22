@@ -6,6 +6,7 @@ module.exports = ({
   cssPath='',
   description='',
   headExtra='',
+  footerExtra='',
   image='',
   lang='en',
   siteName='',
@@ -34,6 +35,7 @@ module.exports = ({
     </head>
     <body>
       ${body}
+      ${footerExtra}
     </body>
   </html>
 `
