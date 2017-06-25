@@ -63,13 +63,13 @@ From your favorite project folder, let's create a new project folder named `geoc
 Once we're in the project folder, let's initialize a `package.json` file to make it easy to manage and hang on to our project's dependencies:
 
 ```
-λ npm init -Y
+λ npm init -y
 ```
 
 or if you have yarn installed:
 
 ```
-λ yarn init
+λ yarn init -y
 ```
 
 You should now have a `package.json` file with some JSON values in it.
