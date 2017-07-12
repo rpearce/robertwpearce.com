@@ -20,6 +20,7 @@ article {
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;
+  margin-bottom: 1em;
   @media only screen and (max-width: 667px) {
     display: none;
     background-image: none !important;
@@ -30,7 +31,8 @@ article {
   @media only screen and (max-width: 667px) {
     display: block;
     color: inherit;
-    padding-bottom: 20px;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
   }
 }
 .article__backgroundHeader {
@@ -38,4 +40,12 @@ article {
   bottom: 20px;
   width: 100%;
   color: $white;
+}
+.article__backgroundHeader small,
+.article__header small {
+  font-style: italic;
+}
+.article__subHeader a {
+  color: #fff;
+  border-color: #fff;
 }

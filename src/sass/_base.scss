@@ -49,11 +49,11 @@ img {
   margin-right: auto;
 }
 p {
-  line-height: 2.286;
-  &.is-first {
-    margin-top: 0;
-    padding-top: 0;
-  }
+  margin: 0;
+  line-height: 1.75;
+}
+p + p {
+  margin-top: 1em;
 }
 hr {
   width: 100px;

@@ -7,15 +7,15 @@ code {
   padding: 0.1em 0.3em;
   white-space: nowrap;
   font-size: 85%;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  color: black;
+  text-shadow: 0 1px white;
   pre & {
     padding: 0;
     background-color: none;
     border: none;
     white-space: inherit;
-    color: black;
     background: none;
-    text-shadow: 0 1px white;
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
     direction: ltr;
     text-align: left;
     white-space: pre;

@@ -1,13 +1,11 @@
 ---
-title:       Node.js Geocoding Proxy with Paperplane
-date:        2017-06-22
-image:       /images/paper-plane.jpg
-description: Tutorial on creating a location geocoding proxy server in Node.js with Paperplane
+title:        Node.js Geocoding Proxy with Paperplane
+date:         2017-06-22
+image:        /images/paper-plane.jpg
+description:  Tutorial on creating a location geocoding proxy server in Node.js with Paperplane
+photoCredit:  Ares Nguyen
+photoWebsite: "https://www.flickr.com/photos/91559340@N05/8478694579"
 ---
-
-<div>
-  <small class="photoCred">\[photo credit <a href="https://www.flickr.com/photos/91559340@N05/8478694579">Ares Nguyen</a>\]</small>
-</div>
 
 _tl;dr => use a proxy server when private API keys are involved; [paperplane](https://github.com/articulate/paperplane) is a great functional server framework._
 
