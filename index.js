@@ -16,7 +16,6 @@ buildSass('src/sass', 'src/sass/app.scss')
     return build({
       outputDir: 'docs',
       copyable: [
-        { from: 'src/fonts', to: 'docs/fonts' },
         { from: 'src/images', to: 'docs/images' },
         { from: 'src/CNAME', to: 'docs/CNAME' },
         { from: 'src/favicon.ico', to: 'docs/favicon.ico' }
