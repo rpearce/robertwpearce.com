@@ -5,7 +5,10 @@ const nav = require('./_nav')
 const subscribe = require('./_subscribe')
 
 function article(metadata, body) {
-  const { relativePath, title, friendlyDate, image } = metadata;
+  const { relativePath, title, friendlyDate, image, photoCredit, photoWebsite } = metadata;
+  const photoCred = photoCredit
+    ? `<small class="photoCred">\[photo credit <a href="${photoWebsite}">${photoCredit}</a>\]</small>`
+    : ''
 
   return `<main>
     ${nav()}
@@ -17,7 +20,10 @@ function article(metadata, body) {
             <h1 class="heading--trim">
               <a href="${relativePath}">${title}</a>
             </h1>
-            <small><em>${friendlyDate}</em></small>
+            <div class="article__subHeader">
+              <small>${friendlyDate}</small>
+              ${photoCred}
+            </div>
           </div>
         </header>
       </div>
@@ -26,7 +32,7 @@ function article(metadata, body) {
           <h1 class="heading--trim">
             <a href="${relativePath}">${title}</a>
           </h1>
-          <small><em>${friendlyDate}</em></small>
+          <small>${friendlyDate}</small>
         </header>
         ${body}
       </div>
