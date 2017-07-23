@@ -35,13 +35,19 @@ article {
     margin-bottom: 1em;
   }
 }
-.article__backgroundHeader {
+.article__bgHeader {
   position: absolute;
   bottom: 20px;
   width: 100%;
   color: $white;
 }
-.article__backgroundHeader small,
+.article__bgTitleContainer {
+  margin-left: -1em;
+  margin-right: -1em;
+  padding: 1em;
+  background-color: rgba(0,0,0,0.75);
+}
+.article__bgHeader small,
 .article__header small {
   font-style: italic;
 }

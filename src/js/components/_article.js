@@ -14,15 +14,16 @@ function article(metadata, body) {
     ${nav()}
     <article class="article">
       <div class="article__background" style="background-image: url('${image}')">
-        <div class="overlay"></div>
-        <header class="article__backgroundHeader">
+        <header class="article__bgHeader">
           <div class="layout--constrained">
-            <h1 class="heading--trim">
-              <a href="${relativePath}">${title}</a>
-            </h1>
-            <div class="article__subHeader">
-              <small>${friendlyDate}</small>
-              ${photoCred}
+            <div class="article__bgTitleContainer">
+              <h1 class="heading--trim">
+                <a href="${relativePath}">${title}</a>
+              </h1>
+              <div class="article__subHeader">
+                <small>${friendlyDate}</small>
+                ${photoCred}
+              </div>
             </div>
           </div>
         </header>
