@@ -28,6 +28,12 @@ module.exports = ({
       <meta property="og:image" content="${image}">
       <meta property="og:type" content="${type}">
 
+      <meta property="twitter:card" content="summary_large_image">
+      <meta property="twitter:site" content="${siteName}">
+      <meta property="twitter:title" content="${title}">
+      <meta property="twitter:description" content="${description}">
+      <meta property="twitter:image" content="${image}">
+
       <link rel="shortcut icon" href="/favicon.ico">
       <link rel="canonical" href="${canonicalUri || uri}">
       <link rel="stylesheet" href="${cssPath}">
