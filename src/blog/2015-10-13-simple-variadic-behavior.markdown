@@ -11,7 +11,7 @@ __Update__: I made a library, [parse-md](https://www.npmjs.com/package/parse-md)
 
 My latest problem to solve was how, once I had a `.md` (Markdown) file's contents, to go about parsing out the blog post's metadata (see below: the key/value pairs between the two `---`s).
 
-```
+```markdown
 ---
 title: This is a test
 description: Once upon a time, there was a test...

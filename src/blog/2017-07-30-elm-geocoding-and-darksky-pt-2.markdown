@@ -47,7 +47,7 @@ What we want to do with our program today is create an HTTP GET request with an 
 ## 1: Defining our primary data model
 At the top level for our app, we only care about an address and latitude and longitude coordinates. While the address' type will definitely be [String](http://package.elm-lang.org/packages/elm-lang/core/latest/String), we can choose between a [record](https://guide.elm-lang.org/core_language.html#records) or [tuple](https://guide.elm-lang.org/core_language.html#tuples) to house our coordinates; however, each of these values must be a `Float` type, as coordinates come in decimal format. For no particular reason, we're going to use a tuple.
 
-```haskell
+```elm
 type alias Model =
     { address : String
     , coords : Coords
@@ -83,7 +83,7 @@ Let's take a look at what a geocoding request's response data for `Auckland` loo
 
 If you've set up your [geocoding proxy](/blog/node-js-geocoding-proxy-with-paperplane.html), you can see these same results by running this command:
 
-```
+```bash
 λ curl localhost:5050/geocode/Auckland
 ```
 
@@ -107,7 +107,7 @@ Based on the geocoding response, let's list out what we're looking at:
 
 Since we're going to need decode these bits of data and reuse the types a few times, let's create type aliases for each of these concepts (prefixed with `Geo`):
 
-```haskell
+```elm
 type alias GeoModel =
     { status : String
     , results : List GeoResult
@@ -135,13 +135,13 @@ There are a number of ways to decode JSON in Elm, and [Brian Hicks](https://www.
 
 First, we install the package into our project:
 
-```
+```bash
 λ elm package install NoRedInk/elm-decode-pipeline
 ```
 
 In our `Main.elm` file, we can import what we'll need from Elm's [core Json-Decode module]() as well as the package we've just installed.
 
-```haskell
+```elm
 -- Importing from elm core.
 -- We know from our type aliases that all we're working
 -- with right now are floats, lists and strings.
@@ -153,7 +153,7 @@ import Json.Decode.Pipeline exposing (decode, required)
 
 Now we can write our decoders!
 
-```haskell
+```elm
 decodeGeo : Decoder GeoModel
 decodeGeo =
     decode GeoModel
@@ -184,7 +184,7 @@ Here we declare that we'd like to decode the JSON string according to our type a
 
 Why does this feel so verbose? Personally, I'm not yet comfortable using [Json.Decode.at](http://package.elm-lang.org/packages/elm-lang/core/5.1.1/Json-Decode#at), which might look like
 
-```haskell
+```elm
 decodeString (at [ "results" ] (list (at [ "geometry", "location" ] (keyValuePairs float)))) jsonString
 ```
 
@@ -199,13 +199,13 @@ It's time to add our `view` function. All we're going for today is
 
 As usual, let's download [the official elm-lang/html package](https://github.com/elm-lang/html):
 
-```
+```bash
 λ elm package install elm-lang/html
 ```
 
 Then let's import what we need from it:
 
-```haskell
+```elm
 import Html exposing (Html, div, form, input, p, text)
 import Html.Attributes exposing (placeholder, type_, value)
 import Html.Events exposing (onInput, onSubmit)
@@ -213,7 +213,7 @@ import Html.Events exposing (onInput, onSubmit)
 
 Each import is a function that we can use to help generate HTML5 elements which Elm then works with behind the scenes.
 
-```haskell
+```elm
 view : Model -> Html Msg
 view model =
     div []
@@ -235,7 +235,7 @@ Our `view` function takes in our model and uses Elm functions to then render out
 ## 6: Adding message types
 Thus far, we know of two message types, `Update` and `SendAddress`, but how do we define them? If you look at our `view` function again, you'll see the return type `Html Msg`. The second part of this will be the `type` that we create, and our custom message types will be a part of that! This is something called a [union type](https://guide.elm-lang.org/types/union_types.html).
 
-```haskell
+```elm
 type Msg
     = UpdateAddress String
     | SendAddress
@@ -249,7 +249,7 @@ Staying consistent with [The Elm Architecture](https://guide.elm-lang.org/archit
 
 This is tough to do in a blog post, so please be patient, and we'll walk through this:
 
-```haskell
+```elm
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -280,19 +280,19 @@ Let's walk through this step-by-step:
 ## 8: Making our request
 In order to build and send HTTP requests, we'll need to make sure we download the [elm-lang/http](https://github.com/elm-lang/http) package:
 
-```
+```bash
 λ elm package install elm-lang/http
 ```
 
 and import it:
 
-```haskell
+```elm
 import Http
 ```
 
 In our `update` function, we referenced a function named `sendAddress` and passed it our model's address as a parameter. This function should accept a string, initiate our HTTP request and return a command with a message.
 
-```haskell
+```elm
 sendAddress : String -> Cmd Msg
 sendAddress address =
     Http.get (geocodingUrl address) decodeGeo
@@ -310,7 +310,7 @@ Our `sendAddress` function does this:
 
 Note that `Http.send`'s first argument is a `Msg` that we haven't defined yet, so let's add that to our `Msg` union type:
 
-```haskell
+```elm
 type Msg
     = UpdateAddress String
     | SendAddress
@@ -323,7 +323,7 @@ Basically, we'll either get back an HTTP error or a data structure in the shape 
 ## 9: Handling the geocode response
 Finally, we now need to handle the successful and erroneous responses in our update function:
 
-```haskell
+```elm
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -391,7 +391,7 @@ Again, let's do this step-by-step:
 ## 10: Final wiring up with the main function & defaults
 Now that we're through the core of the application's contents, we can wire up the remaining bits and get it to compile:
 
-```haskell
+```elm
 -- Define our HTML program
 main : Program Never Model Msg
 main =

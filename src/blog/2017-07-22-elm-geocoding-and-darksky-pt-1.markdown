@@ -34,7 +34,7 @@ Once you've got Node installed, we can begin.
 ## Project Setup
 From your favorite project folder, let's create a new project folder named `elm-geocoding-darksky` and change the current working directory to be the new folder:
 
-```
+```bash
 λ mkdir elm-geocoding-darksky
 λ cd elm-geocoding-darksky
 ```
@@ -58,20 +58,20 @@ Our goal here is to compile our elm project to an `elm.js` file and include that
 
 First, let's create a `src/` directory to house our source code and a `Main.elm` file within it:
 
-```
+```bash
 λ mkdir src
 λ touch src/Main.elm
 ```
 
 Next, we want to install Elm's HTML package so that so that we can access its HTML-related functions:
 
-```
+```bash
 λ elm package install elm-lang/html
 ```
 
 Within the `Main.elm` file, add the following:
 
-```haskell
+```elm
 module Main exposing (..)
 
 import Html exposing (text)
@@ -87,7 +87,7 @@ _Note: to learn more about the Elm language and syntax, check out the [Elm Tutor
 
 We can then compile this and output it to `elm.js`:
 
-```
+```bash
 λ elm make src/Main.elm --output=elm.js
 ```
 
@@ -122,7 +122,7 @@ If you run `λ open index.html`, you should be able to view the file in the brow
 ### Creating a Build File
 If you're lazy like me, you can create an executable file, `build`, that will perform our `elm make ...` command for us:
 
-```
+```bash
 λ touch build
 λ chmod +x build
 λ cat <<EOF > ./build
@@ -134,7 +134,7 @@ EOF
 
 This executable can now handle whatever build options and processes we'll add for the future (such as JavaScript minification & uglifying):
 
-```
+```bash
 λ ./build
 Success! Compiled 1 module.
 Successfully generated ./elm.js
@@ -148,7 +148,7 @@ First, you'll need to get a Google Maps API Key from here: [https://developers.g
 
 Once you've done that, go ahead and clone or download [the geocoding-proxy project on GitHub](https://github.com/rpearce/geocoding-proxy) and follow the directions to get set up. Given you've got Node installed, you've copied over the `.env` file and set your API key in there, then running `λ node index.js` should start the server. From another command-line tab, run this and see if you get a similar result:
 
-```js
+```bash
 λ curl localhost:5050/geocode/Auckland
 {"results":[...]}
 ```
@@ -162,7 +162,7 @@ First, you'll need to get a DarkSky API Key from here: [https://darksky.net/dev/
 
 Once you've done that, go ahead and clone or download [the DarkSky-proxy project on GitHub](https://github.com/rpearce/DarkSky-proxy) and follow the directions to get set up. Given you've got Node installed, you've copied over the `.env` file and set your API key in there, then running `λ node index.js` should start the server. From another command-line tab, run this and see if you get a similar result:
 
-```js
+```bash
 λ curl http://localhost:5051/forecast/37.8267,-122.4233
 {"latitude":37.8267,"longitude":-122.4233,...}
 ```

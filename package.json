@@ -15,9 +15,11 @@
     "node-sass": "latest",
     "nodemon": "latest",
     "parse-md": "latest",
-    "prismjs": "latest",
     "ramda": "latest",
     "speakingurl": "latest",
     "task-from-fn": "latest"
+  },
+  "dependencies": {
+    "highlight.js": "^9.12.0"
   }
 }

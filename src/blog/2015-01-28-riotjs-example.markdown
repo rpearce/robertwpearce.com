@@ -100,7 +100,7 @@ $ npm run watch:riot
 if you have an NPM script set up or
 
 ```bash
-$ riot -w src/ build/`
+$ riot -w src/ build/
 ```
 
 to compile and watch for more changes to the file/folder.

@@ -52,7 +52,7 @@ Once you've got Node and yarn installed, we can begin.
 ## Project Setup
 From your favorite project folder, let's create a new project folder named `geocoding-proxy` and change the current working directory to be the new folder:
 
-```
+```bash
 λ mkdir geocoding-proxy
 λ cd geocoding-proxy
 ```
@@ -60,13 +60,13 @@ From your favorite project folder, let's create a new project folder named `geoc
 ### Installing Dependencies
 Once we're in the project folder, let's initialize a `package.json` file to make it easy to manage and hang on to our project's dependencies:
 
-```
+```bash
 λ npm init -y
 ```
 
 or if you have yarn installed:
 
-```
+```bash
 λ yarn init -y
 ```
 
@@ -74,13 +74,13 @@ You should now have a `package.json` file with some JSON values in it.
 
 Next, let's install the tools that we're going to use:
 
-```
+```bash
 λ npm install --save axios dotenv paperplane ramda
 ```
 
 or
 
-```
+```bash
 λ yarn add axios dotenv paperplane ramda
 ```
 
@@ -88,7 +88,7 @@ or
 You can get yourself an API key from [this page](https://developers.google.com/maps/documentation/geocoding/get-api-key). Once you've done this, you'll need to copy
 the `.env.example` file at your project's root (`λ cp .env.example .env`) and replace the value of the `GEO_KEY` with your API key. Your `.env` file should look like
 
-```
+```bash
 GEO_KEY=abcdefg-hijklmn-op
 PORT=5050
 ```
@@ -97,7 +97,7 @@ PORT=5050
 Once your dependencies are installed, let's create a server to see if we can get things working. First, create `index.js` at your project's root and open it in your
 favorite text editor.
 
-```
+```bash
 λ touch index.js
 ```
 
@@ -144,14 +144,14 @@ to learn about effective function composition.)_
 
 We can start the server in a terminal window by running
 
-```
+```bash
 λ node index.js
 Listening on port: 5050
 ```
 
 From another terminal window, let's use cURL to see if this works:
 
-```
+```bash
 λ curl localhost:5050
 "hello world"
 ```
@@ -179,7 +179,7 @@ The `req` object gives us a `params` object with the key `address`, since that w
 
 With the new endpoint added, save the file, restart your server (stop it with `Ctrl + C`), and run cURL with a city name this time:
 
-```
+```bash
 λ curl localhost:5050/geocode/Auckland
 "Auckland"
 ```
@@ -210,13 +210,13 @@ In this code, we are using the JavaScript Promise-based axios tool to create a G
 using the `dotenv` package and configuring that above, we get access to the `GEO_KEY` value in our `.env` file, and we separately get to pass on the `address`
 param, as well. When this request is sent, the `url` will look like:
 
-```
+```bash
 https://maps.googleapis.com/maps/api/geocode/json?key=abcdefg&address=Auckland
 ```
 
 After restarting your server, run `λ curl localhost:5050/geocode/Auckland` again.
 
-```
+```bash
 λ curl localhost:5050/geocode/Auckland
 {"message":"Converting circular structure to JSON","name":"TypeError"}
 ```
@@ -251,7 +251,7 @@ const endpoints = routes({
 
 If all the stars have aligned and you restart and rerun the command again, you should see
 
-```js
+```bash
 λ curl localhost:5050/geocode/Auckland
 {"results":[{"address_components":[{"long_name":"Auckland","short_name":"Auckland","types":["locality","political"]},{"long_name":"Auckland","short_name":"Auckland","types":["administrative_area_level_1","political"]},{"long_name":"New Zealand","short_name":"NZ","types":["country","political"]}],"formatted_address":"Auckland, New Zealand","geometry":{"bounds":{"northeast":{"lat":-36.660571,"lng":175.2871371},"southwest":{"lat":-37.0654751,"lng":174.4438016}},"location":{"lat":-36.8484597,"lng":174.7633315},"location_type":"APPROXIMATE","viewport":{"northeast":{"lat":-36.660571,"lng":175.2871371},"southwest":{"lat":-37.0654751,"lng":174.4438016}}},"place_id":"ChIJ--acWvtHDW0RF5miQ2HvAAU","types":["locality","political"]}],"status":"OK"}
 ```
