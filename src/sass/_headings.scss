@@ -26,7 +26,6 @@ h3,
 .h3 {
   font-size: $fontSize--h3;
 }
-h2,
 h3,
 h4,
 h5,
@@ -48,5 +47,20 @@ h6 {
     height: 0;
     border-top: 5px solid #F2F2F2;
     padding-bottom: 20px;
+  }
+}
+.heading--link {
+  position: relative;
+  &:hover,
+  &:active,
+  &:target {
+    &:before {
+      content: "🔗";
+      position: absolute;
+      left: -1.25em;
+      top: 50%;
+      @include transform(translateY(-50%));
+      font-size: 1rem;
+    }
   }
 }

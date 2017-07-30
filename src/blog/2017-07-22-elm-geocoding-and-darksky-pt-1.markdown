@@ -24,7 +24,7 @@ By the end of this post, you will have a "Hello, world!" Elm app with a simple `
 ## Project Source Code
 The project we're making will be broken into parts here (branches will be named for each part): [https://github.com/rpearce/elm-geocoding-darksky/](https://github.com/rpearce/elm-geocoding-darksky/). Be sure to check out the other branches to see the other parts as they become available.
 
-The project code for this part is located in the `pt-1` branch: [https://github.com/rpearce/elm-geocoding-darksky/tree/pt-1](https://github.com/rpearce/elm-geocoding-darksky/tree/pt-1).
+The code for this part is located in the `pt-1` branch: [https://github.com/rpearce/elm-geocoding-darksky/tree/pt-1](https://github.com/rpearce/elm-geocoding-darksky/tree/pt-1).
 
 ## Pre-requisites
 This tutorial assumes that you already have installed Node.js (I use [NVM](https://github.com/creationix/nvm) for managing Node versions and am using `v8.3`).

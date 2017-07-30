@@ -390,3 +390,22 @@ http.createServer(mount(app, opts)).listen(port, listening)
 
 ## Conclusion
 Tools like Node.js with paperplane make it very easy to create proxy servers to handle your requests in a safe fashion, so use them and always keep your API keys secret!
+
+## Update: 2017-07-30
+I've seen a some feedback asking about CORS (cross-origin resource sharing), so here's how you can do it (useful for running things on localhost):
+
+```js
+const { cors, ... } = require('paperplane')
+
+// ...
+
+// Server options
+const corsOpts = { methods: 'GET' }
+const corsApp = cors(app, corsOpts)
+// ...
+
+// Start the server
+http.createServer(mount(corsApp, opts)).listen(port, listening)
+```
+
+Read more about paperplane's CORS API in [paperplane's CORS docs](https://github.com/articulate/paperplane/blob/master/docs/API.md#cors).
