@@ -6,8 +6,9 @@
   },
   "devDependencies": {
     "data.task": "latest",
-    "favicon-emoji": "^1.0.4",
+    "favicon-emoji": "latest",
     "fs-extra": "latest",
+    "highlight.js": "latest",
     "html-minifier": "latest",
     "koa": "latest",
     "koa-static": "latest",
@@ -18,8 +19,5 @@
     "ramda": "latest",
     "speakingurl": "latest",
     "task-from-fn": "latest"
-  },
-  "dependencies": {
-    "highlight.js": "^9.12.0"
   }
 }

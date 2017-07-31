@@ -1,6 +1,6 @@
-var serve = require('koa-static');
-var koa = require('koa');
-var app = new koa();
+const serve = require('koa-static');
+const koa = require('koa');
+const app = new koa();
 
 app.use(serve('docs/.'));
 app.listen(3000);
