@@ -17,6 +17,7 @@
     "nodemon": "latest",
     "parse-md": "latest",
     "ramda": "latest",
+    "sitemap": "latest",
     "speakingurl": "latest",
     "task-from-fn": "latest"
   }

@@ -4,7 +4,7 @@ module.exports = {
   siteName: `Robert Pearce | Freelance Software Developer`,
   title: `Robert Pearce | Freelance Software Developer`,
   description: `Need to develop or troubleshoot software? You've come to the right place.`,
-  uri: `https://robertwpearce.com`,
+  hostname: `https://robertwpearce.com`,
   image: `/images/robert-london.jpg`,
   cssPath: `/styles.css`,
   type: `website`,
