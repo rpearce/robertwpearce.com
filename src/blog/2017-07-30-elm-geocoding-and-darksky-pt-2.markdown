@@ -11,14 +11,14 @@ This is part 2 of a multipart series where we will be building a small weather f
 
 * [Pt. 1 – Setup Elm & Proxy Servers](/blog/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html)
 * Pt. 2 – Geocoding an Address
-* <span class="faded">(wip) Pt. 3 – Fetching the Current Weather</span>
+* [Pt. 3 – Fetching the Current Weather](/blog/elm-geocoding-and-darksky-pt-3-fetching-the-current-weather.html)
 * <span class="faded">(wip) Pt. 4 – Fetching the Weather Forecast</span>
 * <span class="faded">(wip) Pt. 5 – Extracting our Elm Code</span>
-* <span class="faded">(wip) Pt. 6 – Building for Semi-Production</span>
+* <span class="faded">(wip) Pt. 6 – Styling in Elm</span>
 
 If you'd like to code along with this tutorial, check out [part 1](/blog/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html) first to get set up.
 
-_Note: to learn more about the Elm language and syntax, check out the [Elm Tutorial](https://www.elm-tutorial.org/en/), the [EggHead.io Elm Course](https://egghead.io/courses/start-using-elm-to-build-web-applications) or subscribe to [DailyDrip's Elm Topic](https://www.dailydrip.com/topics/elm)._
+_Note: to learn more about the Elm language and syntax, check out the [Elm Tutorial](https://www.elm-tutorial.org/en/), the [EggHead.io Elm course](https://egghead.io/courses/start-using-elm-to-build-web-applications), subscribe to [DailyDrip's Elm Topic](https://www.dailydrip.com/topics/elm), [James Moore's Elm Courses](http://courses.knowthen.com) or check out [Elm on exercism.io](http://exercism.io/languages/elm/about)._
 
 ## Overview
 Before we can send a weather forecast request to DarkSky, we need to geocode an address to get its latitude and longitutde. In this post, we're going to use Elm and our geocoding server from [Part 1](/blog/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html) to geocode an address based on a user's input in a text box.
