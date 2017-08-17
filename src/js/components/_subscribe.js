@@ -3,7 +3,7 @@
 module.exports = () => `
   <section class="section--padded bg--gray">
     <div class="layout--constrained">
-      <h2>Get Articles</h2>
+      <h2>Get notified of new posts</h2>
       <!-- Begin MailChimp Signup Form -->
       <form action="//robertwpearce.us13.list-manage.com/subscribe/post?u=2df44e8960266388bff165fa6&amp;id=ee2f2a3737" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate class="form">
         <div id="mce-responses">

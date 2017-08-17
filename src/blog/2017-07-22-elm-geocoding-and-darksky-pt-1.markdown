@@ -10,11 +10,12 @@ photoWebsite: "https://unsplash.com/@padolsey"
 This is part 1 of a multipart series where we will be building a small weather forecast app using [Elm](http://elm-lang.org/), [Google's Geocoding API](https://developers.google.com/maps/documentation/geocoding/start) and the [DarkSky API](https://darksky.net/dev/). Instead of doing everything in one massive post, I've broken the steps down into parts of a series. Here is the series plan:
 
 * Pt. 1 – Setup Elm & Proxy Servers
-* <span class="faded">(wip) Pt. 2 – Geocoding an Address</span>
+* [Pt. 2 – Geocoding an Address](/blog/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html)
+* [Pt. 3 – Fetching the Current Weather](/blog/elm-geocoding-and-darksky-pt-3-fetching-the-current-weather.html)
 * <span class="faded">(wip) Pt. 3 – Fetching the Current Weather</span>
 * <span class="faded">(wip) Pt. 4 – Fetching the Weather Forecast</span>
 * <span class="faded">(wip) Pt. 5 – Extracting our Elm Code</span>
-* <span class="faded">(wip) Pt. 6 – Building for Semi-Production</span>
+* <span class="faded">(wip) Pt. 6 – Styling in Elm</span>
 
 ## Overview
 This post will cover setting up [Elm](http://elm-lang.org/), a [geocoding proxy](http://localhost:3000/blog/node-js-geocoding-proxy-with-paperplane.html) and a [DarkSky proxy](https://github.com/rpearce/DarkSky-proxy/). We'll need all of these things set up in order to get our weather app to work and not sacrifice our API keys.
@@ -83,7 +84,7 @@ main =
 
 Here, we import the `Html` package that we installed, specifically expose the `text` function from it and then use that function to tell Elm that we want some HTML-friendly text.
 
-_Note: to learn more about the Elm language and syntax, check out the [Elm Tutorial](https://www.elm-tutorial.org/en/), the [EggHead.io Elm Course](https://egghead.io/courses/start-using-elm-to-build-web-applications) or subscribe to [DailyDrip's Elm Topic](https://www.dailydrip.com/topics/elm)._
+_Note: to learn more about the Elm language and syntax, check out the [Elm Tutorial](https://www.elm-tutorial.org/en/), the [EggHead.io Elm course](https://egghead.io/courses/start-using-elm-to-build-web-applications), subscribe to [DailyDrip's Elm Topic](https://www.dailydrip.com/topics/elm), [James Moore's Elm Courses](http://courses.knowthen.com) or check out [Elm on exercism.io](http://exercism.io/languages/elm/about)._
 
 We can then compile this and output it to `elm.js`:
 
