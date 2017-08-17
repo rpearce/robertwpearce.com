@@ -12,10 +12,8 @@ This is part 1 of a multipart series where we will be building a small weather f
 * Pt. 1 – Setup Elm & Proxy Servers
 * [Pt. 2 – Geocoding an Address](/blog/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html)
 * [Pt. 3 – Fetching the Current Weather](/blog/elm-geocoding-and-darksky-pt-3-fetching-the-current-weather.html)
-* <span class="faded">(wip) Pt. 3 – Fetching the Current Weather</span>
-* <span class="faded">(wip) Pt. 4 – Fetching the Weather Forecast</span>
-* <span class="faded">(wip) Pt. 5 – Extracting our Elm Code</span>
-* <span class="faded">(wip) Pt. 6 – Styling in Elm</span>
+* <span class="faded">(wip) Pt. 4 – Extracting our Elm Code</span>
+* <span class="faded">(wip) Pt. 5 – Styling in Elm</span>
 
 ## Overview
 This post will cover setting up [Elm](http://elm-lang.org/), a [geocoding proxy](http://localhost:3000/blog/node-js-geocoding-proxy-with-paperplane.html) and a [DarkSky proxy](https://github.com/rpearce/DarkSky-proxy/). We'll need all of these things set up in order to get our weather app to work and not sacrifice our API keys.
