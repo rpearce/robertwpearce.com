@@ -13,7 +13,6 @@ This is part 2 of a multipart series where we will be building a small weather f
 * Pt. 2 – Geocoding an Address
 * [Pt. 3 – Fetching the Current Weather](/blog/elm-geocoding-and-darksky-pt-3-fetching-the-current-weather.html)
 * <span class="faded">(wip) Pt. 4 – Extracting our Elm Code</span>
-* <span class="faded">(wip) Pt. 5 – Styling in Elm</span>
 
 If you'd like to code along with this tutorial, check out [part 1](/blog/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html) first to get set up.
 
