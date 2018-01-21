@@ -56,8 +56,8 @@ p + p {
   margin-top: 1em;
 }
 hr {
-  width: 100px;
-  border: 0;
-  height: 1px;
-  background-image: linear-gradient(to left, lighten($gray-light, 15%), $gray-light, lighten($gray-light, 15%));
+  height: 0;
+  border: none;
+  border-top: 5px solid #F2F2F2;
+  margin: 1.75em 0;
 }
