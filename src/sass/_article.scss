@@ -20,7 +20,7 @@ article {
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;
-  margin-bottom: 1em;
+  margin-bottom: 2em;
   @media only screen and (max-width: 667px) {
     display: none;
     background-image: none !important;
@@ -37,7 +37,7 @@ article {
 }
 .article__bgHeader {
   position: absolute;
-  bottom: 20px;
+  bottom: 2em;
   width: 100%;
   color: $white;
 }

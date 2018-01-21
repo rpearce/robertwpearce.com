@@ -1,11 +1,14 @@
 ---
 title:        "Ramda Chops: Function Currying"
-date:         2018-01-22
+date:         2018-01-23
 image:        /images/shepherd-flock.jpg
 description:  How function currying works under the hood.
 photoCredit:  Biegun Wschodni
 photoWebsite: "https://unsplash.com/@biegunwschodni"
 ---
+
+_Thanks to [Jillian Silver](https://github.com/jsilve) and
+[@evilsoft](https://twitter.com/evilsoft) for their review of this post._
 
 Functional Programming concepts have been pouring into the JavaScript community
 for a number of years now, and many of us struggle to keep up. I've been lucky
@@ -62,7 +65,9 @@ function add(a) {
 
 // and then
 
+// add10 :: Number -> Number
 const add10 = add(10)
+
 add10 // => Function
 add10(4) // => 14
 ```
@@ -146,8 +151,8 @@ Sounds simple, right? Easier said than done!
 1. we need to first accept a function (the one to be curried)
 1. we need to then accept [any number of arguments (variadic behavior)](/blog/simple-variadic-behavior.html)
 1. when this happens, we need to either
-  a. return a value (when all arguments have been applied)
-  b. return a function that accepts the remaining arguments and repeat this
+  * return a value (when all arguments have been applied)
+  * return a function that accepts the remaining arguments and repeat this
   condition
 
 ### Breaking Down Curry
@@ -159,7 +164,9 @@ const curry = (fn) => {
   // 2. we return a function taking any `n` arguments
   return (...xs) => {
     // make sure we have a populated list to work with;
-    // comes in handy with function calling later.
+    // `undefined` is the value for the Unit type in
+    // crocks and calling our function must utilize some
+    // sort of value.
     const args =
       xs.length ? xs : [ undefined ]
 
@@ -187,6 +194,8 @@ const curry = (fn) => {
     // or go ahead and call the function
     // with the final argument so we can
     // get back a value.
+    //
+    // NOTE: `applyCurry` is defined below.
     const val =
       args.length === fn.length
         ? fn.apply(null, args)
@@ -203,29 +212,29 @@ const curry = (fn) => {
       ? curry(val)
       : val
   }
-
-  const applyCurry = (fn, arg) => {
-    // return whatever we received if
-    // fn is actually NOT a function.
-    if (!isFunction(fn)) { return fn }
-
-    // if we have more than 1 argument
-    // remaining to be applied, then let's
-    // bind a value to the next argument and
-    // keep going.
-    //
-    // otherwise, then yay let's go ahead
-    // and call that function with the argument;
-    // our `[ undefined ]` default save us from
-    // some potential headache here.
-    return fn.length > 1
-      ? fn.bind(null, arg)
-      : fn.call(null, arg)
-  }
-
-  const isFunction = x =>
-    typeof x === 'function'
 }
+
+const applyCurry = (fn, arg) => {
+  // return whatever we received if
+  // fn is actually NOT a function.
+  if (!isFunction(fn)) { return fn }
+
+  // if we have more than 1 argument
+  // remaining to be applied, then let's
+  // bind a value to the next argument and
+  // keep going.
+  //
+  // otherwise, then yay let's go ahead
+  // and call that function with the argument;
+  // our `[ undefined ]` default saves us from
+  // some potential headache here.
+  return fn.length > 1
+    ? fn.bind(null, arg)
+    : fn.call(null, arg)
+}
+
+const isFunction = x =>
+  typeof x === 'function'
 ```
 
 With all of these checks in here, we can now run the following code and have it
@@ -269,8 +278,8 @@ addOrRemoveTest([ 'thing', 'test' ]) // => ["thing"]
 The `addOrRemove` function almost reads like English: "If something contains
 `x`, give me back that something without `x`; otherwise, append `x` to that
 something." What is worth understanding here is that these functions each accept
-a variable number of arguments where _the most generic/reusable are provided
-first_ (this is a tennent of Functional Programming. Here, we are able to create
+a number of arguments where _the most generic/reusable are provided
+first_ (this is a tenet of Functional Programming). Here, we are able to create
 a very reusable function with partially applied values that sits and waits until
 the final bit – an array – is provided.
 
