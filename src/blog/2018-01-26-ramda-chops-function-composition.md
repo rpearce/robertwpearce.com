@@ -1,11 +1,14 @@
 ---
 title:        "Ramda Chops: Function Composition"
-date:         2018-01-25
+date:         2018-01-26
 image:        /images/sheep-hill-building.jpg
 description:  Learn about function composition with ramda's compose function.
 photoCredit:  Alex Kotomanov
 photoWebsite: "https://unsplash.com/@kotomanov"
 ---
+
+_Thanks to [@evilsoft](https://twitter.com/evilsoft) and
+[@zerkms](https://twitter.com/zerkms) for their review of this post._
 
 _Composition_ is defined as "the combining of distinct parts or elements to
 form a whole." <sup>[source](https://www.wordnik.com/words/composition)</sup>
@@ -37,7 +40,7 @@ const results = [
 ```js
 // getHighScorers :: [Object] -> [String]
 const getHighScorers = xs =>
-  xs
+  [...xs]
     .sort((a, b) => b.score - a.score)
     .slice(0, 3)
     .map(x => x.name)
@@ -46,11 +49,11 @@ getHighScorers(results) // => [ 'Eowin', 'Bilbo', 'Frodo' ]
 ```
 
 As cautious JavaScript developers, we know to reach for our functions and
-methods that don't mutate the objects we're receiving. We use the original list
-and chain together operations that `sort`, `slice` and `map` the return values
-of each operation until we arrive at `[ 'Eowin', 'Bilbo', 'Frodo' ]`. Many
-folks would stop here, write a few unit tests and be done with it. We, on the
-other hand, will take this to the next level.
+methods that don't mutate the objects we're receiving. We use a _copy_ of the
+original list and chain together operations that `sort`, `slice` and `map` the
+return values of each operation until we arrive at `[ 'Eowin', 'Bilbo', 'Frodo' ]`.
+Many folks would stop here, write a few unit tests and be done with it. We, on
+the other hand, will take this to the next level.
 
 ## Extracting Reusable Functions
 Our `getHighScorers` function has some functionality that we may want to use
@@ -61,15 +64,20 @@ elsewhere in the future. Let's break down what we might be able to extract:
 * a _map prop_ function (from `map`)
 
 ```js
-// descBy :: String -> [a] -> [a]
+// Altered slightly to allows us to compare
+// things like strings and numbers.
+//
+// descBy :: (String, [a]) -> [a]
 const descBy = (prop, xs) =>
-  xs.sort((a, b) => b[prop] - a[prop])
+  [...xs].sort((a, b) =>
+    a[prop] < b[prop] ? 1 : (a[prop] === b[prop] ? 0 : -1)
+  )
 
-// take3 :: [a] -> [a]
+// takeN :: (Number, [a]) -> [a]
 const takeN = (n, xs) =>
   xs.slice(0, n)
 
-// mapProp :: String -> [a] -> [a]
+// mapProp :: (String, [a]) -> [b]
 const mapProp = (prop, xs) =>
   xs.map(x => x[prop])
 
@@ -89,7 +97,7 @@ const getHighScorers = xs =>
 getHighScorers(results) // => [ 'Eowin', 'Bilbo', 'Frodo' ]
 ```
 
-_[Try this code in the ramda REPL.](https://goo.gl/NNU3hH)_
+_[Try this code in the ramda REPL.](https://goo.gl/9XsTQx)_
 
 This is starting to look good, but that `getHighScorers` function is looking a
 bit dense. Since we have a seeming pipeline of transformations that we're
@@ -112,10 +120,21 @@ const getHighScorers = xs =>
   compose(mapProp('name'), takeN(3), descBy('score'))(xs)
 ```
 
-But wait! How can `descBy`, `takeN` and `mapProp` only accept one argument at a
-time when they all accept two?! In order to make these a reality, we can make use
-of [ramda's curry function](http://ramdajs.com/docs/#curry) which we dove into
-in my [previous post on function currying](/blog/ramda-chops-function-currying.html]).
+Let's first clarify what `compose` is doing:
+
+```js
+compose(f, g)(x) === f(g(x))
+```
+
+Say it aloud: "f after g." With `compose`, the function furthest to the _right_
+is applied first with the value (`x`), and the return value of that function is
+passed to the next function to its _left_, and repeat this until all functions
+have been applied.
+
+Cool – but wait! How can `descBy`, `takeN` and `mapProp` only accept one
+argument at a time when they all accept two?! In order to make these a reality,
+we can make use of [ramda's curry function](http://ramdajs.com/docs/#curry)
+which we dove into in my [previous post on function currying](/blog/ramda-chops-function-currying.html]).
 
 ```js
 import compose from 'ramda/src/compose'
@@ -123,15 +142,17 @@ import curry from 'ramda/src/curry'
 
 // descBy :: String -> [a] -> [a]
 const descBy = curry((prop, xs) =>
-  xs.sort((a, b) => b[prop] - a[prop])
+  [...xs].sort((a, b) =>
+    a[prop] < b[prop] ? 1 : (a[prop] === b[prop] ? 0 : -1)
+  )
 )
 
-// take3 :: [a] -> [a]
+// takeN :: Number -> [a] -> [a]
 const takeN = curry((n, xs) =>
   xs.slice(0, n)
 )
 
-// mapProp :: String -> [a] -> [a]
+// mapProp :: String -> [a] -> [b]
 const mapProp = curry((prop, xs) =>
   xs.map(x => x[prop])
 )
@@ -141,7 +162,7 @@ const getHighScorers =
   compose(mapProp('name'), takeN(3), descBy('score'))
 ```
 
-_[Try this code in the ramda REPL.](https://goo.gl/a3Yeko)_
+_[Try this code in the ramda REPL.](https://goo.gl/NxEFhi)_
 
 You may also notice that we removed `xs =>` from `getHighScorers` because when
 we use compose and pass the final argument in at the end, it in fact becomes
@@ -161,7 +182,7 @@ const getHighScorers =
   compose(mapProp('name'), getTop3)
 ```
 
-_[Try this code in the ramda REPL.](https://goo.gl/oc7Af4)_
+_[Try this code in the ramda REPL.](https://goo.gl/jRoCWZ)_
 
 This is where we truly begin to see the power of `compose`, for we are able to
 break our functions or function compositions out into tiny little pieces that we
@@ -174,25 +195,27 @@ chain together like water pipes or guitar pedals.
   </figcaption>
 </figure>
 
+We are now empowered (nay – encouraged!) to provide meaningful names in the
+context of what we're trying to accomplish.
+
+Composing compositions also allows us to use our type signatures to tell a story
+about what behavior is expected with each little part on our path to the
+ultimate goal.
+
 ## `pipe` vs `compose`
-Some folks don't like the right to left function application of `compose`, so if
-you find yourself thinking the same thing, [pipe](http://ramdajs.com/docs/#pipe)
-is for you, as it reads from left to right:
+For various reasons that are usally a matter of opinion, many people prefer
+function application to flow from _left to right_ instead of _right to left_
+(the latter being what you get with `compose`). So if you find yourself thinking
+the same thing, [pipe](http://ramdajs.com/docs/#pipe) is for you:
 
 ```js
-compose(
-  mapProp('name'),
-  takeN(3),
-  descBy('score')
-)
+//      <-------------   <------   <-------------
+compose(mapProp('name'), takeN(3), descBy('score'))(xs)
 
 // versus
 
-pipe(
-  descBy('score'),
-  takeN(3),
-  mapProp('name')
-)
+//   -------------->  ------->  -------------->
+pipe(descBy('score'), takeN(3), mapProp('name'))(xs)
 ```
 
 ## Composing Promises
