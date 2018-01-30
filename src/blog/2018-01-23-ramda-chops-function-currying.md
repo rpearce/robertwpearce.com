@@ -32,6 +32,13 @@ currying and why, so I'll briefly touch on those points, but I really want to
 focus on how it works under the hood and how this funny little concept will
 completely change the way that you program.
 
+* * *
+
+_Other ramda posts:_
+
+* [Ramda Chops: Function Composition](/blog/ramda-chops-function-composition.html)
+* [Ramda Chops: Safely Accessing Properties](/blog/ramda-chops-safely-accessing-properties.html)
+
 ## Rudimentary Currying
 Many articles already cover this, so I'll keep it short.
 

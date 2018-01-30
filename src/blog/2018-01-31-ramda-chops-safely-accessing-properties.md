@@ -7,15 +7,18 @@ photoCredit:  George Hiles
 photoWebsite: "https://unsplash.com/@hilesy"
 ---
 
+_Thanks to [@joshsloat](https://twitter.com/joshsloat) and
+[@zerkms](https://twitter.com/zerkms) for their review of this post._
+
 One of the most prevalent causes of bugs I've seen in latter-day JavaScript
-revolves around expectations with regards to data modeling. With the rise of
+revolves around expectations with regard to data modeling. With the rise of
 [react](https://reactjs.org/), [redux](https://redux.js.org/), et al, many of us
 store our application state in an object whose keys and hierarchy can easily
 change, leaving us sometimes with or without values that were in fact expected:
 for example, `undefined is not a function` or trying to call `.map(...)` on a
 non-mappable data type (such as `null` or `undefined`). While there are any
 number of solutions for this issue that might even include diving into algebraic
-data types, the [ramda library](http://ramdajs.com) library gives us a few
+data types, the [ramda library](http://ramdajs.com) gives us a few
 helper methods that we can use right away to dig into our data structures and
 extract values:
 
@@ -23,6 +26,13 @@ extract values:
 * [`propOr`](http://ramdajs.com/docs/#propOr)
 * [`path`](http://ramdajs.com/docs/#path)
 * [`pathOr`](http://ramdajs.com/docs/#pathOr)
+
+* * *
+
+_Other ramda posts:_
+
+* [Ramda Chops: Function Currying](/blog/ramda-chops-function-currying.html)
+* [Ramda Chops: Function Composition](/blog/ramda-chops-function-composition.html)
 
 ## `prop` & `propOr`
 What happens normally if you expect an array, try to access the third item
@@ -75,9 +85,9 @@ propOr({}, 2, arr) // {}
 propOr(0, 'length', arr) // 0
 ```
 
-If you need to select multiple properties without fear, then the perhaps the
+If you need to select multiple properties without fear, then the
 [`props`](http://ramdajs.com/docs/#props) or
-[`pick`](http://ramdajs.com/docs/#pick) helpers may be for you.
+[`pick`](http://ramdajs.com/docs/#pick) functions may be for you.
 
 ## `path` & `pathOr`
 What if we are working in a deeply nested data structure where multiple keys in
@@ -92,7 +102,7 @@ import path from 'ramda/src/path'
 
 const data = {
   courses: {
-    'abc123': {
+    abc123: {
       title: 'How To Build a Tiny House',
       dueAt: '2018-01-30'
     }
@@ -107,16 +117,16 @@ getCourseTitle('abc123')(data) // "How To Build a Tiny House"
 getCourseTitle('def456')(data) // undefined
 ```
 
-_[Try this code in the ramda REPL](https://goo.gl/u8qVXy)_
+_[Try this code in the ramda REPL](https://goo.gl/fdujHu)_
 
-Or if we'd always like to default to a default, we can use `pathOr`:
+Or if we'd always like to default to a value, we can use `pathOr`:
 
 ```js
 import pathOr from 'ramda/src/path'
 
 const data = {
   courses: {
-    'abc123': {
+    abc123: {
       title: 'How To Build a Tiny House',
       dueAt: '2018-01-30'
     }
@@ -131,12 +141,12 @@ getCourseTitle('abc123')(data) // "How To Build a Tiny House"
 getCourseTitle('def456')(data) // "My Course"
 ```
 
-_[Try this code in the ramda REPL](https://goo.gl/dPC9FK)_
+_[Try this code in the ramda REPL](https://goo.gl/PXD1ju)_
 
 * * *
 
 As I said before, there are _many_ different ways to solve this problem, but
-I've found the `propOr` and `pathOr` family of ramda helpers to be a great
+I've found the `propOr` and `pathOr` family of ramda functions to be a great
 starting point.
 
 Until next time,

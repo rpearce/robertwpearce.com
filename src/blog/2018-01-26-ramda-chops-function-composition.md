@@ -35,6 +35,13 @@ const results = [
 ]
 ```
 
+* * *
+
+_Other ramda posts:_
+
+* [Ramda Chops: Function Currying](/blog/ramda-chops-function-currying.html)
+* [Ramda Chops: Safely Accessing Properties](/blog/ramda-chops-safely-accessing-properties.html)
+
 ## First Approach
 
 ```js
