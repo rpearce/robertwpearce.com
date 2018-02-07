@@ -7,6 +7,10 @@ photoCredit:  Mingheras Cosmin
 photoWebsite: "https://unsplash.com/@cosmin_13"
 ---
 
+_Thanks to [Jillian Silver](https://github.com/jsilve), [Patrick
+Eakin](https://patrickweakin.com) and [@zerkms](https://twitter.com/zerkms) for
+their review of this post._
+
 The [`map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map),
 [`filter`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)
 and [`reduce`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
@@ -19,10 +23,13 @@ MDN documentation on each (linked above).
 
 * * *
 
-_Other ramda posts:_
+_Pre-requisite ramda posts:_
 
 * [Ramda Chops: Function Currying](/blog/ramda-chops-function-currying.html)
 * [Ramda Chops: Function Composition](/blog/ramda-chops-function-composition.html)
+
+_Other ramda posts:_
+
 * [Ramda Chops: Safely Accessing Properties](/blog/ramda-chops-safely-accessing-properties.html)
 
 ## Our Data Set: Films!
@@ -121,10 +128,11 @@ output(films)
 ```
 _[Try this code in the ramda REPL](https://goo.gl/7VMNTV)_
 
-One thing to remember is that ramda typically orders arguments from least likely
-to change to most likely to change. Callback/transformation functions here are
-passed as the _first_ argument, and the data comes last. To understand this
-further, check out the following links:
+One thing to remember with ramda functions (like `map` and `filter`) is that
+ramda typically orders arguments from least likely to change to most likely to
+change. Callback/transformation functions here are passed as the _first_
+argument, and the data comes last. To understand this further, check out the
+following links:
 
 * [ramda's documentation for `map`](http://ramdajs.com/docs/#map)
 * [ramda's documentation for `filter`](http://ramdajs.com/docs/#filter)
@@ -151,11 +159,9 @@ output(films)
 ```
 _[Try this code in the ramda REPL](https://goo.gl/dFXCEK)_
 
-## Step 6: Throw It All Away With `reduce`
-You may have noticed that we're first filtering a list and then mapping over a
-list. This means that in a worst-case scenario, if we have a list of 1000
-movies that are all 8.8 ratings or higher, we could end up doing 2000 iterations
-(double the work)! Here is how `reduce` can come to the rescue.
+## Step 6: Another Way With `reduce`
+We can accomplish the same goals as `filter` and `map` by making use of
+`reduce`.
 
 ```js
 films.reduce((acc, x) => {
@@ -163,8 +169,18 @@ films.reduce((acc, x) => {
     ? acc.concat(filmHtml(x))
     : acc
 }, [])
+
+// or, for better performance
+
+films.reduce((acc, x) => {
+  if (hasHighScore(x)) {
+    acc.push(filmHtml(x))
+  }
+
+  return acc
+}, [])
 ```
-_[Try this code in the ramda REPL](https://goo.gl/4zP9pU)_
+_[Try this code in the ramda REPL](https://goo.gl/b86Kdq)_
 
 If you're not familiar with reduce, be sure to play with the live example to
 better understand how those pieces work before moving on.
