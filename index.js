@@ -26,9 +26,11 @@ buildSass('src/sass', 'src/sass/app.scss')
     return build({
       outputDir: 'docs',
       copyable: [
+        { from: 'src/_config.yml', to: 'docs/_config.yml' },
         { from: 'src/images', to: 'docs/images' },
         { from: 'src/CNAME', to: 'docs/CNAME' },
-        { from: 'src/favicon.ico', to: 'docs/favicon.ico' }
+        { from: 'src/favicon.ico', to: 'docs/favicon.ico' },
+        { from: 'src/.well-known/brave-payments-verification.txt', to: 'docs/.well-known/brave-payments-verification.txt' }
       ],
       writable: [
         { path: 'docs/index.html', content: optimizeHtml(homePage({ posts })) },
