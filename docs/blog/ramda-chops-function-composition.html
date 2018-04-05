@@ -6,7 +6,7 @@
   { <span class="hljs-attr">score</span>: <span class="hljs-number">100</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'Eowin'</span> },
   { <span class="hljs-attr">score</span>: <span class="hljs-number">94</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'Frodo'</span> }
 ]
-</code></pre><hr><p><em>Other ramda posts:</em></p><ul><li><a href="/blog/ramda-chops-function-currying.html">Ramda Chops: Function Currying</a></li><li><a href="/blog/ramda-chops-safely-accessing-properties.html">Ramda Chops: Safely Accessing Properties</a></li></ul><h2><a class="heading--link" name="first-approach" href="#first-approach"><span>First Approach</span></a></h2><pre><code class="hljs js"><span class="hljs-comment">// getHighScorers :: [Object] -&gt; [String]</span>
+</code></pre><hr><p><em>Other ramda posts:</em></p><ul><li><a href="/blog/ramda-chops-function-currying.html">Ramda Chops: Function Currying</a></li><li><a href="/blog/ramda-chops-safely-accessing-properties.html">Ramda Chops: Safely Accessing Properties</a></li><li><a href="/blog/ramda-chops-map-filter-and-reduce.html">Ramda Chops: Map, Filter &amp; Reduce</a></li></ul><h2><a class="heading--link" name="first-approach" href="#first-approach"><span>First Approach</span></a></h2><pre><code class="hljs js"><span class="hljs-comment">// getHighScorers :: [Object] -&gt; [String]</span>
 <span class="hljs-keyword">const</span> getHighScorers = <span class="hljs-function"><span class="hljs-params">xs</span> =&gt;</span>
   [...xs]
     .sort(<span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> b.score - a.score)
