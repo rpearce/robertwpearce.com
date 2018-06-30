@@ -1,1 +1,180 @@
-<!DOCTYPE html><html lang="en"><head><title>Node.js Geocoding Proxy with Paperplane</title><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta name="description" content="Tutorial on creating a location geocoding proxy server in Node.js with Paperplane"><meta property="og:site_name" content="Robert Pearce | Freelance Software Developer"><meta property="og:title" content="Node.js Geocoding Proxy with Paperplane"><meta property="og:url" content="https://robertwpearce.com/blog/node-js-geocoding-proxy-with-paperplane.html"><meta property="og:description" content="Tutorial on creating a location geocoding proxy server in Node.js with Paperplane"><meta property="og:image" content="/images/paper-plane.jpg"><meta property="og:type" content="article"><meta property="twitter:card" content="summary_large_image"><meta property="twitter:site" content="Robert Pearce | Freelance Software Developer"><meta property="twitter:title" content="Node.js Geocoding Proxy with Paperplane"><meta property="twitter:description" content="Tutorial on creating a location geocoding proxy server in Node.js with Paperplane"><meta property="twitter:image" content="/images/paper-plane.jpg"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://robertwpearce.com/blog/node-js-geocoding-proxy-with-paperplane.html"><link rel="stylesheet" href="/styles.css"><meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU"><link href="//fonts.googleapis.com/css?family=Lato:400" rel="stylesheet" type="text/css"></head><body><main><nav><div class="layout--constrained"><ul class="nav--main list--bare list--horz"><li><a href="/">Home</a></li><li><a href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a></li></ul></div></nav><article class="article"><div class="article__background" style="background-image: url('/images/paper-plane.jpg')"><header class="article__bgHeader"><div class="layout--constrained"><div class="article__bgTitleContainer"><h1 class="heading--trim"><a href="/blog/node-js-geocoding-proxy-with-paperplane.html">Node.js Geocoding Proxy with Paperplane</a></h1><div class="article__subHeader"><small>June 22, 2017</small> <small class="photoCred">[photo credit <a href="https://www.flickr.com/photos/91559340@N05/8478694579">Ares Nguyen</a>]</small></div></div></div></header></div><div class="layout--constrained"><header class="article__header heading--fatBottomBorder"><h1 class="heading--trim"><a href="/blog/node-js-geocoding-proxy-with-paperplane.html">Node.js Geocoding Proxy with Paperplane</a></h1><small>June 22, 2017</small></header>function (a0) { return fn.apply(this, arguments); }</div></article><section class="section--padded bg--gray"><div class="layout--constrained"><h2>Get notified of new posts</h2><!-- Begin MailChimp Signup Form --><form action="//robertwpearce.us13.list-manage.com/subscribe/post?u=2df44e8960266388bff165fa6&amp;id=ee2f2a3737" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate class="form"><div id="mce-responses"><div class="response" id="mce-error-response" style="display:none"></div><div class="response" id="mce-success-response" style="display:none"></div></div><div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_2df44e8960266388bff165fa6_ee2f2a3737" tabindex="-1" value=""></div><div class="form__container"><label for="mce-EMAIL" class="form__label">Email Address</label> <input type="email" value="" id="mce-EMAIL" class="form__input" name="EMAIL" placeholder="you@greatemail.com"> <input type="submit" value="Subscribe" name="subscribe" class="form__submit"></div><small>Note: I will <em>never</em> give out your email nor spam you. Unsubscribe at any time.</small></form><!--End mc_embed_signup--></div></section></main></body></html>
+<!DOCTYPE html><html lang="en"><head><title>Node.js Geocoding Proxy with Paperplane</title><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta name="description" content="Tutorial on creating a location geocoding proxy server in Node.js with Paperplane"><meta property="og:site_name" content="Robert Pearce | Freelance Software Developer"><meta property="og:title" content="Node.js Geocoding Proxy with Paperplane"><meta property="og:url" content="https://robertwpearce.com/blog/node-js-geocoding-proxy-with-paperplane.html"><meta property="og:description" content="Tutorial on creating a location geocoding proxy server in Node.js with Paperplane"><meta property="og:image" content="/images/paper-plane.jpg"><meta property="og:type" content="article"><meta property="twitter:card" content="summary_large_image"><meta property="twitter:site" content="Robert Pearce | Freelance Software Developer"><meta property="twitter:title" content="Node.js Geocoding Proxy with Paperplane"><meta property="twitter:description" content="Tutorial on creating a location geocoding proxy server in Node.js with Paperplane"><meta property="twitter:image" content="/images/paper-plane.jpg"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://robertwpearce.com/blog/node-js-geocoding-proxy-with-paperplane.html"><link rel="stylesheet" href="/styles.css"><meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU"><link href="//fonts.googleapis.com/css?family=Lato:400" rel="stylesheet" type="text/css"></head><body><main><nav><div class="layout--constrained"><ul class="nav--main list--bare list--horz"><li><a href="/">Home</a></li><li><a href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a></li></ul></div></nav><article class="article"><div class="article__background" style="background-image: url('/images/paper-plane.jpg')"><header class="article__bgHeader"><div class="layout--constrained"><div class="article__bgTitleContainer"><h1 class="heading--trim"><a href="/blog/node-js-geocoding-proxy-with-paperplane.html">Node.js Geocoding Proxy with Paperplane</a></h1><div class="article__subHeader"><small>June 22, 2017</small> <small class="photoCred">[photo credit <a href="https://www.flickr.com/photos/91559340@N05/8478694579">Ares Nguyen</a>]</small></div></div></div></header></div><div class="layout--constrained"><header class="article__header heading--fatBottomBorder"><h1 class="heading--trim"><a href="/blog/node-js-geocoding-proxy-with-paperplane.html">Node.js Geocoding Proxy with Paperplane</a></h1><small>June 22, 2017</small></header><p><em>tl;dr =&gt; use a proxy server when private API keys are involved; <a href="https://github.com/articulate/paperplane">paperplane</a> is a great functional server framework.</em></p><p>Converting addresses, cities and other locations to latitude and logitude and back again is something that is expected in the software application world today. Whether someone is asking for directions, <a href="http://www.brewpublik.com">plotting optimal beer delivery routes</a> or tagging a photo of their cronut in a local cafe, managing location data is an important skillset for developers to have. Numerous services, typically in the form of <a href="https://en.wikipedia.org/wiki/Application_programming_interface">application programming interfaces</a> (APIs), exist to provide folks with ways of accessing this data. Today we&#39;ll be using the <a href="https://developers.google.com/maps/documentation/geocoding/start">Google Maps Geocoding API</a> to complete the task of acquiring the geo-data for any place name; however, we will be creating a <a href="https://nodejs.org">Node.js</a> server as a proxy (a go-between) for our request instead of embedding this request in a browser.</p><h2><a class="heading--link" name="why-a-proxy-server-" href="#why-a-proxy-server-"><span>Why A Proxy Server?</span></a></h2><p>If you are granted an API key for a service that is private and mapped to you, it is a good idea to keep it that way. If you commit this API key to source control or expose it via your frontend code, then someone could take your key and pretend to be you. In order to avoid this, it is recommended that you keep such keys hidden, for example, as environment variables set on a server. Thus, we are going to create a small server to act as a proxy between the client (a web browser, app or cURL) and the API in question: the Google Maps Geocoding API.</p><h2><a class="heading--link" name="why-paperplane-as-a-node-js-server-framework-" href="#why-paperplane-as-a-node-js-server-framework-"><span>Why Paperplane as a Node.js Server Framework?</span></a></h2><p>It is possible to do everything you need with Node&#39;s <code>http</code> package, but I like the approach <a href="https://github.com/articulate/paperplane">paperplane</a> takes with viewing the request and response aspects of handling an HTTP request as a pure function where the request is the input and the response is what is returned from it:</p><pre><code class="hljs haskell"><span class="hljs-type">Request</span> -&gt; <span class="hljs-type">Response</span></code></pre><p>whereas many Node frameworks&#39; handlers accept a function with the request and response as two arguments and not utilizing a return value, yielding the signature:</p><pre><code class="hljs haskell">(<span class="hljs-type">IncomingMessage</span>, <span class="hljs-type">ServerResponse</span>) -&gt; ()</code></pre><p>The paperplane approach makes a good deal more sense to me. You can read more about the &quot;why&quot; on <a href="https://github.com/articulate/paperplane/blob/master/docs/getting-started.md">paperplane&#39;s getting started guide</a>.</p><h2><a class="heading--link" name="project-source-code" href="#project-source-code"><span>Project Source Code</span></a></h2><p>The project we&#39;ll be making can be seen in its entirety here: <a href="https://github.com/rpearce/geocoding-proxy/">https://github.com/rpearce/geocoding-proxy/</a>.</p><h2><a class="heading--link" name="pre-requisites" href="#pre-requisites"><span>Pre-requisites</span></a></h2><p><em>Note: what we&#39;ll be making is by no means a production-level application, as that would be outside the scope of this post. However, there are some slightly advanced tangential topics that I will be glossing over (sometimes providing links to) in order to not write a book. Send me an email if I can be clearer in certain areas.</em></p><p>This tutorial assumes that you already have installed Node.js (I use <a href="https://github.com/creationix/nvm">NVM</a> for managing Node versions and am using <code>v8.1</code>) and optionally the <a href="https://yarnpkg.com/lang/en/docs/install/">yarn package manager</a>.</p><p>Once you&#39;ve got Node and yarn installed, we can begin.</p><h2><a class="heading--link" name="project-setup" href="#project-setup"><span>Project Setup</span></a></h2><p>From your favorite project folder, let&#39;s create a new project folder named <code>geocoding-proxy</code> and change the current working directory to be the new folder:</p><pre><code class="hljs bash">λ mkdir geocoding-proxy
+λ <span class="hljs-built_in">cd</span> geocoding-proxy</code></pre><h3><a class="heading--link" name="installing-dependencies" href="#installing-dependencies"><span>Installing Dependencies</span></a></h3><p>Once we&#39;re in the project folder, let&#39;s initialize a <code>package.json</code> file to make it easy to manage and hang on to our project&#39;s dependencies:</p><pre><code class="hljs bash">λ npm init -y</code></pre><p>or if you have yarn installed:</p><pre><code class="hljs bash">λ yarn init -y</code></pre><p>You should now have a <code>package.json</code> file with some JSON values in it.</p><p>Next, let&#39;s install the tools that we&#39;re going to use:</p><pre><code class="hljs bash">λ npm install --save axios dotenv paperplane ramda</code></pre><p>or</p><pre><code class="hljs bash">λ yarn add axios dotenv paperplane ramda</code></pre><h3><a class="heading--link" name="get-a-google-maps-geocoding-api-key" href="#get-a-google-maps-geocoding-api-key"><span>Get A Google Maps Geocoding API Key</span></a></h3><p>You can get yourself an API key from <a href="https://developers.google.com/maps/documentation/geocoding/get-api-key">this page</a>. Once you&#39;ve done this, you&#39;ll need to copy the <code>.env.example</code> file at your project&#39;s root (<code>λ cp .env.example .env</code>) and replace the value of the <code>GEO_KEY</code> with your API key. Your <code>.env</code> file should look like</p><pre><code class="hljs bash">GEO_KEY=abcdefg-hijklmn-op
+PORT=5050</code></pre><h2><a class="heading--link" name="hello-world-with-paperplane" href="#hello-world-with-paperplane"><span>Hello, World! With Paperplane</span></a></h2><p>Once your dependencies are installed, let&#39;s create a server to see if we can get things working. First, create <code>index.js</code> at your project&#39;s root and open it in your favorite text editor.</p><pre><code class="hljs bash">λ touch index.js</code></pre><p>Next, let&#39;s import the packages we&#39;ll be using and create a basic &quot;Hello, World!&quot; server:</p><pre><code class="hljs js"><span class="hljs-comment">// Make our .env configuration file available</span>
+<span class="hljs-built_in">require</span>(<span class="hljs-string">'dotenv'</span>).config()
+
+
+<span class="hljs-comment">// Import libraries</span>
+<span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>)
+<span class="hljs-keyword">const</span> { compose } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ramda'</span>)
+<span class="hljs-keyword">const</span> { json, logger, methods, mount, parseJson, routes } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'paperplane'</span>)
+
+
+<span class="hljs-comment">// Application-specific code</span>
+<span class="hljs-keyword">const</span> endpoints = routes({
+  <span class="hljs-string">'/'</span>: methods({
+    <span class="hljs-attr">GET</span>: <span class="hljs-function"><span class="hljs-params">req</span> =&gt;</span> (
+      <span class="hljs-built_in">Promise</span>
+        .resolve(<span class="hljs-string">'hello world'</span>)
+        .then(json)
+    )
+  })
+})
+
+<span class="hljs-keyword">const</span> app = compose(endpoints, parseJson)
+
+
+<span class="hljs-comment">// Server options</span>
+<span class="hljs-keyword">const</span> opts = { <span class="hljs-attr">errLogger</span>: logger, logger }
+<span class="hljs-keyword">const</span> port = process.env.PORT || <span class="hljs-number">3000</span>
+<span class="hljs-keyword">const</span> listening = <span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> err ? <span class="hljs-built_in">console</span>.error(err) : <span class="hljs-built_in">console</span>.info(<span class="hljs-string">`Listening on port: <span class="hljs-subst">${port}</span>`</span>)
+
+
+<span class="hljs-comment">// Start the server</span>
+http.createServer(mount(app, opts)).listen(port, listening)</code></pre><p><em>(Read up more on how paperplane works on its <a href="https://github.com/articulate/paperplane/blob/master/docs/getting-started.md">getting started page</a> or by taking a look at <a href="https://github.com/articulate/paperplane/blob/master/demo/index.js">the demo application</a>. Also check out <a href="http://ramdajs.com/docs/#compose">Ramda&#39;s compose function</a> to learn about effective function composition.)</em></p><p>We can start the server in a terminal window by running</p><pre><code class="hljs bash">λ node index.js
+Listening on port: 5050</code></pre><p>From another terminal window, let&#39;s use cURL to see if this works:</p><pre><code class="hljs bash">λ curl localhost:5050
+<span class="hljs-string">"hello world"</span></code></pre><p>It works!</p><h2><a class="heading--link" name="hello-location" href="#hello-location"><span>Hello, Location</span></a></h2><p>Now that we know our server works, let&#39;s see if we can get it to echo back a location/address parameter we send it at a route we&#39;ll create called <code>/geocode</code>. Let&#39;s remove our <code>&#39;/&#39;</code> endpoint and &quot;hello, world!&quot; code and add some for geocoding:</p><pre><code class="hljs js"><span class="hljs-keyword">const</span> endpoints = routes({
+  <span class="hljs-string">'/geocode/:address'</span>: methods({
+    <span class="hljs-attr">GET</span>: <span class="hljs-function"><span class="hljs-params">req</span> =&gt;</span> (
+      <span class="hljs-built_in">Promise</span>
+        .resolve(req.params.address)
+        .then(json)
+    )
+  })
+})</code></pre><p>The <code>req</code> object gives us a <code>params</code> object with the key <code>address</code>, since that was what we specified we&#39;d like our parameter to be named by setting the <code>/geocode/:address</code> key in the <code>routes</code> function argument.</p><p>With the new endpoint added, save the file, restart your server (stop it with <code>Ctrl + C</code>), and run cURL with a city name this time:</p><pre><code class="hljs bash">λ curl localhost:5050/geocode/Auckland
+<span class="hljs-string">"Auckland"</span></code></pre><h2><a class="heading--link" name="sending-to-the-geocoding-api" href="#sending-to-the-geocoding-api"><span>Sending to the Geocoding API</span></a></h2><p>We&#39;re almost there! Instead of echoing back whatever address the server receives, let&#39;s instead make an HTTP GET request to the geocode API using the <code>axios</code> package:</p><pre><code class="hljs js"><span class="hljs-keyword">const</span> endpoints = routes({
+  <span class="hljs-string">'/geocode/:address'</span>: methods({
+    <span class="hljs-attr">GET</span>: <span class="hljs-function"><span class="hljs-params">req</span> =&gt;</span> (
+      axios({
+        <span class="hljs-attr">method</span>: <span class="hljs-string">'GET'</span>,
+        <span class="hljs-attr">url</span>: <span class="hljs-string">'https://maps.googleapis.com/maps/api/geocode/json'</span>,
+        <span class="hljs-attr">params</span>: {
+          <span class="hljs-attr">key</span>: process.env.GEO_KEY,
+          <span class="hljs-attr">address</span>: req.params.address
+        }
+      })
+      .then(json)
+    )
+  })
+})</code></pre><p>In this code, we are using the JavaScript Promise-based axios tool to create a GET request to the geocode API. Take note of our <code>params</code> object here; since we&#39;re using the <code>dotenv</code> package and configuring that above, we get access to the <code>GEO_KEY</code> value in our <code>.env</code> file, and we separately get to pass on the <code>address</code> param, as well. When this request is sent, the <code>url</code> will look like:</p><pre><code class="hljs bash">https://maps.googleapis.com/maps/api/geocode/json?key=abcdefg&amp;address=Auckland</code></pre><p>After restarting your server, run <code>λ curl localhost:5050/geocode/Auckland</code> again.</p><pre><code class="hljs bash">λ curl localhost:5050/geocode/Auckland
+{<span class="hljs-string">"message"</span>:<span class="hljs-string">"Converting circular structure to JSON"</span>,<span class="hljs-string">"name"</span>:<span class="hljs-string">"TypeError"</span>}</code></pre><p>Uh oh! If we log the axios result, we&#39;ll see a big response object that we don&#39;t care too much about right now. The only key we want right now from this big response is the <code>data</code> key, so we can use <a href="http://ramdajs.com/docs/#prop">Ramda&#39;s prop method</a> to simply access this object key and pass its return value down the chain:</p><pre><code class="hljs js"><span class="hljs-comment">// add `prop` to the require statement</span>
+<span class="hljs-keyword">const</span> { compose, prop } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ramda'</span>)
+
+<span class="hljs-comment">// ...</span>
+
+<span class="hljs-keyword">const</span> endpoints = routes({
+  <span class="hljs-string">'/geocode/:address'</span>: methods({
+    <span class="hljs-attr">GET</span>: <span class="hljs-function"><span class="hljs-params">req</span> =&gt;</span> (
+      axios({
+        <span class="hljs-attr">method</span>: <span class="hljs-string">'GET'</span>,
+        <span class="hljs-attr">url</span>: <span class="hljs-string">'https://maps.googleapis.com/maps/api/geocode/json'</span>,
+        <span class="hljs-attr">params</span>: {
+          <span class="hljs-attr">key</span>: process.env.GEO_KEY,
+          <span class="hljs-attr">address</span>: req.params.address
+        }
+      })
+      .then(prop(<span class="hljs-string">'data'</span>))
+      .then(json)
+    )
+  })
+})</code></pre><p>If all the stars have aligned and you restart and rerun the command again, you should see</p><pre><code class="hljs bash">λ curl localhost:5050/geocode/Auckland
+{<span class="hljs-string">"results"</span>:[{<span class="hljs-string">"address_components"</span>:[{<span class="hljs-string">"long_name"</span>:<span class="hljs-string">"Auckland"</span>,<span class="hljs-string">"short_name"</span>:<span class="hljs-string">"Auckland"</span>,<span class="hljs-string">"types"</span>:[<span class="hljs-string">"locality"</span>,<span class="hljs-string">"political"</span>]},{<span class="hljs-string">"long_name"</span>:<span class="hljs-string">"Auckland"</span>,<span class="hljs-string">"short_name"</span>:<span class="hljs-string">"Auckland"</span>,<span class="hljs-string">"types"</span>:[<span class="hljs-string">"administrative_area_level_1"</span>,<span class="hljs-string">"political"</span>]},{<span class="hljs-string">"long_name"</span>:<span class="hljs-string">"New Zealand"</span>,<span class="hljs-string">"short_name"</span>:<span class="hljs-string">"NZ"</span>,<span class="hljs-string">"types"</span>:[<span class="hljs-string">"country"</span>,<span class="hljs-string">"political"</span>]}],<span class="hljs-string">"formatted_address"</span>:<span class="hljs-string">"Auckland, New Zealand"</span>,<span class="hljs-string">"geometry"</span>:{<span class="hljs-string">"bounds"</span>:{<span class="hljs-string">"northeast"</span>:{<span class="hljs-string">"lat"</span>:-36.660571,<span class="hljs-string">"lng"</span>:175.2871371},<span class="hljs-string">"southwest"</span>:{<span class="hljs-string">"lat"</span>:-37.0654751,<span class="hljs-string">"lng"</span>:174.4438016}},<span class="hljs-string">"location"</span>:{<span class="hljs-string">"lat"</span>:-36.8484597,<span class="hljs-string">"lng"</span>:174.7633315},<span class="hljs-string">"location_type"</span>:<span class="hljs-string">"APPROXIMATE"</span>,<span class="hljs-string">"viewport"</span>:{<span class="hljs-string">"northeast"</span>:{<span class="hljs-string">"lat"</span>:-36.660571,<span class="hljs-string">"lng"</span>:175.2871371},<span class="hljs-string">"southwest"</span>:{<span class="hljs-string">"lat"</span>:-37.0654751,<span class="hljs-string">"lng"</span>:174.4438016}}},<span class="hljs-string">"place_id"</span>:<span class="hljs-string">"ChIJ--acWvtHDW0RF5miQ2HvAAU"</span>,<span class="hljs-string">"types"</span>:[<span class="hljs-string">"locality"</span>,<span class="hljs-string">"political"</span>]}],<span class="hljs-string">"status"</span>:<span class="hljs-string">"OK"</span>}</code></pre><p>Hooray! We now have geocode response data for Auckland like:</p><ul><li><code>&quot;status&quot;:&quot;OK&quot;</code></li><li><code>&quot;formatted_address&quot;:&quot;Auckland, New Zealand&quot;</code></li><li><code>&quot;location&quot;:{&quot;lat&quot;:-36.8484597,&quot;lng&quot;:174.7633315}</code></li></ul><h2><a class="heading--link" name="refactoring-the-routes" href="#refactoring-the-routes"><span>Refactoring the Routes</span></a></h2><p>As you might imagine, having all of the request handling functions inside of paperplane&#39;s <code>routes</code> function might get difficult to follow and modularize. With that in mind, let&#39;s first pull the handler function out and into its own function:</p><pre><code class="hljs js"><span class="hljs-keyword">const</span> geocode = <span class="hljs-function"><span class="hljs-params">req</span> =&gt;</span>
+  axios({
+    <span class="hljs-attr">method</span>: <span class="hljs-string">'GET'</span>,
+    <span class="hljs-attr">url</span>: <span class="hljs-string">'https://maps.googleapis.com/maps/api/geocode/json'</span>,
+    <span class="hljs-attr">params</span>: {
+      <span class="hljs-attr">key</span>: process.env.GEO_KEY,
+      <span class="hljs-attr">address</span>: req.params.address
+    }
+  })
+  .then(prop(<span class="hljs-string">'data'</span>))
+  .then(json)
+
+<span class="hljs-keyword">const</span> endpoints = routes({
+  <span class="hljs-string">'/geocode/:address'</span>: methods({
+    <span class="hljs-attr">GET</span>: geocode
+  })
+})</code></pre><p>You could now abstract the <code>geocode</code> function to another file if you wanted to, as well as the object that is passed to routes (think of a routes file that requires in the different handlers it needs).</p><h3><a class="heading--link" name="leveraging-ramda" href="#leveraging-ramda"><span>Leveraging Ramda</span></a></h3><p>We can refactor the code above even further and make it a bit more functional and closer to being <a href="https://lucasmreis.github.io/blog/pointfree-javascript">&quot;point-free&quot;</a> by including a few Ramda helpers:</p><pre><code class="hljs js"><span class="hljs-keyword">const</span> { compose, composeP, curryN, path, prop } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ramda'</span>)
+
+<span class="hljs-comment">// ...</span>
+
+<span class="hljs-comment">// Application-specific code</span>
+<span class="hljs-keyword">const</span> getGeocode = curryN(<span class="hljs-number">2</span>, (key, address) =&gt;
+  axios({
+    <span class="hljs-attr">method</span>: <span class="hljs-string">'GET'</span>,
+    <span class="hljs-attr">url</span>: <span class="hljs-string">'https://maps.googleapis.com/maps/api/geocode/json'</span>,
+    <span class="hljs-attr">params</span>: { key, address }
+  })
+  .then(prop(<span class="hljs-string">'data'</span>))
+})
+
+<span class="hljs-keyword">const</span> geocode = compose(
+  composeP(
+    json,
+    getGeocode(process.env.GEO_KEY),
+  ),
+  path([<span class="hljs-string">'params'</span>, <span class="hljs-string">'address'</span>])
+)
+
+<span class="hljs-keyword">const</span> endpoints = routes({
+  <span class="hljs-string">'/geocode/:address'</span>: methods({
+    <span class="hljs-attr">GET</span>: geocode
+  })
+})
+
+<span class="hljs-keyword">const</span> app = compose(endpoints, parseJson)</code></pre><p>This code accomplishes the same goal as before, but now we have accomplished a few things:</p><ol><li>We no longer access <code>req.params.address</code> – what happens if any of those returned <code>null</code> or <code>undefined</code>? Instead, we use Ramda&#39;s <a href="http://ramdajs.com/docs/#path">path helper</a>.</li><li>Ramda&#39;s <a href="http://ramdajs.com/docs/#compose">compose</a> rears its head again, allowing us to make a chain of functions. However, note the use of <a href="http://ramdajs.com/docs/#composeP">composeP</a>. The <code>getGeocode</code> function returns a <code>Promise</code> thanks to <code>axios</code>, so we need to use <code>composeP</code> to compose our Promise-returning function.</li><li>We can use <a href="http://ramdajs.com/docs/#curryN">currying</a> to accept both <code>key</code> and <code>address</code> parameters at separate times. This is handy, for we could partially apply our <code>key</code> once, store that in a variable and reuse it over and over with different <code>address</code>es.</li><li>We have decoupled the use of paperplane&#39;s <code>json</code> helper from <code>getGeocode</code> and <code>axios</code>, meaning that function can now be leveraged in other ways instead of being hard-set to JSON.</li></ol><p>If this scares the hell out of you, fear not! Check out <a href="https://egghead.io/instructors/andrew-van-slaars">Andrew van Slaar&#39;s Ramda lessons on egghead.io</a> and if you&#39;re liking what you&#39;re seeing, <a href="https://github.com/MostlyAdequate/mostly-adequate-guide">Dr. Boolean&#39;s &quot;Mostly Adequate Guide to Functional Programming&quot;</a>.</p><h2><a class="heading--link" name="all-of-the-code" href="#all-of-the-code"><span>All of the Code</span></a></h2><p>The project itself can be found at <a href="https://github.com/rpearce/geocoding-proxy">https://github.com/rpearce/geocoding-proxy</a>, but here is our <code>index.js</code> file in its entirety:</p><pre><code class="hljs js"><span class="hljs-comment">// Make our .env configuration file available</span>
+<span class="hljs-built_in">require</span>(<span class="hljs-string">'dotenv'</span>).config()
+
+
+<span class="hljs-comment">// Import libraries</span>
+<span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>)
+<span class="hljs-keyword">const</span> axios = <span class="hljs-built_in">require</span>(<span class="hljs-string">'axios'</span>)
+<span class="hljs-keyword">const</span> { compose, composeP, curryN, path, prop } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ramda'</span>)
+<span class="hljs-keyword">const</span> { json, logger, methods, mount, parseJson, routes } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'paperplane'</span>)
+
+
+<span class="hljs-comment">// Application-specific code</span>
+<span class="hljs-keyword">const</span> getGeocode = curryN(<span class="hljs-number">2</span>, (key, address) =&gt;
+  axios({
+    <span class="hljs-attr">method</span>: <span class="hljs-string">'GET'</span>,
+    <span class="hljs-attr">url</span>: <span class="hljs-string">'https://maps.googleapis.com/maps/api/geocode/json'</span>,
+    <span class="hljs-attr">params</span>: { key, address }
+  })
+  .then(prop(<span class="hljs-string">'data'</span>))
+)
+
+<span class="hljs-keyword">const</span> geocode = compose(
+  composeP(
+    json,
+    getGeocode(process.env.GEO_KEY),
+  ),
+  path([<span class="hljs-string">'params'</span>, <span class="hljs-string">'address'</span>])
+)
+
+<span class="hljs-keyword">const</span> endpoints = routes({
+  <span class="hljs-string">'/geocode/:address'</span>: methods({
+    <span class="hljs-attr">GET</span>: geocode
+  })
+})
+
+<span class="hljs-keyword">const</span> app = compose(endpoints, parseJson)
+
+
+<span class="hljs-comment">// Server options</span>
+<span class="hljs-keyword">const</span> opts = { <span class="hljs-attr">errLogger</span>: logger, logger }
+<span class="hljs-keyword">const</span> port = process.env.PORT || <span class="hljs-number">3000</span>
+<span class="hljs-keyword">const</span> listening = <span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> err ? <span class="hljs-built_in">console</span>.error(err) : <span class="hljs-built_in">console</span>.info(<span class="hljs-string">`Listening on port: <span class="hljs-subst">${port}</span>`</span>)
+
+
+<span class="hljs-comment">// Start the server</span>
+http.createServer(mount(app, opts)).listen(port, listening)</code></pre><h2><a class="heading--link" name="conclusion" href="#conclusion"><span>Conclusion</span></a></h2><p>Tools like Node.js with paperplane make it very easy to create proxy servers to handle your requests in a safe fashion, so use them and always keep your API keys secret!</p><h2><a class="heading--link" name="update-2017-07-30" href="#update-2017-07-30"><span>Update: 2017-07-30</span></a></h2><p>I&#39;ve seen a some feedback asking about CORS (cross-origin resource sharing), so here&#39;s how you can do it (useful for running things on localhost):</p><pre><code class="hljs js"><span class="hljs-keyword">const</span> { cors, ... } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'paperplane'</span>)
+
+<span class="hljs-comment">// ...</span>
+
+<span class="hljs-comment">// Server options</span>
+<span class="hljs-keyword">const</span> corsOpts = { <span class="hljs-attr">methods</span>: <span class="hljs-string">'GET'</span> }
+<span class="hljs-keyword">const</span> corsApp = cors(app, corsOpts)
+<span class="hljs-comment">// ...</span>
+
+<span class="hljs-comment">// Start the server</span>
+http.createServer(mount(corsApp, opts)).listen(port, listening)</code></pre><p>Read more about paperplane&#39;s CORS API in <a href="https://github.com/articulate/paperplane/blob/master/docs/API.md#cors">paperplane&#39;s CORS docs</a>.</p></div></article><section class="section--padded bg--gray"><div class="layout--constrained"><h2>Get notified of new posts</h2><!-- Begin MailChimp Signup Form --><form action="//robertwpearce.us13.list-manage.com/subscribe/post?u=2df44e8960266388bff165fa6&amp;id=ee2f2a3737" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate class="form"><div id="mce-responses"><div class="response" id="mce-error-response" style="display:none"></div><div class="response" id="mce-success-response" style="display:none"></div></div><div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_2df44e8960266388bff165fa6_ee2f2a3737" tabindex="-1" value=""></div><div class="form__container"><label for="mce-EMAIL" class="form__label">Email Address</label> <input type="email" value="" id="mce-EMAIL" class="form__input" name="EMAIL" placeholder="you@greatemail.com"> <input type="submit" value="Subscribe" name="subscribe" class="form__submit"></div><small>Note: I will <em>never</em> give out your email nor spam you. Unsubscribe at any time.</small></form><!--End mc_embed_signup--></div></section></main></body></html>
