@@ -1,0 +1,97 @@
+---
+title:       Robert Pearce – Freelance Software Developer
+description: Functional programming! Web Development! CLI tooling!
+image:       /images/robert-london.jpg
+---
+
+<header class="author">
+  <div class="layout--constrained">
+    <img class="author__image" src="/images/robert-london.jpg" alt="Robert Pearce" title="Robert Pearce in London" />
+    <h1 class="author__name">Robert Pearce</h1>
+    <h2 class="author__title">Freelance Software Developer</h2>
+    <div class="author__links">
+      <a href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a>
+      <a href="https://github.com/rpearce">GitHub</a>
+      <a href="/atom.xml">Atom Feed</a>
+      <a href="https://www.linkedin.com/in/robertwpearce">LinkedIn</a>
+      <a href="https://dribbble.com/rpearce">dribbble</a>
+    </div>
+  </div>
+</header>
+<section class="reviews">
+  <div class="layout--constrained">
+    <h2 class="reviews__header">Recommendations</h2>
+    <div class="review">
+      <div class="review__author">
+        <img
+          class="review__authorImg"
+          src="/images/marty.jpg"
+          alt="Review author: Marty B."
+          title="Review author: Marty B."
+          width="75"
+          height="75"
+        />
+        <small><a href="https://www.linkedin.com/in/martybauer">Marty B.</a></small>
+      </div>
+      <blockquote class="review__text">
+        "Whether it is Robert's attention to detail, his clear communication,
+        his insatiable work-ethic or his infectious personality - there are many
+        reasons why when something needs to be done he is the first person I turn
+        to for results."
+      </blockquote>
+    </div>
+    <div class="review">
+      <div class="review__author">
+        <img
+          class="review__authorImg"
+          src="/images/nik.jpg"
+          alt="Review author: Nik B."
+          title="Review author: Nik B."
+          width="75"
+          height="75"
+        />
+        <small><a href="https://www.linkedin.com/in/nibuesq">Nik B.</a></small>
+      </div>
+      <blockquote class="review__text">
+        "Robert is without a doubt one of the best people I have had the pleasure of working with.
+        The amount of intelligence and diligence he has displayed has been incredible to behold.
+        He will always deliver the highest quality work and do so with a great attitude."
+      </blockquote>
+    </div>
+    <div class="review">
+      <div class="review__author">
+        <img
+           class="review__authorImg"
+           src="/images/sam.png"
+           alt="Review author: Sam A."
+           title="Review author: Sam A."
+           width="75"
+           height="75"
+         />
+        <small><a href="https://www.linkedin.com/in/augusteverymonth">Sam A.</a></small>
+      </div>
+      <blockquote class="review__text">
+        "Robert's attention to detail, positive attitude, caring nature and solution-oriented
+        mindset made him the ultimate developer. He was such a pleasure to work with and
+        far exceeded my expectations. I would recommend him for any web development project,
+        no matter how complicated or demanding."
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+$partial("templates/subscribe.html")$
+
+<section class="posts">
+  <div class="layout--constrained">
+    <h2 class="posts__header">Blog Posts</h2>
+    <ul class="posts__list">
+      $for(posts)$
+        <li>
+          <div><a href="$url$">$title$</a></div>
+          <small>$date$</small>
+        </li>
+      $endfor$
+    </ul>
+  </div>
+</section>
