@@ -14,7 +14,7 @@ import qualified Data.Text            as T
 
 main :: IO ()
 main = hakyllWith config $ do
-    match "images/*" $ do
+    match (fromList ["CNAME", "images/*"]) $ do
         route   idRoute
         compile copyFileCompiler
 
