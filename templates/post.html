@@ -1,0 +1,35 @@
+<main>
+  $partial("templates/nav.html")$
+  <article class="article">
+    <div class="article__bg" style="background-image: url('$image$')">
+      <header class="article__bgHeader">
+        <div class="layout--constrained">
+          <div class="article__bgTitleWrap">
+            <h1 class="article__bgTitle">
+              <a href="$url$">$title$</a>
+            </h1>
+            <div class="article__bgSubHeader">
+              <small class="italic">$date$</small>
+              $if(photoCredit)$
+                <small class="article__bgPhotoCred italic">
+                  [ photo credit <a href="$photoWebsite$">$photoCredit$</a> ]
+                </small>
+              $endif$
+            </div>
+          </div>
+        </div>
+      </header>
+    </div>
+    <section class="layout--constrained">
+      <header class="article__header">
+        <h1 class="article__title">
+          <a href="$url$">$title$</a>
+        </h1>
+        <small class="italic">$date$</small>
+      </header>
+      $body$
+    </section>
+  </article>
+</main>
+
+$partial("templates/subscribe.html")$
