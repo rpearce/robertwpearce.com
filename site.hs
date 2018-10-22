@@ -1,20 +1,23 @@
 {-# LANGUAGE OverloadedStrings #-}
---import qualified Data.Map          as M
-import           Data.Maybe           (fromMaybe)
-import           Hakyll
-import           Hakyll.Core.Metadata (lookupString)
-import           Hakyll.Web.Pandoc
-import           Text.Pandoc
-import           Web.Slug             (mkSlug)
 
-import           Data.Char            (isAlphaNum)
-import           Data.Text            (Text)
-import qualified Data.Text            as T
+
+import           Hakyll
+
+import           Data.Char   (isAlphaNum)
+import           Data.Maybe  (fromMaybe)
+import qualified Data.Text   as T
+import           Text.Pandoc
+import           Web.Slug    (mkSlug)
 
 
 main :: IO ()
 main = hakyllWith config $ do
-    match (fromList ["CNAME", "images/*"]) $ do
+    match "CNAME" $ do
+        route   idRoute
+        compile copyFileCompiler
+
+
+    match "images/*" $ do
         route   idRoute
         compile copyFileCompiler
 
@@ -40,8 +43,7 @@ main = hakyllWith config $ do
             posts <- recentFirst =<< loadAll "posts/*"
             let indexCtx =
                     listField "posts" postCtx (return posts) <>
-                    constField "title" "Home" <>
-                    constField "root" root <>
+                    constField "root" root                   <>
                     defaultContext
 
             getResourceBody
@@ -59,6 +61,14 @@ main = hakyllWith config $ do
             let sitemapCtx = listField "posts" postCtx (return posts)
             makeItem ""
                 >>= loadAndApplyTemplate "templates/sitemap.xml" sitemapCtx
+
+
+    create ["rss.xml"] $ do
+        route idRoute
+        compile $ do
+            let feedCtx = titleContext <> postCtx <> bodyField "description"
+            posts <- recentFirst =<< loadAll "posts/*"
+            renderRss feedConfiguration feedCtx posts
 
 
     create ["atom.xml"] $ do
@@ -147,7 +157,7 @@ feedConfiguration =
 -- CUSTOM ROUTE
 
 
-getSlugWords :: Text -> [Text]
+getSlugWords :: T.Text -> [T.Text]
 getSlugWords =
     T.words . T.toLower . T.map f . T.replace "'" "" . T.replace "&" "and"
     where
