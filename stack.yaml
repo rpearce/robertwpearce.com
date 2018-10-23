@@ -3,4 +3,4 @@ packages:
 - .
 extra-deps:
 - slug-0.1.7
-resolver: lts-12.11
+resolver: lts-12.14
