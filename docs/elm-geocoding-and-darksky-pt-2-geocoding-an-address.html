@@ -111,26 +111,26 @@ type alias Coords =
 <p>I like to keep my models/type aliases fairly clean and primed for re-use in type definitions, so I created a separate type alias, <code>Coords</code>, to represent <code>( Float, Float )</code>.</p>
 <h2>2: Understanding Google’s geocode response data</h2>
 <p>Let’s take a look at what a geocoding request’s response data for <code>Auckland</code> looks like so we can understand what we’re working with.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="op">{</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="st">&quot;results&quot;</span><span class="op">:</span> [</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="op">{</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">      <span class="st">&quot;geometry&quot;</span><span class="op">:</span> <span class="op">{</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">        <span class="st">&quot;location&quot;</span><span class="op">:</span> <span class="op">{</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">          <span class="st">&quot;lat&quot;</span><span class="op">:</span> <span class="fl">-36.8484597</span><span class="op">,</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">          <span class="st">&quot;lng&quot;</span><span class="op">:</span> <span class="fl">174.7633315</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">        <span class="op">},</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">        <span class="co">// ...</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">      <span class="op">},</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">      <span class="co">// ...</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">    <span class="op">}</span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">  ]<span class="op">,</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">  <span class="st">&quot;status&quot;</span><span class="op">:</span> <span class="st">&quot;OK&quot;</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="op">}</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="op">{</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="st">&quot;results&quot;</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb2-3" title="3">    <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-4" title="4">      <span class="st">&quot;geometry&quot;</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-5" title="5">        <span class="st">&quot;location&quot;</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-6" title="6">          <span class="st">&quot;lat&quot;</span><span class="op">:</span> <span class="fl">-36.8484597</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-7" title="7">          <span class="st">&quot;lng&quot;</span><span class="op">:</span> <span class="fl">174.7633315</span></a>
+<a class="sourceLine" id="cb2-8" title="8">        <span class="op">},</span></a>
+<a class="sourceLine" id="cb2-9" title="9">        <span class="co">// ...</span></a>
+<a class="sourceLine" id="cb2-10" title="10">      <span class="op">},</span></a>
+<a class="sourceLine" id="cb2-11" title="11">      <span class="co">// ...</span></a>
+<a class="sourceLine" id="cb2-12" title="12">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb2-13" title="13">  ]<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-14" title="14">  <span class="st">&quot;status&quot;</span><span class="op">:</span> <span class="st">&quot;OK&quot;</span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="op">}</span></a></code></pre></div>
 <p>If you’ve set up your <a href="/blog/node-js-geocoding-proxy-with-paperplane.html">geocoding proxy</a>, you can see these same results by running this command:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1">λ <span class="ex">curl</span> localhost:5050/geocode/Auckland</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1">λ <span class="ex">curl</span> localhost:5050/geocode/Auckland</a></code></pre></div>
 <p>We can see here that we get back a <code>status</code> string and a <code>results</code> list where one of the results contains a <code>geometry</code> object, and inside of that, we find <code>location</code> and finally, our quarry: <code>lat</code> and <code>lng</code>. If we were searching for this with JavaScript, we might find this data like so:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="va">response</span>.<span class="va">results</span>.<span class="at">find</span>(x <span class="op">=&gt;</span> x[<span class="st">&#39;geometry&#39;</span>]).<span class="va">geometry</span>.<span class="at">location</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">// { lat: -36.8484597, lng: 174.7633315 }</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="va">response</span>.<span class="va">results</span>.<span class="at">find</span>(x <span class="op">=&gt;</span> x[<span class="st">&#39;geometry&#39;</span>]).<span class="va">geometry</span>.<span class="at">location</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co">// { lat: -36.8484597, lng: 174.7633315 }</span></a></code></pre></div>
 <p>What would happen in vanilla JavaScript if there were no results, or those object keys didn’t exist? Elm steps up to help us solve for the unexpected.</p>
 <h2>3: Modeling the geocode response data</h2>
 <p>Based on the geocoding response, let’s list out what we’re looking at:</p>
@@ -164,7 +164,7 @@ type alias GeoLocation =
 <h2>4: Creating JSON decoders</h2>
 <p>There are a number of ways to decode JSON in Elm, and <a href="https://www.brianthicks.com">Brian Hicks</a> has <a href="https://www.brianthicks.com/post/2016/08/22/decoding-large-json-objects-a-summary/">written about this</a> (and has a <a href="https://www.brianthicks.com/json-survival-kit/">short book on decoding JSON</a>), and so have many others, such as <a href="https://robots.thoughtbot.com/decoding-json-structures-with-elm">Thoughtbot</a>. Today, we’re going to be working with <a href="https://github.com/NoRedInk/elm-decode-pipeline">NoRedInk’s elm-decode-pipeline</a>.</p>
 <p>First, we install the package into our project:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1">λ <span class="ex">elm</span> package install NoRedInk/elm-decode-pipeline</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1">λ <span class="ex">elm</span> package install NoRedInk/elm-decode-pipeline</a></code></pre></div>
 <p>In our <code>Main.elm</code> file, we can import what we’ll need from Elm’s <a href="">core Json-Decode module</a> as well as the package we’ve just installed.</p>
 <pre class="elm"><code>-- Importing from elm core.
 -- We know from our type aliases that all we&#39;re working
@@ -210,7 +210,7 @@ decodeGeoLocation =
 <li>a paragraph to display the coordinates; for example, <code>Coords: (123, 456)</code></li>
 </ul>
 <p>As usual, let’s download <a href="https://github.com/elm-lang/html">the official elm-lang/html package</a>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" data-line-number="1">λ <span class="ex">elm</span> package install elm-lang/html</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" title="1">λ <span class="ex">elm</span> package install elm-lang/html</a></code></pre></div>
 <p>Then let’s import what we need from it:</p>
 <pre class="elm"><code>import Html exposing (Html, div, form, input, p, text)
 import Html.Attributes exposing (placeholder, type_, value)
@@ -272,7 +272,7 @@ update msg model =
 </ul>
 <h2>8: Making our request</h2>
 <p>In order to build and send HTTP requests, we’ll need to make sure we download the <a href="https://github.com/elm-lang/http">elm-lang/http</a> package:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" data-line-number="1">λ <span class="ex">elm</span> package install elm-lang/http</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" title="1">λ <span class="ex">elm</span> package install elm-lang/http</a></code></pre></div>
 <p>and import it:</p>
 <pre class="elm"><code>import Http</code></pre>
 <p>In our <code>update</code> function, we referenced a function named <code>sendAddress</code> and passed it our model’s address as a parameter. This function should accept a string, initiate our HTTP request and return a command with a message.</p>

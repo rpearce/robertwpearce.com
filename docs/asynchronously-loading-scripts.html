@@ -70,49 +70,49 @@
 <p>Where do you place your <code>&lt;script&gt;</code> tags to load your JavaScript for your website? If you’re doing this within the <code>&lt;head&gt;</code> element, you might want to consider whether or not this is the best option for you.</p>
 <h2>Fetching JavaScript Synchronously</h2>
 <p>So long as HTTP/1.1 is what your website is accessed via (which it will be a long while), <code>&lt;script&gt;</code> tags will be used to fetch external JavaScript files whose contents will be included on the page. These typically look like <code>&lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;</code>. <code>&lt;script&gt;</code> tags are by default “blocking,” meaning that the web page has to pause its download &amp; render cycle, fetch and load the JavaScript and then continue on. Here is what this looks like:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">&lt;html&gt;</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="kw">&lt;head&gt;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;app.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;/head&gt;</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">  <span class="kw">&lt;body&gt;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="kw">&lt;div&gt;</span>My Website<span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">  <span class="kw">&lt;/body&gt;</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="kw">&lt;/html&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">&lt;html&gt;</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="kw">&lt;head&gt;</span></a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;app.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a>
+<a class="sourceLine" id="cb1-4" title="4">  <span class="kw">&lt;/head&gt;</span></a>
+<a class="sourceLine" id="cb1-5" title="5">  <span class="kw">&lt;body&gt;</span></a>
+<a class="sourceLine" id="cb1-6" title="6">    <span class="kw">&lt;div&gt;</span>My Website<span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-7" title="7">  <span class="kw">&lt;/body&gt;</span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="kw">&lt;/html&gt;</span></a></code></pre></div>
 <p>The worst thing you can do is load multiple scripts in this blocking fashion:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">&lt;html&gt;</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="kw">&lt;head&gt;</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;jquery.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;jquery.lightbox.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;some_file.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;app.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">  <span class="kw">&lt;/head&gt;</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">  <span class="kw">&lt;body&gt;</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">    <span class="kw">&lt;div&gt;</span>My Website<span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">  <span class="kw">&lt;/body&gt;</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="kw">&lt;/html&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">&lt;html&gt;</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="kw">&lt;head&gt;</span></a>
+<a class="sourceLine" id="cb2-3" title="3">    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;jquery.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a>
+<a class="sourceLine" id="cb2-4" title="4">    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;jquery.lightbox.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a>
+<a class="sourceLine" id="cb2-5" title="5">    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;some_file.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a>
+<a class="sourceLine" id="cb2-6" title="6">    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;app.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a>
+<a class="sourceLine" id="cb2-7" title="7">  <span class="kw">&lt;/head&gt;</span></a>
+<a class="sourceLine" id="cb2-8" title="8">  <span class="kw">&lt;body&gt;</span></a>
+<a class="sourceLine" id="cb2-9" title="9">    <span class="kw">&lt;div&gt;</span>My Website<span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb2-10" title="10">  <span class="kw">&lt;/body&gt;</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="kw">&lt;/html&gt;</span></a></code></pre></div>
 <p>so make sure you combine (concatenate) all your JavaScript files in to one file. But this is still not ideal, for you have a blocking script that will have to download before anything else happens.</p>
 <p>When we throw <code>&lt;script&gt;</code> tags at the end of the <code>&lt;body&gt;</code>, we allow for the page to paint and then go and fetch the JS synchronously (this lets the user see and utilize the page, but the scripts still haven’t finished loading).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">&lt;html&gt;</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="kw">&lt;head&gt;&lt;/head&gt;</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="kw">&lt;body&gt;</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">    <span class="kw">&lt;div&gt;</span>My Website<span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;app.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">  <span class="kw">&lt;/body&gt;</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw">&lt;/html&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">&lt;html&gt;</span></a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="kw">&lt;head&gt;&lt;/head&gt;</span></a>
+<a class="sourceLine" id="cb3-3" title="3">  <span class="kw">&lt;body&gt;</span></a>
+<a class="sourceLine" id="cb3-4" title="4">    <span class="kw">&lt;div&gt;</span>My Website<span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb3-5" title="5">    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;app.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a>
+<a class="sourceLine" id="cb3-6" title="6">  <span class="kw">&lt;/body&gt;</span></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="kw">&lt;/html&gt;</span></a></code></pre></div>
 <p>However, since the page is still loading, search engines might punish you for a long(er) loading time. What we might need, instead, is the ability to asynchronously fetch the JavaScript <em>after</em> the page is finished loading.</p>
 <h2>Fetching JavaScript Asynchronously</h2>
 <p>There are two popular methods for fetch JavaScript in an asynchronous manner.</p>
 <p>The first is to simply include the HTML5 <code>async</code> property:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;app.js&quot;</span><span class="ot"> async</span><span class="kw">&gt;&lt;/script&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;app.js&quot;</span><span class="ot"> async</span><span class="kw">&gt;&lt;/script&gt;</span></a></code></pre></div>
 <p>Or, if you need to support older browsers, add an event listener to the window’s <code>load</code> function to dynamically build a script tag and append it to the page (note how I do not use <code>window.onload =</code>):</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">&lt;script&gt;</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="va">window</span>.<span class="at">addEventListener</span>(<span class="st">&#39;load&#39;</span><span class="op">,</span> buildScriptTag)<span class="op">;</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">  <span class="kw">function</span> <span class="at">buildScriptTag</span>() <span class="op">{</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">    <span class="kw">var</span> script <span class="op">=</span> <span class="va">document</span>.<span class="at">createElement</span>(<span class="st">&#39;script&#39;</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">    <span class="va">script</span>.<span class="at">src</span> <span class="op">=</span> <span class="st">&#39;app.js&#39;</span><span class="op">;</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">    <span class="va">document</span>.<span class="va">body</span>.<span class="at">appendChild</span>(script)<span class="op">;</span> <span class="co">// append it wherever you want</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">  <span class="op">}</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="kw">&lt;/script&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">&lt;script&gt;</span></a>
+<a class="sourceLine" id="cb5-2" title="2">  <span class="va">window</span>.<span class="at">addEventListener</span>(<span class="st">&#39;load&#39;</span><span class="op">,</span> buildScriptTag)<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-3" title="3">  <span class="kw">function</span> <span class="at">buildScriptTag</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-4" title="4">    <span class="kw">var</span> script <span class="op">=</span> <span class="va">document</span>.<span class="at">createElement</span>(<span class="st">&#39;script&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-5" title="5">    <span class="va">script</span>.<span class="at">src</span> <span class="op">=</span> <span class="st">&#39;app.js&#39;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb5-6" title="6">    <span class="va">document</span>.<span class="va">body</span>.<span class="at">appendChild</span>(script)<span class="op">;</span> <span class="co">// append it wherever you want</span></a>
+<a class="sourceLine" id="cb5-7" title="7">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="kw">&lt;/script&gt;</span></a></code></pre></div>
 <p>Why didn’t I use <code>window.onload =</code> here? When you assign a browser callback trigger a value, it can only have one value! When you add an event listener, you allow the window’s load functionality to have more values in the future.</p>
 <h2>Conclusion</h2>
 <p>If your app/website is architected to rely on JavaScript before it renders anything, then you can utilize this asynchronous technique with a “Loading…” graphic that is removed when the JavaScript loads. Ultimately, you want to decrease the amount of time it takes for a web page to perform an initial load so that the user can get started using your project as quickly as possible. With asynchronous loading of JavaScript, you enable your users to get going ASAP and then allow for them to have a fancier experience once things load in the background.</p>

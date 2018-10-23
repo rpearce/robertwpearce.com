@@ -94,22 +94,22 @@
 </ol>
 <h2>1. Understanding DarkSky’s response data</h2>
 <p>Let’s get the weather data for Auckland, NZ (-36.8484597,174.7633315). If we start up our <a href="https://github.com/rpearce/DarkSky-proxy">DarkSky proxy</a> and run</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1">λ <span class="ex">curl</span> localhost:5051/forecast/-36.8484597,174.7633315</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1">λ <span class="ex">curl</span> localhost:5051/forecast/-36.8484597,174.7633315</a></code></pre></div>
 <p>then we will see response data like this:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">{</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="dt">&quot;timezone&quot;</span><span class="fu">:</span> <span class="st">&quot;Pacific</span><span class="ch">\/</span><span class="st">Auckland&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="dt">&quot;currently&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">    <span class="dt">&quot;summary&quot;</span><span class="fu">:</span> <span class="st">&quot;Overcast&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="dt">&quot;icon&quot;</span><span class="fu">:</span> <span class="st">&quot;cloudy&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">    <span class="dt">&quot;temperature&quot;</span><span class="fu">:</span> <span class="fl">61.42</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">    <span class="er">...</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">  <span class="fu">},</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">  <span class="dt">&quot;hourly&quot;</span><span class="fu">:</span> <span class="fu">{</span> <span class="er">...</span> <span class="fu">}</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">  <span class="st">&quot;daily&quot;</span><span class="er">:</span> <span class="fu">{</span> <span class="er">...</span> <span class="fu">}</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="fu">}</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb2-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="dt">&quot;timezone&quot;</span><span class="fu">:</span> <span class="st">&quot;Pacific</span><span class="ch">\/</span><span class="st">Auckland&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="dt">&quot;currently&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-4" title="4">    <span class="dt">&quot;summary&quot;</span><span class="fu">:</span> <span class="st">&quot;Overcast&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-5" title="5">    <span class="dt">&quot;icon&quot;</span><span class="fu">:</span> <span class="st">&quot;cloudy&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-6" title="6">    <span class="dt">&quot;temperature&quot;</span><span class="fu">:</span> <span class="fl">61.42</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-7" title="7">    <span class="er">...</span></a>
+<a class="sourceLine" id="cb2-8" title="8">  <span class="fu">},</span></a>
+<a class="sourceLine" id="cb2-9" title="9">  <span class="dt">&quot;hourly&quot;</span><span class="fu">:</span> <span class="fu">{</span> <span class="er">...</span> <span class="fu">}</span></a>
+<a class="sourceLine" id="cb2-10" title="10">  <span class="st">&quot;daily&quot;</span><span class="er">:</span> <span class="fu">{</span> <span class="er">...</span> <span class="fu">}</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="fu">}</span></a></code></pre></div>
 <p>While all we care about are the <code>summary</code>, <code>icon</code> and <code>temperature</code> properties within the top-level <code>currently</code> property, we will only use <code>temperature</code> in this part.</p>
 <p>Disclaimer: DarkSky units are in <code>us</code> by default. You can specify other unit types by appending a <code>units</code> query parameter to the end like this:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1">λ <span class="ex">curl</span> localhost:5051/forecast/-36.8484597,174.7633315?units=si</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1">λ <span class="ex">curl</span> localhost:5051/forecast/-36.8484597,174.7633315?units=si</a></code></pre></div>
 <p>Read more about <a href="https://darksky.net/dev/docs/forecast">DarkSky request parameters in the DarkSky docs</a> to customize your response data.</p>
 <p>Now that we’ve got our data in the correct units, let’s model this data in Elm!</p>
 <h2>2. Modeling the DarkSky response data</h2>

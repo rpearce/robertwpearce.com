@@ -84,68 +84,68 @@
 </ul>
 <h2>Our Data Set: Films!</h2>
 <p>This is the test data set we will reference throughout the post:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">const</span> films <span class="op">=</span> [</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="op">{</span> <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;The Empire Strikes Back&#39;</span><span class="op">,</span> <span class="dt">rating</span><span class="op">:</span> <span class="fl">8.8</span> <span class="op">},</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="op">{</span> <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;Pulp Fiction&#39;</span><span class="op">,</span> <span class="dt">rating</span><span class="op">:</span> <span class="fl">8.9</span> <span class="op">},</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="op">{</span> <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;The Deer Hunter&#39;</span><span class="op">,</span> <span class="dt">rating</span><span class="op">:</span> <span class="fl">8.2</span> <span class="op">},</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">  <span class="op">{</span> <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;The Lion King&#39;</span><span class="op">,</span> <span class="dt">rating</span><span class="op">:</span> <span class="fl">8.5</span> <span class="op">}</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">]</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">const</span> films <span class="op">=</span> [</a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="op">{</span> <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;The Empire Strikes Back&#39;</span><span class="op">,</span> <span class="dt">rating</span><span class="op">:</span> <span class="fl">8.8</span> <span class="op">},</span></a>
+<a class="sourceLine" id="cb1-3" title="3">  <span class="op">{</span> <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;Pulp Fiction&#39;</span><span class="op">,</span> <span class="dt">rating</span><span class="op">:</span> <span class="fl">8.9</span> <span class="op">},</span></a>
+<a class="sourceLine" id="cb1-4" title="4">  <span class="op">{</span> <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;The Deer Hunter&#39;</span><span class="op">,</span> <span class="dt">rating</span><span class="op">:</span> <span class="fl">8.2</span> <span class="op">},</span></a>
+<a class="sourceLine" id="cb1-5" title="5">  <span class="op">{</span> <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;The Lion King&#39;</span><span class="op">,</span> <span class="dt">rating</span><span class="op">:</span> <span class="fl">8.5</span> <span class="op">}</span></a>
+<a class="sourceLine" id="cb1-6" title="6">]</a></code></pre></div>
 <h2>Our Goal</h2>
 <p>There are a few conditions that are required for us to meet our goal. We must construct a function that:</p>
 <ul>
 <li>only selects those with an 8.8 rating or higher</li>
 <li><p>returns a list of the selected titles interpolated in an HTML string that has this structure:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">&lt;div&gt;</span>TITLE: <span class="kw">&lt;strong&gt;</span>SCORE<span class="kw">&lt;/strong&gt;&lt;/div&gt;</span></a></code></pre></div></li>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">&lt;div&gt;</span>TITLE: <span class="kw">&lt;strong&gt;</span>SCORE<span class="kw">&lt;/strong&gt;&lt;/div&gt;</span></a></code></pre></div></li>
 </ul>
 <p>Given these requirements, a pseudotype signature for this might be:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">// `output` takes in a list of films</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">// and returns a list of HTML strings</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">//</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">// output :: [Film] -&gt; [Html]</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="co">// `output` takes in a list of films</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="co">// and returns a list of HTML strings</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co">//</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co">// output :: [Film] -&gt; [Html]</span></a></code></pre></div>
 <h2>Step 1: Get the HTML Part Working</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="va">films</span>.<span class="at">map</span>(film <span class="op">=&gt;</span> <span class="vs">`&lt;div&gt;</span><span class="sc">${</span><span class="va">film</span>.<span class="at">title</span><span class="sc">}</span><span class="vs">, &lt;strong&gt;</span><span class="sc">${</span><span class="va">film</span>.<span class="at">rating</span><span class="sc">}</span><span class="vs">&lt;/strong&gt;&lt;/div&gt;`</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">// =&gt; [</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">//      &quot;&lt;div&gt;The Empire Strikes Back, &lt;strong&gt;8.8&lt;/strong&gt;&lt;/div&gt;&quot;,</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">//      &quot;&lt;div&gt;Pulp Fiction, &lt;strong&gt;8.9&lt;/strong&gt;&lt;/div&gt;&quot;,</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">//      &quot;&lt;div&gt;The Deer Hunter, &lt;strong&gt;8.2&lt;/strong&gt;&lt;/div&gt;&quot;,</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">//      &quot;&lt;div&gt;The Lion King, &lt;strong&gt;8.5&lt;/strong&gt;&lt;/div&gt;&quot;</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">//    ]</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="va">films</span>.<span class="at">map</span>(film <span class="op">=&gt;</span> <span class="vs">`&lt;div&gt;</span><span class="sc">${</span><span class="va">film</span>.<span class="at">title</span><span class="sc">}</span><span class="vs">, &lt;strong&gt;</span><span class="sc">${</span><span class="va">film</span>.<span class="at">rating</span><span class="sc">}</span><span class="vs">&lt;/strong&gt;&lt;/div&gt;`</span>)</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co">// =&gt; [</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co">//      &quot;&lt;div&gt;The Empire Strikes Back, &lt;strong&gt;8.8&lt;/strong&gt;&lt;/div&gt;&quot;,</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co">//      &quot;&lt;div&gt;Pulp Fiction, &lt;strong&gt;8.9&lt;/strong&gt;&lt;/div&gt;&quot;,</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">//      &quot;&lt;div&gt;The Deer Hunter, &lt;strong&gt;8.2&lt;/strong&gt;&lt;/div&gt;&quot;,</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co">//      &quot;&lt;div&gt;The Lion King, &lt;strong&gt;8.5&lt;/strong&gt;&lt;/div&gt;&quot;</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co">//    ]</span></a></code></pre></div>
 <p><em><a href="https://goo.gl/mQmFBm">Try this code in the ramda REPL</a></em></p>
 <h2>Step 2: Extract the <code>map</code> Callback</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co">// filmHtml :: Film -&gt; Html</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">const</span> filmHtml <span class="op">=</span> film <span class="op">=&gt;</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">  <span class="vs">`&lt;div&gt;</span><span class="sc">${</span><span class="va">film</span>.<span class="at">title</span><span class="sc">}</span><span class="vs">, &lt;strong&gt;</span><span class="sc">${</span><span class="va">film</span>.<span class="at">rating</span><span class="sc">}</span><span class="vs">&lt;/strong&gt;&lt;/div&gt;`</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="va">films</span>.<span class="at">map</span>(filmHtml)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="co">// filmHtml :: Film -&gt; Html</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw">const</span> filmHtml <span class="op">=</span> film <span class="op">=&gt;</span></a>
+<a class="sourceLine" id="cb5-3" title="3">  <span class="vs">`&lt;div&gt;</span><span class="sc">${</span><span class="va">film</span>.<span class="at">title</span><span class="sc">}</span><span class="vs">, &lt;strong&gt;</span><span class="sc">${</span><span class="va">film</span>.<span class="at">rating</span><span class="sc">}</span><span class="vs">&lt;/strong&gt;&lt;/div&gt;`</span></a>
+<a class="sourceLine" id="cb5-4" title="4"></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="va">films</span>.<span class="at">map</span>(filmHtml)</a></code></pre></div>
 <p><em><a href="https://goo.gl/C4a1kZ">Try this code in the ramda REPL</a></em></p>
 <h2>Step 3: <code>filter</code> Out Lower Scores</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" data-line-number="1">films</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">  .<span class="at">filter</span>(x <span class="op">=&gt;</span> <span class="va">x</span>.<span class="at">rating</span> <span class="op">&gt;=</span> <span class="fl">8.8</span>)</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">  .<span class="at">map</span>(filmHtml)</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">// =&gt; [</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">//      &quot;&lt;div&gt;The Empire Strikes Back, &lt;strong&gt;8.8&lt;/strong&gt;&lt;/div&gt;&quot;,</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">//      &quot;&lt;div&gt;Pulp Fiction, &lt;strong&gt;8.9&lt;/strong&gt;&lt;/div&gt;&quot;,</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">//    ]</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1">films</a>
+<a class="sourceLine" id="cb6-2" title="2">  .<span class="at">filter</span>(x <span class="op">=&gt;</span> <span class="va">x</span>.<span class="at">rating</span> <span class="op">&gt;=</span> <span class="fl">8.8</span>)</a>
+<a class="sourceLine" id="cb6-3" title="3">  .<span class="at">map</span>(filmHtml)</a>
+<a class="sourceLine" id="cb6-4" title="4"></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="co">// =&gt; [</span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="co">//      &quot;&lt;div&gt;The Empire Strikes Back, &lt;strong&gt;8.8&lt;/strong&gt;&lt;/div&gt;&quot;,</span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="co">//      &quot;&lt;div&gt;Pulp Fiction, &lt;strong&gt;8.9&lt;/strong&gt;&lt;/div&gt;&quot;,</span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="co">//    ]</span></a></code></pre></div>
 <p><em><a href="https://goo.gl/yTxfKQ">Try this code in the ramda REPL</a></em></p>
 <p>But wait! We can extract that <code>filter</code> callback, as well:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co">// hasHighScore :: Film -&gt; Bool</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">const</span> hasHighScore <span class="op">=</span> x <span class="op">=&gt;</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">  <span class="va">x</span>.<span class="at">rating</span> <span class="op">&gt;=</span> <span class="fl">8.8</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">films</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">  .<span class="at">filter</span>(hasHighScore)</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">  .<span class="at">map</span>(filmHtml)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="co">// hasHighScore :: Film -&gt; Bool</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw">const</span> hasHighScore <span class="op">=</span> x <span class="op">=&gt;</span></a>
+<a class="sourceLine" id="cb7-3" title="3">  <span class="va">x</span>.<span class="at">rating</span> <span class="op">&gt;=</span> <span class="fl">8.8</span></a>
+<a class="sourceLine" id="cb7-4" title="4"></a>
+<a class="sourceLine" id="cb7-5" title="5">films</a>
+<a class="sourceLine" id="cb7-6" title="6">  .<span class="at">filter</span>(hasHighScore)</a>
+<a class="sourceLine" id="cb7-7" title="7">  .<span class="at">map</span>(filmHtml)</a></code></pre></div>
 <p><em><a href="https://goo.gl/qG4kZ7">Try this code in the ramda REPL</a></em></p>
 <h2>Step 4: Composing <code>filter</code> and <code>map</code></h2>
 <p>We can use ramda’s <a href="/blog/ramda-chops-function-currying.html">function currying capabilities</a> and <a href="/blog/ramda-chops-function-composition.html">function composition</a> to create some very clear and concise <a href="https://wiki.haskell.org/Pointfree">pointfree functions</a>.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="im">import</span> <span class="op">{</span> compose<span class="op">,</span> filter<span class="op">,</span> map <span class="op">}</span> <span class="im">from</span> <span class="st">&#39;ramda&#39;</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">// output :: [Film] -&gt; [Html]</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="kw">const</span> output <span class="op">=</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">  <span class="at">compose</span>(<span class="at">map</span>(filmHtml)<span class="op">,</span> <span class="at">filter</span>(hasHighScore))</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="at">output</span>(films)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="im">import</span> <span class="op">{</span> compose<span class="op">,</span> filter<span class="op">,</span> map <span class="op">}</span> <span class="im">from</span> <span class="st">&#39;ramda&#39;</span></a>
+<a class="sourceLine" id="cb8-2" title="2"></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="co">// output :: [Film] -&gt; [Html]</span></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="kw">const</span> output <span class="op">=</span></a>
+<a class="sourceLine" id="cb8-5" title="5">  <span class="at">compose</span>(<span class="at">map</span>(filmHtml)<span class="op">,</span> <span class="at">filter</span>(hasHighScore))</a>
+<a class="sourceLine" id="cb8-6" title="6"></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="at">output</span>(films)</a></code></pre></div>
 <p><em><a href="https://goo.gl/7VMNTV">Try this code in the ramda REPL</a></em></p>
 <p>One thing to remember with ramda functions (like <code>map</code> and <code>filter</code>) is that ramda typically orders arguments from least likely to change to most likely to change. Callback/transformation functions here are passed as the <em>first</em> argument, and the data comes last. To understand this further, check out the following links:</p>
 <ul>
@@ -154,56 +154,56 @@
 </ul>
 <h2>Step 5: Extracting The Composition Further</h2>
 <p>If we want to not only reuse our filtering and mapping functions but also make them more readable, we can pull out the pieces that make up our <code>output</code> function into smaller bits:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co">// filmsToHtml :: [Film] -&gt; [Html]</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw">const</span> filmsToHtml <span class="op">=</span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">  <span class="at">map</span>(filmHtml)</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">// highScores :: [Film] -&gt; [Film]</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="kw">const</span> highScores <span class="op">=</span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">  <span class="at">filter</span>(hasHighScore)</a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">// output :: [Film] -&gt; [Html]</span></a>
-<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="kw">const</span> output <span class="op">=</span></a>
-<a class="sourceLine" id="cb9-11" data-line-number="11">  <span class="at">compose</span>(filmsToHtml<span class="op">,</span> highScores)</a>
-<a class="sourceLine" id="cb9-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="at">output</span>(films)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="co">// filmsToHtml :: [Film] -&gt; [Html]</span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="kw">const</span> filmsToHtml <span class="op">=</span></a>
+<a class="sourceLine" id="cb9-3" title="3">  <span class="at">map</span>(filmHtml)</a>
+<a class="sourceLine" id="cb9-4" title="4"></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="co">// highScores :: [Film] -&gt; [Film]</span></a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="kw">const</span> highScores <span class="op">=</span></a>
+<a class="sourceLine" id="cb9-7" title="7">  <span class="at">filter</span>(hasHighScore)</a>
+<a class="sourceLine" id="cb9-8" title="8"></a>
+<a class="sourceLine" id="cb9-9" title="9"><span class="co">// output :: [Film] -&gt; [Html]</span></a>
+<a class="sourceLine" id="cb9-10" title="10"><span class="kw">const</span> output <span class="op">=</span></a>
+<a class="sourceLine" id="cb9-11" title="11">  <span class="at">compose</span>(filmsToHtml<span class="op">,</span> highScores)</a>
+<a class="sourceLine" id="cb9-12" title="12"></a>
+<a class="sourceLine" id="cb9-13" title="13"><span class="at">output</span>(films)</a></code></pre></div>
 <p><em><a href="https://goo.gl/dFXCEK">Try this code in the ramda REPL</a></em></p>
 <h2>Step 6: Another Way With <code>reduce</code></h2>
 <p>We can accomplish the same goals as <code>filter</code> and <code>map</code> by making use of <code>reduce</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="va">films</span>.<span class="at">reduce</span>((acc<span class="op">,</span> x) <span class="op">=&gt;</span> <span class="op">{</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">  <span class="cf">return</span> <span class="at">hasHighScore</span>(x)</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">    <span class="op">?</span> <span class="va">acc</span>.<span class="at">concat</span>(<span class="at">filmHtml</span>(x))</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">    : acc</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="op">},</span> [])</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">// or, for better performance</span></a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="va">films</span>.<span class="at">reduce</span>((acc<span class="op">,</span> x) <span class="op">=&gt;</span> <span class="op">{</span></a>
-<a class="sourceLine" id="cb10-10" data-line-number="10">  <span class="cf">if</span> (<span class="at">hasHighScore</span>(x)) <span class="op">{</span></a>
-<a class="sourceLine" id="cb10-11" data-line-number="11">    <span class="va">acc</span>.<span class="at">push</span>(<span class="at">filmHtml</span>(x))</a>
-<a class="sourceLine" id="cb10-12" data-line-number="12">  <span class="op">}</span></a>
-<a class="sourceLine" id="cb10-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb10-14" data-line-number="14">  <span class="cf">return</span> acc</a>
-<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="op">},</span> [])</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb10-1" title="1"><span class="va">films</span>.<span class="at">reduce</span>((acc<span class="op">,</span> x) <span class="op">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-2" title="2">  <span class="cf">return</span> <span class="at">hasHighScore</span>(x)</a>
+<a class="sourceLine" id="cb10-3" title="3">    <span class="op">?</span> <span class="va">acc</span>.<span class="at">concat</span>(<span class="at">filmHtml</span>(x))</a>
+<a class="sourceLine" id="cb10-4" title="4">    : acc</a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="op">},</span> [])</a>
+<a class="sourceLine" id="cb10-6" title="6"></a>
+<a class="sourceLine" id="cb10-7" title="7"><span class="co">// or, for better performance</span></a>
+<a class="sourceLine" id="cb10-8" title="8"></a>
+<a class="sourceLine" id="cb10-9" title="9"><span class="va">films</span>.<span class="at">reduce</span>((acc<span class="op">,</span> x) <span class="op">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-10" title="10">  <span class="cf">if</span> (<span class="at">hasHighScore</span>(x)) <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-11" title="11">    <span class="va">acc</span>.<span class="at">push</span>(<span class="at">filmHtml</span>(x))</a>
+<a class="sourceLine" id="cb10-12" title="12">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb10-13" title="13"></a>
+<a class="sourceLine" id="cb10-14" title="14">  <span class="cf">return</span> acc</a>
+<a class="sourceLine" id="cb10-15" title="15"><span class="op">},</span> [])</a></code></pre></div>
 <p><em><a href="https://goo.gl/b86Kdq">Try this code in the ramda REPL</a></em></p>
 <p>If you’re not familiar with reduce, be sure to play with the live example to better understand how those pieces work before moving on.</p>
 <p>It’s also worth noting that you can do just about <em>anything</em> in JavaScript with the <code>reduce</code> function. I highly recommend going through <a href="https://twitter.com/kylehill">Kyle Hill</a>’s slides on <a href="https://omnifunction.herokuapp.com">reduce Is The Omnifunction</a>.</p>
 <p>But wait! We can extract the <code>reduce</code> callback like we did with <code>map</code> and <code>filter</code> before:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co">// highScoresHtml :: ([Html], Film) -&gt; [Html]</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw">const</span> highScoresHtml <span class="op">=</span> (acc<span class="op">,</span> x) <span class="op">=&gt;</span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">  <span class="at">hasHighScore</span>(x)</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4">    <span class="op">?</span> <span class="va">acc</span>.<span class="at">concat</span>(<span class="at">filmHtml</span>(x))</a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">    : acc</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="va">films</span>.<span class="at">reduce</span>(highScoresHtml<span class="op">,</span> [])</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb11-1" title="1"><span class="co">// highScoresHtml :: ([Html], Film) -&gt; [Html]</span></a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="kw">const</span> highScoresHtml <span class="op">=</span> (acc<span class="op">,</span> x) <span class="op">=&gt;</span></a>
+<a class="sourceLine" id="cb11-3" title="3">  <span class="at">hasHighScore</span>(x)</a>
+<a class="sourceLine" id="cb11-4" title="4">    <span class="op">?</span> <span class="va">acc</span>.<span class="at">concat</span>(<span class="at">filmHtml</span>(x))</a>
+<a class="sourceLine" id="cb11-5" title="5">    : acc</a>
+<a class="sourceLine" id="cb11-6" title="6"></a>
+<a class="sourceLine" id="cb11-7" title="7"><span class="va">films</span>.<span class="at">reduce</span>(highScoresHtml<span class="op">,</span> [])</a></code></pre></div>
 <p><em><a href="https://goo.gl/F6NovJ">Try this code in the ramda REPL</a></em></p>
 <h2>Step 7: Making Our Reduce Arguments Reusable</h2>
-<div class="sourceCode" id="cb12"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="im">import</span> <span class="op">{</span> reduce <span class="op">}</span> <span class="im">from</span> <span class="st">&#39;ramda&#39;</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="kw">const</span> output <span class="op">=</span></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">  <span class="at">reduce</span>(highScoresHtml<span class="op">,</span> [])</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="at">output</span>(films)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb12-1" title="1"><span class="im">import</span> <span class="op">{</span> reduce <span class="op">}</span> <span class="im">from</span> <span class="st">&#39;ramda&#39;</span></a>
+<a class="sourceLine" id="cb12-2" title="2"></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="kw">const</span> output <span class="op">=</span></a>
+<a class="sourceLine" id="cb12-4" title="4">  <span class="at">reduce</span>(highScoresHtml<span class="op">,</span> [])</a>
+<a class="sourceLine" id="cb12-5" title="5"></a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="at">output</span>(films)</a></code></pre></div>
 <p><em><a href="https://goo.gl/wjbAFY">Try this code in the ramda REPL</a></em></p>
 <p>As before with <code>map</code> &amp; <code>filter</code>, <code>output</code> can be reused over and over again and passed any set of films to generate HTML for. To further understand the parameter order used here, check out the <a href="http://ramdajs.com/docs/#reduce">docs for ramda’s <code>reduce</code></a>.</p>
 <hr />
