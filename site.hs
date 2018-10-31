@@ -58,7 +58,8 @@ main = hakyllWith config $ do
         route idRoute
         compile $ do
             posts <- recentFirst =<< loadAll "posts/*"
-            let sitemapCtx = listField "posts" postCtx (return posts)
+            let sitemapCtx = constField "root" root <>
+                    listField "posts" postCtx (return posts)
             makeItem ""
                 >>= loadAndApplyTemplate "templates/sitemap.xml" sitemapCtx
 
