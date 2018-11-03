@@ -28,7 +28,7 @@
     <link href="//fonts.googleapis.com/css?family=Lato:400" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/default.css" />
     
-    <link rel="stylesheet" href="/css/post.css" />
+    <link rel="stylesheet" href="/css/article.css" />
     
   </head>
   <body>
@@ -80,7 +80,7 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="co">// app.js</span></a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="kw">var</span> currentTempInKelvin <span class="op">=</span> <span class="fl">294.11</span><span class="op">;</span></a></code></pre></div>
 <p>So what are your options?</p>
-<h2>Immediately Invoked Function Expressions (IIFEs)</h2>
+<h2 id="immediately-invoked-function-expressions-iifes">Immediately Invoked Function Expressions (IIFEs)</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="co">// app.js</span></a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="op">;</span>(<span class="kw">function</span>() <span class="op">{</span></a>
 <a class="sourceLine" id="cb3-3" title="3">  <span class="co">// your code here</span></a>
@@ -95,7 +95,7 @@
 <p>and then you try to <code>console.log(currentTempInKelvin);</code> from the browser’s JavaScript console, you will get <code>undefined</code>, for <code>currentTempInKelvin</code> now only exists within that anonymous function’s scope. Hurray! No more globals.</p>
 <hr />
 <p>But what if we want to access something in a global fashion? We know about the problems of name-clashing, so let’s also try to reduce that. Let’s combine what you did with the immediate function and do global variables in a less-bad way using <em>namespacing</em>.</p>
-<h2>Namespacing</h2>
+<h2 id="namespacing">Namespacing</h2>
 <p>Namespacing allows us to limit our use of global variables to one global by nesting all of our functionality within one global object that we’ll call <code>WeatherApp</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="co">// app.js</span></a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="co">// No var declaration means global!</span></a>
@@ -124,7 +124,7 @@
 <a class="sourceLine" id="cb8-5" title="5"><span class="op">}</span>)(<span class="kw">this</span>)<span class="op">;</span></a></code></pre></div>
 <p>This last method allows you to use this code and pass in any contextual scope. Since <code>this</code> is equivalent to <code>window</code> at the global level, when you run this in the browser, <code>this</code> is <code>window</code>, so <code>WeatherApp</code> will be added to the <code>window</code> global.</p>
 <p>When you leave out the <code>var</code>, you create a global variable, so be careful! I recommend being explicit with to what object you are adding a <code>namespace</code>. If you’re going the global variable route, then you should nest every single thing you’re doing inside of your <code>WeatherApp</code> namespace in order to avoid having more than 1 global variable.</p>
-<h2>Conclusion</h2>
+<h2 id="conclusion">Conclusion</h2>
 <p>This is a great pattern to utilize when you have relatively simple JavaScript you would like to add to a webpage and not have its contents clash with other libraries &amp; code. If your code begins to get too complicated for this file, then we can start to look at the <a href="http://wiki.commonjs.org/wiki/Modules/1.1">CommonJS module exporting &amp; requiring pattern</a> that is currently implemented by the wonderful <a href="http://browserify.org">Browserify</a> library (aka, Node.js but in the browser). I will cover this in the future, but in the mean time, leverage the power of immediate functions for great good!</p>
     </section>
   </article>

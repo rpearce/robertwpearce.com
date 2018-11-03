@@ -28,7 +28,7 @@
     <link href="//fonts.googleapis.com/css?family=Lato:400" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/default.css" />
     
-    <link rel="stylesheet" href="/css/post.css" />
+    <link rel="stylesheet" href="/css/article.css" />
     
   </head>
   <body>
@@ -83,7 +83,7 @@
 <li><a href="/blog/ramda-chops-safely-accessing-properties.html">Ramda Chops: Safely Accessing Properties</a></li>
 <li><a href="/blog/ramda-chops-map-filter-and-reduce.html">Ramda Chops: Map, Filter &amp; Reduce</a></li>
 </ul>
-<h2>Rudimentary Currying</h2>
+<h2 id="rudimentary-currying">Rudimentary Currying</h2>
 <p>Many articles already cover this, so I’ll keep it short.</p>
 <p>Let’s start with a function that takes two numbers and adds them together:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="co">// add :: (Number, Number) -&gt; Number</span></a>
@@ -113,7 +113,7 @@
 <p>Note the change in type signature: we now have singular arguments that are accepted at a time instead of the tuple style. When we provide the first argument, we are then returned a function that will sit and wait until all the functions are applied before giving us a value. This method can be useful in many situations, but consider the following:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="at">add</span>(<span class="dv">10</span>)(<span class="dv">4</span>)</a></code></pre></div>
 <p>That feels awkward, right? Fear not! There is a way.</p>
-<h2>The <code>curry</code> Function</h2>
+<h2 id="the-curry-function">The <code>curry</code> Function</h2>
 <p>Ramda provides us a function named <code>curry</code> that will take what might be considered a “normal” JavaScript function definition with multiple parameters and turn it into a function that will keep returning a function until all of its parameters have been supplied. Check it out!</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="im">import</span> curry <span class="im">from</span> <span class="st">&#39;ramda/src/curry&#39;</span></a>
 <a class="sourceLine" id="cb4-2" title="2"></a>
@@ -131,11 +131,11 @@
 <a class="sourceLine" id="cb5-3" title="3">  a <span class="op">+</span> b</a>
 <a class="sourceLine" id="cb5-4" title="4">)</a></code></pre></div>
 <p>The magical <code>curry</code> function doesn’t care when you provide arguments or how you do so – it will just keep returning you partially applied functions until all arguments have been applied, at which point it will give you back a value.</p>
-<h2>Cool… Now How Does <code>curry</code> Work?</h2>
+<h2 id="cool-now-how-does-curry-work">Cool… Now How Does <code>curry</code> Work?</h2>
 <p>This might seem blasphemous, but to understand how <code>curry</code> works under the hood, we’re going to dive into a different library’s implementation of it: <a href="https://github.com/evilsoft/crocks">crocks</a> by <a href="https://twitter.com/evilsoft">@evilsoft</a>. (Crocks is similar to ramda but dives more into abstract data types (ADTs) and is more towards the deeper end of the Functional Programming pool.) I think crocks’ implementation is excellent, and 99% of it being in one file makes for a great teaching tool.</p>
 <p>If you want to jump ahead, here is a link to crocks’ <code>curry</code> function: <a href="https://github.com/evilsoft/crocks/blob/master/src/core/curry.js" class="uri">https://github.com/evilsoft/crocks/blob/master/src/core/curry.js</a></p>
 <p>Where do we start with understanding this next-level JavaScript? Always start with the types, as they can tell a story.</p>
-<h3>Reading <code>curry</code>’s Story</h3>
+<h3 id="reading-currys-story">Reading <code>curry</code>’s Story</h3>
 <p>What does this tell us?</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="co">// curry :: ((a, b, c) -&gt; d) -&gt; a -&gt; b -&gt; c -&gt; d</span></a></code></pre></div>
 <ol>
@@ -144,7 +144,7 @@
 <li><code>-&gt; d</code> tells us that it ultimately returns the value as specified in the function</li>
 </ol>
 <p>Sounds simple, right? Easier said than done!</p>
-<h3>What we need to do</h3>
+<h3 id="what-we-need-to-do">What we need to do</h3>
 <ol>
 <li>we need to first accept a function (the one to be curried)</li>
 <li>we need to then accept <a href="/blog/simple-variadic-behavior.html">any number of arguments (variadic behavior)</a></li>
@@ -154,7 +154,7 @@
 <li>return a value (when all arguments have been applied)</li>
 <li>return a function that accepts the remaining arguments and repeat this condition</li>
 </ul>
-<h3>Breaking Down Curry</h3>
+<h3 id="breaking-down-curry">Breaking Down Curry</h3>
 <div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="co">// curry :: ((a, b, c) -&gt; d) -&gt; a -&gt; b -&gt; c -&gt; d</span></a>
 <a class="sourceLine" id="cb7-2" title="2"><span class="co">//</span></a>
 <a class="sourceLine" id="cb7-3" title="3"><span class="co">// 1. we accept a function</span></a>
@@ -242,7 +242,7 @@
 <a class="sourceLine" id="cb8-6" title="6"><span class="at">add</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span>) <span class="co">// =&gt; 3</span></a>
 <a class="sourceLine" id="cb8-7" title="7"><span class="at">add</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">99</span>) <span class="co">// =&gt; 3 (we don&#39;t care about the last one!)</span></a>
 <a class="sourceLine" id="cb8-8" title="8"><span class="at">add</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">99</span><span class="op">,</span> <span class="dv">2000</span>) <span class="co">// =&gt; 3 (we don&#39;t care about the last two!)</span></a></code></pre></div>
-<h2><code>curry</code> In Action</h2>
+<h2 id="curry-in-action"><code>curry</code> In Action</h2>
 <p>If all of your functions are curried, you can start writing code that you never would have been able to before. Here is a small taste that we will cover more fully in a future Ramda Chops:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="co">// addOrRemove :: a -&gt; Array -&gt; Array</span></a>
 <a class="sourceLine" id="cb9-2" title="2"><span class="kw">const</span> addOrRemove <span class="op">=</span> x <span class="op">=&gt;</span></a>

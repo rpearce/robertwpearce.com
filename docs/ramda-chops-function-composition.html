@@ -28,7 +28,7 @@
     <link href="//fonts.googleapis.com/css?family=Lato:400" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/default.css" />
     
-    <link rel="stylesheet" href="/css/post.css" />
+    <link rel="stylesheet" href="/css/article.css" />
     
   </head>
   <body>
@@ -92,7 +92,7 @@
 <li><a href="/blog/ramda-chops-safely-accessing-properties.html">Ramda Chops: Safely Accessing Properties</a></li>
 <li><a href="/blog/ramda-chops-map-filter-and-reduce.html">Ramda Chops: Map, Filter &amp; Reduce</a></li>
 </ul>
-<h2>First Approach</h2>
+<h2 id="first-approach">First Approach</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="co">// getHighScorers :: [Object] -&gt; [String]</span></a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="kw">const</span> getHighScorers <span class="op">=</span> xs <span class="op">=&gt;</span></a>
 <a class="sourceLine" id="cb2-3" title="3">  [...<span class="at">xs</span>]</a>
@@ -102,7 +102,7 @@
 <a class="sourceLine" id="cb2-7" title="7"></a>
 <a class="sourceLine" id="cb2-8" title="8"><span class="at">getHighScorers</span>(results) <span class="co">// =&gt; [ &#39;Eowin&#39;, &#39;Bilbo&#39;, &#39;Frodo&#39; ]</span></a></code></pre></div>
 <p>As cautious JavaScript developers, we know to reach for our functions and methods that don’t mutate the objects we’re receiving. We use a <em>copy</em> of the original list and chain together operations that <code>sort</code>, <code>slice</code> and <code>map</code> the return values of each operation until we arrive at <code>[ 'Eowin', 'Bilbo', 'Frodo' ]</code>. Many folks would stop here, write a few unit tests and be done with it. We, on the other hand, will take this to the next level.</p>
-<h2>Extracting Reusable Functions</h2>
+<h2 id="extracting-reusable-functions">Extracting Reusable Functions</h2>
 <p>Our <code>getHighScorers</code> function has some functionality that we may want to use elsewhere in the future. Let’s break down what we might be able to extract:</p>
 <ul>
 <li>a <em>sort by some prop in descending order</em> function (from <code>sort</code>)</li>
@@ -142,7 +142,7 @@
 <a class="sourceLine" id="cb3-31" title="31"><span class="at">getHighScorers</span>(results) <span class="co">// =&gt; [ &#39;Eowin&#39;, &#39;Bilbo&#39;, &#39;Frodo&#39; ]</span></a></code></pre></div>
 <p><em><a href="https://goo.gl/9XsTQx">Try this code in the ramda REPL.</a></em></p>
 <p>This is starting to look good, but that <code>getHighScorers</code> function is looking a bit dense. Since we have a seeming pipeline of transformations that we’re applying to a list, wouldn’t it be great if we could simply list these transformations in a “flat” way (instead of a “nested” way like we do above) and then pass the data to this list of transformations?</p>
-<h2>Enter <code>compose</code></h2>
+<h2 id="enter-compose">Enter <code>compose</code></h2>
 <p>Let’s take our <code>getHighScorers</code> function and rewrite it using <a href="http://ramdajs.com/docs/#compose">ramda’s compose function</a>:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="im">import</span> compose <span class="im">from</span> <span class="st">&#39;ramda/src/compose&#39;</span></a>
 <a class="sourceLine" id="cb4-2" title="2"></a>
@@ -181,7 +181,7 @@
 <a class="sourceLine" id="cb6-23" title="23">  <span class="at">compose</span>(<span class="at">mapProp</span>(<span class="st">&#39;name&#39;</span>)<span class="op">,</span> <span class="at">takeN</span>(<span class="dv">3</span>)<span class="op">,</span> <span class="at">descBy</span>(<span class="st">&#39;score&#39;</span>))</a></code></pre></div>
 <p><em><a href="https://goo.gl/NxEFhi">Try this code in the ramda REPL.</a></em></p>
 <p>You may also notice that we removed <code>xs =&gt;</code> from <code>getHighScorers</code> because when we use compose and pass the final argument in at the end, it in fact becomes redundant. Our composition sits and waits for either the data to be applied or for it to be used another way: more compositions! This leads us down a powerful path whereby we can now compose different functions together and combine them into a final composition.</p>
-<h2>Composing a Composition</h2>
+<h2 id="composing-a-composition">Composing a Composition</h2>
 <div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="co">// getTop3 :: [a] -&gt; [a]</span></a>
 <a class="sourceLine" id="cb7-2" title="2"><span class="kw">const</span> getTop3 <span class="op">=</span></a>
 <a class="sourceLine" id="cb7-3" title="3">  <span class="at">compose</span>(<span class="at">takeN</span>(<span class="dv">3</span>)<span class="op">,</span> <span class="at">descBy</span>(<span class="st">&#39;score&#39;</span>))</a>
@@ -199,7 +199,7 @@
 </figure>
 <p>We are now empowered (nay – encouraged!) to provide meaningful names in the context of what we’re trying to accomplish.</p>
 <p>Composing compositions also allows us to use our type signatures to tell a story about what behavior is expected with each little part on our path to the ultimate goal.</p>
-<h2><code>pipe</code> vs <code>compose</code></h2>
+<h2 id="pipe-vs-compose"><code>pipe</code> vs <code>compose</code></h2>
 <p>For various reasons that are usally a matter of opinion, many people prefer function application to flow from <em>left to right</em> instead of <em>right to left</em> (the latter being what you get with <code>compose</code>). So if you find yourself thinking the same thing, <a href="http://ramdajs.com/docs/#pipe">pipe</a> is for you:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="co">//      &lt;-------------   &lt;------   &lt;-------------</span></a>
 <a class="sourceLine" id="cb8-2" title="2"><span class="at">compose</span>(<span class="at">mapProp</span>(<span class="st">&#39;name&#39;</span>)<span class="op">,</span> <span class="at">takeN</span>(<span class="dv">3</span>)<span class="op">,</span> <span class="at">descBy</span>(<span class="st">&#39;score&#39;</span>))(xs)</a>
@@ -208,9 +208,9 @@
 <a class="sourceLine" id="cb8-5" title="5"></a>
 <a class="sourceLine" id="cb8-6" title="6"><span class="co">//   --------------&gt;  -------&gt;  --------------&gt;</span></a>
 <a class="sourceLine" id="cb8-7" title="7"><span class="at">pipe</span>(<span class="at">descBy</span>(<span class="st">&#39;score&#39;</span>)<span class="op">,</span> <span class="at">takeN</span>(<span class="dv">3</span>)<span class="op">,</span> <span class="at">mapProp</span>(<span class="st">&#39;name&#39;</span>))(xs)</a></code></pre></div>
-<h2>Composing Promises</h2>
+<h2 id="composing-promises">Composing Promises</h2>
 <p>There’s really nothing to it! Instead of <code>compose</code> or <code>pipe</code>, use <a href="http://ramdajs.com/docs/#composeP">composeP</a> or <a href="http://ramdajs.com/docs/#pipeP">pipeP</a>.</p>
-<h2>Debugging</h2>
+<h2 id="debugging">Debugging</h2>
 <p>Once you adopt this pattern, you may find it initially difficult to inspect your data at a given point in the pipeline; however, here’s a tip that will solve most of your problems:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="at">compose</span>(</a>
 <a class="sourceLine" id="cb9-2" title="2">  <span class="at">mapProp</span>(<span class="st">&#39;name&#39;</span>)<span class="op">,</span></a>

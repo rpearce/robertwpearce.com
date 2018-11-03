@@ -28,7 +28,7 @@
     <link href="//fonts.googleapis.com/css?family=Lato:400" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/default.css" />
     
-    <link rel="stylesheet" href="/css/post.css" />
+    <link rel="stylesheet" href="/css/article.css" />
     
   </head>
   <body>
@@ -84,7 +84,7 @@
 <li><a href="/blog/ramda-chops-function-composition.html">Ramda Chops: Function Composition</a></li>
 <li><a href="/blog/ramda-chops-map-filter-and-reduce.html">Ramda Chops: Map, Filter &amp; Reduce</a></li>
 </ul>
-<h2><code>prop</code> &amp; <code>propOr</code></h2>
+<h2 id="prop-propor"><code>prop</code> &amp; <code>propOr</code></h2>
 <p>What happens normally if you expect an array, try to access the third item (index position 2), but are actually provided <code>undefined</code> instead of an array?</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">const</span> arr <span class="op">=</span> <span class="kw">undefined</span></a>
 <a class="sourceLine" id="cb1-2" title="2">arr[<span class="dv">2</span>] <span class="co">// TypeError is thrown</span></a></code></pre></div>
@@ -110,7 +110,7 @@
 <a class="sourceLine" id="cb5-4" title="4"><span class="at">propOr</span>(<span class="op">{},</span> <span class="dv">2</span><span class="op">,</span> arr) <span class="co">// {}</span></a>
 <a class="sourceLine" id="cb5-5" title="5"><span class="at">propOr</span>(<span class="dv">0</span><span class="op">,</span> <span class="st">&#39;length&#39;</span><span class="op">,</span> arr) <span class="co">// 0</span></a></code></pre></div>
 <p>If you need to select multiple properties without fear, then the <a href="http://ramdajs.com/docs/#props"><code>props</code></a> or <a href="http://ramdajs.com/docs/#pick"><code>pick</code></a> functions may be for you.</p>
-<h2><code>path</code> &amp; <code>pathOr</code></h2>
+<h2 id="path-pathor"><code>path</code> &amp; <code>pathOr</code></h2>
 <p>What if we are working in a deeply nested data structure where multiple keys in our hierarchy may or may not exist? Enter <a href="http://ramdajs.com/docs/#path"><code>path</code></a> and <a href="http://ramdajs.com/docs/#pathOr"><code>pathOr</code></a>. These work similarly to <code>prop</code> and <code>propOr</code> except that they use an array syntax to dive into data structures and ultimately check for a <em>value</em>, whereas the <code>prop</code> family checks for a property’s presence.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="im">import</span> path <span class="im">from</span> <span class="st">&#39;ramda/src/path&#39;</span></a>
 <a class="sourceLine" id="cb6-2" title="2"></a>

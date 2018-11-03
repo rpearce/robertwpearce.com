@@ -28,7 +28,7 @@
     <link href="//fonts.googleapis.com/css?family=Lato:400" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/default.css" />
     
-    <link rel="stylesheet" href="/css/post.css" />
+    <link rel="stylesheet" href="/css/article.css" />
     
   </head>
   <body>
@@ -68,7 +68,7 @@
       <p><em>This article is intended for HTML &amp; JavaScript beginners.</em></p>
 <hr />
 <p>Where do you place your <code>&lt;script&gt;</code> tags to load your JavaScript for your website? If you’re doing this within the <code>&lt;head&gt;</code> element, you might want to consider whether or not this is the best option for you.</p>
-<h2>Fetching JavaScript Synchronously</h2>
+<h2 id="fetching-javascript-synchronously">Fetching JavaScript Synchronously</h2>
 <p>So long as HTTP/1.1 is what your website is accessed via (which it will be a long while), <code>&lt;script&gt;</code> tags will be used to fetch external JavaScript files whose contents will be included on the page. These typically look like <code>&lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;</code>. <code>&lt;script&gt;</code> tags are by default “blocking,” meaning that the web page has to pause its download &amp; render cycle, fetch and load the JavaScript and then continue on. Here is what this looks like:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">&lt;html&gt;</span></a>
 <a class="sourceLine" id="cb1-2" title="2">  <span class="kw">&lt;head&gt;</span></a>
@@ -100,7 +100,7 @@
 <a class="sourceLine" id="cb3-6" title="6">  <span class="kw">&lt;/body&gt;</span></a>
 <a class="sourceLine" id="cb3-7" title="7"><span class="kw">&lt;/html&gt;</span></a></code></pre></div>
 <p>However, since the page is still loading, search engines might punish you for a long(er) loading time. What we might need, instead, is the ability to asynchronously fetch the JavaScript <em>after</em> the page is finished loading.</p>
-<h2>Fetching JavaScript Asynchronously</h2>
+<h2 id="fetching-javascript-asynchronously">Fetching JavaScript Asynchronously</h2>
 <p>There are two popular methods for fetch JavaScript in an asynchronous manner.</p>
 <p>The first is to simply include the HTML5 <code>async</code> property:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;app.js&quot;</span><span class="ot"> async</span><span class="kw">&gt;&lt;/script&gt;</span></a></code></pre></div>
@@ -114,7 +114,7 @@
 <a class="sourceLine" id="cb5-7" title="7">  <span class="op">}</span></a>
 <a class="sourceLine" id="cb5-8" title="8"><span class="kw">&lt;/script&gt;</span></a></code></pre></div>
 <p>Why didn’t I use <code>window.onload =</code> here? When you assign a browser callback trigger a value, it can only have one value! When you add an event listener, you allow the window’s load functionality to have more values in the future.</p>
-<h2>Conclusion</h2>
+<h2 id="conclusion">Conclusion</h2>
 <p>If your app/website is architected to rely on JavaScript before it renders anything, then you can utilize this asynchronous technique with a “Loading…” graphic that is removed when the JavaScript loads. Ultimately, you want to decrease the amount of time it takes for a web page to perform an initial load so that the user can get started using your project as quickly as possible. With asynchronous loading of JavaScript, you enable your users to get going ASAP and then allow for them to have a fancier experience once things load in the background.</p>
     </section>
   </article>

@@ -28,7 +28,7 @@
     <link href="//fonts.googleapis.com/css?family=Lato:400" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/default.css" />
     
-    <link rel="stylesheet" href="/css/post.css" />
+    <link rel="stylesheet" href="/css/article.css" />
     
   </head>
   <body>
@@ -73,8 +73,8 @@
 <p>I am a fan of Facebook’s <a href="https://facebook.github.io/react/">ReactJS</a> library because of its DOM diffing (via the “virtual DOM”) and one-way data binding. React is a tool I use every day and have come to enjoy (sans-JSX), but I am always on the lookout for way to do things simpler.</p>
 <p>A colleague of mine recently shared the second iteration of <a href="https://muut.com/riotjs/">RiotJS</a> with me. Of course, I was sucked in because it compared itself with React (a bold statement). You can <a href="https://muut.com/riotjs/compare.html">view the comparisons between Riot and React</a> for yourself.</p>
 <p>One unfortunate fact about fledgling JS libraries is that they lack examples of how to accomplish common goals for the web. This is an attempt to help out with that.</p>
-<h2>Installation</h2>
-<h3>Project-Specific</h3>
+<h2 id="installation">Installation</h2>
+<h3 id="project-specific">Project-Specific</h3>
 <p><span style="text-decoration:line-through;">While I am not a fan of Facebook’s JSX (and don’t use it–more to come in future blog posts on this), Riot’s pre-compiled syntax is much easier to swallow.</span> Given you have a <code>package.json</code> set up, you can easily install the Riot compiler as a development dependency</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1">$ <span class="ex">npm</span> install riot --save-dev</a></code></pre></div>
 <p>and then set up Riot to run as an NPM script and watch for any changes</p>
@@ -84,15 +84,15 @@
 <p>which is then run by a simple</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1">$ <span class="ex">npm</span> run watch:riot</a></code></pre></div>
 <p>Alternatively, you can <a href="https://muut.com/riotjs/download.html">download the riot.js library</a> via any of their recommended methods.</p>
-<h3>Global Installation (alternative)</h3>
+<h3 id="global-installation-alternative">Global Installation (alternative)</h3>
 <p>If you don’t have a <code>package.json</code> and want to install Riot globally:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1">$ <span class="ex">npm</span> install riot -g</a>
 <a class="sourceLine" id="cb4-2" title="2">$ <span class="ex">riot</span> -w src/ build/</a></code></pre></div>
-<h2>Tab Example</h2>
+<h2 id="tab-example">Tab Example</h2>
 <p>I decided to start small and make a tabbing example where clicking a tab shows content related to it underneath. Here is the final product:</p>
 <iframe class="iframe--example" frameborder="0" src="https://rpearce.github.io/riotjs-examples/tabs.html" style="height: 550px;">
 </iframe>
-<h3>Step 1: Start With Markup</h3>
+<h3 id="step-1-start-with-markup">Step 1: Start With Markup</h3>
 <p>Starting with a blank HTML document, add the <code>&lt;riot-tabs&gt;&lt;/riot-tabs&gt;</code> tag to your document:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb5-1" title="1"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span></a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="kw">&lt;html&gt;</span></a>
@@ -115,7 +115,7 @@
 <a class="sourceLine" id="cb7-5" title="5">  <span class="kw">&lt;script&gt;</span><span class="va">riot</span>.<span class="at">mount</span>(<span class="st">&#39;riot-tabs&#39;</span>)<span class="kw">&lt;/script&gt;</span></a>
 <a class="sourceLine" id="cb7-6" title="6"><span class="kw">&lt;/body&gt;</span></a></code></pre></div>
 <p>When we run this code through the browser, we’re going to receive an error telling us that <code>'tabs'</code> is not a thing. Congrats! Time for Step 2.</p>
-<h3>Step 2: Creating Your Custom Tag</h3>
+<h3 id="step-2-creating-your-custom-tag">Step 2: Creating Your Custom Tag</h3>
 <p>Riot’s NPM package, as mentioned earlier, allows us to write and compile pseudo-markup mixed with a little JS. To get started, create a <code>src</code> folder and add a <code>tabs.tag</code> file to it, then run</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1">$ <span class="ex">npm</span> run watch:riot</a></code></pre></div>
 <p>if you have an NPM script set up or</p>
@@ -183,7 +183,7 @@
 <a class="sourceLine" id="cb13-14" title="14">  ]</a>
 <a class="sourceLine" id="cb13-15" title="15"><span class="kw">&lt;/riot-tabs&gt;</span></a></code></pre></div>
 <p>Next, we need to set a default “active tab” and “active content.”</p>
-<h3>Step 3: Conditional Classes</h3>
+<h3 id="step-3-conditional-classes">Step 3: Conditional Classes</h3>
 <p>We want to be able to specify a default tab and tab content. This is accomplished via a conditional <code>is-active</code> class on both the <code>.tabItem</code> as well as the corresponding <code>.tabContent__item</code>. To keep track of what tab/content is active, we can</p>
 <ul>
 <li>add a property to the <code>this.tabs</code> array objects</li>
@@ -213,7 +213,7 @@
 <a class="sourceLine" id="cb14-21" title="21"><span class="kw">&lt;/riot-tabs&gt;</span></a></code></pre></div>
 <p>Since these are <em>conditional</em> classes, they will either be evaluated as true or false (I believe that anything that is not falsy is considered true; for example, <code>new Date()</code> is considered <code>true</code>). Here, we create a function called <code>isActiveTab</code> and call it from the item itself, but because the function is not scoped to the item, we need to access the <code>parent</code> scope and call the function on that.</p>
 <p>Finally, we need a way to react to <em>events</em>.</p>
-<h3>Step 4: Toggling the Tabs</h3>
+<h3 id="step-4-toggling-the-tabs">Step 4: Toggling the Tabs</h3>
 <p>When we click on a tab, we want that tab to now be active, and we want the corresponding tab content to be displayed. This can be done via an <code>onclick</code> handler that calls a function on the parent called <code>toggleTab</code></p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">&lt;riot-tabs&gt;</span></a>
 <a class="sourceLine" id="cb15-2" title="2">  <span class="kw">&lt;h2&gt;</span>Tabs<span class="kw">&lt;/h2&gt;</span></a>
@@ -244,7 +244,7 @@
 <p>The <code>onclick</code> event handler receives an event object that is packed with information. What we want is the current tab that we are clicking on, and this is accessed through <code>e.item.tab.ref</code>, which is just the <code>ref</code> property on the <code>tab</code> object of the currently iterated <code>item</code>.</p>
 <p>According to the Riot docs, when an event handler is called, Riot will automatically call <code>this.update()</code> and re-render the component. However, I found that after I altered my data, I had to <code>return true</code>.</p>
 <p>Once this event handler is completed and the component is re-rendered, the correct tab and content will be displayed, and you will be happy.</p>
-<h2>Wrap up</h2>
+<h2 id="wrap-up">Wrap up</h2>
 <p>In sum, playing with Riot was a mostly enjoyable experience, and I am thankful to the <a href="https://muut.com/">Muut</a> folks for releasing it.</p>
 <p>While there are quirks (single quote vs double quote issues, among others) and opinions (neglecting the use of semi-colons, as well as <code>return</code>s), this is a promising UI library that I am <em>definitely</em> going to consider vs. React in my future projects.</p>
     </section>
