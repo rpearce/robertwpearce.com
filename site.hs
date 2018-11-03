@@ -127,17 +127,26 @@ pandocCompilerCustom =
     pandocCompilerWith pandocReaderOpts pandocWriterOpts
 
 
+pandocExtensionsCustom :: Extensions
+pandocExtensionsCustom =
+    githubMarkdownExtensions <>
+    extensionsFromList
+        [ Ext_auto_identifiers
+        , Ext_smart
+        ]
+
+
 pandocReaderOpts :: ReaderOptions
 pandocReaderOpts =
     defaultHakyllReaderOptions
-        { readerExtensions = enableExtension Ext_smart githubMarkdownExtensions
+        { readerExtensions = pandocExtensionsCustom
         }
 
 
 pandocWriterOpts :: WriterOptions
 pandocWriterOpts =
     defaultHakyllWriterOptions
-        { writerExtensions = enableExtension Ext_smart githubMarkdownExtensions
+        { writerExtensions = pandocExtensionsCustom
         }
 
 

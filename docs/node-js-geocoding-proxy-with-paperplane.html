@@ -28,7 +28,7 @@
     <link href="//fonts.googleapis.com/css?family=Lato:400" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/default.css" />
     
-    <link rel="stylesheet" href="/css/post.css" />
+    <link rel="stylesheet" href="/css/article.css" />
     
   </head>
   <body>
@@ -71,25 +71,25 @@
       </header>
       <p><em>tl;dr =&gt; use a proxy server when private API keys are involved; <a href="https://github.com/articulate/paperplane">paperplane</a> is a great functional server framework.</em></p>
 <p>Converting addresses, cities and other locations to latitude and logitude and back again is something that is expected in the software application world today. Whether someone is asking for directions, <a href="http://www.brewpublik.com">plotting optimal beer delivery routes</a> or tagging a photo of their cronut in a local cafe, managing location data is an important skillset for developers to have. Numerous services, typically in the form of <a href="https://en.wikipedia.org/wiki/Application_programming_interface">application programming interfaces</a> (APIs), exist to provide folks with ways of accessing this data. Today we’ll be using the <a href="https://developers.google.com/maps/documentation/geocoding/start">Google Maps Geocoding API</a> to complete the task of acquiring the geo-data for any place name; however, we will be creating a <a href="https://nodejs.org">Node.js</a> server as a proxy (a go-between) for our request instead of embedding this request in a browser.</p>
-<h2>Why A Proxy Server?</h2>
+<h2 id="why-a-proxy-server">Why A Proxy Server?</h2>
 <p>If you are granted an API key for a service that is private and mapped to you, it is a good idea to keep it that way. If you commit this API key to source control or expose it via your frontend code, then someone could take your key and pretend to be you. In order to avoid this, it is recommended that you keep such keys hidden, for example, as environment variables set on a server. Thus, we are going to create a small server to act as a proxy between the client (a web browser, app or cURL) and the API in question: the Google Maps Geocoding API.</p>
-<h2>Why Paperplane as a Node.js Server Framework?</h2>
+<h2 id="why-paperplane-as-a-node.js-server-framework">Why Paperplane as a Node.js Server Framework?</h2>
 <p>It is possible to do everything you need with Node’s <code>http</code> package, but I like the approach <a href="https://github.com/articulate/paperplane">paperplane</a> takes with viewing the request and response aspects of handling an HTTP request as a pure function where the request is the input and the response is what is returned from it:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" title="1"><span class="dt">Request</span> <span class="ot">-&gt;</span> <span class="dt">Response</span></a></code></pre></div>
 <p>whereas many Node frameworks’ handlers accept a function with the request and response as two arguments and not utilizing a return value, yielding the signature:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" title="1">(<span class="dt">IncomingMessage</span>, <span class="dt">ServerResponse</span>) <span class="ot">-&gt;</span> ()</a></code></pre></div>
 <p>The paperplane approach makes a good deal more sense to me. You can read more about the “why” on <a href="https://github.com/articulate/paperplane/blob/master/docs/getting-started.md">paperplane’s getting started guide</a>.</p>
-<h2>Project Source Code</h2>
+<h2 id="project-source-code">Project Source Code</h2>
 <p>The project we’ll be making can be seen in its entirety here: <a href="https://github.com/rpearce/geocoding-proxy/" class="uri">https://github.com/rpearce/geocoding-proxy/</a>.</p>
-<h2>Pre-requisites</h2>
+<h2 id="pre-requisites">Pre-requisites</h2>
 <p><em>Note: what we’ll be making is by no means a production-level application, as that would be outside the scope of this post. However, there are some slightly advanced tangential topics that I will be glossing over (sometimes providing links to) in order to not write a book. Send me an email if I can be clearer in certain areas.</em></p>
 <p>This tutorial assumes that you already have installed Node.js (I use <a href="https://github.com/creationix/nvm">NVM</a> for managing Node versions and am using <code>v8.1</code>) and optionally the <a href="https://yarnpkg.com/lang/en/docs/install/">yarn package manager</a>.</p>
 <p>Once you’ve got Node and yarn installed, we can begin.</p>
-<h2>Project Setup</h2>
+<h2 id="project-setup">Project Setup</h2>
 <p>From your favorite project folder, let’s create a new project folder named <code>geocoding-proxy</code> and change the current working directory to be the new folder:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1">λ <span class="fu">mkdir</span> geocoding-proxy</a>
 <a class="sourceLine" id="cb3-2" title="2">λ <span class="bu">cd</span> geocoding-proxy</a></code></pre></div>
-<h3>Installing Dependencies</h3>
+<h3 id="installing-dependencies">Installing Dependencies</h3>
 <p>Once we’re in the project folder, let’s initialize a <code>package.json</code> file to make it easy to manage and hang on to our project’s dependencies:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1">λ <span class="ex">npm</span> init -y</a></code></pre></div>
 <p>or if you have yarn installed:</p>
@@ -99,11 +99,11 @@
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1">λ <span class="ex">npm</span> install --save axios dotenv paperplane ramda</a></code></pre></div>
 <p>or</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1">λ <span class="ex">yarn</span> add axios dotenv paperplane ramda</a></code></pre></div>
-<h3>Get A Google Maps Geocoding API Key</h3>
+<h3 id="get-a-google-maps-geocoding-api-key">Get A Google Maps Geocoding API Key</h3>
 <p>You can get yourself an API key from <a href="https://developers.google.com/maps/documentation/geocoding/get-api-key">this page</a>. Once you’ve done this, you’ll need to copy the <code>.env.example</code> file at your project’s root (<code>λ cp .env.example .env</code>) and replace the value of the <code>GEO_KEY</code> with your API key. Your <code>.env</code> file should look like</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1"><span class="va">GEO_KEY=</span>abcdefg-hijklmn-op</a>
 <a class="sourceLine" id="cb8-2" title="2"><span class="va">PORT=</span>5050</a></code></pre></div>
-<h2>Hello, World! With Paperplane</h2>
+<h2 id="hello-world-with-paperplane">Hello, World! With Paperplane</h2>
 <p>Once your dependencies are installed, let’s create a server to see if we can get things working. First, create <code>index.js</code> at your project’s root and open it in your favorite text editor.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1">λ <span class="fu">touch</span> index.js</a></code></pre></div>
 <p>Next, let’s import the packages we’ll be using and create a basic “Hello, World!” server:</p>
@@ -147,7 +147,7 @@
 <div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" title="1">λ <span class="ex">curl</span> localhost:5050</a>
 <a class="sourceLine" id="cb12-2" title="2"><span class="st">&quot;hello world&quot;</span></a></code></pre></div>
 <p>It works!</p>
-<h2>Hello, Location</h2>
+<h2 id="hello-location">Hello, Location</h2>
 <p>Now that we know our server works, let’s see if we can get it to echo back a location/address parameter we send it at a route we’ll create called <code>/geocode</code>. Let’s remove our <code>'/'</code> endpoint and “hello, world!” code and add some for geocoding:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">const</span> endpoints <span class="op">=</span> <span class="at">routes</span>(<span class="op">{</span></a>
 <a class="sourceLine" id="cb13-2" title="2">  <span class="st">&#39;/geocode/:address&#39;</span><span class="op">:</span> <span class="at">methods</span>(<span class="op">{</span></a>
@@ -162,7 +162,7 @@
 <p>With the new endpoint added, save the file, restart your server (stop it with <code>Ctrl + C</code>), and run cURL with a city name this time:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" title="1">λ <span class="ex">curl</span> localhost:5050/geocode/Auckland</a>
 <a class="sourceLine" id="cb14-2" title="2"><span class="st">&quot;Auckland&quot;</span></a></code></pre></div>
-<h2>Sending to the Geocoding API</h2>
+<h2 id="sending-to-the-geocoding-api">Sending to the Geocoding API</h2>
 <p>We’re almost there! Instead of echoing back whatever address the server receives, let’s instead make an HTTP GET request to the geocode API using the <code>axios</code> package:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">const</span> endpoints <span class="op">=</span> <span class="at">routes</span>(<span class="op">{</span></a>
 <a class="sourceLine" id="cb15-2" title="2">  <span class="st">&#39;/geocode/:address&#39;</span><span class="op">:</span> <span class="at">methods</span>(<span class="op">{</span></a>
@@ -215,7 +215,7 @@
 <li><code>&quot;formatted_address&quot;:&quot;Auckland, New Zealand&quot;</code></li>
 <li><code>&quot;location&quot;:{&quot;lat&quot;:-36.8484597,&quot;lng&quot;:174.7633315}</code></li>
 </ul>
-<h2>Refactoring the Routes</h2>
+<h2 id="refactoring-the-routes">Refactoring the Routes</h2>
 <p>As you might imagine, having all of the request handling functions inside of paperplane’s <code>routes</code> function might get difficult to follow and modularize. With that in mind, let’s first pull the handler function out and into its own function:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">const</span> geocode <span class="op">=</span> req <span class="op">=&gt;</span></a>
 <a class="sourceLine" id="cb20-2" title="2">  <span class="at">axios</span>(<span class="op">{</span></a>
@@ -235,7 +235,7 @@
 <a class="sourceLine" id="cb20-16" title="16">  <span class="op">}</span>)</a>
 <a class="sourceLine" id="cb20-17" title="17"><span class="op">}</span>)</a></code></pre></div>
 <p>You could now abstract the <code>geocode</code> function to another file if you wanted to, as well as the object that is passed to routes (think of a routes file that requires in the different handlers it needs).</p>
-<h3>Leveraging Ramda</h3>
+<h3 id="leveraging-ramda">Leveraging Ramda</h3>
 <p>We can refactor the code above even further and make it a bit more functional and closer to being <a href="https://lucasmreis.github.io/blog/pointfree-javascript">“point-free”</a> by including a few Ramda helpers:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb21-1" title="1"><span class="kw">const</span> <span class="op">{</span> compose<span class="op">,</span> composeP<span class="op">,</span> curryN<span class="op">,</span> path<span class="op">,</span> prop <span class="op">}</span> <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;ramda&#39;</span>)</a>
 <a class="sourceLine" id="cb21-2" title="2"></a>
@@ -274,7 +274,7 @@
 <li>We have decoupled the use of paperplane’s <code>json</code> helper from <code>getGeocode</code> and <code>axios</code>, meaning that function can now be leveraged in other ways instead of being hard-set to JSON.</li>
 </ol>
 <p>If this scares the hell out of you, fear not! Check out <a href="https://egghead.io/instructors/andrew-van-slaars">Andrew van Slaar’s Ramda lessons on egghead.io</a> and if you’re liking what you’re seeing, <a href="https://github.com/MostlyAdequate/mostly-adequate-guide">Dr. Boolean’s “Mostly Adequate Guide to Functional Programming”</a>.</p>
-<h2>All of the Code</h2>
+<h2 id="all-of-the-code">All of the Code</h2>
 <p>The project itself can be found at <a href="https://github.com/rpearce/geocoding-proxy" class="uri">https://github.com/rpearce/geocoding-proxy</a>, but here is our <code>index.js</code> file in its entirety:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb22-1" title="1"><span class="co">// Make our .env configuration file available</span></a>
 <a class="sourceLine" id="cb22-2" title="2"><span class="at">require</span>(<span class="st">&#39;dotenv&#39;</span>).<span class="at">config</span>()</a>
@@ -322,9 +322,9 @@
 <a class="sourceLine" id="cb22-44" title="44"></a>
 <a class="sourceLine" id="cb22-45" title="45"><span class="co">// Start the server</span></a>
 <a class="sourceLine" id="cb22-46" title="46"><span class="va">http</span>.<span class="at">createServer</span>(<span class="at">mount</span>(app<span class="op">,</span> opts)).<span class="at">listen</span>(port<span class="op">,</span> listening)</a></code></pre></div>
-<h2>Conclusion</h2>
+<h2 id="conclusion">Conclusion</h2>
 <p>Tools like Node.js with paperplane make it very easy to create proxy servers to handle your requests in a safe fashion, so use them and always keep your API keys secret!</p>
-<h2>Update: 2017-07-30</h2>
+<h2 id="update-2017-07-30">Update: 2017-07-30</h2>
 <p>I’ve seen a some feedback asking about CORS (cross-origin resource sharing), so here’s how you can do it (useful for running things on localhost):</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">const</span> <span class="op">{</span> cors<span class="op">,</span> ... <span class="op">}</span> <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;paperplane&#39;</span>)</a>
 <a class="sourceLine" id="cb23-2" title="2"></a>

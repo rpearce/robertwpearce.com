@@ -28,7 +28,7 @@
     <link href="//fonts.googleapis.com/css?family=Lato:400" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/default.css" />
     
-    <link rel="stylesheet" href="/css/post.css" />
+    <link rel="stylesheet" href="/css/article.css" />
     
   </head>
   <body>
@@ -76,33 +76,33 @@
 <li><a href="/blog/elm-geocoding-and-darksky-pt-3-fetching-the-current-weather.html">Pt. 3 – Fetching the Current Weather</a></li>
 <li><a href="/blog/elm-geocoding-and-darksky-pt-4-extracting-our-elm-code.html">Pt. 4 – Extracting Our Elm Code</a></li>
 </ul>
-<h2>Overview</h2>
+<h2 id="overview">Overview</h2>
 <p>This post will cover setting up <a href="http://elm-lang.org/">Elm</a>, a <a href="http://localhost:3000/blog/node-js-geocoding-proxy-with-paperplane.html">geocoding proxy</a> and a <a href="https://github.com/rpearce/DarkSky-proxy/">DarkSky proxy</a>. We’ll need all of these things set up in order to get our weather app to work and not sacrifice our API keys.</p>
 <p>By the end of this post, you will have a “Hello, world!” Elm app with a simple <code>./build</code> command, and you should be able to <code>cURL</code> both your geocoding and DarkSky proxies to receive response data that we will use in the coming lessons.</p>
-<h2>Project Source Code</h2>
+<h2 id="project-source-code">Project Source Code</h2>
 <p>The project we’re making will be broken into parts here (branches will be named for each part): <a href="https://github.com/rpearce/elm-geocoding-darksky/" class="uri">https://github.com/rpearce/elm-geocoding-darksky/</a>. Be sure to check out the other branches to see the other parts as they become available.</p>
 <p>The code for this part is located in the <code>pt-1</code> branch: <a href="https://github.com/rpearce/elm-geocoding-darksky/tree/pt-1" class="uri">https://github.com/rpearce/elm-geocoding-darksky/tree/pt-1</a>.</p>
-<h2>Pre-requisites</h2>
+<h2 id="pre-requisites">Pre-requisites</h2>
 <p>This tutorial assumes that you already have installed Node.js (I use <a href="https://github.com/creationix/nvm">NVM</a> for managing Node versions and am using <code>v8.3</code>).</p>
 <p>Once you’ve got Node installed, we can begin.</p>
-<h2>Project Setup</h2>
+<h2 id="project-setup">Project Setup</h2>
 <p>From your favorite project folder, let’s create a new project folder named <code>elm-geocoding-darksky</code> and change the current working directory to be the new folder:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1">λ <span class="fu">mkdir</span> elm-geocoding-darksky</a>
 <a class="sourceLine" id="cb1-2" title="2">λ <span class="bu">cd</span> elm-geocoding-darksky</a></code></pre></div>
-<h2>Elm</h2>
-<h3>Installing Elm</h3>
+<h2 id="elm">Elm</h2>
+<h3 id="installing-elm">Installing Elm</h3>
 <p>You can install elm via any of the methods on the <a href="https://guide.elm-lang.org/install.html">elm install page</a> or by one of these methods:</p>
 <ul>
 <li>Homebrew: <code>brew install elm</code></li>
 <li>Node.js: <code>npm i elm -g</code> for a global binary or <code>npm init -y &amp;&amp; npm i elm</code> to create a <code>package.json</code> file and install <code>elm</code> to it; you’ll have to run this latter method via <code>npx elm</code>, as it’ll be looking for the binary in your <code>./node_modules/.bin/</code> directory)</li>
 </ul>
-<h3>elm-format</h3>
+<h3 id="elm-format">elm-format</h3>
 <p>I’ve found that having a tool re-format my Elm code to an agreed-upon format makes me more efficient and makes it easier for others to read my code. Check out these projects for more on how to do this:</p>
 <ul>
 <li><a href="https://github.com/avh4/elm-format" class="uri">https://github.com/avh4/elm-format</a></li>
 <li><a href="https://github.com/ElmCast/elm-vim">elm-vim</a></li>
 </ul>
-<h3>Adding Elm to a Webpage</h3>
+<h3 id="adding-elm-to-a-webpage">Adding Elm to a Webpage</h3>
 <p>Our goal here is to compile our elm project to an <code>elm.js</code> file and include that on a webpage (which we’ll make in a minute).</p>
 <p>First, let’s create a <code>src/</code> directory to house our source code and a <code>Main.elm</code> file within it:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1">λ <span class="fu">mkdir</span> src</a>
@@ -143,7 +143,7 @@ main =
 <a class="sourceLine" id="cb6-18" title="18">  <span class="kw">&lt;/body&gt;</span></a>
 <a class="sourceLine" id="cb6-19" title="19"><span class="kw">&lt;/html&gt;</span></a></code></pre></div>
 <p>If you run <code>λ open index.html</code>, you should be able to view the file in the browser and see <code>Hello, world!</code>. Congrats! You’re primed and ready to start building.</p>
-<h3>Creating a Build File</h3>
+<h3 id="creating-a-build-file">Creating a Build File</h3>
 <p>If you’re lazy like me, you can create an executable file, <code>build</code>, that will perform our <code>elm make ...</code> command for us:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1">λ <span class="fu">touch</span> build</a>
 <a class="sourceLine" id="cb7-2" title="2">λ <span class="fu">chmod</span> +x build</a>
@@ -156,22 +156,22 @@ main =
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1">λ <span class="ex">./build</span></a>
 <a class="sourceLine" id="cb8-2" title="2"><span class="ex">Success</span>! Compiled 1 module.</a>
 <a class="sourceLine" id="cb8-3" title="3"><span class="ex">Successfully</span> generated ./elm.js</a></code></pre></div>
-<h2>Proxies</h2>
+<h2 id="proxies">Proxies</h2>
 <p>In order to not expose our API keys for geocoding and weather forecasts, we’ll be using a separate proxy server for each service. I wrote recently wrote a post entitled <a href="/blog/node-js-geocoding-proxy-with-paperplane.html">Node.js Geocoding Proxy with Paperplane</a> where you can see a full explanation of what we’re doing and how to do it. If you don’t care about the how and why about setting up these little servers, then just continue on!</p>
-<h3>Setting Up Your Geocoding Proxy</h3>
+<h3 id="setting-up-your-geocoding-proxy">Setting Up Your Geocoding Proxy</h3>
 <p>First, you’ll need to get a Google Maps API Key from here: <a href="https://developers.google.com/maps/documentation/geocoding/start#get-a-key" class="uri">https://developers.google.com/maps/documentation/geocoding/start#get-a-key</a>.</p>
 <p>Once you’ve done that, go ahead and clone or download <a href="https://github.com/rpearce/geocoding-proxy">the geocoding-proxy project on GitHub</a> and follow the directions to get set up. Given you’ve got Node installed, you’ve copied over the <code>.env</code> file and set your API key in there, then running <code>λ node index.js</code> should start the server. From another command-line tab, run this and see if you get a similar result:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1">λ <span class="ex">curl</span> localhost:5050/geocode/Auckland</a>
 <a class="sourceLine" id="cb9-2" title="2"><span class="dt">{&quot;results&quot;:[...]}</span></a></code></pre></div>
 <p>If so, congrats! If you get stuck, create an issue on the <a href="https://github.com/rpearce/geocoding-proxy/issues">geocoding-proxy issues page</a>, and I’ll see if I can help.</p>
-<h3>Setting Up Your DarkSky Proxy</h3>
+<h3 id="setting-up-your-darksky-proxy">Setting Up Your DarkSky Proxy</h3>
 <p>(This is almost exactly like the geocoding proxy setup.)</p>
 <p>First, you’ll need to get a DarkSky API Key from here: <a href="https://darksky.net/dev/" class="uri">https://darksky.net/dev/</a>.</p>
 <p>Once you’ve done that, go ahead and clone or download <a href="https://github.com/rpearce/DarkSky-proxy">the DarkSky-proxy project on GitHub</a> and follow the directions to get set up. Given you’ve got Node installed, you’ve copied over the <code>.env</code> file and set your API key in there, then running <code>λ node index.js</code> should start the server. From another command-line tab, run this and see if you get a similar result:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" title="1">λ <span class="ex">curl</span> http://localhost:5051/forecast/37.8267,-122.4233</a>
 <a class="sourceLine" id="cb10-2" title="2"><span class="dt">{&quot;latitude&quot;:37.8267,&quot;longitude&quot;:-122.4233,...}</span></a></code></pre></div>
 <p>If so, congrats! If you get stuck, create an issue on the <a href="https://github.com/rpearce/DarkSky-proxy/issues">DarkSky-proxy issues page</a>, and I’ll see if I can help.</p>
-<h2>Wrapping Up</h2>
+<h2 id="wrapping-up">Wrapping Up</h2>
 <p>Thank you for reading this far! Now that we’ve got our Elm app build process set up and your proxy servers ready to work, we can start constructing our application piece-by-piece in the next article in the series.</p>
 <p>If you’d like to be notified of when articles are published, subscribe!</p>
 <p>Until next time, <br> Robert</p>
