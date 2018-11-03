@@ -7,6 +7,12 @@
   </url>
 
   <url>
+    <loc>https://robertwpearce.com/hakyll-pt-1-setup-and-initial-customization.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://robertwpearce.com/ramda-chops-map-filter-and-reduce.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

@@ -1,8 +1,10 @@
 ---
+author:      Robert Pearce
 title:       Asynchronously Loading Scripts
 date:        2015-10-05
 image:       /images/rock-creek-pk.jpg
 description: Beginner-friendly introduction to loading scripts on to a web page.
+keywords:    javascript, javascript tutorial, asynchronous scripts, website basics
 ---
 
 _This article is intended for HTML & JavaScript beginners._

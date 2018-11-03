@@ -1,8 +1,10 @@
 ---
+author:      Robert Pearce
 title:       Travel Ruminations
 date:        2017-02-20
 image:       /images/from_afar.jpg
 description: Travel is a way of discarding what you know and embracing that which is strange...
+keywords:    travel, discovery, new places, travel thoughts, bilbo baggins
 ---
 
 Travel is a way of discarding what you know and embracing that which is strange; a way of unburdening the comforts of life in search of a truth about which you cannot quite say, but you know it exists.

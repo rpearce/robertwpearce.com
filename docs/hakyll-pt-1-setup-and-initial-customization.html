@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hakyll Pt. 1 – Setup & Initial Customization</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <meta name="description" content="Use the hakyll static site generator to set up a website or blog.">
+    <meta name="author" content="Robert Pearce">
+    <meta name="keywords" content="hakyll, hakyll tutorial, hakyll blog, hakyll blog tutorial, hakyll static site, static site generator">
+    <meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU">
+
+    <meta property="og:site_name" content="Robert Pearce | Freelance Software Developer">
+    <meta property="og:title" content="Hakyll Pt. 1 – Setup & Initial Customization">
+    <meta property="og:url" content="https://robertwpearce.com/hakyll-pt-1-setup-and-initial-customization.html">
+    <meta property="og:description" content="Use the hakyll static site generator to set up a website or blog.">
+    <meta property="og:image" content="https://robertwpearce.com/images/mount-cook.jpg">
+    
+      <meta property="og:type" content="article">
+    
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="Robert Pearce | Freelance Software Developer">
+    <meta property="twitter:title" content="Hakyll Pt. 1 – Setup & Initial Customization">
+    <meta property="twitter:description" content="Use the hakyll static site generator to set up a website or blog.">
+    <meta property="twitter:image" content="https://robertwpearce.com/images/mount-cook.jpg">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="canonical" href="https://robertwpearce.com/hakyll-pt-1-setup-and-initial-customization.html">
+    <link href="//fonts.googleapis.com/css?family=Lato:400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/default.css" />
+    
+      <link rel="stylesheet" href="/css/article.css" />
+    
+  </head>
+  <body>
+    <main>
+  <nav class="nav">
+  <div class="layout--constrained">
+    <a class="nav__link" href="/">Home</a>
+    <a class="nav__link" href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a>
+    <a class="nav__link" href="/atom.xml">atom</a>
+    <a class="nav__link" href="/rss.xml">rss</a>
+  </div>
+</nav>
+
+  <article class="article">
+    <div class="article__bg" style="background-image: url('/images/mount-cook.jpg')">
+      <header class="article__bgHeader">
+        <div class="layout--constrained">
+          <div class="article__bgTitleWrap">
+            <h1 class="article__bgTitle">
+              <a href="/hakyll-pt-1-setup-and-initial-customization.html">Hakyll Pt. 1 – Setup & Initial Customization</a>
+            </h1>
+            <div class="article__bgSubHeader">
+              <small class="italic">Nov  4, 2018</small>
+              
+                <small class="article__bgPhotoCred italic">
+                  [ photo credit <a href="https://unsplash.com/@hamishclark_">Hamish Clark</a> ]
+                </small>
+              
+            </div>
+          </div>
+        </div>
+      </header>
+    </div>
+    <section class="layout--constrained">
+      <header class="article__header">
+        <h1 class="article__title">
+          <a href="/hakyll-pt-1-setup-and-initial-customization.html">Hakyll Pt. 1 – Setup & Initial Customization</a>
+        </h1>
+        <small class="italic">Nov  4, 2018</small>
+      </header>
+      <p>This is part 1 of a multipart series where we will look at getting a website / blog set up with <a href="https://jaspervdj.be/hakyll">hakyll</a> and customized a fair bit.</p>
+<ul>
+<li>Pt. 1 – Setup &amp; Initial Customization</li>
+<li><em>(wip) Pt. 2 – Generating a Sitemap XML File</em></li>
+<li><em>(wip) Pt. 3 – Generating RSS and Atom XML Feeds</em></li>
+<li><em>(wip) Pt. 4 – Customizing Markdown Compiler Options</em></li>
+<li><em>(wip) Pt. 5 – Generating Custom Post Filenames From a Title Slug</em></li>
+</ul>
+<h2 id="overview">Overview</h2>
+<ol>
+<li><a href="#installation-setup">Installation &amp; Setup</a></li>
+<li><a href="#configuration-rules">Configuration Rules</a></li>
+<li><a href="#blog-posts">Blog Posts</a></li>
+<li><a href="#working-with-templates">Working With Templates</a></li>
+<li><a href="#rendering-partials">Rendering Partials</a></li>
+</ol>
+<h2 id="installation-setup">Installation &amp; Setup</h2>
+<p>While this is detailed fully on <a href="https://jaspervdj.be/hakyll/tutorials/01-installation.html">the hakyll installation tutorial</a>, I will repeat it here.</p>
+<ol>
+<li>install <a href="https://docs.haskellstack.org/en/stable/README/">stack</a> and make sure <code>$HOME/.local/bin</code> is included in your <code>PATH</code></li>
+<li><code>λ stack install hakyll</code> – should install <code>hakyll-init</code> in <code>$HOME/.local/bin</code></li>
+<li><code>λ hakyll-init ourblog.com</code></li>
+<li><code>λ cd ourblog.com</code></li>
+<li><code>λ stack init</code></li>
+<li><code>λ stack build</code></li>
+<li><code>λ stack exec site build</code></li>
+<li><code>λ stack exec site rebuild</code> – to test the rebuild command</li>
+<li><code>λ stack exec site watch</code> – starts dev server &amp; watches for changes</li>
+<li>navigate to <a href="http://localhost:8000" class="uri">http://localhost:8000</a> to see it!</li>
+</ol>
+<h2 id="configuration-rules">Configuration Rules</h2>
+<p>Hakyll gives you the ability to override its <a href="https://jaspervdj.be/hakyll/reference/Hakyll-Core-Configuration.html">existing configuration rules</a> to change anything from the output directory (default <code>_site/</code>) to deploy commands to the host and port for previewing your site locally.</p>
+<p>Here is what the default configuration looks like in hakyll (<a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Configuration.hs#L88-L110">source</a>):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" title="1"><span class="co">-- | Default configuration for a hakyll application</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="ot">defaultConfiguration ::</span> <span class="dt">Configuration</span></a>
+<a class="sourceLine" id="cb1-3" title="3">defaultConfiguration <span class="fu">=</span> <span class="dt">Configuration</span></a>
+<a class="sourceLine" id="cb1-4" title="4">    { destinationDirectory <span class="fu">=</span> <span class="st">&quot;_site&quot;</span></a>
+<a class="sourceLine" id="cb1-5" title="5">    , storeDirectory       <span class="fu">=</span> <span class="st">&quot;_cache&quot;</span></a>
+<a class="sourceLine" id="cb1-6" title="6">    , tmpDirectory         <span class="fu">=</span> <span class="st">&quot;_cache/tmp&quot;</span></a>
+<a class="sourceLine" id="cb1-7" title="7">    , providerDirectory    <span class="fu">=</span> <span class="st">&quot;.&quot;</span></a>
+<a class="sourceLine" id="cb1-8" title="8">    , ignoreFile           <span class="fu">=</span> ignoreFile&#39;</a>
+<a class="sourceLine" id="cb1-9" title="9">    , deployCommand        <span class="fu">=</span> <span class="st">&quot;echo &#39;No deploy command specified&#39; &amp;&amp; exit 1&quot;</span></a>
+<a class="sourceLine" id="cb1-10" title="10">    , deploySite           <span class="fu">=</span> system <span class="fu">.</span> deployCommand</a>
+<a class="sourceLine" id="cb1-11" title="11">    , inMemoryCache        <span class="fu">=</span> <span class="dt">True</span></a>
+<a class="sourceLine" id="cb1-12" title="12">    , previewHost          <span class="fu">=</span> <span class="st">&quot;127.0.0.1&quot;</span></a>
+<a class="sourceLine" id="cb1-13" title="13">    , previewPort          <span class="fu">=</span> <span class="dv">8000</span></a>
+<a class="sourceLine" id="cb1-14" title="14">    }</a>
+<a class="sourceLine" id="cb1-15" title="15">  <span class="kw">where</span></a>
+<a class="sourceLine" id="cb1-16" title="16">    ignoreFile&#39; path</a>
+<a class="sourceLine" id="cb1-17" title="17">        <span class="fu">|</span> <span class="st">&quot;.&quot;</span>    <span class="ot">`isPrefixOf`</span> fileName <span class="fu">=</span> <span class="dt">True</span></a>
+<a class="sourceLine" id="cb1-18" title="18">        <span class="fu">|</span> <span class="st">&quot;#&quot;</span>    <span class="ot">`isPrefixOf`</span> fileName <span class="fu">=</span> <span class="dt">True</span></a>
+<a class="sourceLine" id="cb1-19" title="19">        <span class="fu">|</span> <span class="st">&quot;~&quot;</span>    <span class="ot">`isSuffixOf`</span> fileName <span class="fu">=</span> <span class="dt">True</span></a>
+<a class="sourceLine" id="cb1-20" title="20">        <span class="fu">|</span> <span class="st">&quot;.swp&quot;</span> <span class="ot">`isSuffixOf`</span> fileName <span class="fu">=</span> <span class="dt">True</span></a>
+<a class="sourceLine" id="cb1-21" title="21">        <span class="fu">|</span> <span class="fu">otherwise</span>                    <span class="fu">=</span> <span class="dt">False</span></a>
+<a class="sourceLine" id="cb1-22" title="22">      <span class="kw">where</span></a>
+<a class="sourceLine" id="cb1-23" title="23">          fileName <span class="fu">=</span> takeFileName path</a></code></pre></div>
+<p>The <a href="https://jaspervdj.be/hakyll/tutorials/03-rules-routes-compilers.html">hakyll tutorial on rules, routes and compilers</a> makes reference to a <code>hakyllWith</code> function for customizing configuration, so let’s see how we can use that.</p>
+<p>The default hakyll <code>main</code> function in your <code>site.hs</code> file looks like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" title="1"><span class="ot">main ::</span> <span class="dt">IO</span> ()</a>
+<a class="sourceLine" id="cb2-2" title="2">main <span class="fu">=</span> hakyll <span class="fu">$</span> <span class="kw">do</span></a></code></pre></div>
+<p>What we can do is change <code>hakyll</code> to <code>hakyllWith</code> and pass a function that we’ll name <code>config</code> that makes use of the <code>defaultConfiguration</code> but returns a new, altered <a href="https://en.wikibooks.org/wiki/Haskell/More_on_datatypes#Named_Fields_.28Record_Syntax.29">record</a>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" title="1"><span class="ot">main ::</span> <span class="dt">IO</span> ()</a>
+<a class="sourceLine" id="cb3-2" title="2">main <span class="fu">=</span> hakyllWith config <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb3-3" title="3">  <span class="co">-- ...</span></a>
+<a class="sourceLine" id="cb3-4" title="4"></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="ot">config ::</span> <span class="dt">Configuration</span></a>
+<a class="sourceLine" id="cb3-6" title="6">config <span class="fu">=</span> defaultConfiguration</a>
+<a class="sourceLine" id="cb3-7" title="7">    { destinationDirectory <span class="fu">=</span> <span class="st">&quot;docs&quot;</span></a>
+<a class="sourceLine" id="cb3-8" title="8">    , previewPort          <span class="fu">=</span> <span class="dv">5000</span></a>
+<a class="sourceLine" id="cb3-9" title="9">    }</a></code></pre></div>
+<p>Whenever we make a change to <code>site.hs</code>, we need to make sure we use <code>stack</code> to <code>build</code> it again and restart our server. We’ll also need to make sure we clean out our old output folder with the <code>clean</code> command. So, all together now:</p>
+<pre><code>λ stack exec site clean
+λ stack build
+λ stack exec site watch</code></pre>
+<p>…and now your output will be in the <code>docs/</code> folder, and your site will be previewable at <a href="http://localhost:5000" class="uri">http://localhost:5000</a>.</p>
+<p>Now that we’ve flexed our configuration muscles a bit, let’s look at the <code>posts/</code> folder to see what we’re working with on the blog side.</p>
+<h2 id="blog-posts">Blog Posts</h2>
+<p>If you open the <code>posts/</code> folder and select any preset blog post (hint: you can see them online at <a href="https://github.com/jaspervdj/hakyll/tree/master/data/example/posts" class="uri">https://github.com/jaspervdj/hakyll/tree/master/data/example/posts</a>; make sure you click the “Raw” button to view the raw markdown), you’ll see a standard markdown file containing two sets of content:</p>
+<ul>
+<li>metadata (between the <code>---</code> delimiters)</li>
+<li>body content (everything else)</li>
+</ul>
+<p>From <a href="http://localhost:5000" class="uri">http://localhost:5000</a>, let’s click on the first post we see: <a href="http://localhost:5000/posts/2015-12-07-tu-quoque.html" class="uri">http://localhost:5000/posts/2015-12-07-tu-quoque.html</a>. If we open up the corresponding file, <code>2015-12-07-tu-quoque.html</code>, in our text editor, we can see there are two metadata fields: <code>title</code> and <code>author</code>. Let’s change them:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode md"><code class="sourceCode markdown"><a class="sourceLine" id="cb5-1" title="1">---</a>
+<a class="sourceLine" id="cb5-2" title="2">title: Some Latin Text</a>
+<a class="sourceLine" id="cb5-3" title="3">author: Some Roman Person</a>
+<a class="sourceLine" id="cb5-4" title="4">---</a></code></pre></div>
+<p>Refresh the page and see the changes!</p>
+<p>But note that despite changing the title of your blog post, the outputted HTML file is still located at <a href="http://localhost:5000/posts/2015-12-07-tu-quoque.html" class="uri">http://localhost:5000/posts/2015-12-07-tu-quoque.html</a>. This is because the <em>markdown filename</em> is what currently determines the outputted filename. We will change this in Part 5 of this series, but until then, if you change the title of your post, it would be a good idea to also change the filename.</p>
+<p>Feel free to edit these metadata fields and markdown content with your own blog post material.</p>
+<p>Next up, we’ll see about how we can customize the templates to work with all the metadata that we might want to include from our posts (description, author, keywords, image, etc).</p>
+<h2 id="working-with-templates">Working With Templates</h2>
+<p>There is a <a href="https://jaspervdj.be/hakyll/tutorials/04-compilers.html#templates">hakyll turorial on templates, context and control flow</a> that you should check out. Here, we’re going to adjust the default templates to suit our needs.</p>
+<p>The HTML templates can be found in – you guessed it – the <code>templates/</code> folder.</p>
+<p>The first file we will look at is <code>templates/default.html</code> (hint: this template is also viewable online at <a href="https://github.com/jaspervdj/hakyll/blob/master/data/example/templates/default.html" class="uri">https://github.com/jaspervdj/hakyll/blob/master/data/example/templates/default.html</a>).</p>
+<p>Templates are nothing more than <code>.html</code> files but with a caveat (which you’d know about if you read the tutorial above): there is added context – drawn from markdown options or injected before compilation in <code>site.hs</code> – that can be used anywhere, so long as it is between <code>$</code> (dollar signs). Here is an example that uses the <code>title</code> property that is set in each file:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">&lt;title&gt;</span>$title$<span class="kw">&lt;/title&gt;</span></a></code></pre></div>
+<p>Cool! Now what if we wanted to use our <code>author</code> metadata?</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;author&quot;</span><span class="ot"> content=</span><span class="st">&quot;$author$&quot;</span><span class="kw">&gt;</span></a></code></pre></div>
+<p>Oh no!</p>
+<pre><code>Compiling
+  updated templates/default.html
+  [ERROR] Missing field $author$ in context for item about.rst</code></pre>
+<p>This is because not all of our files being run through this default template have all the same fields. We can use conditionals to solve this:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb9-1" title="1">$if(author)$<span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;author&quot;</span><span class="ot"> content=</span><span class="st">&quot;$author$&quot;</span><span class="kw">&gt;</span>$endif$</a>
+<a class="sourceLine" id="cb9-2" title="2"></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="co">&lt;!-- or, if you prefer --&gt;</span></a>
+<a class="sourceLine" id="cb9-4" title="4"></a>
+<a class="sourceLine" id="cb9-5" title="5">$if(author)$</a>
+<a class="sourceLine" id="cb9-6" title="6">  <span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;author&quot;</span><span class="ot"> content=</span><span class="st">&quot;$author$&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb9-7" title="7">$endif$</a></code></pre></div>
+<p>Blog posts also should have a <code>description</code> and <code>keywords</code>, so let’s add those: to <code>posts/2015-12-07-tu-quoque.markdown</code>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode md"><code class="sourceCode markdown"><a class="sourceLine" id="cb10-1" title="1">---</a>
+<a class="sourceLine" id="cb10-2" title="2">title: My Blog Post</a>
+<a class="sourceLine" id="cb10-3" title="3">description: This is my great blog post</a>
+<a class="sourceLine" id="cb10-4" title="4">keywords: blog, first blog, best blog evar</a>
+<a class="sourceLine" id="cb10-5" title="5">author: I did it!</a>
+<a class="sourceLine" id="cb10-6" title="6">---</a></code></pre></div>
+<p>We’ll then update our default template to handle those, as well:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">&lt;title&gt;</span>$title$<span class="kw">&lt;/title&gt;</span></a>
+<a class="sourceLine" id="cb11-2" title="2">$if(author)$<span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;author&quot;</span><span class="ot"> content=</span><span class="st">&quot;$author$&quot;</span><span class="kw">&gt;</span>$endif$</a>
+<a class="sourceLine" id="cb11-3" title="3">$if(keywords)$<span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;keywords&quot;</span><span class="ot"> content=</span><span class="st">&quot;$keywords$&quot;</span><span class="kw">&gt;</span>$endif$</a></code></pre></div>
+<p>If you refresh <a href="http://localhost:5000/posts/2015-12-07-tu-quoque.html" class="uri">http://localhost:5000/posts/2015-12-07-tu-quoque.html</a> and open up the web inspector, you’ll now see that the <code>&lt;head&gt;</code> now contains not only your post’s <code>title</code>, but also all the other fields you specified!</p>
+<p>There are many other possibilities for this, as well. For instance, if you wanted to have different <code>og:type</code>s of pages, you could do:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb12-1" title="1">$if(type)$</a>
+<a class="sourceLine" id="cb12-2" title="2">  <span class="kw">&lt;meta</span><span class="ot"> property=</span><span class="st">&quot;og:type&quot;</span><span class="ot"> content=</span><span class="st">&quot;$type$&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb12-3" title="3">$else$</a>
+<a class="sourceLine" id="cb12-4" title="4">  <span class="kw">&lt;meta</span><span class="ot"> property=</span><span class="st">&quot;og:type&quot;</span><span class="ot"> content=</span><span class="st">&quot;website&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb12-5" title="5">$endif$</a></code></pre></div>
+<p>Check out the default template for this website here: <a href="https://github.com/rpearce/robertwpearce.com/blob/master/templates/default.html" class="uri">https://github.com/rpearce/robertwpearce.com/blob/master/templates/default.html</a>.</p>
+<h2 id="rendering-partials">Rendering Partials</h2>
+<p>Lastly for today, what if we want to reuse templates and specify where they should be rendered from other templates? Enter <a href="https://jaspervdj.be/hakyll/tutorials/04-compilers.html#partials">hakyll partials</a>.</p>
+<p>A common use of partials is for navigation across different templates. We can add a new file, <code>templates/nav.html</code>, and place the following in it (add some CSS classes and styling if you want it to look nice):</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">&lt;nav</span><span class="ot"> class=</span><span class="st">&quot;nav&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb13-2" title="2">  <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;/&quot;</span><span class="kw">&gt;</span>Home<span class="kw">&lt;/a&gt;</span></a>
+<a class="sourceLine" id="cb13-3" title="3">  <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;mailto:me@myemail.com&quot;</span><span class="kw">&gt;</span>Email Me<span class="kw">&lt;/a&gt;</span></a>
+<a class="sourceLine" id="cb13-4" title="4"><span class="kw">&lt;/nav&gt;</span></a></code></pre></div>
+<p>Now, this partial can be used anywhere. For example, from <code>templates/post.html</code>:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb14-1" title="1">$partial(&quot;templates/nav.html&quot;)$</a></code></pre></div>
+<h2 id="wrapping-up">Wrapping Up</h2>
+<p>In this lesson we learned how to get started with <a href="https://jaspervdj.be/hakyll">hakyll</a> and learned some of the ways for us to get started customizing it to our own needs. Next time, we’ll dive into <code>site.hs</code> to generate our own <code>sitemap.xml</code> file.</p>
+<p>Next up:</p>
+<ul>
+<li><em>(wip) Pt. 2 – Generating a Sitemap XML File</em></li>
+<li><em>(wip) Pt. 3 – Generating RSS and Atom XML Feeds</em></li>
+<li><em>(wip) Pt. 4 – Customizing Markdown Compiler Options</em></li>
+<li><em>(wip) Pt. 5 – Generating Custom Post Filenames From a Title Slug</em></li>
+</ul>
+<hr />
+<p>Until next time, <br /> Robert</p>
+    </section>
+  </article>
+</main>
+
+<section class="subscribe section--padded bg--gray">
+  <div class="layout--constrained">
+    <h2 class="subscribe__header">Get notified of new posts</h2>
+
+    <form action="//robertwpearce.us13.list-manage.com/subscribe/post?u=2df44e8960266388bff165fa6&amp;id=ee2f2a3737" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate class="subscribe__form">
+      <div id="mce-responses">
+        <div class="response" id="mce-error-response" style="display:none"></div>
+        <div class="response" id="mce-success-response" style="display:none"></div>
+      </div>
+      <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_2df44e8960266388bff165fa6_ee2f2a3737" tabindex="-1" value=""></div>
+      <div class="subscribe__section">
+        <label for="mce-EMAIL" class="subscribe__label">Email Address</label>
+        <input type="email" value="" id="mce-EMAIL" class="subscribe__input" name="EMAIL" placeholder="you@greatemail.com">
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe__submit">
+      </div>
+      <small>Note: I will <em>never</em> give out your email nor spam you. Unsubscribe at any time.</small>
+    </form>
+
+    <p>
+      <small>(or subscribe to the <a href="/atom.xml">atom</a> or <a href="/rss.xml">rss</a> feeds)</small>
+    </p>
+  </div>
+</section>
+
+
+  </body>
+</html>

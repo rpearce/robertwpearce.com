@@ -1,8 +1,10 @@
 ---
+author:      Robert Pearce
 title:       Freelancing
 date:        2015-10-14
 image:       /images/mtn.jpeg
 description: Some thoughts on freelancing in the software development business.
+kewords:     freelancing, digital nomad, toptal
 ---
 
 Sandy beaches; downhill skiing; coffee shop Hugh Grant-esque romance. When people imagine themselves leaving their corporate jobs and becoming their own boss, moving from project to project as a knife through butter, they envision themselves living the good life and doing so _on their terms_. This is absolutely possible to achieve, but as with anything, freelancing isn't all rainbows and unicorns! But we want rainbows; we want unicorns. How can we get to this point? Let's start at the bottom.

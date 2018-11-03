@@ -1,8 +1,10 @@
 ---
+author:      Robert Pearce
 title:       Stop Saying Silicon Harbor
 date:        2015-03-23
 image:       /images/morris-island.jpg
 description: Charleston, SC techpreneurs need to stop saying Silicon Harbor.
+keywords:    silicon harbor, charleston, charlestontech, charleston tech, south carolina tech
 ---
 
 Ever since [Nate DaPore](https://twitter.com/natedapore) allegedly coined the phrase ["Silicon Harbor"](http://charlestonmag.com/features/the_rise_of_silicon_harbor) for Charleston, South Carolina (even though other cities around the world already used this term, such as [Hamburg, Germany](https://twitter.com/siliconharbor)), folks wanting to look like they know what they're talking about have continued to use the phrase "Silicon Harbor" _[ad](http://www.fastcompany.com/1839445/introducing-silicon-harbor-charleston-sc-home-twitpic-and-amazons-createspace) [nauseam](http://www.charlestoncitypaper.com/charleston/silicon-harbor-is-becoming-a-major-player-in-the-nations-tech-scene/Content?oid=4604950)_. If Charleston tech companies would like to move forward and be taken seriously by other cities and players in this game, they need to stop emulating and start innovating. This begins with a proper name.

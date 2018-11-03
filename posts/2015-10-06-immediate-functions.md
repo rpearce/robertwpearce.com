@@ -1,8 +1,10 @@
 ---
+author:      Robert Pearce
 title:       Immediate Functions
 date:        2015-10-06
 image:       /images/sunrise.jpg
 description: Beginner-friendly introduction to immediate functions.
+keywords:    javascript, javascript tutorial, immediate functions, IIFE, kelvin to fahrenheit,
 ---
 
 _This article is intended for JavaScript beginners._

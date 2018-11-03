@@ -1,8 +1,10 @@
 ---
+author:       Robert Pearce
 title:        "Elm, Geocoding & DarkSky: Pt. 2 – Geocoding an Address"
 date:         2017-07-30
 image:        /images/rain-window.jpg
 description:  In Part 2 we will use Elm & the Google Maps API to geocode an address.
+keywords:     elm, elm tutorial, elmlang, elm geocoding, elm darksky, elm weather, elm functional programming
 photoCredit:  Gabriele Diwald
 photoWebsite: "https://unsplash.com/@gabrielediwald"
 ---

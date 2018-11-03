@@ -1,8 +1,10 @@
 ---
+author:      Robert Pearce
 title:       Moving To London
 date:        2014-09-01
 image:       /images/london-tree.jpg
 description: If you can go on an adventure, then what are you waiting for?
+keywords:    travel, remote work, adventure, london, digital nomad
 ---
 
 2 months ago I decided I wanted to go to London for an indefinite amount of time.
