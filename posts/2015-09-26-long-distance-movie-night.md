@@ -1,8 +1,10 @@
 ---
+author:      Robert Pearce
 title:       Long-Distance Movie Night
 date:        2015-09-26
 image:       /images/cary_grant.jpg
 description: Your significant other and you can do long-distance movie night easily. Here's how.
+keywords:    long distance relationships, movie night, skype, dropbox
 ---
 
 In a long-distance relationship? I currently am, and it sucks, but that will change someday. My SO (significant other), who is an ocean away and five hours ahead, and I were recently celebrating the passing of time and wanted to share a movie night. How were we to do this?

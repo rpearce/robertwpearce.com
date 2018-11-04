@@ -1,8 +1,10 @@
 ---
+author:      Robert Pearce
 title:       Switching Jobs
 date:        2015-06-04
 image:       /images/edinburgh.jpg
 description: Announcement of switching jobs from Articulate to The Iron Yard.
+keywords:    switching jobs, new job, articulate, the iron yard
 ---
 
 Self-discipline can take you places you've never dreamed you would go.

@@ -1,8 +1,10 @@
 ---
+author:       Robert Pearce
 title:        "Ramda Chops: Safely Accessing Properties"
 date:         2018-01-31
 image:        /images/sheep-countryside.jpg
 description:  Get introduced to ramda's prop, propOr, path & pathOr functions.
+keywords:     ramda, ramda.js, ramdajs, ramda tutorial, ramda prop, ramda propOr, ramda path, ramda pathOr, ramda fp
 photoCredit:  George Hiles
 photoWebsite: "https://unsplash.com/@hilesy"
 ---

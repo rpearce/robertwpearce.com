@@ -6,9 +6,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <meta name="description" content="$description$">
+    $if(author)$<meta name="author" content="$author$">$endif$
+    $if(keywords)$<meta name="keywords" content="$keywords$">$endif$
     <meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU">
 
-    <meta property="og:site_name" content="Robert Pearce | Freelance Software Developer">
+    <meta property="og:site_name" content="$siteName$">
     <meta property="og:title" content="$title$">
     <meta property="og:url" content="$root$$url$">
     <meta property="og:description" content="$description$">
@@ -20,7 +22,7 @@
     $endif$
 
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:site" content="Robert Pearce | Freelance Software Developer">
+    <meta property="twitter:site" content="$siteName$">
     <meta property="twitter:title" content="$title$">
     <meta property="twitter:description" content="$description$">
     <meta property="twitter:image" content="$root$$image$">
@@ -30,9 +32,9 @@
     <link href="//fonts.googleapis.com/css?family=Lato:400" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/default.css" />
     $if(type)$
-    <link rel="stylesheet" href="/css/$type$.css" />
+      <link rel="stylesheet" href="/css/$type$.css" />
     $else$
-    <link rel="stylesheet" href="/css/home.css" />
+      <link rel="stylesheet" href="/css/home.css" />
     $endif$
   </head>
   <body>

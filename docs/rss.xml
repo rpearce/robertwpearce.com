@@ -7,8 +7,16 @@
         <description><![CDATA[Posts on JavaScript, Node.js, Haskell, Elm, Ruby and more.]]></description>
         <atom:link href="https://robertwpearce.com/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Thu, 08 Feb 2018 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Sun, 04 Nov 2018 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Hakyll Pt. 1 – Setup &amp; Initial Customization</title>
+    <link>https://robertwpearce.com/hakyll-pt-1-setup-and-initial-customization.html</link>
+    <description><![CDATA[Use the hakyll static site generator to set up a website or blog.]]></description>
+    <pubDate>Sun, 04 Nov 2018 00:00:00 UT</pubDate>
+    <guid>https://robertwpearce.com/hakyll-pt-1-setup-and-initial-customization.html</guid>
+    <dc:creator>Robert Pearce</dc:creator>
+</item>
+<item>
     <title>Ramda Chops: Map, Filter &amp; Reduce</title>
     <link>https://robertwpearce.com/ramda-chops-map-filter-and-reduce.html</link>
     <description><![CDATA[How to use ramda's map, filter and reduce functions to filter and transform a list of popular films.]]></description>

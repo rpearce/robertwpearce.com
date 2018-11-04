@@ -1,8 +1,10 @@
 ---
+author:      Robert Pearce
 title:       RiotJS Example
 date:        2015-01-28
 image:       /images/riotjs.jpg
 description: A quick-dive in to RiotJS, with examples.
+keywords:    riotjs, riot.js, riotjs tutorial, tutorial, javascript
 ---
 
 When I look at any of the myriad JavaScript UI libraries out there, I now ask two questions:

@@ -1,8 +1,10 @@
 ---
+author:       Robert Pearce
 title:        "Elm, Geocoding & DarkSky: Pt. 3 – Fetching the Current Weather"
 date:         2017-08-18
 image:        /images/london-rain.jpg
 description:  In Part 3 we query the DarkSky API with our geocoded address
+keywords:     elm, elm tutorial, elmlang, elm geocoding, elm darksky, elm weather, elm functional programming
 photoCredit:  Anjana Menon
 photoWebsite: "https://unsplash.com/@anjimenon"
 ---

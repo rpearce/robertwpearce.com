@@ -1,8 +1,10 @@
 ---
+author:       Robert Pearce
 title:        "Elm, Geocoding & DarkSky: Pt. 4 – Extracting our Elm Code"
 date:         2017-12-16
 image:        /images/field-road-rain.jpg
 description:  In Part 4 we ectract our Elm code for clarity
+keywords:     elm, elm tutorial, elmlang, elm geocoding, elm darksky, elm weather, elm functional programming
 photoCredit:  Pop & Zebra
 photoWebsite: "https://unsplash.com/@popnzebra"
 ---

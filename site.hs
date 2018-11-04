@@ -44,6 +44,7 @@ main = hakyllWith config $ do
             let indexCtx =
                     listField "posts" postCtx (return posts) <>
                     constField "root" root                   <>
+                    constField "siteName" siteName           <>
                     defaultContext
 
             getResourceBody
@@ -58,7 +59,9 @@ main = hakyllWith config $ do
         route idRoute
         compile $ do
             posts <- recentFirst =<< loadAll "posts/*"
-            let sitemapCtx = constField "root" root <>
+            let sitemapCtx =
+                    constField "root" root         <>
+                    constField "siteName" siteName <>
                     listField "posts" postCtx (return posts)
             makeItem ""
                 >>= loadAndApplyTemplate "templates/sitemap.xml" sitemapCtx
@@ -88,6 +91,11 @@ root =
     "https://robertwpearce.com"
 
 
+siteName :: String
+siteName =
+    "Robert Pearce | Freelance Software Developer"
+
+
 config :: Configuration
 config =
     defaultConfiguration
@@ -114,8 +122,9 @@ titleContext =
 
 postCtx :: Context String
 postCtx =
-    dateField "date" "%b %e, %Y" <>
-    constField "root" root <>
+    dateField "date" "%b %e, %Y"   <>
+    constField "root" root         <>
+    constField "siteName" siteName <>
     defaultContext
 
 

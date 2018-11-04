@@ -1,8 +1,10 @@
 ---
+author:       Robert Pearce
 title:        "Ramda Chops: Function Composition"
 date:         2018-01-26
 image:        /images/sheep-hill-building.jpg
 description:  Learn about function composition with ramda's compose function.
+keywords:     ramda, ramda.js, ramdajs, ramda tutorial, ramda compose, function composition, ramda fp
 photoCredit:  Alex Kotomanov
 photoWebsite: "https://unsplash.com/@kotomanov"
 ---
