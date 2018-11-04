@@ -1,5 +1,6 @@
 ---
-author:       Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:        Node.js Geocoding Proxy with Paperplane
 date:         2017-06-22
 image:        /images/paper-plane.jpg

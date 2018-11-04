@@ -1,5 +1,6 @@
 ---
-author:      Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:       RiotJS Example
 date:        2015-01-28
 image:       /images/riotjs.jpg

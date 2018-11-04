@@ -1,5 +1,6 @@
 ---
-author:      Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:       On Working Remotely
 date:        2014-10-15
 image:       /images/lavish-habit.jpg

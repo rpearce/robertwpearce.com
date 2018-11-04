@@ -1,5 +1,6 @@
 ---
-author:      Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:       Behaviour & Your Team
 date:        2017-06-02
 image:       /images/wellington.jpg

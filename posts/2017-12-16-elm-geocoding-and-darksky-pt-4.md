@@ -1,5 +1,6 @@
 ---
-author:       Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:        "Elm, Geocoding & DarkSky: Pt. 4 – Extracting our Elm Code"
 date:         2017-12-16
 image:        /images/field-road-rain.jpg

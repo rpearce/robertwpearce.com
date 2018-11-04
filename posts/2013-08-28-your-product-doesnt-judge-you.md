@@ -1,5 +1,6 @@
 ---
-author:      Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:       Your product doesn’t judge you; people do.
 date:        2013-08-28
 image:       /images/papaya-farm.jpg

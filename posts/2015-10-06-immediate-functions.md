@@ -1,5 +1,6 @@
 ---
-author:      Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:       Immediate Functions
 date:        2015-10-06
 image:       /images/sunrise.jpg

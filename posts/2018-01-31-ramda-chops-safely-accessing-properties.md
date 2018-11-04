@@ -1,5 +1,6 @@
 ---
-author:       Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:        "Ramda Chops: Safely Accessing Properties"
 date:         2018-01-31
 image:        /images/sheep-countryside.jpg

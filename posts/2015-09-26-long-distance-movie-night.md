@@ -1,5 +1,6 @@
 ---
-author:      Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:       Long-Distance Movie Night
 date:        2015-09-26
 image:       /images/cary_grant.jpg

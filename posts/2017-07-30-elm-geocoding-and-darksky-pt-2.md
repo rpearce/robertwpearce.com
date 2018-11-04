@@ -1,5 +1,6 @@
 ---
-author:       Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:        "Elm, Geocoding & DarkSky: Pt. 2 – Geocoding an Address"
 date:         2017-07-30
 image:        /images/rain-window.jpg

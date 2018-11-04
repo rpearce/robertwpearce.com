@@ -1,5 +1,6 @@
 ---
-author:      Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:       Moving To London
 date:        2014-09-01
 image:       /images/london-tree.jpg

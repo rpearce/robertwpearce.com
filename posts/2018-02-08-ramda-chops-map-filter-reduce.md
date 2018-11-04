@@ -1,5 +1,6 @@
 ---
-author:       Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:        "Ramda Chops: Map, Filter & Reduce"
 date:         2018-02-08
 image:        /images/sheep-cliffs.jpg

@@ -1,5 +1,6 @@
 ---
-author:      Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:       Simple Variadic Behavior
 date:        2015-10-13
 image:       /images/waterfall.jpg

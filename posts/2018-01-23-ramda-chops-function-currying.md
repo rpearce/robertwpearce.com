@@ -1,5 +1,6 @@
 ---
-author:       Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:        "Ramda Chops: Function Currying"
 date:         2018-01-23
 image:        /images/shepherd-flock.jpg

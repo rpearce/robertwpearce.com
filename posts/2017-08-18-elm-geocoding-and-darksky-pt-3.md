@@ -1,5 +1,6 @@
 ---
-author:       Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:        "Elm, Geocoding & DarkSky: Pt. 3 – Fetching the Current Weather"
 date:         2017-08-18
 image:        /images/london-rain.jpg

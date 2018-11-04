@@ -1,5 +1,6 @@
 ---
-author:      Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:       Missing Those We Love
 date:        2016-02-02
 image:       /images/from_afar.jpg

@@ -1,5 +1,6 @@
 ---
-author:      Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:       Asynchronously Loading Scripts
 date:        2015-10-05
 image:       /images/rock-creek-pk.jpg

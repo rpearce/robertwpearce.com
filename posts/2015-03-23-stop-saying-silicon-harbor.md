@@ -1,5 +1,6 @@
 ---
-author:      Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:       Stop Saying Silicon Harbor
 date:        2015-03-23
 image:       /images/morris-island.jpg

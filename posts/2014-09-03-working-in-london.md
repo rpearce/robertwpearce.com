@@ -1,5 +1,6 @@
 ---
-author:      Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:       Working In London
 date:        2014-09-03
 image:       /images/clapham-cafe.jpg

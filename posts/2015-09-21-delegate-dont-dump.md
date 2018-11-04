@@ -1,5 +1,6 @@
 ---
-author:       Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:        Delegate; Don't Dump
 date:         2015-09-21
 image:        /images/hinge.jpg

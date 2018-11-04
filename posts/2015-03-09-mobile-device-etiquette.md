@@ -1,5 +1,6 @@
 ---
-author:      Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:       Mobile Device Etiquette
 date:        2015-03-09
 image:       /images/phone-table.jpg

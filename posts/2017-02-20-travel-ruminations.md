@@ -1,5 +1,6 @@
 ---
-author:      Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:       Travel Ruminations
 date:        2017-02-20
 image:       /images/from_afar.jpg

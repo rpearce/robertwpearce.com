@@ -1,5 +1,6 @@
 ---
-author:       Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:        "Elm, Geocoding & DarkSky: Pt. 1 – Setup Elm & Proxy Servers"
 date:         2017-07-22
 image:        /images/snow-dogs.jpg

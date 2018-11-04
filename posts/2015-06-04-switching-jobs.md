@@ -1,5 +1,6 @@
 ---
-author:      Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:       Switching Jobs
 date:        2015-06-04
 image:       /images/edinburgh.jpg

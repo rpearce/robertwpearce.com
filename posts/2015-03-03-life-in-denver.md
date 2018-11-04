@@ -1,5 +1,6 @@
 ---
-author:      Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:       Life in Colorado
 date:        2015-03-03
 image:       /images/colorado.jpg

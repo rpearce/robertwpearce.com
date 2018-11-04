@@ -1,5 +1,6 @@
 ---
-author:      Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:       Exercising In Transit
 date:        2014-09-29
 image:       /images/outdoor-gym.jpg

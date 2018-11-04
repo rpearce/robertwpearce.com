@@ -1,5 +1,6 @@
 ---
-author:      Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:       Freelancing
 date:        2015-10-14
 image:       /images/mtn.jpeg

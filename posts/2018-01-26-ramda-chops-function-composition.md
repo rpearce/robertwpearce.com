@@ -1,5 +1,6 @@
 ---
-author:       Robert Pearce
+author:        "Robert Pearce"
+authorTwitter: "@RobertWPearce"
 title:        "Ramda Chops: Function Composition"
 date:         2018-01-26
 image:        /images/sheep-hill-building.jpg
