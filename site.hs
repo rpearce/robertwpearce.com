@@ -3,21 +3,20 @@
 
 import           Hakyll
 
-import           Data.Char   (isAlphaNum)
-import           Data.Maybe  (fromMaybe)
-import qualified Data.Text   as T
+import           Control.Monad (forM_)
+import           Data.Char     (isAlphaNum)
+import           Data.Maybe    (fromMaybe)
+import qualified Data.Text     as T
 import           Text.Pandoc
-import           Web.Slug    (mkSlug)
+import           Web.Slug      (mkSlug)
 
 
 main :: IO ()
 main = hakyllWith config $ do
-    match "CNAME" $ do
-        route   idRoute
-        compile copyFileCompiler
-
-
-    match "images/*" $ do
+    forM_ [ "CNAME"
+          , "images/*"
+          , ".well-known/*"
+          ] $ \f -> match f $ do
         route   idRoute
         compile copyFileCompiler
 
@@ -33,6 +32,16 @@ main = hakyllWith config $ do
         route $ metadataRoute customizedRoute
         compile $ pandocCompilerCustom
             >>= loadAndApplyTemplate "templates/post.html"    ctx
+            >>= saveSnapshot "content"
+            >>= loadAndApplyTemplate "templates/default.html" ctx
+
+
+    match "new-zealand/*" $ do
+        let ctx = constField "type" "article" <> infoCtx
+
+        route $ setExtension "html"
+        compile $ pandocCompilerCustom
+            >>= loadAndApplyTemplate "templates/info.html"    ctx
             >>= saveSnapshot "content"
             >>= loadAndApplyTemplate "templates/default.html" ctx
 
@@ -122,6 +131,14 @@ titleContext =
 
 postCtx :: Context String
 postCtx =
+    dateField "date" "%b %e, %Y"   <>
+    constField "root" root         <>
+    constField "siteName" siteName <>
+    defaultContext
+
+
+infoCtx :: Context String
+infoCtx =
     dateField "date" "%b %e, %Y"   <>
     constField "root" root         <>
     constField "siteName" siteName <>
