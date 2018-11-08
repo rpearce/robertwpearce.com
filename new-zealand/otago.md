@@ -37,6 +37,14 @@ Albert Town.
 * https://www.lakewanaka.co.nz/explore/outlet-track/
 
 #### Diamond Lake Circuit and Rocky Mountain Summit
+This can be a big hike, a medium hike or a small walk. It's a 10 minute walk or
+so to the lake itself, which is wonderful to walk around. There is also a
+lookout you can hike up to if you're interested in seeing it from above. If you
+continue on past the lookout and decide to do the Rocky Mountain Summit, as
+well, make sure you take the _Western Route_ (go left when you have a choice...
+you'll know when) so that you can see the good views as you come down.
+Gorgeous views over Lake Wanaka are at the top, but make sure you're careful, as
+this can get muddy and can be steep at times.
 * https://www.doc.govt.nz/parks-and-recreation/places-to-go/otago/places/diamond-lake-and-hospital-flat/things-to-do/diamond-lake-and-rocky-mountain-walks/
 * https://www.lakewanaka.co.nz/things-to-do/walking-and-hiking/wanaka-photo-walk/photo-point-11-diamond-lake
 
@@ -64,6 +72,11 @@ drive.
 
 #### Millenium Walkway: Wanaka-Glendhu
 * https://goo.gl/maps/GFVRE4GF6fo
+
+#### Glendhu Bay
+* https://www.lakewanaka.co.nz/explore/glendhu-bay-track/
+* https://www.lakewanaka.co.nz/explore/glendhu-bay-lakeside-holiday-park/
+* https://www.lakewanaka.co.nz/things-to-do/walking-and-hiking/wanaka-photo-walk/photo-point-10-glendhu-bay-lookout/
 
 #### Rob Roy Glacier Track
 * https://www.doc.govt.nz/parks-and-recreation/places-to-go/otago/places/mount-aspiring-national-park/things-to-do/tracks/rob-roy-track/
