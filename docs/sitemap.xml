@@ -223,4 +223,16 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://robertwpearce.com/new-zealand/queenstown-area.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://robertwpearce.com/new-zealand/wanaka-area.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
