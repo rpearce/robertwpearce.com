@@ -16,6 +16,7 @@ Things to do and see in New Zealand's Otago region.
   * [Walks / Hikes](#walks-hikes)
   * [Food / Drink](#food-drink)
   * [Activities / Things To See](#activities-things-to-see)
+  * [Coworking](#coworking)
 
 ## Wanaka, Albert Town, Hawea, Glendhu Bay, Cardrona, Cromwell
 
@@ -167,6 +168,7 @@ Highly recommend going!
 * https://goo.gl/maps/8yrW58MH81o
 
 ### Coworking
+
 #### The Cell
 Great for short-term and long-term coworking-space-seekers alike. Be sure to ask
 for MJ, and tell her I (Robert Pearce) sent you!
