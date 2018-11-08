@@ -12,6 +12,11 @@ photoWebsite:  "https://www.instagram.com/theworldwithabackpack/"
 
 Things to do and see in New Zealand's Otago region.
 
+* [Wanaka, Albert Town, Hawea, Glendhu Bay, Cardrona, Cromwell](#wanaka-albert-town-hawea-glendhu-bay-cardrona-cromwell)
+  * [Walks / Hikes](#walks-hikes)
+  * [Food / Drink](#food-drink)
+  * [Activities / Things To See](#activities-things-to-see)
+
 ## Wanaka, Albert Town, Hawea, Glendhu Bay, Cardrona, Cromwell
 
 ### Walks / Hikes
