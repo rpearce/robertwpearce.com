@@ -14,6 +14,7 @@ import           Web.Slug      (mkSlug)
 main :: IO ()
 main = hakyllWith config $ do
     forM_ [ "CNAME"
+          , "robots.txt"
           , "images/*"
           , ".well-known/*"
           ] $ \f -> match f $ do
@@ -37,7 +38,7 @@ main = hakyllWith config $ do
 
 
     match "new-zealand/*" $ do
-        let ctx = constField "type" "article" <> infoCtx
+        let ctx = constField "type" "article" <> postCtx
 
         route $ setExtension "html"
         compile $ pandocCompilerCustom
@@ -68,10 +69,12 @@ main = hakyllWith config $ do
         route idRoute
         compile $ do
             posts <- recentFirst =<< loadAll "posts/*"
+            otherPages <- loadAll "new-zealand/*"
             let sitemapCtx =
-                    constField "root" root         <>
-                    constField "siteName" siteName <>
-                    listField "posts" postCtx (return posts)
+                    constField "root" root                   <>
+                    constField "siteName" siteName           <>
+                    listField "posts" postCtx (return posts) <>
+                    listField "otherPages" postCtx (return otherPages)
             makeItem ""
                 >>= loadAndApplyTemplate "templates/sitemap.xml" sitemapCtx
 
@@ -131,14 +134,6 @@ titleContext =
 
 postCtx :: Context String
 postCtx =
-    dateField "date" "%b %e, %Y"   <>
-    constField "root" root         <>
-    constField "siteName" siteName <>
-    defaultContext
-
-
-infoCtx :: Context String
-infoCtx =
     dateField "date" "%b %e, %Y"   <>
     constField "root" root         <>
     constField "siteName" siteName <>

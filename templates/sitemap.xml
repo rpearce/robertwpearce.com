@@ -12,4 +12,11 @@ $for(posts)$
     <priority>0.8</priority>
   </url>
 $endfor$
+$for(otherPages)$
+  <url>
+    <loc>$root$$url$</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+$endfor$
 </urlset>
