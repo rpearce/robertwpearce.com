@@ -37,7 +37,7 @@ main = hakyllWith config $ do
             >>= loadAndApplyTemplate "templates/default.html" ctx
 
 
-    match "new-zealand/*" $ do
+    match "new-zealand/**" $ do
         let ctx = constField "type" "article" <> postCtx
 
         route $ setExtension "html"

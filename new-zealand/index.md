@@ -13,4 +13,6 @@ photoWebsite:  "https://www.instagram.com/theworldwithabackpack/"
 Things to do and see in New Zealand.
 
 ## South Island
-* [Otago](/new-zealand/otago.html)
+* [Otago](/new-zealand/otago/index.html)
+  * [Wanaka, Albert Town, Hawea, Glendhu Bay, Cardrona, Cromwell](/new-zealand/otago/wanaka-area.html)
+  * [Queenstown, Arrow Town, Glenorchy](/new-zealand/otago/queenstown-area.html)
