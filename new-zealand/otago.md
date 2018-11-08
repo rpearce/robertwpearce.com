@@ -2,7 +2,7 @@
 author:        "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 title:         Otago, New Zealand
-date:          2018-11-15
+date:          2018-11-08
 image:         /images/papaya-farm.jpg
 description:   Things to do and see in New Zealand's Otago region
 keywords:      otago, central otago, new zealand, things to do, hikes, coworking, restaurants
@@ -13,15 +13,24 @@ Things to do and see in New Zealand's Otago region.
 ## Wanaka, Albert Town, Hawea, Glendhu Bay, Cardrona, Cromwell
 
 ### Walks / Hikes
+https://www.lakewanaka.co.nz/things-to-do/walking-and-hiking/
 
 #### That Wanaka Tree Walk
-* https://goo.gl/maps/FbkDXE54XQF2)
+Classic walk from lakefront Wanaka that takes you past
+[#thatwanakatree](https://www.instagram.com/explore/tags/thatwanakatree/). Be
+sure to be mindful of others while there and cleanup after yourself.
+* https://www.lakewanaka.co.nz/things-to-do/walking-and-hiking/wanaka-photo-walk/photo-point-2-thatwanakatree/
+* https://goo.gl/maps/FbkDXE54XQF2
 
 #### Hawea River Track
+Riverside track that stretches north-to-south from Lake Hawea all the way to
+Albert Town.
 * https://www.lakewanaka.co.nz/explore/hawea-river-track/
 
 #### Lake Hawea
 * https://www.newzealand.com/int/lake-hawea/
+* https://www.lakewanaka.co.nz/things-to-do/walking-and-hiking/wanaka-photo-walk/photo-point-16-lake-hawea-lookout/
+* https://www.lakewanaka.co.nz/things-to-do/walking-and-hiking/wanaka-photo-walk/photo-point-14-lake-hawea-esplanade-reserve/
 
 #### Upper Clutha River Track (Including Outlet Track)
 * https://www.doc.govt.nz/parks-and-recreation/places-to-go/otago/places/wanaka-area/things-to-do/upper-clutha-river-track
@@ -29,18 +38,36 @@ Things to do and see in New Zealand's Otago region.
 
 #### Diamond Lake Circuit and Rocky Mountain Summit
 * https://www.doc.govt.nz/parks-and-recreation/places-to-go/otago/places/diamond-lake-and-hospital-flat/things-to-do/diamond-lake-and-rocky-mountain-walks/
+* https://www.lakewanaka.co.nz/things-to-do/walking-and-hiking/wanaka-photo-walk/photo-point-11-diamond-lake
 
 #### Mt Iron Loop Track
+Gorgeous views await those who walk up to the top. This is nota  difficult walk
+if you keep to the Wanaka Lake-facing side. Note: This "loop" goes _over_ the
+mountain instead of around it, and the Albert Town side is much tougher.
 * https://www.doc.govt.nz/parks-and-recreation/places-to-go/otago/places/wanaka-area/things-to-do/mount-iron-track/
+* https://www.lakewanaka.co.nz/things-to-do/walking-and-hiking/wanaka-photo-walk/photo-point-6-mt-iron-summit
 
 #### Blue Pools Track
+Those gorgeous blue pools you always see pictures of. Be sure to continue
+walking past them into the valley. Watch out for the sand fleas down by the
+water, though! They pack a _wicked_ punch that you won't notice for a day or two
+that is just like North American fleas.
 * https://www.doc.govt.nz/parks-and-recreation/places-to-go/otago/places/mount-aspiring-national-park/things-to-do/tracks/blue-pools-track/
+* https://www.lakewanaka.co.nz/explore/blue-pools-track/
+
+#### The Neck
+You _get to_ pass over The Neck to get to the [Blue Pools
+Track](#blue-pools-track), and what a treat this is: lookouts over lakes as you
+drive.
+* https://www.lakewanaka.co.nz/things-to-do/walking-and-hiking/wanaka-photo-walk/photo-point-17-the-neck
+
 
 #### Millenium Walkway: Wanaka-Glendhu
 * https://goo.gl/maps/GFVRE4GF6fo
 
 #### Rob Roy Glacier Track
 * https://www.doc.govt.nz/parks-and-recreation/places-to-go/otago/places/mount-aspiring-national-park/things-to-do/tracks/rob-roy-track/
+* https://www.lakewanaka.co.nz/explore/rob-roy-glacier-track/
 
 #### Motatapu River Track
 * http://www.uppercluthatrackstrust.org.nz/motatapu-river-track/
@@ -55,17 +82,25 @@ Things to do and see in New Zealand's Otago region.
 * https://www.doc.govt.nz/parks-and-recreation/places-to-go/otago/places/wanaka-area/things-to-do/minaret-burn-track/
 
 #### Bannockburn Sluicings
+Known as "the heart of the desert," Bannockburn is New Zealand's own man-made
+desert (not on purpose) that was a result of a type of gold-mining back in the
+day known as sluicing. The are tracks all around this area that also highlight
+an old dam, holes bored into cliffsides that diggers used, an old house and nice
+scenery to boot.
 * https://www.doc.govt.nz/parks-and-recreation/places-to-go/otago/places/bannockburn-area/things-to-do/bannockburn-sluicings-track/
 
 ### Food / Drink
 
 #### Rhyme & Reason Brewery
+Brewery & taproom nestled back in the warehouse district of Wanaka.
 * https://www.rhymeandreason.beer/
 
-#### Francesca’s Italian Kitchen (Booking Essential)
+#### Francesca’s Italian Kitchen
+Where to go on a date; it has nice Italian food. Booking ahead is essential.
 * https://fransitalian.co.nz/
 
 #### Amigos Mexican Grill
+The best (maybe only) Mexican food in Wanaka.
 * http://www.amigosmexicangrill.co.nz/
 
 #### Speights Ale House
@@ -90,6 +125,11 @@ Lovely cafe in a neighborhood in Albert town.
 #### The Honey Shed
 The _best_ honey; sold via an honor system on the side of the road.
 * https://goo.gl/maps/YvWpE6Jt2vL2
+
+#### Makarora Country Cafe
+Country cafe with outdoor seating and petrol filling station on the way to the
+[Blue Pools](#blue-pools).
+* https://goo.gl/maps/hqk4gpv5G322
 
 ### Activities / Things To See
 
