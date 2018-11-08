@@ -114,21 +114,21 @@ scenery to boot.
 
 #### Rhyme & Reason Brewery
 Brewery & taproom nestled back in the warehouse district of Wanaka.
-* https://www.rhymeandreason.beer/
+* https://www.rhymeandreason.beer
 
 #### Francesca’s Italian Kitchen
 Where to go on a date; it has nice Italian food. Booking ahead is essential.
-* https://fransitalian.co.nz/
+* https://fransitalian.co.nz
 
 #### Amigos Mexican Grill
 The best (maybe only) Mexican food in Wanaka.
-* http://www.amigosmexicangrill.co.nz/
+* http://www.amigosmexicangrill.co.nz
 
 #### Speights Ale House
-* https://wanakaspeightsalehouse.co.nz/
+* https://wanakaspeightsalehouse.co.nz
 
 #### Lake Bar
-* http://www.lakebar.co.nz/
+* http://www.lakebar.co.nz
 
 #### Big Fig
 * https://goo.gl/maps/n8WYpQbGbvt
@@ -138,10 +138,10 @@ The best (maybe only) Mexican food in Wanaka.
 
 #### Double Black Cafe
 Lovely cafe in a neighborhood in Albert town.
-* https://www.doubleblack.co.nz/
+* https://www.doubleblack.co.nz
 
 #### Pembroke Patisserie
-* https://www.pembrokepatisserie.co.nz/
+* https://www.pembrokepatisserie.co.nz
 
 #### The Honey Shed
 The _best_ honey; sold via an honor system on the side of the road.
@@ -155,13 +155,13 @@ Country cafe with outdoor seating and petrol filling station on the way to the
 ### Activities / Things To See
 
 #### Cromwell Heritage Precinct, Fruit Shops
-* http://www.cromwellheritageprecinct.co.nz/
+* http://www.cromwellheritageprecinct.co.nz
 * https://www.cromwell.org.nz/listing-cat/fruit-stalls/
 
 #### The Cardrona Horse Trek
 Absolutely fantastic horse trek adventure through the Cardrona valley area.
 Highly recommend going!
-* https://thecardrona.co.nz/
+* https://thecardrona.co.nz
 * https://www.tripadvisor.co.nz/Attraction_Review-g612500-d6415446-Reviews-The_Cardrona-Wanaka_Otago_Region_South_Island.html
 
 #### Bradrona (Cardrona Bra Fence)
@@ -171,8 +171,10 @@ Highly recommend going!
 
 #### The Cell
 Great for short-term and long-term coworking-space-seekers alike. Be sure to ask
-for MJ, and tell her I (Robert Pearce) sent you!
+for MJ, and tell her I (Robert Pearce) sent you! Really nice folks.
+* https://www.thecell.co.nz
 * https://goo.gl/maps/a4S6SoBfd622
 
 #### The Engine Room
+* https://www.engineroomwanaka.co.nz
 * https://goo.gl/maps/e5uwR38V2W32
