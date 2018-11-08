@@ -18,6 +18,9 @@ Cardrona and Cromwell in New Zealand.
 * [Activities / Things To See](#activities-things-to-see)
 * [Coworking](#coworking)
 
+Or go back to the [Otago index](/new-zealand/otago/index.html) or the
+[main New Zealand index](/new-zealand/index.html).
+
 ## Walks / Hikes
 https://www.lakewanaka.co.nz/things-to-do/walking-and-hiking/
 
