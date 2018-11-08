@@ -109,28 +109,44 @@ day known as sluicing. The are tracks all around this area that also highlight
 an old dam, holes bored into cliffsides that diggers used, an old house and nice
 scenery to boot.
 * https://www.doc.govt.nz/parks-and-recreation/places-to-go/otago/places/bannockburn-area/things-to-do/bannockburn-sluicings-track/
+* https://goo.gl/maps/LFUkNctqzuE2
 
 ### Food / Drink
 
-#### Rhyme & Reason Brewery
+#### Rhyme and Reason Brewery
 Brewery & taproom nestled back in the warehouse district of Wanaka.
 * https://www.rhymeandreason.beer
+* https://goo.gl/maps/6hmnJSRnMVq
 
 #### Francesca’s Italian Kitchen
 Where to go on a date; it has nice Italian food. Booking ahead is essential.
 * https://fransitalian.co.nz
+* https://goo.gl/maps/Gj1fXtFVL3E2
 
 #### Amigos Mexican Grill
 The best (maybe only) Mexican food in Wanaka.
 * http://www.amigosmexicangrill.co.nz
+* https://goo.gl/maps/CyugGKLdhju
 
 #### Speights Ale House
 * https://wanakaspeightsalehouse.co.nz
+* https://goo.gl/maps/Zt41bK1nyry
 
 #### Lake Bar
+Popular with tourists but for good reason: it's got a perfect lakefront spot
+facing Lake Wanaka. Seemingly because of this, all their portions are
+American-sized (try the loaded chips [fries] or jalapeño poppers).
 * http://www.lakebar.co.nz
+* https://goo.gl/maps/VygtHim2Av32
+
+#### Rippon Vineyard
+Great for some wine tasting after hiking [Roys Peak](#roys-peak). Hungry folks
+be warned – they don't tend to have food.
+* https://www.rippon.co.nz
+* https://goo.gl/maps/y4kZqd7gJQy
 
 #### Big Fig
+Quick, amazingly healthy lunch served up in large bowl.
 * https://goo.gl/maps/n8WYpQbGbvt
 
 #### Kai Whakapai

@@ -16,7 +16,7 @@ main = hakyllWith config $ do
     forM_ [ "CNAME"
           , "robots.txt"
           , "images/*"
-          , ".well-known/*"
+          , ".well-known/*" -- @TODO
           ] $ \f -> match f $ do
         route   idRoute
         compile copyFileCompiler
