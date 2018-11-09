@@ -30,13 +30,18 @@ Or go back to the [Otago index](/new-zealand/otago/index.html) or the
 ## Food / Drink
 
 ### The Fork and Tap
-
 * http://theforkandtap.co.nz
 * https://goo.gl/maps/GZqr2hXBTtw
 
 ### The Postmasters Residence
-* http://www.postmasters.co.nz/
+* http://www.postmasters.co.nz
 * https://goo.gl/maps/cpoZqdyST5B2
+
+### The Stables Restaurant & Wine Bar
+* https://goo.gl/maps/S5j27b4SSu22
+
+### The Blue Door
+* https://goo.gl/maps/VY99AQE8NTm
 
 ### The Chop Shop
 * https://goo.gl/maps/MFL39C2kKCN2
