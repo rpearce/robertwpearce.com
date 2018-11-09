@@ -1,16 +1,16 @@
 ---
-author:        "Robert Pearce"
+author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-title:         Queenstown, Arrow Town & Glenorchy
-date:          2018-11-08
-image:         /images/lake-wanaka.jpg
-description:   Things to do and see in Wanaka, Albert Town, Hawea, Glendhu Bay, Cardrona & Cromwell
-keywords:      queenstown, arrow town, glenorchy, new zealand
-photoCredit:   theworldwithabackpack
-photoWebsite:  "https://www.instagram.com/theworldwithabackpack/"
+date: "2018-11-08"
+description: "Things to do and see in the Queenstown, Arrowtown & Glenorchy areas."
+image: "/images/lake-wanaka.jpg"
+keywords: "queenstown, arrow town, glenorchy, new zealand"
+photoCredit: "theworldwithabackpack"
+photoWebsite: "https://www.instagram.com/theworldwithabackpack/"
+title: "Queenstown, Arrowtown & Glenorchy"
 ---
 
-Things to do and see in and around Queenstown, Arrow Town & Glenorchy in New
+Things to do and see in and around Queenstown, Arrowtown & Glenorchy in New
 Zealand.
 
 * [Walks / Hikes](#walks-hikes)

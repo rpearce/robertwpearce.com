@@ -1,13 +1,12 @@
 ---
-author:        "Robert Pearce"
+author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-title:        "Ramda Chops: Map, Filter & Reduce"
-date:         2018-02-08
-image:        /images/sheep-cliffs.jpg
-description:  How to use ramda's map, filter and reduce functions to filter and transform a list of popular films.
-keywords:     ramda, ramda.js, ramdajs, ramda tutorial, ramda map, ramda filter, ramda reduce, ramda fp
-photoCredit:  Mingheras Cosmin
+description: "How to use ramda's map, filter and reduce functions to filter and transform a list of popular films."
+image: "/images/sheep-cliffs.jpg"
+keywords: "ramda, ramda.js, ramdajs, ramda tutorial, ramda map, ramda filter, ramda reduce, ramda fp"
+photoCredit: "Mingheras Cosmin"
 photoWebsite: "https://unsplash.com/@cosmin_13"
+title: "Ramda Chops: Map, Filter & Reduce"
 ---
 
 _Thanks to [Jillian Silver](https://github.com/jsilve), [Patrick

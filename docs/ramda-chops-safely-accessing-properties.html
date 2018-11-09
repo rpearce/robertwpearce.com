@@ -54,7 +54,7 @@
               <a href="/ramda-chops-safely-accessing-properties.html">Ramda Chops: Safely Accessing Properties</a>
             </h1>
             <div class="article__bgSubHeader">
-              <small class="italic">Jan 31, 2018</small>
+              <small class="italic">2018-01-31</small>
               
                 <small class="article__bgPhotoCred italic">
                   [ photo credit <a href="https://unsplash.com/@hilesy">George Hiles</a> ]
@@ -70,7 +70,7 @@
         <h1 class="article__title">
           <a href="/ramda-chops-safely-accessing-properties.html">Ramda Chops: Safely Accessing Properties</a>
         </h1>
-        <small class="italic">Jan 31, 2018</small>
+        <small class="italic">2018-01-31</small>
       </header>
       <p><em>Thanks to <a href="https://twitter.com/joshsloat">@joshsloat</a> and <a href="https://twitter.com/zerkms">@zerkms</a> for their review of this post.</em></p>
 <p>One of the most prevalent causes of bugs I’ve seen in latter-day JavaScript revolves around expectations with regard to data modeling. With the rise of <a href="https://reactjs.org/">react</a>, <a href="https://redux.js.org/">redux</a>, et al, many of us store our application state in an object whose keys and hierarchy can easily change, leaving us sometimes with or without values that were in fact expected: for example, <code>undefined is not a function</code> or trying to call <code>.map(...)</code> on a non-mappable data type (such as <code>null</code> or <code>undefined</code>). While there are any number of solutions for this issue that might even include diving into algebraic data types, the <a href="http://ramdajs.com">ramda library</a> gives us a few helper methods that we can use right away to dig into our data structures and extract values:</p>

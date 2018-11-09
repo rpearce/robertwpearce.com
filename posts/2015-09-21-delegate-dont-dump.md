@@ -1,13 +1,12 @@
 ---
-author:        "Robert Pearce"
+author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-title:        Delegate; Don't Dump
-date:         2015-09-21
-image:        /images/hinge.jpg
-description:  On being the hinge between someone with a question and someone else with a solution.
-keywords:     leadership, leadership advice, teamwork, delegate, hinge
-photoCredit:  Kelly Sikkema
+description: "On being the hinge between someone with a question and someone else with a solution."
+image: "/images/hinge.jpg"
+keywords: "leadership, leadership advice, teamwork, delegate, hinge"
+photoCredit: "Kelly Sikkema"
 photoWebsite: "https://unsplash.com/@kellysikkema"
+title: "Delegate; Don't Dump"
 ---
 
 A fellow employee, Margaret, contacts you and asks, &quot;Do you know anything about [problem] and how I might be able to solve it?&quot; You respond, &quot;Oh, yeah, Jane is handling that now.&quot; You are a busy person being crushed under the weight of your duties, and you have just helped someone. Having now pushed something off of your plate, it is time to address the next thing!

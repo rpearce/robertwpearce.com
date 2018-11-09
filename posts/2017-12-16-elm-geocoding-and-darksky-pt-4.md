@@ -1,13 +1,12 @@
 ---
-author:        "Robert Pearce"
+author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-title:        "Elm, Geocoding & DarkSky: Pt. 4 – Extracting our Elm Code"
-date:         2017-12-16
-image:        /images/field-road-rain.jpg
-description:  In Part 4 we ectract our Elm code for clarity
-keywords:     elm, elm tutorial, elmlang, elm geocoding, elm darksky, elm weather, elm functional programming
-photoCredit:  Pop & Zebra
+description: "In Part 4 we ectract our Elm code for clarity"
+image: "/images/field-road-rain.jpg"
+keywords: "elm, elm tutorial, elmlang, elm geocoding, elm darksky, elm weather, elm functional programming"
+photoCredit: "Pop & Zebra"
 photoWebsite: "https://unsplash.com/@popnzebra"
+title: "Elm, Geocoding & DarkSky: Pt. 4 – Extracting our Elm Code"
 ---
 
 This is part 4 of a multipart series where we will be building a small weather forecast app using [Elm](http://elm-lang.org/), [Google's Geocoding API](https://developers.google.com/maps/documentation/geocoding/start) and the [DarkSky API](https://darksky.net/dev/). Instead of doing everything in one massive post, I've broken the steps down into parts of a series. Here is the series plan:

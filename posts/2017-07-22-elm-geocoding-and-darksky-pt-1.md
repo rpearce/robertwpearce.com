@@ -1,13 +1,12 @@
 ---
-author:        "Robert Pearce"
+author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-title:        "Elm, Geocoding & DarkSky: Pt. 1 – Setup Elm & Proxy Servers"
-date:         2017-07-22
-image:        /images/snow-dogs.jpg
-description:  In Part 1 we will begin building a small weather forecast app using Elm, Google's Geocoding API and the DarkSky API.
-keywords:     elm, elm tutorial, elmlang, elm geocoding, elm darksky, elm weather, elm functional programming
-photoCredit:  James Padolsey
+description: "In Part 1 we will begin building a small weather forecast app using Elm, Google's Geocoding API and the DarkSky API."
+image: "/images/snow-dogs.jpg"
+keywords: "elm, elm tutorial, elmlang, elm geocoding, elm darksky, elm weather, elm functional programming"
+photoCredit: "James Padolsey"
 photoWebsite: "https://unsplash.com/@padolsey"
+title: "Elm, Geocoding & DarkSky: Pt. 1 – Setup Elm & Proxy Servers"
 ---
 
 This is part 1 of a multipart series where we will be building a small weather forecast app using [Elm](http://elm-lang.org/), [Google's Geocoding API](https://developers.google.com/maps/documentation/geocoding/start) and the [DarkSky API](https://darksky.net/dev/). Instead of doing everything in one massive post, I've broken the steps down into parts of a series. Here is the series plan:

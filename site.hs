@@ -70,12 +70,12 @@ main = hakyllWith config $ do
         route idRoute
         compile $ do
             posts <- recentFirst =<< loadAll "posts/*"
-            otherPages <- loadAll "new-zealand/**"
-            let sitemapCtx =
-                    constField "root" root                   <>
-                    constField "siteName" siteName           <>
-                    listField "posts" postCtx (return posts) <>
-                    listField "otherPages" postCtx (return otherPages)
+            nzPages <- loadAll "new-zealand/**"
+            let pages = posts <> nzPages
+                sitemapCtx =
+                    constField "root" root         <>
+                    constField "siteName" siteName <>
+                    listField "pages" postCtx (return pages)
             makeItem ""
                 >>= loadAndApplyTemplate "templates/sitemap.xml" sitemapCtx
 
@@ -136,9 +136,9 @@ titleContext =
 
 postCtx :: Context String
 postCtx =
-    dateField "date" "%b %e, %Y"   <>
-    constField "root" root         <>
-    constField "siteName" siteName <>
+    constField "root" root          <>
+    constField "siteName" siteName  <>
+    dateField "date" "%Y-%m-%d"     <>
     defaultContext
 
 

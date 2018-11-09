@@ -1,11 +1,10 @@
 ---
-author:        "Robert Pearce"
+author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-title:       On Working Remotely
-date:        2014-10-15
-image:       /images/lavish-habit.jpg
-description: You can work remotely, too! Here's how.
-keywords:    remote working, remote work, digital nomad, traveling while working, travel, telecommuting
+description: "You can work remotely, too! Here's how."
+image: "/images/lavish-habit.jpg"
+keywords: "remote working, remote work, digital nomad, traveling while working, travel, telecommuting"
+title: "On Working Remotely"
 ---
 
 Do you have a remote/virtual/telecommute job? I do. And it rocks.

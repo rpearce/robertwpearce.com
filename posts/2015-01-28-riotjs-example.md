@@ -1,11 +1,10 @@
 ---
-author:        "Robert Pearce"
+author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-title:       RiotJS Example
-date:        2015-01-28
-image:       /images/riotjs.jpg
-description: A quick-dive in to RiotJS, with examples.
-keywords:    riotjs, riot.js, riotjs tutorial, tutorial, javascript
+description: "A quick-dive in to RiotJS, with examples."
+image: "/images/riotjs.jpg"
+keywords: "riotjs, riot.js, riotjs tutorial, tutorial, javascript"
+title: "RiotJS Example"
 ---
 
 When I look at any of the myriad JavaScript UI libraries out there, I now ask two questions:
