@@ -114,6 +114,7 @@ config =
         { destinationDirectory = "docs"
         , previewHost          = "127.0.0.1"
         , previewPort          = 8000
+        , ignoreFile           = const False
         }
 
 
