@@ -1,11 +1,10 @@
 ---
-author:        "Robert Pearce"
+author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-title:       Your product doesn’t judge you; people do.
-date:        2013-08-28
-image:       /images/papaya-farm.jpg
-description: Selling sucks, but you need to get your project out in the real world.
-keywords:    entrepreneur, entrepreneurship, product, getting things done, tech, 1776dc, sales
+description: "Selling sucks, but you need to get your project out in the real world."
+image: "/images/papaya-farm.jpg"
+keywords: "entrepreneur, entrepreneurship, product, getting things done, tech, 1776dc, sales"
+title: "Your product doesn’t judge you; people do."
 ---
 
 I ran in to [Doug](http://www.infieldhealth.com/about-us/), a fellow entrepreneur in the [1776 startup co-working space](http://1776dc.com/), today at the coffee/water/pb&j oasis. After exchanging a few words, we somehow found our way into a conversation about being in a small company and the battle between focusing on ***sales*** and focusing on ***product***.

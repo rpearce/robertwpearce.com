@@ -1,13 +1,13 @@
 ---
-author:        "Robert Pearce"
+author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-title:         New Zealand Information Index
-date:          2018-11-08
-image:         /images/lake-wanaka.jpg
-description:   Things to do and see in New Zealand
-keywords:      new zealand, otago
-photoCredit:   theworldwithabackpack
-photoWebsite:  "https://www.instagram.com/theworldwithabackpack/"
+date: "2018-11-08"
+description: "Things to do and see in New Zealand"
+image: "/images/lake-wanaka.jpg"
+keywords: "new zealand, otago, things to do, places to see"
+photoCredit: "theworldwithabackpack"
+photoWebsite: "https://www.instagram.com/theworldwithabackpack/"
+title: "New Zealand Information Index"
 ---
 
 Things to do and see in New Zealand.

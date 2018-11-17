@@ -5,16 +5,10 @@
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-$for(posts)$
+$for(pages)$
   <url>
     <loc>$root$$url$</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-$endfor$
-$for(otherPages)$
-  <url>
-    <loc>$root$$url$</loc>
+    <lastmod>$if(updated)$$updated$$else$$if(date)$$date$$endif$$endif$</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

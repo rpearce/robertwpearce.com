@@ -7,230 +7,274 @@
   </url>
 
   <url>
+    <loc>https://robertwpearce.com/hakyll-pt-2-generating-a-sitemap-xml-file.html</loc>
+    <lastmod>2018-11-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://robertwpearce.com/hakyll-pt-1-setup-and-initial-customization.html</loc>
+    <lastmod>2018-11-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/ramda-chops-map-filter-and-reduce.html</loc>
+    <lastmod>2018-02-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/ramda-chops-safely-accessing-properties.html</loc>
+    <lastmod>2018-01-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/ramda-chops-function-composition.html</loc>
+    <lastmod>2018-01-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/ramda-chops-function-currying.html</loc>
+    <lastmod>2018-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/elm-geocoding-and-darksky-pt-4-extracting-our-elm-code.html</loc>
+    <lastmod>2017-12-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/elm-geocoding-and-darksky-pt-3-fetching-the-current-weather.html</loc>
+    <lastmod>2017-08-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html</loc>
+    <lastmod>2017-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html</loc>
+    <lastmod>2017-07-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/node-js-geocoding-proxy-with-paperplane.html</loc>
+    <lastmod>2017-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/behaviour-and-your-team.html</loc>
+    <lastmod>2017-06-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/travel-ruminations.html</loc>
+    <lastmod>2017-02-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/turning-a-new-leaf.html</loc>
+    <lastmod>2016-02-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/missing-those-we-love.html</loc>
+    <lastmod>2016-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/freelancing.html</loc>
+    <lastmod>2015-10-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/simple-variadic-behavior.html</loc>
+    <lastmod>2015-10-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/immediate-functions.html</loc>
+    <lastmod>2015-10-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/asynchronously-loading-scripts.html</loc>
+    <lastmod>2015-10-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/long-distance-movie-night.html</loc>
+    <lastmod>2015-09-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/delegate-dont-dump.html</loc>
+    <lastmod>2015-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/switching-jobs.html</loc>
+    <lastmod>2015-06-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/stop-saying-silicon-harbor.html</loc>
+    <lastmod>2015-03-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/mobile-device-etiquette.html</loc>
+    <lastmod>2015-03-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/life-in-colorado.html</loc>
+    <lastmod>2015-03-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/riotjs-example.html</loc>
+    <lastmod>2015-01-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/use-bcc.html</loc>
+    <lastmod>2015-01-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/be-better.html</loc>
+    <lastmod>2015-01-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/on-working-remotely.html</loc>
+    <lastmod>2014-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/exercising-in-transit.html</loc>
+    <lastmod>2014-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/chief.html</loc>
+    <lastmod>2014-09-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/berlin.html</loc>
+    <lastmod>2014-09-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/working-in-london.html</loc>
+    <lastmod>2014-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/moving-to-london.html</loc>
+    <lastmod>2014-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/your-product-doesn-t-judge-you-people-do.html</loc>
+    <lastmod>2013-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
-
   <url>
     <loc>https://robertwpearce.com/new-zealand/index.html</loc>
+    <lastmod>2018-11-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/new-zealand/otago/index.html</loc>
+    <lastmod>2018-11-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/new-zealand/otago/queenstown-area.html</loc>
+    <lastmod>2018-11-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/new-zealand/otago/wanaka-area.html</loc>
+    <lastmod>2018-11-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

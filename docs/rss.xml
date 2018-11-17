@@ -7,8 +7,16 @@
         <description><![CDATA[Posts on JavaScript, Node.js, Haskell, Elm, Ruby and more.]]></description>
         <atom:link href="https://robertwpearce.com/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Sun, 04 Nov 2018 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Sat, 17 Nov 2018 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Hakyll Pt. 2 – Generating a Sitemap XML File</title>
+    <link>https://robertwpearce.com/hakyll-pt-2-generating-a-sitemap-xml-file.html</link>
+    <description><![CDATA[Generate a sitemap.xml file for your hakyll site.]]></description>
+    <pubDate>Sat, 17 Nov 2018 00:00:00 UT</pubDate>
+    <guid>https://robertwpearce.com/hakyll-pt-2-generating-a-sitemap-xml-file.html</guid>
+    <dc:creator>Robert Pearce</dc:creator>
+</item>
+<item>
     <title>Hakyll Pt. 1 – Setup &amp; Initial Customization</title>
     <link>https://robertwpearce.com/hakyll-pt-1-setup-and-initial-customization.html</link>
     <description><![CDATA[Use the hakyll static site generator to set up a website or blog.]]></description>

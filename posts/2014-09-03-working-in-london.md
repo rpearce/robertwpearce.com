@@ -1,11 +1,10 @@
 ---
-author:        "Robert Pearce"
+author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-title:       Working In London
-date:        2014-09-03
-image:       /images/clapham-cafe.jpg
-description: What it's been like working in London for a few days.
-keywords:    remote work, remote working, digital nomad, london, articulate, travel
+description: "What it's been like working in London for a few days."
+image: "/images/clapham-cafe.jpg"
+keywords: "remote work, remote working, digital nomad, london, articulate, travel"
+title: "Working In London"
 ---
 
 I spend the majority of my time writing software for [Articulate](http://www.articulate.com "Articulate"). This isn't the offical mantra, but it is how I think of the company:

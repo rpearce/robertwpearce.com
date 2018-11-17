@@ -1,11 +1,10 @@
 ---
-author:        "Robert Pearce"
+author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-title:       Mobile Device Etiquette
-date:        2015-03-09
-image:       /images/phone-table.jpg
-description: Pay less attention to your device and more to those around you.
-keywords:    mobile devices, etiquette, advice, staring at phones
+description: "Pay less attention to your device and more to those around you."
+image: "/images/phone-table.jpg"
+keywords: "mobile devices, etiquette, advice, staring at phones"
+title: "Mobile Device Etiquette"
 ---
 
 A friend and colleague of mine, [Jason Vanderslice](https://twitter.com/javanderslice), and I recently discussed the state of mobile devices with regard to their place in various settings and within our interpersonal relationships. While I would not presume to speak for Jason on most subjects, we agree that mobile device etiquette is something that needs to be taught, spread to others and repeated.

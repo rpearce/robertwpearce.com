@@ -1,13 +1,12 @@
 ---
-author:        "Robert Pearce"
+author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-title:        "Elm, Geocoding & DarkSky: Pt. 3 – Fetching the Current Weather"
-date:         2017-08-18
-image:        /images/london-rain.jpg
-description:  In Part 3 we query the DarkSky API with our geocoded address
-keywords:     elm, elm tutorial, elmlang, elm geocoding, elm darksky, elm weather, elm functional programming
-photoCredit:  Anjana Menon
+description: "In Part 3 we query the DarkSky API with our geocoded address"
+image: "/images/london-rain.jpg"
+keywords: "elm, elm tutorial, elmlang, elm geocoding, elm darksky, elm weather, elm functional programming"
+photoCredit: "Anjana Menon"
 photoWebsite: "https://unsplash.com/@anjimenon"
+title: "Elm, Geocoding & DarkSky: Pt. 3 – Fetching the Current Weather"
 ---
 
 This is part 3 of a multipart series where we will be building a small weather forecast app using [Elm](http://elm-lang.org/), [Google's Geocoding API](https://developers.google.com/maps/documentation/geocoding/start) and the [DarkSky API](https://darksky.net/dev/). Instead of doing everything in one massive post, I've broken the steps down into parts of a series. Here is the series plan:
