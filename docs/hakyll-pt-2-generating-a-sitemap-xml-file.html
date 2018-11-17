@@ -219,8 +219,9 @@
 <a class="sourceLine" id="cb6-20" title="20"></a>
 <a class="sourceLine" id="cb6-21" title="21"><span class="ot">postCtx ::</span> <span class="dt">Context</span> <span class="dt">String</span></a>
 <a class="sourceLine" id="cb6-22" title="22">postCtx <span class="fu">=</span></a>
-<a class="sourceLine" id="cb6-23" title="23">    constField <span class="st">&quot;root&quot;</span> root <span class="fu">&lt;&gt;</span> <span class="co">-- here</span></a>
-<a class="sourceLine" id="cb6-24" title="24">    defaultContext</a></code></pre></div>
+<a class="sourceLine" id="cb6-23" title="23">    constField <span class="st">&quot;root&quot;</span> root      <span class="fu">&lt;&gt;</span> <span class="co">-- here</span></a>
+<a class="sourceLine" id="cb6-24" title="24">    dateField <span class="st">&quot;date&quot;</span> <span class="st">&quot;%Y-%m-%d&quot;</span> <span class="fu">&lt;&gt;</span></a>
+<a class="sourceLine" id="cb6-25" title="25">    defaultContext</a></code></pre></div>
 <p><em>Hint: if the <code>&lt;&gt;</code> is throwing you for a loop, it’s defined as the same as thing as <a href="https://wiki.haskell.org/Monoid"><code>mappend</code></a>.</em></p>
 <p>See how we defined <code>constField &quot;root&quot; root</code> in two places? We’re talking about two different contexts here: the <em>sitemap</em> context and the <em>post</em> context. While you could have the <code>postCtx</code> be combined with the <code>sitemapCtx</code>, thus giving the <code>pages</code> field access to the <code>root</code> field, you probably want to use <code>root</code> (and perhaps other constants) wherever you work with posts, so adding them to <code>postCtx</code> for use everywhere seems like the right thing to do.</p>
 <p>Once you’ve got all this, run the following to build (or rebuild) your <code>docs/sitemap.xml</code> file:</p>
