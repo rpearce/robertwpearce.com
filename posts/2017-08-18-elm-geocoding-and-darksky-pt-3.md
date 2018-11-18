@@ -11,12 +11,12 @@ title: "Elm, Geocoding & DarkSky: Pt. 3 – Fetching the Current Weather"
 
 This is part 3 of a multipart series where we will be building a small weather forecast app using [Elm](http://elm-lang.org/), [Google's Geocoding API](https://developers.google.com/maps/documentation/geocoding/start) and the [DarkSky API](https://darksky.net/dev/). Instead of doing everything in one massive post, I've broken the steps down into parts of a series. Here is the series plan:
 
-* [Pt. 1 – Setup Elm & Proxy Servers](/blog/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html)
-* [Pt. 2 – Geocoding an Address](/blog/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html)
+* [Pt. 1 – Setup Elm & Proxy Servers](/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html)
+* [Pt. 2 – Geocoding an Address](/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html)
 * Pt. 3 – Fetching the Current Weather
-* [Pt. 4 – Extracting Our Elm Code](/blog/elm-geocoding-and-darksky-pt-4-extracting-our-elm-code.html)
+* [Pt. 4 – Extracting Our Elm Code](/elm-geocoding-and-darksky-pt-4-extracting-our-elm-code.html)
 
-If you'd like to code along with this tutorial, check out [part 1](/blog/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html) and [part 2](/blog/elm-geocoding-and-darksky-pt-2-fetching-the-current-weather.html) first to get set up.
+If you'd like to code along with this tutorial, check out [part 1](/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html) and [part 2](/elm-geocoding-and-darksky-pt-2-fetching-the-current-weather.html) first to get set up.
 
 _Note: to learn more about the Elm language and syntax, check out the [Elm Tutorial](https://www.elm-tutorial.org/en/), the [EggHead.io Elm course](https://egghead.io/courses/start-using-elm-to-build-web-applications), subscribe to [DailyDrip's Elm Topic](https://www.dailydrip.com/topics/elm), [James Moore's Elm Courses](http://courses.knowthen.com) or check out [Elm on exercism.io](http://exercism.io/languages/elm/about)._
 
@@ -132,7 +132,7 @@ initialWeatherCurrently =
 These are defaults that we provide in the event that we have no data to work with (initially or if something goes wrong).
 
 ## 3. Creating DarkSky JSON decoders
-Just as we did in the [geocoding post section on JSON decoding](/blog/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html#4-creating-json-decoders), we want to leverage [NoRedInk's elm-decode-pipeline](https://github.com/NoRedInk/elm-decode-pipeline) to define how our JSON response should be structured and thus parsed.
+Just as we did in the [geocoding post section on JSON decoding](/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html#4-creating-json-decoders), we want to leverage [NoRedInk's elm-decode-pipeline](https://github.com/NoRedInk/elm-decode-pipeline) to define how our JSON response should be structured and thus parsed.
 
 ```elm
 decodeWeather : Decoder Weather
@@ -152,7 +152,7 @@ decodeWeatherCurrently =
 While we could use [Json.Decode.at](http://package.elm-lang.org/packages/elm-lang/core/5.1.1/Json-Decode#at) to potentially have less code, there is absolutely nothing wrong with being verbose if it leads to clarity.
 
 ## 4. Writing our fetchWeather HTTP function
-We know that we're going to have to send latitude and longitude `Coords` to our [DarkSky proxy server](https://github.com/rpearce/DarkSky-proxy), as well as any additional options, so let's define the URL for that and the fetching function [just like we did for geocoding](/blog/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html#8-making-our-request).
+We know that we're going to have to send latitude and longitude `Coords` to our [DarkSky proxy server](https://github.com/rpearce/DarkSky-proxy), as well as any additional options, so let's define the URL for that and the fetching function [just like we did for geocoding](/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html#8-making-our-request).
 
 ```elm
 weatherUrl : Coords -> String
@@ -188,7 +188,7 @@ type Msg
 ```
 
 ## 5. Calling fetchWeather and handling the response
-When we [handled our geocode response in the prior post](https://robertwpearce.com/blog/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html#9-handling-the-geocode-response), inside of `ReceiveGeocoding` we returned `( newModel, Cmd.none )`, for we had no further actions to take. Instead of our action in this tuple being `Cmd.none`, let's instead call our `fetchWeather` function and pass it our geocoded coordinates:
+When we [handled our geocode response in the prior post](/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html#9-handling-the-geocode-response), inside of `ReceiveGeocoding` we returned `( newModel, Cmd.none )`, for we had no further actions to take. Instead of our action in this tuple being `Cmd.none`, let's instead call our `fetchWeather` function and pass it our geocoded coordinates:
 
 ```elm
 update : Msg -> Model -> ( Model, Cmd Msg )

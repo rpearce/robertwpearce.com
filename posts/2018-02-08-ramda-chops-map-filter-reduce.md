@@ -27,12 +27,12 @@ MDN documentation on each (linked above).
 
 _Pre-requisite ramda posts:_
 
-* [Ramda Chops: Function Currying](/blog/ramda-chops-function-currying.html)
-* [Ramda Chops: Function Composition](/blog/ramda-chops-function-composition.html)
+* [Ramda Chops: Function Currying](/ramda-chops-function-currying.html)
+* [Ramda Chops: Function Composition](/ramda-chops-function-composition.html)
 
 _Other ramda posts:_
 
-* [Ramda Chops: Safely Accessing Properties](/blog/ramda-chops-safely-accessing-properties.html)
+* [Ramda Chops: Safely Accessing Properties](/ramda-chops-safely-accessing-properties.html)
 
 ## Our Data Set: Films!
 This is the test data set we will reference throughout the post:
@@ -115,8 +115,8 @@ _[Try this code in the ramda REPL](https://goo.gl/qG4kZ7)_
 
 ## Step 4: Composing `filter` and `map`
 We can use ramda's [function currying
-capabilities](/blog/ramda-chops-function-currying.html) and [function
-composition](/blog/ramda-chops-function-composition.html) to create some very
+capabilities](/ramda-chops-function-currying.html) and [function
+composition](/ramda-chops-function-composition.html) to create some very
 clear and concise [pointfree functions](https://wiki.haskell.org/Pointfree).
 
 ```js

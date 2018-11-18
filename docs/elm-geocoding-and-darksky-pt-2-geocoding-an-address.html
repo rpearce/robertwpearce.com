@@ -74,15 +74,15 @@
       </header>
       <p>This is part 2 of a multipart series where we will be building a small weather forecast app using <a href="http://elm-lang.org/">Elm</a>, <a href="https://developers.google.com/maps/documentation/geocoding/start">Google’s Geocoding API</a> and the <a href="https://darksky.net/dev/">DarkSky API</a>. Instead of doing everything in one massive post, I’ve broken the steps down into parts of a series. Here is the series plan:</p>
 <ul>
-<li><a href="/blog/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html">Pt. 1 – Setup Elm &amp; Proxy Servers</a></li>
+<li><a href="/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html">Pt. 1 – Setup Elm &amp; Proxy Servers</a></li>
 <li>Pt. 2 – Geocoding an Address</li>
-<li><a href="/blog/elm-geocoding-and-darksky-pt-3-fetching-the-current-weather.html">Pt. 3 – Fetching the Current Weather</a></li>
-<li><a href="/blog/elm-geocoding-and-darksky-pt-4-extracting-our-elm-code.html">Pt. 4 – Extracting Our Elm Code</a></li>
+<li><a href="/elm-geocoding-and-darksky-pt-3-fetching-the-current-weather.html">Pt. 3 – Fetching the Current Weather</a></li>
+<li><a href="/elm-geocoding-and-darksky-pt-4-extracting-our-elm-code.html">Pt. 4 – Extracting Our Elm Code</a></li>
 </ul>
-<p>If you’d like to code along with this tutorial, check out <a href="/blog/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html">part 1</a> first to get set up.</p>
+<p>If you’d like to code along with this tutorial, check out <a href="/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html">part 1</a> first to get set up.</p>
 <p><em>Note: to learn more about the Elm language and syntax, check out the <a href="https://www.elm-tutorial.org/en/">Elm Tutorial</a>, the <a href="https://egghead.io/courses/start-using-elm-to-build-web-applications">EggHead.io Elm course</a>, subscribe to <a href="https://www.dailydrip.com/topics/elm">DailyDrip’s Elm Topic</a>, <a href="http://courses.knowthen.com">James Moore’s Elm Courses</a> or check out <a href="http://exercism.io/languages/elm/about">Elm on exercism.io</a>.</em></p>
 <h2 id="overview">Overview</h2>
-<p>Before we can send a weather forecast request to DarkSky, we need to geocode an address to get its latitude and longitutde. In this post, we’re going to use Elm and our geocoding server from <a href="/blog/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html">Part 1</a> to geocode an address based on a user’s input in a text box.</p>
+<p>Before we can send a weather forecast request to DarkSky, we need to geocode an address to get its latitude and longitutde. In this post, we’re going to use Elm and our geocoding server from <a href="/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html">Part 1</a> to geocode an address based on a user’s input in a text box.</p>
 <p>Warning: this is a hefty post.</p>
 <h2 id="project-source-code">Project Source Code</h2>
 <p>The project we’re making will be broken into parts here (branches will be named for each part): <a href="https://github.com/rpearce/elm-geocoding-darksky/" class="uri">https://github.com/rpearce/elm-geocoding-darksky/</a>. Be sure to check out the other branches to see the other parts as they become available.</p>
@@ -129,7 +129,7 @@ type alias Coords =
 <a class="sourceLine" id="cb2-13" title="13">  ]<span class="op">,</span></a>
 <a class="sourceLine" id="cb2-14" title="14">  <span class="st">&quot;status&quot;</span><span class="op">:</span> <span class="st">&quot;OK&quot;</span></a>
 <a class="sourceLine" id="cb2-15" title="15"><span class="op">}</span></a></code></pre></div>
-<p>If you’ve set up your <a href="/blog/node-js-geocoding-proxy-with-paperplane.html">geocoding proxy</a>, you can see these same results by running this command:</p>
+<p>If you’ve set up your <a href="/node-js-geocoding-proxy-with-paperplane.html">geocoding proxy</a>, you can see these same results by running this command:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1">λ <span class="ex">curl</span> localhost:5050/geocode/Auckland</a></code></pre></div>
 <p>We can see here that we get back a <code>status</code> string and a <code>results</code> list where one of the results contains a <code>geometry</code> object, and inside of that, we find <code>location</code> and finally, our quarry: <code>lat</code> and <code>lng</code>. If we were searching for this with JavaScript, we might find this data like so:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="va">response</span>.<span class="va">results</span>.<span class="at">find</span>(x <span class="op">=&gt;</span> x[<span class="st">&#39;geometry&#39;</span>]).<span class="va">geometry</span>.<span class="at">location</span></a>

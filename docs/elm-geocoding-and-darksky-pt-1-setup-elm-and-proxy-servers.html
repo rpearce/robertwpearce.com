@@ -75,12 +75,12 @@
       <p>This is part 1 of a multipart series where we will be building a small weather forecast app using <a href="http://elm-lang.org/">Elm</a>, <a href="https://developers.google.com/maps/documentation/geocoding/start">Google’s Geocoding API</a> and the <a href="https://darksky.net/dev/">DarkSky API</a>. Instead of doing everything in one massive post, I’ve broken the steps down into parts of a series. Here is the series plan:</p>
 <ul>
 <li>Pt. 1 – Setup Elm &amp; Proxy Servers</li>
-<li><a href="/blog/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html">Pt. 2 – Geocoding an Address</a></li>
-<li><a href="/blog/elm-geocoding-and-darksky-pt-3-fetching-the-current-weather.html">Pt. 3 – Fetching the Current Weather</a></li>
-<li><a href="/blog/elm-geocoding-and-darksky-pt-4-extracting-our-elm-code.html">Pt. 4 – Extracting Our Elm Code</a></li>
+<li><a href="/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html">Pt. 2 – Geocoding an Address</a></li>
+<li><a href="/elm-geocoding-and-darksky-pt-3-fetching-the-current-weather.html">Pt. 3 – Fetching the Current Weather</a></li>
+<li><a href="/elm-geocoding-and-darksky-pt-4-extracting-our-elm-code.html">Pt. 4 – Extracting Our Elm Code</a></li>
 </ul>
 <h2 id="overview">Overview</h2>
-<p>This post will cover setting up <a href="http://elm-lang.org/">Elm</a>, a <a href="http://localhost:3000/blog/node-js-geocoding-proxy-with-paperplane.html">geocoding proxy</a> and a <a href="https://github.com/rpearce/DarkSky-proxy/">DarkSky proxy</a>. We’ll need all of these things set up in order to get our weather app to work and not sacrifice our API keys.</p>
+<p>This post will cover setting up <a href="http://elm-lang.org/">Elm</a>, a <a href="/node-js-geocoding-proxy-with-paperplane.html">geocoding proxy</a> and a <a href="https://github.com/rpearce/DarkSky-proxy/">DarkSky proxy</a>. We’ll need all of these things set up in order to get our weather app to work and not sacrifice our API keys.</p>
 <p>By the end of this post, you will have a “Hello, world!” Elm app with a simple <code>./build</code> command, and you should be able to <code>cURL</code> both your geocoding and DarkSky proxies to receive response data that we will use in the coming lessons.</p>
 <h2 id="project-source-code">Project Source Code</h2>
 <p>The project we’re making will be broken into parts here (branches will be named for each part): <a href="https://github.com/rpearce/elm-geocoding-darksky/" class="uri">https://github.com/rpearce/elm-geocoding-darksky/</a>. Be sure to check out the other branches to see the other parts as they become available.</p>
@@ -160,7 +160,7 @@ main =
 <a class="sourceLine" id="cb8-2" title="2"><span class="ex">Success</span>! Compiled 1 module.</a>
 <a class="sourceLine" id="cb8-3" title="3"><span class="ex">Successfully</span> generated ./elm.js</a></code></pre></div>
 <h2 id="proxies">Proxies</h2>
-<p>In order to not expose our API keys for geocoding and weather forecasts, we’ll be using a separate proxy server for each service. I wrote recently wrote a post entitled <a href="/blog/node-js-geocoding-proxy-with-paperplane.html">Node.js Geocoding Proxy with Paperplane</a> where you can see a full explanation of what we’re doing and how to do it. If you don’t care about the how and why about setting up these little servers, then just continue on!</p>
+<p>In order to not expose our API keys for geocoding and weather forecasts, we’ll be using a separate proxy server for each service. I wrote recently wrote a post entitled <a href="/node-js-geocoding-proxy-with-paperplane.html">Node.js Geocoding Proxy with Paperplane</a> where you can see a full explanation of what we’re doing and how to do it. If you don’t care about the how and why about setting up these little servers, then just continue on!</p>
 <h3 id="setting-up-your-geocoding-proxy">Setting Up Your Geocoding Proxy</h3>
 <p>First, you’ll need to get a Google Maps API Key from here: <a href="https://developers.google.com/maps/documentation/geocoding/start#get-a-key" class="uri">https://developers.google.com/maps/documentation/geocoding/start#get-a-key</a>.</p>
 <p>Once you’ve done that, go ahead and clone or download <a href="https://github.com/rpearce/geocoding-proxy">the geocoding-proxy project on GitHub</a> and follow the directions to get set up. Given you’ve got Node installed, you’ve copied over the <code>.env</code> file and set your API key in there, then running <code>λ node index.js</code> should start the server. From another command-line tab, run this and see if you get a similar result:</p>

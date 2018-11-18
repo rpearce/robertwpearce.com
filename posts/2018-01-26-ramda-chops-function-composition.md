@@ -41,9 +41,9 @@ const results = [
 
 _Other ramda posts:_
 
-* [Ramda Chops: Function Currying](/blog/ramda-chops-function-currying.html)
-* [Ramda Chops: Safely Accessing Properties](/blog/ramda-chops-safely-accessing-properties.html)
-* [Ramda Chops: Map, Filter & Reduce](/blog/ramda-chops-map-filter-and-reduce.html)
+* [Ramda Chops: Function Currying](/ramda-chops-function-currying.html)
+* [Ramda Chops: Safely Accessing Properties](/ramda-chops-safely-accessing-properties.html)
+* [Ramda Chops: Map, Filter & Reduce](/ramda-chops-map-filter-and-reduce.html)
 
 ## First Approach
 
@@ -144,7 +144,7 @@ have been applied.
 Cool – but wait! How can `descBy`, `takeN` and `mapProp` only accept one
 argument at a time when they all accept two?! In order to make these a reality,
 we can make use of [ramda's curry function](http://ramdajs.com/docs/#curry)
-which we dove into in my [previous post on function currying](/blog/ramda-chops-function-currying.html]).
+which we dove into in my [previous post on function currying](/ramda-chops-function-currying.html]).
 
 ```js
 import compose from 'ramda/src/compose'

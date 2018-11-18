@@ -11,17 +11,17 @@ title: "Elm, Geocoding & DarkSky: Pt. 2 – Geocoding an Address"
 
 This is part 2 of a multipart series where we will be building a small weather forecast app using [Elm](http://elm-lang.org/), [Google's Geocoding API](https://developers.google.com/maps/documentation/geocoding/start) and the [DarkSky API](https://darksky.net/dev/). Instead of doing everything in one massive post, I've broken the steps down into parts of a series. Here is the series plan:
 
-* [Pt. 1 – Setup Elm & Proxy Servers](/blog/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html)
+* [Pt. 1 – Setup Elm & Proxy Servers](/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html)
 * Pt. 2 – Geocoding an Address
-* [Pt. 3 – Fetching the Current Weather](/blog/elm-geocoding-and-darksky-pt-3-fetching-the-current-weather.html)
-* [Pt. 4 – Extracting Our Elm Code](/blog/elm-geocoding-and-darksky-pt-4-extracting-our-elm-code.html)
+* [Pt. 3 – Fetching the Current Weather](/elm-geocoding-and-darksky-pt-3-fetching-the-current-weather.html)
+* [Pt. 4 – Extracting Our Elm Code](/elm-geocoding-and-darksky-pt-4-extracting-our-elm-code.html)
 
-If you'd like to code along with this tutorial, check out [part 1](/blog/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html) first to get set up.
+If you'd like to code along with this tutorial, check out [part 1](/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html) first to get set up.
 
 _Note: to learn more about the Elm language and syntax, check out the [Elm Tutorial](https://www.elm-tutorial.org/en/), the [EggHead.io Elm course](https://egghead.io/courses/start-using-elm-to-build-web-applications), subscribe to [DailyDrip's Elm Topic](https://www.dailydrip.com/topics/elm), [James Moore's Elm Courses](http://courses.knowthen.com) or check out [Elm on exercism.io](http://exercism.io/languages/elm/about)._
 
 ## Overview
-Before we can send a weather forecast request to DarkSky, we need to geocode an address to get its latitude and longitutde. In this post, we're going to use Elm and our geocoding server from [Part 1](/blog/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html) to geocode an address based on a user's input in a text box.
+Before we can send a weather forecast request to DarkSky, we need to geocode an address to get its latitude and longitutde. In this post, we're going to use Elm and our geocoding server from [Part 1](/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html) to geocode an address based on a user's input in a text box.
 
 Warning: this is a hefty post.
 
@@ -81,7 +81,7 @@ Let's take a look at what a geocoding request's response data for `Auckland` loo
 }
 ```
 
-If you've set up your [geocoding proxy](/blog/node-js-geocoding-proxy-with-paperplane.html), you can see these same results by running this command:
+If you've set up your [geocoding proxy](/node-js-geocoding-proxy-with-paperplane.html), you can see these same results by running this command:
 
 ```bash
 λ curl localhost:5050/geocode/Auckland

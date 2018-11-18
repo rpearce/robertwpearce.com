@@ -38,9 +38,9 @@ completely change the way that you program.
 
 _Other ramda posts:_
 
-* [Ramda Chops: Function Composition](/blog/ramda-chops-function-composition.html)
-* [Ramda Chops: Safely Accessing Properties](/blog/ramda-chops-safely-accessing-properties.html)
-* [Ramda Chops: Map, Filter & Reduce](/blog/ramda-chops-map-filter-and-reduce.html)
+* [Ramda Chops: Function Composition](/ramda-chops-function-composition.html)
+* [Ramda Chops: Safely Accessing Properties](/ramda-chops-safely-accessing-properties.html)
+* [Ramda Chops: Map, Filter & Reduce](/ramda-chops-map-filter-and-reduce.html)
 
 ## Rudimentary Currying
 Many articles already cover this, so I'll keep it short.
@@ -159,7 +159,7 @@ Sounds simple, right? Easier said than done!
 
 ### What we need to do
 1. we need to first accept a function (the one to be curried)
-1. we need to then accept [any number of arguments (variadic behavior)](/blog/simple-variadic-behavior.html)
+1. we need to then accept [any number of arguments (variadic behavior)](/simple-variadic-behavior.html)
 1. when this happens, we need to either
   * return a value (when all arguments have been applied)
   * return a function that accepts the remaining arguments and repeat this

@@ -12,12 +12,12 @@ title: "Elm, Geocoding & DarkSky: Pt. 1 – Setup Elm & Proxy Servers"
 This is part 1 of a multipart series where we will be building a small weather forecast app using [Elm](http://elm-lang.org/), [Google's Geocoding API](https://developers.google.com/maps/documentation/geocoding/start) and the [DarkSky API](https://darksky.net/dev/). Instead of doing everything in one massive post, I've broken the steps down into parts of a series. Here is the series plan:
 
 * Pt. 1 – Setup Elm & Proxy Servers
-* [Pt. 2 – Geocoding an Address](/blog/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html)
-* [Pt. 3 – Fetching the Current Weather](/blog/elm-geocoding-and-darksky-pt-3-fetching-the-current-weather.html)
-* [Pt. 4 – Extracting Our Elm Code](/blog/elm-geocoding-and-darksky-pt-4-extracting-our-elm-code.html)
+* [Pt. 2 – Geocoding an Address](/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html)
+* [Pt. 3 – Fetching the Current Weather](/elm-geocoding-and-darksky-pt-3-fetching-the-current-weather.html)
+* [Pt. 4 – Extracting Our Elm Code](/elm-geocoding-and-darksky-pt-4-extracting-our-elm-code.html)
 
 ## Overview
-This post will cover setting up [Elm](http://elm-lang.org/), a [geocoding proxy](http://localhost:3000/blog/node-js-geocoding-proxy-with-paperplane.html) and a [DarkSky proxy](https://github.com/rpearce/DarkSky-proxy/). We'll need all of these things set up in order to get our weather app to work and not sacrifice our API keys.
+This post will cover setting up [Elm](http://elm-lang.org/), a [geocoding proxy](/node-js-geocoding-proxy-with-paperplane.html) and a [DarkSky proxy](https://github.com/rpearce/DarkSky-proxy/). We'll need all of these things set up in order to get our weather app to work and not sacrifice our API keys.
 
 By the end of this post, you will have a "Hello, world!" Elm app with a simple `./build` command, and you should be able to `cURL` both your geocoding and DarkSky proxies to receive response data that we will use in the coming lessons.
 
@@ -141,7 +141,7 @@ Successfully generated ./elm.js
 ```
 
 ## Proxies
-In order to not expose our API keys for geocoding and weather forecasts, we'll be using a separate proxy server for each service. I wrote recently wrote a post entitled [Node.js Geocoding Proxy with Paperplane](/blog/node-js-geocoding-proxy-with-paperplane.html) where you can see a full explanation of what we're doing and how to do it. If you don't care about the how and why about setting up these little servers, then just continue on!
+In order to not expose our API keys for geocoding and weather forecasts, we'll be using a separate proxy server for each service. I wrote recently wrote a post entitled [Node.js Geocoding Proxy with Paperplane](/node-js-geocoding-proxy-with-paperplane.html) where you can see a full explanation of what we're doing and how to do it. If you don't care about the how and why about setting up these little servers, then just continue on!
 
 ### Setting Up Your Geocoding Proxy
 First, you'll need to get a Google Maps API Key from here: [https://developers.google.com/maps/documentation/geocoding/start#get-a-key](https://developers.google.com/maps/documentation/geocoding/start#get-a-key).

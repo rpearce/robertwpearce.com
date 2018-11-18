@@ -78,12 +78,12 @@
 <hr />
 <p><em>Pre-requisite ramda posts:</em></p>
 <ul>
-<li><a href="/blog/ramda-chops-function-currying.html">Ramda Chops: Function Currying</a></li>
-<li><a href="/blog/ramda-chops-function-composition.html">Ramda Chops: Function Composition</a></li>
+<li><a href="/ramda-chops-function-currying.html">Ramda Chops: Function Currying</a></li>
+<li><a href="/ramda-chops-function-composition.html">Ramda Chops: Function Composition</a></li>
 </ul>
 <p><em>Other ramda posts:</em></p>
 <ul>
-<li><a href="/blog/ramda-chops-safely-accessing-properties.html">Ramda Chops: Safely Accessing Properties</a></li>
+<li><a href="/ramda-chops-safely-accessing-properties.html">Ramda Chops: Safely Accessing Properties</a></li>
 </ul>
 <h2 id="our-data-set-films">Our Data Set: Films!</h2>
 <p>This is the test data set we will reference throughout the post:</p>
@@ -141,7 +141,7 @@
 <a class="sourceLine" id="cb7-7" title="7">  .<span class="at">map</span>(filmHtml)</a></code></pre></div>
 <p><em><a href="https://goo.gl/qG4kZ7">Try this code in the ramda REPL</a></em></p>
 <h2 id="step-4-composing-filter-and-map">Step 4: Composing <code>filter</code> and <code>map</code></h2>
-<p>We can use ramda’s <a href="/blog/ramda-chops-function-currying.html">function currying capabilities</a> and <a href="/blog/ramda-chops-function-composition.html">function composition</a> to create some very clear and concise <a href="https://wiki.haskell.org/Pointfree">pointfree functions</a>.</p>
+<p>We can use ramda’s <a href="/ramda-chops-function-currying.html">function currying capabilities</a> and <a href="/ramda-chops-function-composition.html">function composition</a> to create some very clear and concise <a href="https://wiki.haskell.org/Pointfree">pointfree functions</a>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="im">import</span> <span class="op">{</span> compose<span class="op">,</span> filter<span class="op">,</span> map <span class="op">}</span> <span class="im">from</span> <span class="st">&#39;ramda&#39;</span></a>
 <a class="sourceLine" id="cb8-2" title="2"></a>
 <a class="sourceLine" id="cb8-3" title="3"><span class="co">// output :: [Film] -&gt; [Html]</span></a>

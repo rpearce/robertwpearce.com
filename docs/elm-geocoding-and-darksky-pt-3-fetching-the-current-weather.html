@@ -74,12 +74,12 @@
       </header>
       <p>This is part 3 of a multipart series where we will be building a small weather forecast app using <a href="http://elm-lang.org/">Elm</a>, <a href="https://developers.google.com/maps/documentation/geocoding/start">Google’s Geocoding API</a> and the <a href="https://darksky.net/dev/">DarkSky API</a>. Instead of doing everything in one massive post, I’ve broken the steps down into parts of a series. Here is the series plan:</p>
 <ul>
-<li><a href="/blog/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html">Pt. 1 – Setup Elm &amp; Proxy Servers</a></li>
-<li><a href="/blog/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html">Pt. 2 – Geocoding an Address</a></li>
+<li><a href="/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html">Pt. 1 – Setup Elm &amp; Proxy Servers</a></li>
+<li><a href="/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html">Pt. 2 – Geocoding an Address</a></li>
 <li>Pt. 3 – Fetching the Current Weather</li>
-<li><a href="/blog/elm-geocoding-and-darksky-pt-4-extracting-our-elm-code.html">Pt. 4 – Extracting Our Elm Code</a></li>
+<li><a href="/elm-geocoding-and-darksky-pt-4-extracting-our-elm-code.html">Pt. 4 – Extracting Our Elm Code</a></li>
 </ul>
-<p>If you’d like to code along with this tutorial, check out <a href="/blog/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html">part 1</a> and <a href="/blog/elm-geocoding-and-darksky-pt-2-fetching-the-current-weather.html">part 2</a> first to get set up.</p>
+<p>If you’d like to code along with this tutorial, check out <a href="/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html">part 1</a> and <a href="/elm-geocoding-and-darksky-pt-2-fetching-the-current-weather.html">part 2</a> first to get set up.</p>
 <p><em>Note: to learn more about the Elm language and syntax, check out the <a href="https://www.elm-tutorial.org/en/">Elm Tutorial</a>, the <a href="https://egghead.io/courses/start-using-elm-to-build-web-applications">EggHead.io Elm course</a>, subscribe to <a href="https://www.dailydrip.com/topics/elm">DailyDrip’s Elm Topic</a>, <a href="http://courses.knowthen.com">James Moore’s Elm Courses</a> or check out <a href="http://exercism.io/languages/elm/about">Elm on exercism.io</a>.</em></p>
 <h2 id="overview">Overview</h2>
 <p>In this post we will use Elm to fetch and display the current weather based on the geocode data we receive from an input field.</p>
@@ -165,7 +165,7 @@ initialWeatherCurrently =
     }</code></pre>
 <p>These are defaults that we provide in the event that we have no data to work with (initially or if something goes wrong).</p>
 <h2 id="creating-darksky-json-decoders">3. Creating DarkSky JSON decoders</h2>
-<p>Just as we did in the <a href="/blog/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html#4-creating-json-decoders">geocoding post section on JSON decoding</a>, we want to leverage <a href="https://github.com/NoRedInk/elm-decode-pipeline">NoRedInk’s elm-decode-pipeline</a> to define how our JSON response should be structured and thus parsed.</p>
+<p>Just as we did in the <a href="/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html#4-creating-json-decoders">geocoding post section on JSON decoding</a>, we want to leverage <a href="https://github.com/NoRedInk/elm-decode-pipeline">NoRedInk’s elm-decode-pipeline</a> to define how our JSON response should be structured and thus parsed.</p>
 <pre class="elm"><code>decodeWeather : Decoder Weather
 decodeWeather =
     decode Weather
@@ -180,7 +180,7 @@ decodeWeatherCurrently =
         |&gt; required &quot;temperature&quot; float</code></pre>
 <p>While we could use <a href="http://package.elm-lang.org/packages/elm-lang/core/5.1.1/Json-Decode#at">Json.Decode.at</a> to potentially have less code, there is absolutely nothing wrong with being verbose if it leads to clarity.</p>
 <h2 id="writing-our-fetchweather-http-function">4. Writing our fetchWeather HTTP function</h2>
-<p>We know that we’re going to have to send latitude and longitude <code>Coords</code> to our <a href="https://github.com/rpearce/DarkSky-proxy">DarkSky proxy server</a>, as well as any additional options, so let’s define the URL for that and the fetching function <a href="/blog/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html#8-making-our-request">just like we did for geocoding</a>.</p>
+<p>We know that we’re going to have to send latitude and longitude <code>Coords</code> to our <a href="https://github.com/rpearce/DarkSky-proxy">DarkSky proxy server</a>, as well as any additional options, so let’s define the URL for that and the fetching function <a href="/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html#8-making-our-request">just like we did for geocoding</a>.</p>
 <pre class="elm"><code>weatherUrl : Coords -&gt; String
 weatherUrl ( lat, lng ) =
     &quot;http://localhost:5051/forecast/&quot;
@@ -209,7 +209,7 @@ fetchWeather coords =
     | ReceiveWeather (Result Http.Error Weather)
     | NoOp</code></pre>
 <h2 id="calling-fetchweather-and-handling-the-response">5. Calling fetchWeather and handling the response</h2>
-<p>When we <a href="https://robertwpearce.com/blog/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html#9-handling-the-geocode-response">handled our geocode response in the prior post</a>, inside of <code>ReceiveGeocoding</code> we returned <code>( newModel, Cmd.none )</code>, for we had no further actions to take. Instead of our action in this tuple being <code>Cmd.none</code>, let’s instead call our <code>fetchWeather</code> function and pass it our geocoded coordinates:</p>
+<p>When we <a href="/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html#9-handling-the-geocode-response">handled our geocode response in the prior post</a>, inside of <code>ReceiveGeocoding</code> we returned <code>( newModel, Cmd.none )</code>, for we had no further actions to take. Instead of our action in this tuple being <code>Cmd.none</code>, let’s instead call our <code>fetchWeather</code> function and pass it our geocoded coordinates:</p>
 <pre class="elm"><code>update : Msg -&gt; Model -&gt; ( Model, Cmd Msg )
 update msg model =
     case msg of
