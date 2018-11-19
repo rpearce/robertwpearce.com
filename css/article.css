@@ -94,7 +94,7 @@
 .article__bgPhotoCred {
   margin-left: 1em;
 }
-@media only screen and (max-width: 667px) {
+@media (max-width: 667px) {
   .article h1 {
     font-size: 2rem;
   }
@@ -125,24 +125,25 @@ iframe {
 /* CODE */
 
 pre {
-  background-color: #F7F7F9;
-  border: 1px solid #E1E1E8;
+  background-color: #f6f8fa;
+  border-radius: 3px;
   page-break-inside: avoid;
+  padding: 16px;
 }
 code {
-  padding: 0.1em 0.3em;
-  background-color: #F7F7F9;
-  border: 1px solid #E1E1E8;
-  white-space: nowrap;
+  padding: 0.2em 0.4em;
+  background-color: #f4f4f4;
+  border-radius: 3px;
+  white-space: pre-wrap;
   font-size: 85%;
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 }
 pre code {
   display: block;
-  overflow-x: auto;
-  padding: 0.5em;
+  overflow: auto;
+  padding: 0;
   border: none;
-  background-color: none;
+  background-color: transparent;
   direction: ltr;
   text-align: left;
   white-space: pre;
@@ -158,6 +159,10 @@ pre code {
   -ms-hyphens: none;
   hyphens: none;
 }
+a[href] > code {
+  color: #2675AB;
+}
+
 /*code span.al { color: #ff0000; font-weight: bold; } [> Alert <]*/
 /*code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } [> Annotation <]*/
 /*code span.at { color: #7d9029; } [> Attribute <]*/
@@ -187,60 +192,6 @@ pre code {
 /*code span.va { color: #19177c; } [> Variable <]*/
 /*code span.vs { color: #4070a0; } [> VerbatimString <]*/
 /*code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } [> Warning <]*/
-
-
-/* SUBSCRIBE */
-
-.subscribe__header {
-  margin-bottom: 0.5em;
-  font-size: 1.643rem;
-  font-weight: 400;
-  line-height: 1.2;
-}
-.subscribe__form {
-  margin: 1em 0;
-}
-.subscribe__section {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-justify-content: space-between;
-  -moz-justify-content: space-between;
-  -ms-justify-content: space-between;
-  justify-content: space-between;
-  -ms-flex-pack: space-between;
-}
-.subscribe__label {
-  display: none;
-}
-.subscribe__input {
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  margin-right: 1em;
-  padding: 0.75em;
-  border-radius:3px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  outline: 0;
-}
-.subscribe__input:focus {
-  border-color:#bedcf0
-}
-.subscribe__submit {
-  background-color:#2980b9;
-  border:none;
-  color:#FFF;
-  padding:1em;
-  font-size:1rem;
-  font-weight:bold;
-  border-radius:3px
-}
-
 
 /* SHAME */
 

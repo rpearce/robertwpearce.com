@@ -4,7 +4,7 @@
     <title>Turning A New Leaf</title>
 
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Two weeks ago today, I quit a rewarding and lucrative job without having another gig lined up. Oh, sh*t.">
     <meta name="author" content="Robert Pearce">
     <meta name="keywords" content="quitting your job, freelancing, healthcare, retirement accounts, technology, digital nomad">
@@ -35,8 +35,7 @@
     
   </head>
   <body>
-    <main>
-  <nav class="nav">
+    <nav class="nav">
   <div class="layout--constrained">
     <a class="nav__link" href="/">Home</a>
     <a class="nav__link" href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a>
@@ -45,9 +44,11 @@
   </div>
 </nav>
 
+
+<main>
   <article class="article">
-    <div class="article__bg" style="background-image: url('/images/path.jpg')">
-      <header class="article__bgHeader">
+    <header class="article__bg" style="background-image: url('/images/path.jpg')">
+      <div class="article__bgHeader">
         <div class="layout--constrained">
           <div class="article__bgTitleWrap">
             <h1 class="article__bgTitle">
@@ -59,8 +60,8 @@
             </div>
           </div>
         </div>
-      </header>
-    </div>
+      </div>
+    </header>
     <section class="layout--constrained">
       <header class="article__header">
         <h1 class="article__title">
@@ -134,7 +135,8 @@
   </article>
 </main>
 
-<section class="subscribe section--padded bg--gray">
+<footer>
+  <section class="subscribe section--padded bg--gray">
   <div class="layout--constrained">
     <h2 class="subscribe__header">Get notified of new posts</h2>
 
@@ -145,19 +147,19 @@
       </div>
       <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_2df44e8960266388bff165fa6_ee2f2a3737" tabindex="-1" value=""></div>
       <div class="subscribe__section">
-        <label for="mce-EMAIL" class="subscribe__label">Email Address</label>
-        <input type="email" value="" id="mce-EMAIL" class="subscribe__input" name="EMAIL" placeholder="you@greatemail.com">
+        <input type="email" value="" id="mce-EMAIL" class="subscribe__input" name="EMAIL" placeholder="you@greatemail.com" aria-label="Email Address">
         <input type="submit" value="Subscribe" name="subscribe" class="subscribe__submit">
       </div>
       <small>Note: I will <em>never</em> give out your email nor spam you. Unsubscribe at any time.</small>
     </form>
 
     <p>
-      <small>(or subscribe to the <a href="/atom.xml">atom</a> or <a href="/rss.xml">rss</a> feeds)</small>
+      <small>(or subscribe to the <a href="/atom.xml" class="subscribe__link">atom</a> or <a class="subscribe__link" href="/rss.xml">rss</a> feeds)</small>
     </p>
   </div>
 </section>
 
+</footer>
 
   </body>
 </html>

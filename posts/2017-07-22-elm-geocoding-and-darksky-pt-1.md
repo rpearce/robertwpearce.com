@@ -101,7 +101,7 @@ Finally, create a new file, `index.html`, and add the following to it:
   <head>
     <title>Weather</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
     <script type="text/javascript" src="elm.js"></script>

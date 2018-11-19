@@ -4,7 +4,7 @@
     <title>Elm, Geocoding & DarkSky: Pt. 1 – Setup Elm & Proxy Servers</title>
 
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="In Part 1 we will begin building a small weather forecast app using Elm, Google's Geocoding API and the DarkSky API.">
     <meta name="author" content="Robert Pearce">
     <meta name="keywords" content="elm, elm tutorial, elmlang, elm geocoding, elm darksky, elm weather, elm functional programming">
@@ -35,8 +35,7 @@
     
   </head>
   <body>
-    <main>
-  <nav class="nav">
+    <nav class="nav">
   <div class="layout--constrained">
     <a class="nav__link" href="/">Home</a>
     <a class="nav__link" href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a>
@@ -45,9 +44,11 @@
   </div>
 </nav>
 
+
+<main>
   <article class="article">
-    <div class="article__bg" style="background-image: url('/images/snow-dogs.jpg')">
-      <header class="article__bgHeader">
+    <header class="article__bg" style="background-image: url('/images/snow-dogs.jpg')">
+      <div class="article__bgHeader">
         <div class="layout--constrained">
           <div class="article__bgTitleWrap">
             <h1 class="article__bgTitle">
@@ -63,8 +64,8 @@
             </div>
           </div>
         </div>
-      </header>
-    </div>
+      </div>
+    </header>
     <section class="layout--constrained">
       <header class="article__header">
         <h1 class="article__title">
@@ -131,7 +132,7 @@ main =
 <a class="sourceLine" id="cb6-3" title="3">  <span class="kw">&lt;head&gt;</span></a>
 <a class="sourceLine" id="cb6-4" title="4">    <span class="kw">&lt;title&gt;</span>Weather<span class="kw">&lt;/title&gt;</span></a>
 <a class="sourceLine" id="cb6-5" title="5">    <span class="kw">&lt;meta</span><span class="ot"> charset=</span><span class="st">&quot;utf-8&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb6-6" title="6">    <span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;viewport&quot;</span><span class="ot"> content=</span><span class="st">&quot;width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb6-6" title="6">    <span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;viewport&quot;</span><span class="ot"> content=</span><span class="st">&quot;width=device-width, initial-scale=1&quot;</span><span class="kw">&gt;</span></a>
 <a class="sourceLine" id="cb6-7" title="7">  <span class="kw">&lt;/head&gt;</span></a>
 <a class="sourceLine" id="cb6-8" title="8">  <span class="kw">&lt;body&gt;</span></a>
 <a class="sourceLine" id="cb6-9" title="9">    <span class="kw">&lt;script</span><span class="ot"> type=</span><span class="st">&quot;text/javascript&quot;</span><span class="ot"> src=</span><span class="st">&quot;elm.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a>
@@ -182,7 +183,8 @@ main =
   </article>
 </main>
 
-<section class="subscribe section--padded bg--gray">
+<footer>
+  <section class="subscribe section--padded bg--gray">
   <div class="layout--constrained">
     <h2 class="subscribe__header">Get notified of new posts</h2>
 
@@ -193,19 +195,19 @@ main =
       </div>
       <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_2df44e8960266388bff165fa6_ee2f2a3737" tabindex="-1" value=""></div>
       <div class="subscribe__section">
-        <label for="mce-EMAIL" class="subscribe__label">Email Address</label>
-        <input type="email" value="" id="mce-EMAIL" class="subscribe__input" name="EMAIL" placeholder="you@greatemail.com">
+        <input type="email" value="" id="mce-EMAIL" class="subscribe__input" name="EMAIL" placeholder="you@greatemail.com" aria-label="Email Address">
         <input type="submit" value="Subscribe" name="subscribe" class="subscribe__submit">
       </div>
       <small>Note: I will <em>never</em> give out your email nor spam you. Unsubscribe at any time.</small>
     </form>
 
     <p>
-      <small>(or subscribe to the <a href="/atom.xml">atom</a> or <a href="/rss.xml">rss</a> feeds)</small>
+      <small>(or subscribe to the <a href="/atom.xml" class="subscribe__link">atom</a> or <a class="subscribe__link" href="/rss.xml">rss</a> feeds)</small>
     </p>
   </div>
 </section>
 
+</footer>
 
   </body>
 </html>

@@ -23,7 +23,7 @@
 .author__title {
   font-size: 1rem;
   line-height: 1.2;
-  color: #8F8F8F;
+  color: #767676;
 }
 .author__links {
   margin-top: 20px;
@@ -78,7 +78,7 @@
 .review__text {
   margin: 0 0 0 100px;
 }
-@media only screen and (max-width: 667px) {
+@media (max-width: 667px) {
   .author__name {
     font-size: 2rem;
   }
@@ -88,57 +88,4 @@
  .reviews {
     margin-top: 0;
   }
-}
-
-
-/* SUBSCRIBE */
-
-.subscribe__header {
-  margin-bottom: 0.5em;
-  font-size: 1.643rem;
-  font-weight: 400;
-  line-height: 1.2;
-}
-.subscribe__form {
-  margin: 1em 0;
-}
-.subscribe__section {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-justify-content: space-between;
-  -moz-justify-content: space-between;
-  -ms-justify-content: space-between;
-  justify-content: space-between;
-  -ms-flex-pack: space-between;
-}
-.subscribe__label {
-  display: none;
-}
-.subscribe__input {
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  margin-right: 1em;
-  padding: 0.75em;
-  border-radius:3px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  outline: 0;
-}
-.subscribe__input:focus {
-  border-color:#bedcf0
-}
-.subscribe__submit {
-  background-color:#2980b9;
-  border:none;
-  color:#FFF;
-  padding:1em;
-  font-size:1rem;
-  font-weight:bold;
-  border-radius:3px
 }
