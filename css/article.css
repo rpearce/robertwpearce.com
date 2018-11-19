@@ -6,6 +6,14 @@
 .nav__link {
   margin-right: 20px;
 }
+.nav__skip {
+  position: absolute;
+  left: -10000px;
+}
+.nav__skip:focus {
+  position: static;
+  left: auto;
+}
 
 
 /* ARTICLE */

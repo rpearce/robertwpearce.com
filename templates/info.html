@@ -1,8 +1,9 @@
-<main>
-  $partial("templates/nav.html")$
+$partial("templates/nav.html")$
+
+<main id="content" tabindex="-1">
   <article class="article">
-    <div class="article__bg" style="background-image: url('$image$')">
-      <header class="article__bgHeader">
+    <header class="article__bg" style="background-image: url('$image$')">
+      <div class="article__bgHeader">
         <div class="layout--constrained">
           <div class="article__bgTitleWrap">
             <h1 class="article__bgTitle">
@@ -18,8 +19,8 @@
             </div>
           </div>
         </div>
-      </header>
-    </div>
+        </div>
+    </header>
     <section class="layout--constrained">
       <header class="article__header">
         <h1 class="article__title">
