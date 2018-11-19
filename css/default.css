@@ -102,6 +102,9 @@ a.subscribe__link[href] {
   border-color:#bedcf0
 }
 .subscribe__submit {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   background-color:#287cb4;
   border:none;
   color:#FFF;
