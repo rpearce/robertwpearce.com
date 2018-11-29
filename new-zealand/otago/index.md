@@ -8,6 +8,7 @@ keywords: "otago, central otago, new zealand, things to do, hikes, coworking, re
 photoCredit: "theworldwithabackpack"
 photoWebsite: "https://www.instagram.com/theworldwithabackpack/"
 title: "Otago, New Zealand"
+updated: "2018-11-29"
 ---
 
 Things to do and see in New Zealand's Otago region.

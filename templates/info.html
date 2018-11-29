@@ -11,6 +11,9 @@ $partial("templates/nav.html")$
             </h1>
             <div class="article__bgSubHeader">
               <small class="italic">$date$</small>
+              $if(updated)$
+              <small class="italic">(updated: $updated$)</small>
+              $endif$
               $if(photoCredit)$
                 <small class="article__bgPhotoCred italic">
                   [ photo credit <a href="$photoWebsite$">$photoCredit$</a> ]
@@ -27,6 +30,9 @@ $partial("templates/nav.html")$
           <a href="$url$">$title$</a>
         </h1>
         <small class="italic">$date$</small>
+        $if(updated)$
+        <small class="italic">(updated: $updated$)</small>
+        $endif$
       </header>
       $body$
     </section>
