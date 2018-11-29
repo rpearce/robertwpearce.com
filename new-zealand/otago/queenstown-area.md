@@ -60,6 +60,11 @@ points, as well.
 * https://www.switchbacktravel.com/maps/frankton-arm-walkway-queenstown
 * https://goo.gl/maps/7bzvrPXupRn
 
+### Bob's Cove
+* https://www.doc.govt.nz/parks-and-recreation/places-to-go/otago/places/queenstown-area/things-to-do/bobs-cove-track-and-nature-walk/
+* https://www.newzealand.com/au/article/bobs-cove-track/
+* http://www.newzealandtravelinsider.com/day-walks/bobs-cove-track-queenstown-nz.htm
+
 ## Food / Drink
 
 ### Fergburger
@@ -136,6 +141,15 @@ This is a fun (yet cold!) experience on a jet boat that can run in 3cm of water
 * http://glenorchyinfocentre.co.nz/
 * https://www.newzealand.com/us/glenorchy/
 * https://goo.gl/maps/qVBQA1y7kPy
+
+### Milford Sound
+While technically in Fiordland, this one is a big day trip from Queenstown (or
+Te Anau, if you can stay there, instead, or in Milford Sound itself) that is a
+gorgeous drive, albeit a long one. If you can't drive the whole way there, there
+are small plane rides to / from there that are stunning.
+* https://www.newzealand.com/us/milford-sound/
+* https://www.milford-sound.co.nz
+* https://www.airmilford.co.nz
 
 ### Paradise
 Search around to see if you can find how to get there. It's a decent drive along
