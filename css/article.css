@@ -50,6 +50,10 @@
   margin: 0;
   line-height: 1.75;
 }
+.article a:visited {
+  color: #206592;
+  border-bottom-color: #206592;
+}
 .article p+p {
   margin-top: 1em;
 }

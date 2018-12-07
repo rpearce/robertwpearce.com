@@ -34,6 +34,10 @@
 .posts {
   margin-top: 20px;
 }
+.posts a:visited {
+  color: #206592;
+  border-bottom-color: #206592;
+}
 .posts__list {
   margin: 0;
   padding: 0;
