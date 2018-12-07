@@ -17,6 +17,7 @@ main = hakyllWith config $ do
           , "robots.txt"
           , "_config.yml"
           , "images/*"
+          , "fonts/*"
           , ".well-known/*"
           ] $ \f -> match f $ do
         route   idRoute

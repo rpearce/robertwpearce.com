@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "LatoRegular";
+  src: local("Lato-Regular"),
+       url("/fonts/Lato-Regular.woff2") format("woff2"),
+       url("/fonts/Lato-Regular.woff") format("woff");
+  font-display: optional;
+  text-rendering: optimizeLegibility;
+}
 html {
   box-sizing: border-box;
   -ms-text-size-adjust: 100%;
@@ -14,7 +22,7 @@ body {
   font-size: 16px;
 }
 body {
-  font-family: "Lato", Verdana, Helvetica, Arial, sans-serif;
+  font-family: "LatoRegular", Verdana, Helvetica, Arial, sans-serif;
   line-height: 1.643;
   color: #334249;
   margin: 0;
