@@ -167,6 +167,7 @@ getUpdatedUTC locale id' = do
         , "%b %d, %Y"
         ]
 
+
 -- TITLE HELPERS
 
 
@@ -232,9 +233,10 @@ type FeedRenderer =
 
 
 feedCompiler :: FeedRenderer -> Compiler (Item String)
-feedCompiler renderer = do
-    posts <- recentFirst =<< loadAll "posts/*"
-    renderer feedConfiguration feedCtx posts
+feedCompiler renderer =
+    loadAll "posts/*"
+        >>= recentFirst
+        >>= renderer feedConfiguration feedCtx
 
 
 feedConfiguration :: FeedConfiguration
