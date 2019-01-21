@@ -3,12 +3,15 @@
 
 import           Hakyll
 
-import           Control.Monad (forM_)
-import           Data.Char     (isAlphaNum)
-import           Data.Maybe    (fromMaybe)
-import qualified Data.Text     as T
+import           Control.Monad    (forM_, liftM, msum)
+import           Data.Char        (isAlphaNum)
+import           Data.Maybe       (fromJust, fromMaybe)
+import qualified Data.Text        as T
+import qualified Data.Time.Clock  as Clock
+import           Data.Time.Format (TimeLocale, defaultTimeLocale, formatTime,
+                                   parseTimeM)
 import           Text.Pandoc
-import           Web.Slug      (mkSlug)
+import           Web.Slug         (mkSlug)
 
 
 main :: IO ()
@@ -83,18 +86,12 @@ main = hakyllWith config $ do
 
     create ["rss.xml"] $ do
         route idRoute
-        compile $ do
-            let feedCtx = titleContext <> postCtx <> bodyField "description"
-            posts <- recentFirst =<< loadAll "posts/*"
-            renderRss feedConfiguration feedCtx posts
+        compile (feedCompiler renderRss)
 
 
     create ["atom.xml"] $ do
         route idRoute
-        compile $ do
-            let feedCtx = titleContext <> postCtx <> bodyField "description"
-            posts <- recentFirst =<< loadAll "posts/*"
-            renderAtom feedConfiguration feedCtx posts
+        compile (feedCompiler renderAtom)
 
 
 -- CONFIG
@@ -123,24 +120,74 @@ config =
 -- CONTEXT
 
 
+feedCtx :: Context String
+feedCtx =
+    titleCtx     <>
+    updatedField <>
+    postCtx      <>
+    bodyField "description"
+
+
+postCtx :: Context String
+postCtx =
+    constField "root" root         <>
+    constField "siteName" siteName <>
+    dateField "date" "%Y-%m-%d"    <>
+    defaultContext
+
+
+titleCtx :: Context String
+titleCtx =
+    field "title" updatedTitle
+
+
+updatedField :: Context String
+updatedField = field "updated" $ \i -> do
+    let locale = defaultTimeLocale
+    time <- getUpdatedUTC locale $ itemIdentifier i
+    return $ formatTime locale "%Y-%m-%dT%H:%M:%SZ" time
+
+
+-- ripped from https://github.com/jaspervdj/hakyll/blob/c85198d8cb6ce055c788e287c7f2470eac0aad36/lib/Hakyll/Web/Template/Context.hs#L296
+getUpdatedUTC :: MonadMetadata m => TimeLocale -> Identifier -> m Clock.UTCTime
+getUpdatedUTC locale id' = do
+    metadata <- getMetadata id'
+    let tryField k fmt = lookupString k metadata >>= parseTime' fmt
+    maybe empty' return $ msum [tryField "updated" fmt | fmt <- formats]
+  where
+    empty'     = fail $ "Hakyll.Web.Template.Context.getUpdatedUTC: " ++ "could not parse time for " ++ show id'
+    parseTime' = parseTimeM True locale
+    formats    =
+        [ "%a, %d %b %Y %H:%M:%S %Z"
+        , "%Y-%m-%dT%H:%M:%S%Z"
+        , "%Y-%m-%d %H:%M:%S%Z"
+        , "%Y-%m-%d"
+        , "%B %e, %Y %l:%M %p"
+        , "%B %e, %Y"
+        , "%b %d, %Y"
+        ]
+
+-- TITLE HELPERS
+
+
 replaceAmp :: String -> String
 replaceAmp =
     replaceAll "&" (const "&amp;")
 
 
-titleContext :: Context a
-titleContext =
-    field "title" $ \item -> do
-        metadata <- getMetadata (itemIdentifier item)
-        return $ replaceAmp $ fromMaybe "no title" $ lookupString "title" metadata
+replaceTitleAmp :: Metadata -> String
+replaceTitleAmp =
+    replaceAmp . safeTitle
 
 
-postCtx :: Context String
-postCtx =
-    constField "root" root          <>
-    constField "siteName" siteName  <>
-    dateField "date" "%Y-%m-%d"     <>
-    defaultContext
+safeTitle :: Metadata -> String
+safeTitle =
+    fromMaybe "no title" . lookupString "title"
+
+
+updatedTitle :: Item a -> Compiler String
+updatedTitle =
+    fmap replaceTitleAmp . getMetadata . itemIdentifier
 
 
 -- PANDOC
@@ -175,6 +222,19 @@ pandocWriterOpts =
 
 
 -- FEEDS
+
+
+type FeedRenderer =
+    FeedConfiguration
+    -> Context String
+    -> [Item String]
+    -> Compiler (Item String)
+
+
+feedCompiler :: FeedRenderer -> Compiler (Item String)
+feedCompiler renderer = do
+    posts <- recentFirst =<< loadAll "posts/*"
+    renderer feedConfiguration feedCtx posts
 
 
 feedConfiguration :: FeedConfiguration
