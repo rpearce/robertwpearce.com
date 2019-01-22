@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hakyll Pt. 3 – Generating RSS and Atom XML Feeds</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Generate rss.xml and atom.xml feeds for your hakyll site.">
+    <meta name="author" content="Robert Pearce">
+    <meta name="keywords" content="hakyll, rss, atom, rss.xml, atom.xml, hakyll tutorial, hakyll blog, hakyll blog tutorial, hakyll static site, static site generator">
+    <meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU">
+
+    <meta property="og:site_name" content="Robert Pearce | Freelance Software Developer">
+    <meta property="og:title" content="Hakyll Pt. 3 – Generating RSS and Atom XML Feeds">
+    <meta property="og:url" content="https://robertwpearce.com/hakyll-pt-3-generating-rss-and-atom-xml-feeds.html">
+    <meta property="og:description" content="Generate rss.xml and atom.xml feeds for your hakyll site.">
+    <meta property="og:image" content="https://robertwpearce.com/images/glenorchy-lagoon.jpg">
+    
+      <meta property="og:type" content="article">
+    
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="Robert Pearce | Freelance Software Developer">
+    <meta property="twitter:title" content="Hakyll Pt. 3 – Generating RSS and Atom XML Feeds">
+    <meta property="twitter:description" content="Generate rss.xml and atom.xml feeds for your hakyll site.">
+    <meta property="twitter:image" content="https://robertwpearce.com/images/glenorchy-lagoon.jpg">
+    <meta property="twitter:creator" content="@RobertWPearce">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="canonical" href="https://robertwpearce.com/hakyll-pt-3-generating-rss-and-atom-xml-feeds.html">
+    <link rel="stylesheet" href="/css/default.css" />
+    
+      <link rel="stylesheet" href="/css/article.css" />
+    
+  </head>
+  <body>
+    <nav class="nav">
+  <div class="layout--constrained">
+    <a class="nav__link nav__skip" href="#content">Skip to content</a>
+    <a class="nav__link" href="/">Home</a>
+    <a class="nav__link" href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a>
+    <a class="nav__link" href="/atom.xml">atom</a>
+    <a class="nav__link" href="/rss.xml">rss</a>
+  </div>
+</nav>
+
+
+<main id="content" tabindex="-1">
+  <article class="article">
+    <header class="article__bg" style="background-image: url('/images/glenorchy-lagoon.jpg')">
+      <div class="article__bgHeader">
+        <div class="layout--constrained">
+          <div class="article__bgTitleWrap">
+            <h1 class="article__bgTitle">
+              <a href="/hakyll-pt-3-generating-rss-and-atom-xml-feeds.html">Hakyll Pt. 3 – Generating RSS and Atom XML Feeds</a>
+            </h1>
+            <div class="article__bgSubHeader">
+              <small class="italic">2019-01-23</small>
+              
+              
+              <small class="article__bgPhotoCred italic">
+                [ photo credit <a href="https://www.instagram.com/robertwpearce">robertwpearce</a> ]
+              </small>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="layout--constrained">
+      <header class="article__header">
+        <h1 class="article__title">
+          <a href="/hakyll-pt-3-generating-rss-and-atom-xml-feeds.html">Hakyll Pt. 3 – Generating RSS and Atom XML Feeds</a>
+        </h1>
+        <small class="italic">2019-01-23</small>
+        
+      </header>
+      <p>This is part 3 of a multipart series where we will look at getting a website / blog set up with <a href="https://jaspervdj.be/hakyll">hakyll</a> and customized a fair bit.</p>
+<ul>
+<li><a href="/hakyll-pt-1-setup-and-initial-customization.html">Pt. 1 – Setup &amp; Initial Customization</a></li>
+<li><a href="/hakyll-pt-2-generating-a-sitemap-xml-file.html">Pt. 2 – Generating a Sitemap XML File</a></li>
+<li>Pt. 3 – Generating RSS and Atom XML Feeds</li>
+<li><em>(wip) Pt. 4 – Copying Static Files For Your Build</em></li>
+<li><em>(wip) Pt. 5 – Generating Custom Post Filenames From a Title Slug</em></li>
+<li><em>(wip) Pt. 6 – Customizing Markdown Compiler Options</em></li>
+</ul>
+<h2 id="overview">Overview</h2>
+<ol>
+<li><a href="#hakyll-feed-required-reading">Hakyll Feed Required Reading</a></li>
+<li><a href="#hakylls-prebuilt-rss-atom-templates">Hakyll’s Prebuilt RSS &amp; Atom Templates</a></li>
+<li><a href="#hakyll-feed-setup">Hakyll Feed Setup</a></li>
+<li><a href="#creating-the-atom-rss-xml-files">Creating the Atom &amp; RSS XML Files</a></li>
+<li><a href="#unexpected-issue-setting-an-updated-field">Unexpected Issue: Setting an <code>updated</code> Field</a></li>
+<li><a href="#validating-and-using-our-feeds">Validating and Using Our Feeds</a></li>
+</ol>
+<h2 id="hakyll-feed-required-reading">Hakyll Feed Required Reading</h2>
+<p>There is already a great starter guide at <a href="https://jaspervdj.be/hakyll/tutorials/05-snapshots-feeds.html" class="uri">https://jaspervdj.be/hakyll/tutorials/05-snapshots-feeds.html</a>, so be sure to read this first – it might make it so you don’t have to read <em>this</em> blog post at all.</p>
+<h2 id="hakylls-prebuilt-rss-atom-templates">Hakyll’s Prebuilt RSS &amp; Atom Templates</h2>
+<p>Thankfully, hakyll aready comes with prebuilt RSS and Atom templates! You can find the source here: <a href="https://github.com/jaspervdj/hakyll/tree/master/data/templates" class="uri">https://github.com/jaspervdj/hakyll/tree/master/data/templates</a>. While you won’t need to copy and paste nor even directly use these files, you should look them over to see what fields they are expecting. There are two levels to be aware of: the feed itself and each individual feed item.</p>
+<h3 id="feed-level">Feed-Level</h3>
+<p>The feed itself is looking for the following, and you’ll provide these through a <code>FeedConfiguration</code> that we’ll discuss in a moment. Here are the fields the <code>atom.xml</code> and <code>rss.xml</code> templates are expecting:</p>
+<ul>
+<li><code>title</code> (title of feed)</li>
+<li><code>description</code> (description of feed)</li>
+<li><code>authorName</code> (feed author name)</li>
+<li><code>authorEmail</code> (feed author email)</li>
+<li><code>root</code> (your website)</li>
+<li><code>updated</code> (feed last updated at; should be done for you)</li>
+<li><code>body</code> (feed body; should be done for you)</li>
+<li><code>url</code> (path to the XML file; based off of a <code>create [&quot;rss.xml&quot;]</code> function that we’ll discuss)</li>
+</ul>
+<h3 id="feed-item-level">Feed Item-Level</h3>
+<p>Each feed item, or <em>entry</em>, expects the following:</p>
+<ul>
+<li><code>title</code> (title of the entry)</li>
+<li><code>root</code> (your website)</li>
+<li><code>url</code> (path to resource)</li>
+<li><code>published</code> (published date; <code>&quot;%Y-%m-%dT%H:%M:%SZ&quot;</code> format; should be done for you via hakyll’s <code>dateField</code> context)</li>
+<li><code>updated</code> (updated date; <code>&quot;%Y-%m-%dT%H:%M:%SZ&quot;</code> format; should be done for you, unless you provide you own)</li>
+</ul>
+<hr />
+<p>Now that you know what sort of data are expected, let’s begin.</p>
+<h2 id="hakyll-feed-setup">Hakyll Feed Setup</h2>
+<p>As is introduced in <a href="https://jaspervdj.be/hakyll/tutorials/05-snapshots-feeds.html">the required hakyll feed reading</a>, we need to create a <code>FeedConfiguration</code>. If you’d like to see the <code>FeedConfiguration</code> data constructor, you can view it here: <a href="https://github.com/jaspervdj/hakyll/blob/f3a17454fae3b140ada30ebef13f508179f4cd0d/lib/Hakyll/Web/Feed.hs#L63-L75" class="uri">https://github.com/jaspervdj/hakyll/blob/f3a17454fae3b140ada30ebef13f508179f4cd0d/lib/Hakyll/Web/Feed.hs#L63-L75</a>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" title="1"><span class="ot">feedConfiguration ::</span> <span class="dt">FeedConfiguration</span></a>
+<a class="sourceLine" id="cb1-2" title="2">feedConfiguration <span class="fu">=</span></a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="dt">FeedConfiguration</span></a>
+<a class="sourceLine" id="cb1-4" title="4">        { feedTitle       <span class="fu">=</span> <span class="st">&quot;My Blog&quot;</span></a>
+<a class="sourceLine" id="cb1-5" title="5">        , feedDescription <span class="fu">=</span> <span class="st">&quot;Posts about x, y &amp; z&quot;</span></a>
+<a class="sourceLine" id="cb1-6" title="6">        , feedAuthorName  <span class="fu">=</span> <span class="st">&quot;My Name&quot;</span></a>
+<a class="sourceLine" id="cb1-7" title="7">        , feedAuthorEmail <span class="fu">=</span> <span class="st">&quot;me@myemail.com&quot;</span></a>
+<a class="sourceLine" id="cb1-8" title="8">        , feedRoot        <span class="fu">=</span> <span class="st">&quot;https://example.com&quot;</span></a>
+<a class="sourceLine" id="cb1-9" title="9">        }</a></code></pre></div>
+<p>We should next figure out what we want our “feed context” to consist of. The official hakyll feed guide (linked above) is:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">let</span> feedCtx <span class="fu">=</span> postCtx <span class="ot">`mappend`</span> bodyField <span class="st">&quot;description&quot;</span></a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="co">-- which can be abbreviated to</span></a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="kw">let</span> feedCtx <span class="fu">=</span> postCtx <span class="fu">&lt;&gt;</span> bodyField <span class="st">&quot;description&quot;</span></a></code></pre></div>
+<p>This will enable you to include the body of your post as the <code>description</code>, but if you provide your own <code>description</code> field in your posts, then this step isn’t necessary. For the mean time, let’s make our own <code>feedCtx</code> function that sticks to the original post.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" title="1"><span class="ot">feedCtx ::</span> <span class="dt">Context</span> <span class="dt">String</span></a>
+<a class="sourceLine" id="cb3-2" title="2">feedCtx <span class="fu">=</span> postCtx <span class="fu">&lt;&gt;</span> bodyField <span class="st">&quot;description&quot;</span></a></code></pre></div>
+<p>If you’re unsure of what <code>postCtx</code> is, I recommend checking out the <a href="/hakyll-pt-2-generating-a-sitemap-xml-file.html">previous article</a> or viewing the source of this site: <a href="https://github.com/rpearce/robertwpearce.com/blob/858163216f445eb8b6ab3b4304b022b64814b6f8/site.hs#L131-L136" class="uri">https://github.com/rpearce/robertwpearce.com/blob/858163216f445eb8b6ab3b4304b022b64814b6f8/site.hs#L131-L136</a>.</p>
+<h2 id="creating-the-atom-rss-xml-files">Creating the Atom &amp; RSS XML Files</h2>
+<p>Here is what <a href="https://jaspervdj.be/hakyll/tutorials/05-snapshots-feeds.html">the official hakyll feed guide</a> recommends:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" title="1">create [<span class="st">&quot;atom.xml&quot;</span>] <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb4-2" title="2">    route idRoute</a>
+<a class="sourceLine" id="cb4-3" title="3">    compile <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb4-4" title="4">        <span class="kw">let</span> feedCtx <span class="fu">=</span> postCtx <span class="ot">`mappend`</span> bodyField <span class="st">&quot;description&quot;</span></a>
+<a class="sourceLine" id="cb4-5" title="5">        posts <span class="ot">&lt;-</span> <span class="fu">fmap</span> (<span class="fu">take</span> <span class="dv">10</span>) <span class="fu">.</span> recentFirst <span class="fu">=&lt;&lt;</span></a>
+<a class="sourceLine" id="cb4-6" title="6">            loadAllSnapshots <span class="st">&quot;posts/*&quot;</span> <span class="st">&quot;content&quot;</span></a>
+<a class="sourceLine" id="cb4-7" title="7">        renderAtom myFeedConfiguration feedCtx posts</a></code></pre></div>
+<p>This is great! However, if we want to generate both an <code>atom.xml</code> feed and an <code>rss.xml</code> feed, we’ll end up with almost duplicated code:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb5-1" title="1">create [<span class="st">&quot;rss.xml&quot;</span>] <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb5-2" title="2">    route idRoute</a>
+<a class="sourceLine" id="cb5-3" title="3">    compile <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb5-4" title="4">        <span class="kw">let</span> feedCtx <span class="fu">=</span> postCtx <span class="ot">`mappend`</span> bodyField <span class="st">&quot;description&quot;</span></a>
+<a class="sourceLine" id="cb5-5" title="5">        posts <span class="ot">&lt;-</span> <span class="fu">fmap</span> (<span class="fu">take</span> <span class="dv">10</span>) <span class="fu">.</span> recentFirst <span class="fu">=&lt;&lt;</span></a>
+<a class="sourceLine" id="cb5-6" title="6">            loadAllSnapshots <span class="st">&quot;posts/*&quot;</span> <span class="st">&quot;content&quot;</span></a>
+<a class="sourceLine" id="cb5-7" title="7">        renderRss myFeedConfiguration feedCtx posts</a></code></pre></div>
+<p>It looks like all the feed compilation is exactly the same except for the <code>renderAtom</code> and <code>renderRss</code> functions that come bundled with hakyll. With this in mind, let’s write our own feed compiler and reduce as much boilerplate as we reasonably can.</p>
+<p>To start out, let’s see what we want our top-level end result to be:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb6-1" title="1">create [<span class="st">&quot;atom.xml&quot;</span>] <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb6-2" title="2">    route idRoute</a>
+<a class="sourceLine" id="cb6-3" title="3">    compile (feedCompiler renderAtom)</a>
+<a class="sourceLine" id="cb6-4" title="4"></a>
+<a class="sourceLine" id="cb6-5" title="5"></a>
+<a class="sourceLine" id="cb6-6" title="6">create [<span class="st">&quot;rss.xml&quot;</span>] <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb6-7" title="7">    route idRoute</a>
+<a class="sourceLine" id="cb6-8" title="8">    compile (feedCompiler renderRss)</a></code></pre></div>
+<p>While we could potentially abstract this further, this leaves wiggle room for customizing the <code>route</code> for whatever reason you may want to.</p>
+<p>This <code>feedCompiler</code> is a function that we need to write that will house the missing logic. Let’s look at its type:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb7-1" title="1"><span class="ot">feedCompiler ::</span> <span class="dt">FeedConfiguration</span></a>
+<a class="sourceLine" id="cb7-2" title="2">                <span class="ot">-&gt;</span> <span class="dt">Context</span> <span class="dt">String</span></a>
+<a class="sourceLine" id="cb7-3" title="3">                <span class="ot">-&gt;</span> [<span class="dt">Item</span> <span class="dt">String</span>]</a>
+<a class="sourceLine" id="cb7-4" title="4">                <span class="ot">-&gt;</span> <span class="dt">Compiler</span> (<span class="dt">Item</span> <span class="dt">String</span>)</a>
+<a class="sourceLine" id="cb7-5" title="5">                <span class="ot">-&gt;</span> <span class="dt">Compiler</span> (<span class="dt">Item</span> <span class="dt">String</span>)</a></code></pre></div>
+<p>The first 4 parameters describe the types of both <code>renderAtom</code> and <code>renderRss</code> (they’re the same). For reading’s sake, let’s set those to a type alias called <code>FeedRenderer</code>:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">type</span> <span class="dt">FeedRenderer</span> <span class="fu">=</span></a>
+<a class="sourceLine" id="cb8-2" title="2">    <span class="dt">FeedConfiguration</span></a>
+<a class="sourceLine" id="cb8-3" title="3">    <span class="ot">-&gt;</span> <span class="dt">Context</span> <span class="dt">String</span></a>
+<a class="sourceLine" id="cb8-4" title="4">    <span class="ot">-&gt;</span> [<span class="dt">Item</span> <span class="dt">String</span>]</a>
+<a class="sourceLine" id="cb8-5" title="5">    <span class="ot">-&gt;</span> <span class="dt">Compiler</span> (<span class="dt">Item</span> <span class="dt">String</span>)</a></code></pre></div>
+<p>And now we can define our feed but do it in a slightly cleaner way:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb9-1" title="1"><span class="ot">feedCompiler ::</span> <span class="dt">FeedRenderer</span> <span class="ot">-&gt;</span> <span class="dt">Compiler</span> (<span class="dt">Item</span> <span class="dt">String</span>)</a>
+<a class="sourceLine" id="cb9-2" title="2">feedCompiler renderer <span class="fu">=</span></a>
+<a class="sourceLine" id="cb9-3" title="3">    renderer feedConfiguration feedCtx</a>
+<a class="sourceLine" id="cb9-4" title="4">        <span class="fu">=&lt;&lt;</span> <span class="fu">fmap</span> (<span class="fu">take</span> <span class="dv">10</span>) <span class="fu">.</span> recentFirst</a>
+<a class="sourceLine" id="cb9-5" title="5">        <span class="fu">=&lt;&lt;</span> loadAllSnapshots <span class="st">&quot;posts/*&quot;</span> <span class="st">&quot;content&quot;</span></a></code></pre></div>
+<h2 id="validating-and-using-our-feeds">Validating and Using Our Feeds</h2>
+<p>If you’ve made it this far and have successfully generated and published your <code>atom.xml</code> and/or <code>rss.xml</code> files, see if they’re valid! Head to <a href="https://validator.w3.org/feed/" class="uri">https://validator.w3.org/feed/</a> and see if yours validate.</p>
+<p>You can check out your new feed in an RSS/Atom feed reader such as the browser plugin <a href="https://nodetics.com/feedbro/">FeedBro</a> or any others.</p>
+<h2 id="unexpected-issue-setting-an-updated-field">Unexpected Issue: Setting an <code>updated</code> Field</h2>
+<p>I ran into a feed validation problem where, in a few posts, I manually set the <code>updated</code> field to a <em>date</em> – not <em>datetime</em> – and thus invalidated my feed. The value <code>2017-06-30</code> needed to be in the <code>&quot;%Y-%m-%dT%H:%M:%SZ&quot;</code> format, or <code>2017-06-30T00:00:00Z</code>. This led me down a rabbit hole that ended in me essentially repurposing the <code>dateField</code> code from hakyll (<a href="https://github.com/jaspervdj/hakyll/blob/c85198d8cb6ce055c788e287c7f2470eac0aad36/lib/Hakyll/Web/Template/Context.hs#L273-L321" class="uri">https://github.com/jaspervdj/hakyll/blob/c85198d8cb6ce055c788e287c7f2470eac0aad36/lib/Hakyll/Web/Template/Context.hs#L273-L321</a>). While I tried to use <code>parseTimeM</code> and <code>formatTime</code> from <a href="https://hackage.haskell.org/package/time-1.9.2/docs/Data-Time-Format.html"><code>Data.Time.Format</code></a> in my own way, I couldn’t make it as simple as I wanted, thus leading to me giving up and using what was already there. Here’s what I did:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb10-1" title="1"><span class="ot">feedCtx ::</span> <span class="dt">Context</span> <span class="dt">String</span></a>
+<a class="sourceLine" id="cb10-2" title="2">feedCtx <span class="fu">=</span></a>
+<a class="sourceLine" id="cb10-3" title="3">    updatedField <span class="fu">&lt;&gt;</span> <span class="co">-- THIS IS NEW</span></a>
+<a class="sourceLine" id="cb10-4" title="4">    postCtx      <span class="fu">&lt;&gt;</span></a>
+<a class="sourceLine" id="cb10-5" title="5">    bodyField <span class="st">&quot;description&quot;</span></a>
+<a class="sourceLine" id="cb10-6" title="6"></a>
+<a class="sourceLine" id="cb10-7" title="7"></a>
+<a class="sourceLine" id="cb10-8" title="8"><span class="ot">updatedField ::</span> <span class="dt">Context</span> <span class="dt">String</span></a>
+<a class="sourceLine" id="cb10-9" title="9">updatedField <span class="fu">=</span> field <span class="st">&quot;updated&quot;</span> <span class="fu">$</span> \i <span class="ot">-&gt;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb10-10" title="10">    <span class="kw">let</span> locale <span class="fu">=</span> defaultTimeLocale</a>
+<a class="sourceLine" id="cb10-11" title="11">    time <span class="ot">&lt;-</span> getUpdatedUTC locale <span class="fu">$</span> itemIdentifier i</a>
+<a class="sourceLine" id="cb10-12" title="12">    <span class="fu">return</span> <span class="fu">$</span> formatTime locale <span class="st">&quot;%Y-%m-%dT%H:%M:%SZ&quot;</span> time</a>
+<a class="sourceLine" id="cb10-13" title="13"></a>
+<a class="sourceLine" id="cb10-14" title="14"></a>
+<a class="sourceLine" id="cb10-15" title="15"><span class="ot">getUpdatedUTC ::</span> <span class="dt">MonadMetadata</span> m <span class="ot">=&gt;</span> <span class="dt">TimeLocale</span> <span class="ot">-&gt;</span> <span class="dt">Identifier</span> <span class="ot">-&gt;</span> m <span class="dt">Clock.UTCTime</span></a>
+<a class="sourceLine" id="cb10-16" title="16">getUpdatedUTC locale id&#39; <span class="fu">=</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb10-17" title="17">    metadata <span class="ot">&lt;-</span> getMetadata id&#39;</a>
+<a class="sourceLine" id="cb10-18" title="18">    <span class="kw">let</span> tryField k fmt <span class="fu">=</span> lookupString k metadata <span class="fu">&gt;&gt;=</span> parseTime&#39; fmt</a>
+<a class="sourceLine" id="cb10-19" title="19">    <span class="fu">maybe</span> empty&#39; <span class="fu">return</span> <span class="fu">$</span> msum [tryField <span class="st">&quot;updated&quot;</span> fmt <span class="fu">|</span> fmt <span class="ot">&lt;-</span> formats]</a>
+<a class="sourceLine" id="cb10-20" title="20">  <span class="kw">where</span></a>
+<a class="sourceLine" id="cb10-21" title="21">    empty&#39;     <span class="fu">=</span> <span class="fu">fail</span> <span class="fu">$</span> <span class="st">&quot;Hakyll.Web.Template.Context.getUpdatedUTC: &quot;</span> <span class="fu">++</span> <span class="st">&quot;could not parse time for &quot;</span> <span class="fu">++</span> <span class="fu">show</span> id&#39;</a>
+<a class="sourceLine" id="cb10-22" title="22">    parseTime&#39; <span class="fu">=</span> parseTimeM <span class="dt">True</span> locale</a>
+<a class="sourceLine" id="cb10-23" title="23">    formats    <span class="fu">=</span></a>
+<a class="sourceLine" id="cb10-24" title="24">        [ <span class="st">&quot;%a, %d %b %Y %H:%M:%S %Z&quot;</span></a>
+<a class="sourceLine" id="cb10-25" title="25">        , <span class="st">&quot;%Y-%m-%dT%H:%M:%S%Z&quot;</span></a>
+<a class="sourceLine" id="cb10-26" title="26">        , <span class="st">&quot;%Y-%m-%d %H:%M:%S%Z&quot;</span></a>
+<a class="sourceLine" id="cb10-27" title="27">        , <span class="st">&quot;%Y-%m-%d&quot;</span></a>
+<a class="sourceLine" id="cb10-28" title="28">        , <span class="st">&quot;%B %e, %Y %l:%M %p&quot;</span></a>
+<a class="sourceLine" id="cb10-29" title="29">        , <span class="st">&quot;%B %e, %Y&quot;</span></a>
+<a class="sourceLine" id="cb10-30" title="30">        , <span class="st">&quot;%b %d, %Y&quot;</span></a>
+<a class="sourceLine" id="cb10-31" title="31">        ]</a></code></pre></div>
+<p>Woah! We need to break down what’s happening here.</p>
+<h3 id="feedctx"><code>feedCtx</code></h3>
+<p>The addition to <code>feedCtx</code> is before our <code>postCtx</code> because of the <code>mappend</code> precedence of what comes out of the pipeline with the value <code>updated</code>. We want first rights to transforming the <code>updated</code> field, so it needs to come first.</p>
+<h3 id="updatedfield"><code>updatedField</code></h3>
+<p>This function is a <code>Context</code> that leans on hakyll’s <code>field</code> function to say that we want to work with the <code>updated</code> field and then do some Monad stuff with time. The tl;dr is that we send the field’s current value off in order to get a <code>UTCTime</code> value back, and then we format it to be the way we need it.</p>
+<h3 id="getupdatedutc"><code>getUpdatedUTC</code></h3>
+<p>It’s really not as bad as it looks! The root of this function does two things:</p>
+<ol>
+<li>looks up the the <code>updated</code> value in the metadata</li>
+<li>tries to parse it using a bunch of different formats</li>
+</ol>
+<p>If it can’t do these things, it simply <code>fail</code>s.</p>
+<hr />
+<p>Yes, I could have simply written my <code>updated</code> field in the correct format. But where’s the fun in that? I would hate for my feed to silently invalidate itself over something so simple!</p>
+<h2 id="wrapping-up">Wrapping Up</h2>
+<p>Whew! We dove in to generating Atom &amp; RSS XML feeds with hakyll, uncovered a nice refactor opportunity via <code>feedCompiler</code>, learned how to validate our feeds and ultimately learned about how a seemingly harmless <code>updated</code> date could prevent us from having a totally valid feed!</p>
+<p>Next up:</p>
+<ul>
+<li><em>(wip) Pt. 4 – Copying Static Files For Your Build</em></li>
+<li><em>(wip) Pt. 5 – Generating Custom Post Filenames From a Title Slug</em></li>
+<li><em>(wip) Pt. 6 – Customizing Markdown Compiler Options</em></li>
+</ul>
+<hr />
+<p>Thank you for reading! <br /> Robert</p>
+    </section>
+  </article>
+</main>
+
+<footer>
+  <section class="subscribe section--padded bg--gray">
+  <div class="layout--constrained">
+    <h2 class="subscribe__header">Get notified of new posts</h2>
+
+    <form action="//robertwpearce.us13.list-manage.com/subscribe/post?u=2df44e8960266388bff165fa6&amp;id=ee2f2a3737" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate class="subscribe__form">
+      <div id="mce-responses">
+        <div class="response" id="mce-error-response" style="display:none"></div>
+        <div class="response" id="mce-success-response" style="display:none"></div>
+      </div>
+      <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_2df44e8960266388bff165fa6_ee2f2a3737" tabindex="-1" value=""></div>
+      <div class="subscribe__section">
+        <input type="email" value="" id="mce-EMAIL" class="subscribe__input" name="EMAIL" placeholder="you@greatemail.com" aria-label="Email Address">
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe__submit">
+      </div>
+      <small>Note: I will <em>never</em> give out your email nor spam you. Unsubscribe at any time.</small>
+    </form>
+
+    <p>
+      <small>(or subscribe to the <a href="/atom.xml" class="subscribe__link">atom</a> or <a class="subscribe__link" href="/rss.xml">rss</a> feeds)</small>
+    </p>
+  </div>
+</section>
+
+</footer>
+
+  </body>
+</html>

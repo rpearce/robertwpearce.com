@@ -234,9 +234,9 @@ type FeedRenderer =
 
 feedCompiler :: FeedRenderer -> Compiler (Item String)
 feedCompiler renderer =
-    loadAll "posts/*"
-        >>= recentFirst
-        >>= renderer feedConfiguration feedCtx
+    renderer feedConfiguration feedCtx
+        =<< recentFirst
+        =<< loadAllSnapshots "posts/*" "content"
 
 
 feedConfiguration :: FeedConfiguration

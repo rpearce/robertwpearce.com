@@ -7,6 +7,13 @@
   </url>
 
   <url>
+    <loc>https://robertwpearce.com/hakyll-pt-3-generating-rss-and-atom-xml-feeds.html</loc>
+    <lastmod>2019-01-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://robertwpearce.com/hakyll-pt-2-generating-a-sitemap-xml-file.html</loc>
     <lastmod>2018-11-17</lastmod>
     <changefreq>weekly</changefreq>
