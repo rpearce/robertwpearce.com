@@ -7,7 +7,7 @@
         <description><![CDATA[Posts on JavaScript, Node.js, Haskell, Elm, Ruby and more.]]></description>
         <atom:link href="https://robertwpearce.com/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Wed, 23 Jan 2019 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>2019-01-24T00:00:00Z</lastBuildDate>
         <item>
     <title>Hakyll Pt. 3 – Generating RSS and Atom XML Feeds</title>
     <link>https://robertwpearce.com/hakyll-pt-3-generating-rss-and-atom-xml-feeds.html</link>
