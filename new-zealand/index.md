@@ -17,3 +17,4 @@ Things to do and see in New Zealand.
   * [Wanaka, Albert Town, Hawea, Glendhu Bay, Cardrona, Cromwell](/new-zealand/otago/wanaka-area.html)
   * [Queenstown, Arrow Town, Glenorchy](/new-zealand/otago/queenstown-area.html)
   * [Dunedin, Oamaru, The Catlins](/new-zealand/otago/dunedin-area.html)
+* [South Island Central to West Coast](/new-zealand/south-island-central-to-west-coast.html)
