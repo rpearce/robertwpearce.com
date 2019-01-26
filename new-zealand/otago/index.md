@@ -15,5 +15,6 @@ Things to do and see in New Zealand's Otago region.
 
 * [Wanaka, Albert Town, Hawea, Glendhu Bay, Cardrona, Cromwell](/new-zealand/otago/wanaka-area.html)
 * [Queenstown, Arrotown, Glenorchy](/new-zealand/otago/queenstown-area.html)
+* [Dunedin, Oamaru, The Catlins](/new-zealand/otago/dunedin-area.html)
 
 Or go back to the [main New Zealand page](/new-zealand/index.html).

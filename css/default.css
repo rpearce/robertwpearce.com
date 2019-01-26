@@ -38,6 +38,7 @@ a[href] {
   border-bottom-width: 2px;
   border-bottom-style: solid;
   border-bottom-color: #abd3ed;
+  word-wrap: break-word;
 }
 a[href]:hover,
 a[href]:focus {
