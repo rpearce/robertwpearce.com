@@ -127,7 +127,7 @@ _config.yml
 images/*
 fonts/*
 .well-known/*</code></pre>
-<p>As it turns out, this <em>list</em> of file identifiers to copy can be used in conjunction with <a href="https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Foldable.html#v:forM_"><code>formM_</code></a> to take some foldable structure (for us, a list), map each element to a monadic action that uses hakyll’s <code>match</code> function, ignore the results and ultimately simplify our code.</p>
+<p>As it turns out, this <em>list</em> of file identifiers to copy can be used in conjunction with <a href="https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Foldable.html#v:forM_"><code>forM_</code></a> to take some foldable structure (for us, a list), map each element to a monadic action that uses hakyll’s <code>match</code> function, ignore the results and ultimately simplify our code.</p>
 <p>The type signature for <code>forM_</code> is as follows:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" title="1"><span class="ot">forM_ ::</span> (<span class="dt">Foldable</span> t, <span class="dt">Monad</span> m) <span class="ot">=&gt;</span> t a <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> m b) <span class="ot">-&gt;</span> m ()</a></code></pre></div>
 <p>And here is the implementation:</p>
