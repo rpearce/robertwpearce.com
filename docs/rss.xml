@@ -7,8 +7,16 @@
         <description><![CDATA[Posts on JavaScript, Node.js, Haskell, Elm, Ruby and more.]]></description>
         <atom:link href="https://robertwpearce.com/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>2019-01-24T00:00:00Z</lastBuildDate>
+        <lastBuildDate>Mon, 28 Jan 2019 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Hakyll Pt. 4 – Copying Static Files For Your Build</title>
+    <link>https://robertwpearce.com/hakyll-pt-4-copying-static-files-for-your-build.html</link>
+    <description><![CDATA[]]></description>
+    <pubDate>Mon, 28 Jan 2019 00:00:00 UT</pubDate>
+    <guid>https://robertwpearce.com/hakyll-pt-4-copying-static-files-for-your-build.html</guid>
+    <dc:creator>Robert Pearce</dc:creator>
+</item>
+<item>
     <title>Hakyll Pt. 3 – Generating RSS and Atom XML Feeds</title>
     <link>https://robertwpearce.com/hakyll-pt-3-generating-rss-and-atom-xml-feeds.html</link>
     <description><![CDATA[Generate rss.xml and atom.xml feeds for your hakyll site.]]></description>
