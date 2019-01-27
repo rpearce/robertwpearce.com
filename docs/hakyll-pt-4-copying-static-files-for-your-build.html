@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hakyll Pt. 4 – Copying Static Files For Your Build</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Robert Pearce">
+    <meta name="keywords" content="hakyll, copyFileCompiler, copying files, hakyll tutorial, hakyll blog, hakyll blog tutorial, hakyll static site, static site generator">
+    <meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU">
+
+    <meta property="og:site_name" content="Robert Pearce | Freelance Software Developer">
+    <meta property="og:title" content="Hakyll Pt. 4 – Copying Static Files For Your Build">
+    <meta property="og:url" content="https://robertwpearce.com/hakyll-pt-4-copying-static-files-for-your-build.html">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://robertwpearce.com/images/florence-hill-lookout.jpg">
+    
+      <meta property="og:type" content="article">
+    
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="Robert Pearce | Freelance Software Developer">
+    <meta property="twitter:title" content="Hakyll Pt. 4 – Copying Static Files For Your Build">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://robertwpearce.com/images/florence-hill-lookout.jpg">
+    <meta property="twitter:creator" content="@RobertWPearce">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="canonical" href="https://robertwpearce.com/hakyll-pt-4-copying-static-files-for-your-build.html">
+    <link rel="stylesheet" href="/css/default.css" />
+    
+      <link rel="stylesheet" href="/css/article.css" />
+    
+  </head>
+  <body>
+    <nav class="nav">
+  <div class="layout--constrained">
+    <a class="nav__link nav__skip" href="#content">Skip to content</a>
+    <a class="nav__link" href="/">Home</a>
+    <a class="nav__link" href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a>
+    <a class="nav__link" href="/atom.xml">atom</a>
+    <a class="nav__link" href="/rss.xml">rss</a>
+  </div>
+</nav>
+
+
+<main id="content" tabindex="-1">
+  <article class="article">
+    <header class="article__bg" style="background-image: url('/images/florence-hill-lookout.jpg')">
+      <div class="article__bgHeader">
+        <div class="layout--constrained">
+          <div class="article__bgTitleWrap">
+            <h1 class="article__bgTitle">
+              <a href="/hakyll-pt-4-copying-static-files-for-your-build.html">Hakyll Pt. 4 – Copying Static Files For Your Build</a>
+            </h1>
+            <div class="article__bgSubHeader">
+              <small class="italic">2019-01-28</small>
+              
+              
+              <small class="article__bgPhotoCred italic">
+                [ photo credit <a href="https://www.instagram.com/theworldwithabackpack/">theworldwithabackpack</a> ]
+              </small>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="layout--constrained">
+      <header class="article__header">
+        <h1 class="article__title">
+          <a href="/hakyll-pt-4-copying-static-files-for-your-build.html">Hakyll Pt. 4 – Copying Static Files For Your Build</a>
+        </h1>
+        <small class="italic">2019-01-28</small>
+        
+      </header>
+      <p>This is part 3 of a multipart series where we will look at getting a website / blog set up with <a href="https://jaspervdj.be/hakyll">hakyll</a> and customized a fair bit.</p>
+<ul>
+<li><a href="/hakyll-pt-1-setup-and-initial-customization.html">Pt. 1 – Setup &amp; Initial Customization</a></li>
+<li><a href="/hakyll-pt-2-generating-a-sitemap-xml-file.html">Pt. 2 – Generating a Sitemap XML File</a></li>
+<li><a href="/hakyll-pt-3-generating-rss-and-atom-xml-feeds.html">Pt. 3 – Generating RSS and Atom XML Feeds</a></li>
+<li>Pt. 4 – Copying Static Files For Your Build</li>
+<li><em>(wip) Pt. 5 – Generating Custom Post Filenames From a Title Slug</em></li>
+<li><em>(wip) Pt. 6 – Customizing Markdown Compiler Options</em></li>
+</ul>
+<h2 id="overview">Overview</h2>
+<p>You will inevitably need to copy static files over to your build folder at some point in a hakyll project, and this short tutorial will show you a simple way to do so.</p>
+<ol>
+<li><a href="#copying-files-the-long-way">Copying Files the Long Way</a></li>
+<li><a href="#simplify-file-copying-with-a-list">Simplify File Copying With a List</a></li>
+<li><a href="#github-pages-tip-for-dotfiles-and-dotfolders">GitHub Pages Tip for Dotfiles and Dotfolders</a></li>
+</ol>
+<h2 id="copying-files-the-long-way">Copying Files the Long Way</h2>
+<p>As of the time of this writing, the <a href="https://github.com/jaspervdj/hakyll/blob/a983c8cbc917ffa3ce81d2540b50bdb321588b92/data/example/site.hs#L10-L12">default hakyll example for copying files</a> looks like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" title="1">match <span class="st">&quot;images/*&quot;</span> <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb1-2" title="2">    route   idRoute</a>
+<a class="sourceLine" id="cb1-3" title="3">    compile copyFileCompiler</a></code></pre></div>
+<p>This is great and gets the job done! When I first looked at copying more files, I went down this path:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" title="1">match <span class="st">&quot;CNAME&quot;</span> <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb2-2" title="2">    route   idRoute</a>
+<a class="sourceLine" id="cb2-3" title="3">    compile copyFileCompiler</a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5"></a>
+<a class="sourceLine" id="cb2-6" title="6">match <span class="st">&quot;robots.txt&quot;</span> <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb2-7" title="7">    route   idRoute</a>
+<a class="sourceLine" id="cb2-8" title="8">    compile copyFileCompiler</a>
+<a class="sourceLine" id="cb2-9" title="9"></a>
+<a class="sourceLine" id="cb2-10" title="10"></a>
+<a class="sourceLine" id="cb2-11" title="11">match <span class="st">&quot;images/*&quot;</span> <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb2-12" title="12">    route   idRoute</a>
+<a class="sourceLine" id="cb2-13" title="13">    compile copyFileCompiler</a>
+<a class="sourceLine" id="cb2-14" title="14"></a>
+<a class="sourceLine" id="cb2-15" title="15"></a>
+<a class="sourceLine" id="cb2-16" title="16">match <span class="st">&quot;fonts/*&quot;</span> <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb2-17" title="17">    route   idRoute</a>
+<a class="sourceLine" id="cb2-18" title="18">    compile copyFileCompiler</a>
+<a class="sourceLine" id="cb2-19" title="19"></a>
+<a class="sourceLine" id="cb2-20" title="20"></a>
+<a class="sourceLine" id="cb2-21" title="21"><span class="co">-- ...and so on</span></a></code></pre></div>
+<p>Obviously, there is some code duplication here; there must be a better way!</p>
+<h2 id="simplify-file-copying-with-a-list">Simplify File Copying With a List</h2>
+<p>Here are all the items I need copied over:</p>
+<pre><code>CNAME
+robots.txt
+_config.yml
+images/*
+fonts/*
+.well-known/*</code></pre>
+<p>As it turns out, this <em>list</em> of file identifiers to copy can be used in conjunction with <a href="https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Foldable.html#v:forM_"><code>formM_</code></a> to take some foldable structure (for us, a list), map each element to a monadic action that uses hakyll’s <code>match</code> function, ignore the results and ultimately simplify our code.</p>
+<p>The type signature for <code>forM_</code> is as follows:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" title="1"><span class="ot">forM_ ::</span> (<span class="dt">Foldable</span> t, <span class="dt">Monad</span> m) <span class="ot">=&gt;</span> t a <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> m b) <span class="ot">-&gt;</span> m ()</a></code></pre></div>
+<p>And here is the implementation:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb5-1" title="1">forM_ [ <span class="st">&quot;CNAME&quot;</span></a>
+<a class="sourceLine" id="cb5-2" title="2">      , <span class="st">&quot;robots.txt&quot;</span></a>
+<a class="sourceLine" id="cb5-3" title="3">      , <span class="st">&quot;_config.yml&quot;</span></a>
+<a class="sourceLine" id="cb5-4" title="4">      , <span class="st">&quot;images/*&quot;</span></a>
+<a class="sourceLine" id="cb5-5" title="5">      , <span class="st">&quot;fonts/*&quot;</span></a>
+<a class="sourceLine" id="cb5-6" title="6">      , <span class="st">&quot;.well-known/*&quot;</span></a>
+<a class="sourceLine" id="cb5-7" title="7">      ] <span class="fu">$</span> \f <span class="ot">-&gt;</span> match f <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb5-8" title="8">    route   idRoute</a>
+<a class="sourceLine" id="cb5-9" title="9">    compile copyFileCompiler</a></code></pre></div>
+<p>Nice! While this technique is not mentioned in the documentation, it is present in the <a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/web/site.hs#L27-L29">hakyll website’s <code>site.hs</code> file</a>, so we know we’re in good company if <a href="https://github.com/jaspervdj">jaspervdj</a> is already using it.</p>
+<p>If you want to read more about the possible patterns that can be matched, check out the commentary in the source here: <a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Identifier/Pattern.hs" class="uri">https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Identifier/Pattern.hs</a>.</p>
+<h2 id="github-pages-tip-for-dotfiles-and-dotfolders">GitHub Pages Tip for Dotfiles and Dotfolders</h2>
+<p>If you’re using GitHub pages and have any dotfiles or dotfolders to copy over, make sure you pay attention here.</p>
+<p>Let’s say you have signed up for <a href="https://publishers.basicattentiontoken.org">Brave Payments</a> and need to verify your site by placing a file at</p>
+<pre><code>https://mysite.com/.well-known/brave-payments-verification.txt</code></pre>
+<p>Unfortunately, <a href="https://pages.github.com">GitHub Pages</a>, which uses <a href="https://jekyllrb.com">jekyll</a> under the hood, will ignore your dotfiles and dotfolders by default and will therefore not deploy them.</p>
+<p>We can fix this by adding a <code>_config.yml</code> file to our project (you can see it included in the list in the previous section) and telling it to include what it is ignoring:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode yml"><code class="sourceCode yaml"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># _config.yml</span></a>
+<a class="sourceLine" id="cb7-2" title="2"></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="fu">include:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;.well-known&quot;</span><span class="kw">]</span></a></code></pre></div>
+<p>Once you’ve done this, you can commit this file, push it up to GitHub and view it on your published site.</p>
+<p>You can read more about jekyll’s configuration options here: <a href="https://jekyllrb.com/docs/configuration/options/" class="uri">https://jekyllrb.com/docs/configuration/options/</a></p>
+<h2 id="wrapping-up">Wrapping Up</h2>
+<p>Today we learned a simple way to list what files we want to be copied over in our hakyll projects, got exposed to <code>formM_</code> and uncovered a potential issue with dotfiles and dotfolders not getting published on GitHub Pages.</p>
+<p>Next up:</p>
+<ul>
+<li><em>(wip) Pt. 5 – Generating Custom Post Filenames From a Title Slug</em></li>
+<li><em>(wip) Pt. 6 – Customizing Markdown Compiler Options</em></li>
+</ul>
+<hr />
+<p>Thank you for reading! <br /> Robert</p>
+    </section>
+  </article>
+</main>
+
+<footer>
+  <section class="subscribe section--padded bg--gray">
+  <div class="layout--constrained">
+    <h2 class="subscribe__header">Get notified of new posts</h2>
+
+    <form action="//robertwpearce.us13.list-manage.com/subscribe/post?u=2df44e8960266388bff165fa6&amp;id=ee2f2a3737" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate class="subscribe__form">
+      <div id="mce-responses">
+        <div class="response" id="mce-error-response" style="display:none"></div>
+        <div class="response" id="mce-success-response" style="display:none"></div>
+      </div>
+      <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_2df44e8960266388bff165fa6_ee2f2a3737" tabindex="-1" value=""></div>
+      <div class="subscribe__section">
+        <input type="email" value="" id="mce-EMAIL" class="subscribe__input" name="EMAIL" placeholder="you@greatemail.com" aria-label="Email Address">
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe__submit">
+      </div>
+      <small>Note: I will <em>never</em> give out your email nor spam you. Unsubscribe at any time.</small>
+    </form>
+
+    <p>
+      <small>(or subscribe to the <a href="/atom.xml" class="subscribe__link">atom</a> or <a class="subscribe__link" href="/rss.xml">rss</a> feeds)</small>
+    </p>
+  </div>
+</section>
+
+</footer>
+
+  </body>
+</html>
