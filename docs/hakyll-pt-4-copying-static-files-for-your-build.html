@@ -89,6 +89,7 @@
 <ol>
 <li><a href="#copying-files-the-long-way">Copying Files the Long Way</a></li>
 <li><a href="#simplify-file-copying-with-a-list">Simplify File Copying With a List</a></li>
+<li><a href="#simplify-file-copying-with-pattern-composition-operators">Simplify File Copying With Pattern Composition Operators</a></li>
 <li><a href="#github-pages-tip-for-dotfiles-and-dotfolders">GitHub Pages Tip for Dotfiles and Dotfolders</a></li>
 </ol>
 <h2 id="copying-files-the-long-way">Copying Files the Long Way</h2>
@@ -142,15 +143,27 @@ fonts/*
 <a class="sourceLine" id="cb5-9" title="9">    compile copyFileCompiler</a></code></pre></div>
 <p>Nice! While this technique is not mentioned in the documentation, it is present in the <a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/web/site.hs#L27-L29">hakyll website’s <code>site.hs</code> file</a>, so we know we’re in good company if <a href="https://github.com/jaspervdj">jaspervdj</a> is already using it.</p>
 <p>If you want to read more about the possible patterns that can be matched, check out the commentary in the source here: <a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Identifier/Pattern.hs" class="uri">https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Identifier/Pattern.hs</a>.</p>
+<h2 id="simplify-file-copying-with-pattern-composition-operators">Simplify File Copying With Pattern Composition Operators</h2>
+<p><a href="https://www.reddit.com/r/haskell/comments/ak9700/hakyll_pt_4_copying_static_files_for_your_build/ef3lv73/">In this /r/haskell reddit thread</a> by <a href="https://www.reddit.com/user/GAumala">GAumala</a>, they point out that <a href="https://jaspervdj.be/hakyll/reference/Hakyll-Core-Identifier-Pattern.html#g:3">hakyll’s pattern composition operators</a> can also be used to accomplish the same goal. Here is how we would could convert our <code>forM_</code> above to instead use <a href="https://jaspervdj.be/hakyll/reference/Hakyll-Core-Identifier-Pattern.html#v:.-124--124-."><code>.||.</code></a>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb6-1" title="1">match (<span class="st">&quot;CNAME&quot;</span></a>
+<a class="sourceLine" id="cb6-2" title="2">       <span class="fu">.||.</span> <span class="st">&quot;favicon.ico&quot;</span></a>
+<a class="sourceLine" id="cb6-3" title="3">       <span class="fu">.||.</span> <span class="st">&quot;robots.txt&quot;</span></a>
+<a class="sourceLine" id="cb6-4" title="4">       <span class="fu">.||.</span> <span class="st">&quot;_config.yml&quot;</span></a>
+<a class="sourceLine" id="cb6-5" title="5">       <span class="fu">.||.</span> <span class="st">&quot;images/*&quot;</span></a>
+<a class="sourceLine" id="cb6-6" title="6">       <span class="fu">.||.</span> <span class="st">&quot;fonts/*&quot;</span></a>
+<a class="sourceLine" id="cb6-7" title="7">       <span class="fu">.||.</span> <span class="st">&quot;.well-known/*&quot;</span>) <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb6-8" title="8">    route   idRoute</a>
+<a class="sourceLine" id="cb6-9" title="9">    compile copyFileCompiler</a></code></pre></div>
+<p>While I understand the <code>forM_</code> better, this does seem to be more attractive!</p>
 <h2 id="github-pages-tip-for-dotfiles-and-dotfolders">GitHub Pages Tip for Dotfiles and Dotfolders</h2>
 <p>If you’re using GitHub pages and have any dotfiles or dotfolders to copy over, make sure you pay attention here.</p>
 <p>Let’s say you have signed up for <a href="https://publishers.basicattentiontoken.org">Brave Payments</a> and need to verify your site by placing a file at</p>
 <pre><code>https://mysite.com/.well-known/brave-payments-verification.txt</code></pre>
 <p>Unfortunately, <a href="https://pages.github.com">GitHub Pages</a>, which uses <a href="https://jekyllrb.com">jekyll</a> under the hood, will ignore your dotfiles and dotfolders by default and will therefore not deploy them.</p>
 <p>We can fix this by adding a <code>_config.yml</code> file to our project (you can see it included in the list in the previous section) and telling it to include what it is ignoring:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode yml"><code class="sourceCode yaml"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># _config.yml</span></a>
-<a class="sourceLine" id="cb7-2" title="2"></a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="fu">include:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;.well-known&quot;</span><span class="kw">]</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode yml"><code class="sourceCode yaml"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># _config.yml</span></a>
+<a class="sourceLine" id="cb8-2" title="2"></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="fu">include:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;.well-known&quot;</span><span class="kw">]</span></a></code></pre></div>
 <p>Once you’ve done this, you can commit this file, push it up to GitHub and view it on your published site.</p>
 <p>You can read more about jekyll’s configuration options here: <a href="https://jekyllrb.com/docs/configuration/options/" class="uri">https://jekyllrb.com/docs/configuration/options/</a>.</p>
 <h2 id="wrapping-up">Wrapping Up</h2>
