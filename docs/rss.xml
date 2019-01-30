@@ -11,7 +11,7 @@
         <item>
     <title>Hakyll Pt. 4 – Copying Static Files For Your Build</title>
     <link>https://robertwpearce.com/hakyll-pt-4-copying-static-files-for-your-build.html</link>
-    <description><![CDATA[]]></description>
+    <description><![CDATA[This short hakyll tutorial will show you a simple way to copy static files over to your build folder.]]></description>
     <pubDate>Sun, 27 Jan 2019 00:00:00 UT</pubDate>
     <guid>https://robertwpearce.com/hakyll-pt-4-copying-static-files-for-your-build.html</guid>
     <dc:creator>Robert Pearce</dc:creator>

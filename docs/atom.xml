@@ -15,7 +15,7 @@
     <id>https://robertwpearce.com/hakyll-pt-4-copying-static-files-for-your-build.html</id>
     <published>2019-01-27T00:00:00Z</published>
     <updated>2018-01-29T00:00:00Z</updated>
-    <summary type="html"><![CDATA[]]></summary>
+    <summary type="html"><![CDATA[This short hakyll tutorial will show you a simple way to copy static files over to your build folder.]]></summary>
 </entry>
 <entry>
     <title>Hakyll Pt. 3 – Generating RSS and Atom XML Feeds</title>
