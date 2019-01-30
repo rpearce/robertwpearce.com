@@ -7,7 +7,7 @@
         <description><![CDATA[Posts on JavaScript, Node.js, Haskell, Elm, Ruby and more.]]></description>
         <atom:link href="https://robertwpearce.com/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Sun, 27 Jan 2019 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>2018-01-29T00:00:00Z</lastBuildDate>
         <item>
     <title>Hakyll Pt. 4 – Copying Static Files For Your Build</title>
     <link>https://robertwpearce.com/hakyll-pt-4-copying-static-files-for-your-build.html</link>
