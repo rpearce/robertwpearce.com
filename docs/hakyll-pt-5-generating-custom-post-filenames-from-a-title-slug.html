@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hakyll Pt. 5 – Generating Custom Post Filenames From a Title Slug</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Leverage hakyll's own internals to output custom webpage URI routes using any metdata field – in this case, our post title.">
+    <meta name="author" content="Robert Pearce">
+    <meta name="keywords" content="hakyll, slug, filename, hakyll tutorial, hakyll blog, hakyll blog tutorial, hakyll static site, static site generator">
+    <meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU">
+
+    <meta property="og:site_name" content="Robert Pearce | Freelance Software Developer">
+    <meta property="og:title" content="Hakyll Pt. 5 – Generating Custom Post Filenames From a Title Slug">
+    <meta property="og:url" content="https://robertwpearce.com/hakyll-pt-5-generating-custom-post-filenames-from-a-title-slug.html">
+    <meta property="og:description" content="Leverage hakyll's own internals to output custom webpage URI routes using any metdata field – in this case, our post title.">
+    <meta property="og:image" content="https://robertwpearce.com/images/te-mata-peak.jpg">
+    
+      <meta property="og:type" content="article">
+    
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="Robert Pearce | Freelance Software Developer">
+    <meta property="twitter:title" content="Hakyll Pt. 5 – Generating Custom Post Filenames From a Title Slug">
+    <meta property="twitter:description" content="Leverage hakyll's own internals to output custom webpage URI routes using any metdata field – in this case, our post title.">
+    <meta property="twitter:image" content="https://robertwpearce.com/images/te-mata-peak.jpg">
+    <meta property="twitter:creator" content="@RobertWPearce">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="canonical" href="https://robertwpearce.com/hakyll-pt-5-generating-custom-post-filenames-from-a-title-slug.html">
+    <link rel="stylesheet" href="/css/default.css" />
+    
+      <link rel="stylesheet" href="/css/article.css" />
+    
+  </head>
+  <body>
+    <nav class="nav">
+  <div class="layout--constrained">
+    <a class="nav__link nav__skip" href="#content">Skip to content</a>
+    <a class="nav__link" href="/">Home</a>
+    <a class="nav__link" href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a>
+    <a class="nav__link" href="/atom.xml">atom</a>
+    <a class="nav__link" href="/rss.xml">rss</a>
+  </div>
+</nav>
+
+
+<main id="content" tabindex="-1">
+  <article class="article">
+    <header class="article__bg" style="background-image: url('/images/te-mata-peak.jpg')">
+      <div class="article__bgHeader">
+        <div class="layout--constrained">
+          <div class="article__bgTitleWrap">
+            <h1 class="article__bgTitle">
+              <a href="/hakyll-pt-5-generating-custom-post-filenames-from-a-title-slug.html">Hakyll Pt. 5 – Generating Custom Post Filenames From a Title Slug</a>
+            </h1>
+            <div class="article__bgSubHeader">
+              <small class="italic">2019-03-16</small>
+              
+              
+              <small class="article__bgPhotoCred italic">
+                [ photo credit <a href="https://www.instagram.com/robertwpearce/">robertwpearce</a> ]
+              </small>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="layout--constrained">
+      <header class="article__header">
+        <h1 class="article__title">
+          <a href="/hakyll-pt-5-generating-custom-post-filenames-from-a-title-slug.html">Hakyll Pt. 5 – Generating Custom Post Filenames From a Title Slug</a>
+        </h1>
+        <small class="italic">2019-03-16</small>
+        
+      </header>
+      <p>This is part 5 of a multipart series where we will look at getting a website / blog set up with <a href="https://jaspervdj.be/hakyll">hakyll</a> and customized a fair bit.</p>
+<ul>
+<li><a href="/hakyll-pt-1-setup-and-initial-customization.html">Pt. 1 – Setup &amp; Initial Customization</a></li>
+<li><a href="/hakyll-pt-2-generating-a-sitemap-xml-file.html">Pt. 2 – Generating a Sitemap XML File</a></li>
+<li><a href="/hakyll-pt-3-generating-rss-and-atom-xml-feeds.html">Pt. 3 – Generating RSS and Atom XML Feeds</a></li>
+<li><a href="/hakyll-pt-4-copying-static-files-for-your-build.html">Pt. 4 – Copying Static Files For Your Build</a></li>
+<li>Pt. 5 – Generating Custom Post Filenames From a Title Slug</li>
+<li><em>(wip) Pt. 6 – Customizing Markdown Compiler Options</em></li>
+</ul>
+<h2 id="overview">Overview</h2>
+<p>Out of the box, hakyll takes filenames and dates and outputs nice routes for your webpages, but what if you want your routes to be based off of a metadata field like <code>title</code>? In this post we’ll take a title like <code>&quot;Hakyll Pt. 5 – Generating Custom Post Filenames From a Title Slug&quot;</code> and have hakyll output routes like <code>&quot;hakyll-pt-5-generating-custom-post-filenames-from-a-title-slug&quot;</code>.</p>
+<ol>
+<li><a href="#where-do-we-start-hakylls-route-function">Where Do We Start? Hakyll’s <code>route</code> Function</a></li>
+<li><a href="#looking-to-idroute-setextension-and-other-routes-functions-for-clues">Looking to <code>idRoute</code>, <code>setExtension</code> and Other <code>Routes</code> Functions for Clues</a></li>
+<li><a href="#leveraging-hakylls-metadataroute-to-access-title-metadata">Leveraging Hakyll’s <code>metadataRoute</code> to Access Title Metadata</a></li>
+<li><a href="#writing-our-own-uri-slug-function">Writing Our Own URI Slug Function</a></li>
+<li><a href="#retrieving-and-slugifying-our-titles">Retrieving and Slugifying our Titles</a></li>
+</ol>
+<h2 id="where-do-we-start-hakylls-route-function">Where Do We Start? Hakyll’s <code>route</code> Function</h2>
+<p>In <a href="https://jaspervdj.be/hakyll/tutorials/03-rules-routes-compilers.html#basic-routes">the hakyll tutorial on basic routing</a>, as well as other posts in this series, we have come across hakyll’s <a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Rules.hs#L175"><code>route</code></a> function used in conjunction with functions like <a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Routes.hs#L114-L115"><code>idRoute</code></a> and <a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Routes.hs#L136-L138"><code>setExtension</code></a>. Given these functions live in the <a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Routes.hs"><code>Hakyll.Core.Routes</code></a> module, we can bet that other functions for customizing our outputted routes will be found in there. Let’s see what we can find!</p>
+<h2 id="looking-to-idroute-setextension-and-other-routes-functions-for-clues">Looking to <code>idRoute</code>, <code>setExtension</code> and Other <code>Routes</code> Functions for Clues</h2>
+<p>When we look at <a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Routes.hs"><code>Hakyll.Core.Routes</code></a>, we can see that <a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Routes.hs#L114-L115"><code>idRoute</code></a> and <a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Routes.hs#L136-L138"><code>setExtension</code></a>, which we know are used with <a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Rules.hs#L175"><code>route</code></a>, both return a type of <code>Routes</code>. The implementation of <code>Routes</code> is not important for us here, for our job now is to see what <em>other</em> functions return <code>Routes</code>, as well, so that we can potentially leverage their functionality.</p>
+<p>Doing a quick search in that module reveals to us some very interesting results!</p>
+<ul>
+<li><a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Routes.hs#L152-L153"><code>customRoute</code></a></li>
+<li><a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Routes.hs#L159-L160"><code>constRoute</code></a></li>
+<li><a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Routes.hs#L173-L177"><code>gsubRoute</code></a></li>
+<li><a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Routes.hs#L182-L185"><code>metadataRoute</code></a></li>
+</ul>
+<p>Alright! Now, what does each one do?</p>
+<ul>
+<li><code>customRoute</code>: takes in a function that accepts an <code>Identifier</code> and returns a <code>FilePath</code> and returns that. Sounds like it could be useful, somehow… Let’s keep going.</li>
+<li><code>constRoute</code>: takes in a <code>FilePath</code>, wraps the value in a <code>const</code> function (which will always return the value it was passed) and then passes the function to <code>customRoute</code>! Okay, so this basically means if we say <code>constRoute &quot;foo.html&quot;</code>, then that’s what the route will come out as. Makes sense.</li>
+<li><code>gsubRoute</code>: this one’s purpose is to use patterns to replace parts of routes (like transforming <code>&quot;tags/rss/bar.xml&quot;</code> to <code>tags/bar.xml</code>). Useful! But not for our task.</li>
+<li><code>metadataRoute</code>: takes in a function that accepts <code>Metadata</code> and returns <code>Routes</code>, and then this function returns <code>Routes</code>. Since we want to access our <code>title</code> metadata to create a route, something that gives us access to <code>Metadata</code> and returns <code>Routes</code> is exactly what we want!</li>
+</ul>
+<h2 id="leveraging-hakylls-metadataroute-to-access-title-metadata">Leveraging Hakyll’s <code>metadataRoute</code> to Access Title Metadata</h2>
+<p>As with most things in the Haskell world, let’s allow the types to guide us. What do we know?</p>
+<ul>
+<li><code>route</code> accepts a function whose return value is <code>Routes</code></li>
+<li><code>metadataRoute</code> ultimately returns <code>Routes</code> (yay!), but it first takes in a function that accepts <code>Metadata</code> and needs to return <code>Routes</code>.</li>
+</ul>
+<p>Therefore, our task is to write a function with the signature <code>Metadata -&gt; Routes</code> that finds the <code>title</code> field in the metadata, converts it to a URI slug, and transforms that <code>FilePath</code> into a <code>Routes</code>. Perhaps we could call it <code>titleRoute</code> and then extract the conversion from <code>Metadata</code> to <code>FilePath</code> to something like <code>fileNameFromTitle</code>? Good enough.</p>
+<p>Also, what did we see earlier that can take a <code>FilePath</code> and return <code>Routes</code>? <code>constRoute</code> to the rescue! With these initial bits figured out, let’s sketch this out :</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" title="1"><span class="ot">main ::</span> <span class="dt">IO</span> ()</a>
+<a class="sourceLine" id="cb1-2" title="2">main <span class="fu">=</span> hakyllWith config <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb1-3" title="3">    match <span class="st">&quot;posts/*&quot;</span> <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb1-4" title="4">        <span class="kw">let</span> ctx <span class="fu">=</span> constField <span class="st">&quot;type&quot;</span> <span class="st">&quot;article&quot;</span> <span class="fu">&lt;&gt;</span> postCtx</a>
+<a class="sourceLine" id="cb1-5" title="5"></a>
+<a class="sourceLine" id="cb1-6" title="6">        route <span class="fu">$</span> metadataRoute titleRoute <span class="co">-- THIS LINE</span></a>
+<a class="sourceLine" id="cb1-7" title="7">        compile <span class="fu">$</span> pandocCompilerCustom</a>
+<a class="sourceLine" id="cb1-8" title="8">            <span class="fu">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/post.html&quot;</span>    ctx</a>
+<a class="sourceLine" id="cb1-9" title="9">            <span class="fu">&gt;&gt;=</span> saveSnapshot <span class="st">&quot;content&quot;</span></a>
+<a class="sourceLine" id="cb1-10" title="10">            <span class="fu">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/default.html&quot;</span> ctx</a>
+<a class="sourceLine" id="cb1-11" title="11"></a>
+<a class="sourceLine" id="cb1-12" title="12">    <span class="co">-- ...other rules</span></a>
+<a class="sourceLine" id="cb1-13" title="13"></a>
+<a class="sourceLine" id="cb1-14" title="14"></a>
+<a class="sourceLine" id="cb1-15" title="15"><span class="ot">titleRoute ::</span> <span class="dt">Metadata</span> <span class="ot">-&gt;</span> <span class="dt">Routes</span></a>
+<a class="sourceLine" id="cb1-16" title="16">titleRoute <span class="fu">=</span> constRoute <span class="fu">.</span> fileNameFromTitle</a>
+<a class="sourceLine" id="cb1-17" title="17"></a>
+<a class="sourceLine" id="cb1-18" title="18"></a>
+<a class="sourceLine" id="cb1-19" title="19"><span class="ot">fileNameFromTitle ::</span> <span class="dt">Metadata</span> <span class="ot">-&gt;</span> <span class="dt">FilePath</span></a>
+<a class="sourceLine" id="cb1-20" title="20">fileNameFromTitle <span class="fu">=</span> <span class="fu">undefined</span> <span class="co">-- ???</span></a></code></pre></div>
+<p>Great! This is progress! We have the outline of what we need to accomplish. The next task is to find the <code>title</code>, convert it to a slug and return a <code>FilePath</code>. But first, we need to take a detour and write a <code>toSlug</code> function that we can work with.</p>
+<h2 id="writing-our-own-uri-slug-function">Writing Our Own URI Slug Function</h2>
+<p>Taking inspiration from the archived project <a href="https://github.com/mrkkrp/slug" class="uri">https://github.com/mrkkrp/slug</a>, we can write a module, <code>Slug.hs</code>, with a main function, <code>toSlug</code> that takes in <code>Text</code> from <code>Data.Text</code> and transforms it from normal text to a slug. For example, <code>&quot;This example isn't good&quot;</code> would be transformed into <code>&quot;this-example-isnt-good&quot;</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" title="1"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span></a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3"></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="kw">module</span> <span class="dt">Slug</span> (toSlug) <span class="kw">where</span></a>
+<a class="sourceLine" id="cb2-5" title="5"></a>
+<a class="sourceLine" id="cb2-6" title="6"></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="kw">import</span>           <span class="dt">Data.Char</span> (isAlphaNum)</a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.Text</span> <span class="kw">as</span> <span class="dt">T</span></a>
+<a class="sourceLine" id="cb2-9" title="9"></a>
+<a class="sourceLine" id="cb2-10" title="10"></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="ot">keepAlphaNum ::</span> <span class="dt">Char</span> <span class="ot">-&gt;</span> <span class="dt">Char</span></a>
+<a class="sourceLine" id="cb2-12" title="12">keepAlphaNum x</a>
+<a class="sourceLine" id="cb2-13" title="13">    <span class="fu">|</span> <span class="fu">isAlphaNum</span> x <span class="fu">=</span> x</a>
+<a class="sourceLine" id="cb2-14" title="14">    <span class="fu">|</span> <span class="fu">otherwise</span>    <span class="fu">=</span> <span class="ch">&#39; &#39;</span></a>
+<a class="sourceLine" id="cb2-15" title="15"></a>
+<a class="sourceLine" id="cb2-16" title="16"></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="ot">clean ::</span> <span class="dt">T.Text</span> <span class="ot">-&gt;</span> <span class="dt">T.Text</span></a>
+<a class="sourceLine" id="cb2-18" title="18">clean <span class="fu">=</span></a>
+<a class="sourceLine" id="cb2-19" title="19">    T.map keepAlphaNum <span class="fu">.</span> T.replace <span class="st">&quot;&#39;&quot;</span> <span class="st">&quot;&quot;</span> <span class="fu">.</span> T.replace <span class="st">&quot;&amp;&quot;</span> <span class="st">&quot;and&quot;</span></a>
+<a class="sourceLine" id="cb2-20" title="20"></a>
+<a class="sourceLine" id="cb2-21" title="21"></a>
+<a class="sourceLine" id="cb2-22" title="22"><span class="ot">toSlug ::</span> <span class="dt">T.Text</span> <span class="ot">-&gt;</span> <span class="dt">T.Text</span></a>
+<a class="sourceLine" id="cb2-23" title="23">toSlug <span class="fu">=</span></a>
+<a class="sourceLine" id="cb2-24" title="24">    T.intercalate (T.singleton <span class="ch">&#39;-&#39;</span>) <span class="fu">.</span> T.words <span class="fu">.</span> T.toLower <span class="fu">.</span> clean</a></code></pre></div>
+<p>Once you do this, don’t forget to open up your project’s <code>.cabal</code> file, add in this line and run <code>stack build</code> eventually:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" title="1">executable site</a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="co">-- ...</span></a>
+<a class="sourceLine" id="cb3-3" title="3">  other<span class="fu">-</span>modules<span class="fu">:</span>    <span class="dt">Slug</span></a></code></pre></div>
+<p>Now that this is taken care of, let’s return to the remaining task!</p>
+<h2 id="retrieving-and-slugifying-our-titles">Retrieving and Slugifying our Titles</h2>
+<p>The last step in our journey is to look up the <code>title</code> in the <code>Metadata</code>, convert it to a slug and return a <code>FilePath</code>. Let’s look at the implementation and then talk about it:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" title="1"><span class="ot">titleRoute ::</span> <span class="dt">Metadata</span> <span class="ot">-&gt;</span> <span class="dt">Routes</span></a>
+<a class="sourceLine" id="cb4-2" title="2">titleRoute <span class="fu">=</span></a>
+<a class="sourceLine" id="cb4-3" title="3">    constRoute <span class="fu">.</span> fileNameFromTitle</a>
+<a class="sourceLine" id="cb4-4" title="4"></a>
+<a class="sourceLine" id="cb4-5" title="5"></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="ot">fileNameFromTitle ::</span> <span class="dt">Metadata</span> <span class="ot">-&gt;</span> <span class="dt">FilePath</span></a>
+<a class="sourceLine" id="cb4-7" title="7">fileNameFromTitle <span class="fu">=</span></a>
+<a class="sourceLine" id="cb4-8" title="8">    T.unpack <span class="fu">.</span> (<span class="ot">`T.append`</span> <span class="st">&quot;.html&quot;</span>) <span class="fu">.</span> toSlug <span class="fu">.</span> T.pack <span class="fu">.</span> getTitleFromMeta</a>
+<a class="sourceLine" id="cb4-9" title="9"></a>
+<a class="sourceLine" id="cb4-10" title="10"></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="ot">getTitleFromMeta ::</span> <span class="dt">Metadata</span> <span class="ot">-&gt;</span> <span class="dt">String</span></a>
+<a class="sourceLine" id="cb4-12" title="12">getTitleFromMeta <span class="fu">=</span></a>
+<a class="sourceLine" id="cb4-13" title="13">    fromMaybe <span class="st">&quot;no title&quot;</span> <span class="fu">.</span> lookupString <span class="st">&quot;title&quot;</span></a></code></pre></div>
+<ol>
+<li><code>getTitleFromMeta</code>: use <code>Metadata</code>’s <a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Metadata.hs#L36-L37"><code>lookupString</code></a> function to search for <code>title</code> and handle the <code>Maybe String</code> return value by providing a fallback of <code>&quot;no title&quot;</code></li>
+<li><code>fileNameFromTitle</code>: once we get the <code>title</code> <code>String</code>, convert it to type <code>Text</code>, pass that to the slugify function, append <code>.html</code> to the slugified <code>title</code>, then convert it back to a <code>String</code> (<code>FilePath</code> is a a type alias of <code>String</code>, so no worries here)</li>
+<li><code>titleRoute</code>: once we have a <code>FilePath</code> value, we pass it to <code>constRoute</code> to get back our <code>Routes</code> type that <code>metadataRoute</code> requires, and we’re done!</li>
+</ol>
+<h2 id="wrapping-up">Wrapping Up</h2>
+<p>While it would be awesome if this sort of thing were built in to hakyll, this experience has shown me that in a way, the core of hakyll allows people to customize their build to their heart’s delight, and perhaps an implementation such as this would be useful as a hakyll plugin. Maybe!</p>
+<p>Next up:</p>
+<ul>
+<li><em>(wip) Pt. 6 – Customizing Markdown Compiler Options</em></li>
+</ul>
+<hr />
+<p>Thank you for reading! <br /> Robert</p>
+    </section>
+  </article>
+</main>
+
+<footer>
+  <section class="subscribe section--padded bg--gray">
+  <div class="layout--constrained">
+    <h2 class="subscribe__header">Get notified of new posts</h2>
+
+    <form action="//robertwpearce.us13.list-manage.com/subscribe/post?u=2df44e8960266388bff165fa6&amp;id=ee2f2a3737" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate class="subscribe__form">
+      <div id="mce-responses">
+        <div class="response" id="mce-error-response" style="display:none"></div>
+        <div class="response" id="mce-success-response" style="display:none"></div>
+      </div>
+      <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_2df44e8960266388bff165fa6_ee2f2a3737" tabindex="-1" value=""></div>
+      <div class="subscribe__section">
+        <input type="email" value="" id="mce-EMAIL" class="subscribe__input" name="EMAIL" placeholder="you@greatemail.com" aria-label="Email Address">
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe__submit">
+      </div>
+      <small>Note: I will <em>never</em> give out your email nor spam you. Unsubscribe at any time.</small>
+    </form>
+
+    <p>
+      <small>(or subscribe to the <a href="/atom.xml" class="subscribe__link">atom</a> or <a class="subscribe__link" href="/rss.xml">rss</a> feeds)</small>
+    </p>
+  </div>
+</section>
+
+</footer>
+
+  </body>
+</html>
