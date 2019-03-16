@@ -54,7 +54,7 @@ then we will see response data like this:
     "temperature": 61.42,
     ...
   },
-  "hourly": { ... }
+  "hourly": { ... },
   "daily": { ... }
 }
 ```

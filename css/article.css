@@ -137,8 +137,9 @@ iframe {
 /* CODE */
 
 pre {
-  background-color: #f6f8fa;
+  background-color: #fff;
   border-radius: 3px;
+  border: 1px solid #ccc;
   page-break-inside: avoid;
   padding: 16px;
 }
@@ -173,6 +174,49 @@ pre code {
 }
 a[href] > code {
   color: #2675AB;
+}
+
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode, table.sourceCode pre
+   { margin: 0; padding: 0; border: 0; vertical-align: baseline; border: none; }
+td.lineNumbers { border-right: 1px solid #AAAAAA; text-align: right; color: #AAAAAA; padding-right: 5px; padding-left: 5px; }
+td.sourceCode { padding-left: 5px; }
+.sourceCode span.kw { color: #007020; font-weight: bold; }
+.sourceCode span.dt { color: #902000; }
+.sourceCode span.dv { color: #40a070; }
+.sourceCode span.bn { color: #40a070; }
+.sourceCode span.fl { color: #40a070; }
+.sourceCode span.ch { color: #4070a0; }
+.sourceCode span.st { color: #4070a0; }
+.sourceCode span.co { color: #60a0b0; }
+.sourceCode span.ot { color: #007020; }
+.sourceCode span.al { color: red; font-weight: bold; }
+.sourceCode span.fu { color: #06287e; }
+.sourceCode span.re { }
+.sourceCode span.er { color: red; font-weight: bold; }
+.sourceCode.html .sourceLine:before,
+.sourceCode.javascript .sourceLine:before,
+.sourceCode.haskell .sourceLine:before {
+  display: inline-block;
+  content: attr(title);
+  text-align: right;
+  border-right: 1px solid rgba(51,66,73,0.1);
+  color: rgba(51,66,73,0.3);
+  width: 30px;
+  padding-right: 10px;
+  margin-right: 10px;
+}
+pre.sourceCode.html,
+pre.sourceCode.js,
+pre.sourceCode.javascript,
+pre.sourceCode.haskell {
+  margin-left: -56px;
+  margin-right: -56px;
+}
+@media (max-width: 768px) {
+  pre.sourceCode {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 /* SHAME */
