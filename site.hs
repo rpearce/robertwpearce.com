@@ -3,15 +3,17 @@
 
 import           Hakyll
 
-import           Control.Monad    (forM_, liftM, msum)
-import           Data.Char        (isAlphaNum)
+import           Control.Monad    (forM_, msum)
 import           Data.Maybe       (fromJust, fromMaybe)
 import qualified Data.Text        as T
 import qualified Data.Time.Clock  as Clock
 import           Data.Time.Format (TimeLocale, defaultTimeLocale, formatTime,
                                    parseTimeM)
-import           Text.Pandoc
-import           Web.Slug         (mkSlug)
+import           Slug             (toSlug)
+import           Text.Pandoc      (Extension (Ext_auto_identifiers, Ext_smart),
+                                   Extensions, ReaderOptions, WriterOptions,
+                                   extensionsFromList, githubMarkdownExtensions,
+                                   readerExtensions, writerExtensions)
 
 
 main :: IO ()
@@ -36,7 +38,7 @@ main = hakyllWith config $ do
     match "posts/*" $ do
         let ctx = constField "type" "article" <> postCtx
 
-        route $ metadataRoute customizedRoute
+        route $ metadataRoute titleRoute
         compile $ pandocCompilerCustom
             >>= loadAndApplyTemplate "templates/post.html"    ctx
             >>= saveSnapshot "content"
@@ -254,28 +256,16 @@ feedConfiguration =
 -- CUSTOM ROUTE
 
 
-getSlugWords :: T.Text -> [T.Text]
-getSlugWords =
-    T.words . T.toLower . T.map f . T.replace "'" "" . T.replace "&" "and"
-    where
-        f x = if isAlphaNum x then x else ' '
-
-
-getSlug :: String -> String
-getSlug =
-    T.unpack . T.intercalate (T.singleton '-') . getSlugWords . T.pack
-
-
 getTitleFromMeta :: Metadata -> String
 getTitleFromMeta =
     fromMaybe "no title" . lookupString "title"
 
 
-fileNameFromTitle :: Metadata -> String
+fileNameFromTitle :: Metadata -> FilePath
 fileNameFromTitle =
-    (++ ".html") . getSlug . getTitleFromMeta
+    T.unpack . (`T.append` ".html") . toSlug . T.pack . getTitleFromMeta
 
 
-customizedRoute :: Metadata -> Routes
-customizedRoute =
-    customRoute . const . fileNameFromTitle
+titleRoute :: Metadata -> Routes
+titleRoute =
+    constRoute . fileNameFromTitle

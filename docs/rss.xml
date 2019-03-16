@@ -7,8 +7,16 @@
         <description><![CDATA[Posts on JavaScript, Node.js, Haskell, Elm, Ruby and more.]]></description>
         <atom:link href="https://robertwpearce.com/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>2018-01-29T00:00:00Z</lastBuildDate>
+        <lastBuildDate>Sat, 16 Mar 2019 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Hakyll Pt. 5 – Generating Custom Post Filenames From a Title Slug</title>
+    <link>https://robertwpearce.com/hakyll-pt-5-generating-custom-post-filenames-from-a-title-slug.html</link>
+    <description><![CDATA[Leverage hakyll's own internals to output custom webpage URI routes using any metdata field – in this case, our post title.]]></description>
+    <pubDate>Sat, 16 Mar 2019 00:00:00 UT</pubDate>
+    <guid>https://robertwpearce.com/hakyll-pt-5-generating-custom-post-filenames-from-a-title-slug.html</guid>
+    <dc:creator>Robert Pearce</dc:creator>
+</item>
+<item>
     <title>Hakyll Pt. 4 – Copying Static Files For Your Build</title>
     <link>https://robertwpearce.com/hakyll-pt-4-copying-static-files-for-your-build.html</link>
     <description><![CDATA[This short hakyll tutorial will show you a simple way to copy static files over to your build folder.]]></description>
