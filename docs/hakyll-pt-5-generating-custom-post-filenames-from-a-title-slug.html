@@ -188,7 +188,7 @@
 <a class="sourceLine" id="cb4-13" title="13">    fromMaybe <span class="st">&quot;no title&quot;</span> <span class="fu">.</span> lookupString <span class="st">&quot;title&quot;</span></a></code></pre></div>
 <ol>
 <li><code>getTitleFromMeta</code>: use <code>Metadata</code>’s <a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Metadata.hs#L36-L37"><code>lookupString</code></a> function to search for <code>title</code> and handle the <code>Maybe String</code> return value by providing a fallback of <code>&quot;no title&quot;</code></li>
-<li><code>fileNameFromTitle</code>: once we get the <code>title</code> <code>String</code>, convert it to type <code>Text</code>, pass that to the slugify function, append <code>.html</code> to the slugified <code>title</code>, then convert it back to a <code>String</code> (<code>FilePath</code> is a a type alias of <code>String</code>, so no worries here)</li>
+<li><code>fileNameFromTitle</code>: once we get the <code>title</code> <code>String</code>, convert it to type <code>Text</code>, pass that to the slugify function, append <code>.html</code> to the slugified <code>title</code>, then convert it back to a <code>String</code> (<code>FilePath</code> is a type alias of <code>String</code>, so no worries here)</li>
 <li><code>titleRoute</code>: once we have a <code>FilePath</code> value, we pass it to <code>constRoute</code> to get back our <code>Routes</code> type that <code>metadataRoute</code> requires, and we’re done!</li>
 </ol>
 <h2 id="wrapping-up">Wrapping Up</h2>
