@@ -1,15 +1,16 @@
+cabal-version:      2.4
+
 name:               robertwpearce-com
 version:            0.1.0.0
 build-type:         Simple
-cabal-version:      >= 1.10
 
 executable site
   main-is:          site.hs
-  build-depends:    base == 4.*
+  build-depends:    base ^>= 4.12.0.0
                   , hakyll == 4.12.*
-                  , MissingH
-                  , pandoc
-                  , text
+                  , MissingH == 1.4.*
+                  , pandoc ^>= 2.7.2
+                  , text ^>= 1.2.3.1
                   , time >= 1.8 && < 1.10
   other-modules:    Slug
   ghc-options:      -threaded

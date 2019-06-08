@@ -100,11 +100,11 @@
 </ul>
 <h2 id="first-approach">First Approach</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="co">// getHighScorers :: [Object] -&gt; [String]</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw">const</span> getHighScorers <span class="op">=</span> xs <span class="op">=&gt;</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw">const</span> getHighScorers <span class="op">=</span> xs <span class="kw">=&gt;</span></a>
 <a class="sourceLine" id="cb2-3" title="3">  [...<span class="at">xs</span>]</a>
-<a class="sourceLine" id="cb2-4" title="4">    .<span class="at">sort</span>((a<span class="op">,</span> b) <span class="op">=&gt;</span> <span class="va">b</span>.<span class="at">score</span> <span class="op">-</span> <span class="va">a</span>.<span class="at">score</span>)</a>
+<a class="sourceLine" id="cb2-4" title="4">    .<span class="at">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> <span class="va">b</span>.<span class="at">score</span> <span class="op">-</span> <span class="va">a</span>.<span class="at">score</span>)</a>
 <a class="sourceLine" id="cb2-5" title="5">    .<span class="at">slice</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb2-6" title="6">    .<span class="at">map</span>(x <span class="op">=&gt;</span> <span class="va">x</span>.<span class="at">name</span>)</a>
+<a class="sourceLine" id="cb2-6" title="6">    .<span class="at">map</span>(x <span class="kw">=&gt;</span> <span class="va">x</span>.<span class="at">name</span>)</a>
 <a class="sourceLine" id="cb2-7" title="7"></a>
 <a class="sourceLine" id="cb2-8" title="8"><span class="at">getHighScorers</span>(results) <span class="co">// =&gt; [ &#39;Eowin&#39;, &#39;Bilbo&#39;, &#39;Frodo&#39; ]</span></a></code></pre></div>
 <p>As cautious JavaScript developers, we know to reach for our functions and methods that don’t mutate the objects we’re receiving. We use a <em>copy</em> of the original list and chain together operations that <code>sort</code>, <code>slice</code> and <code>map</code> the return values of each operation until we arrive at <code>[ 'Eowin', 'Bilbo', 'Frodo' ]</code>. Many folks would stop here, write a few unit tests and be done with it. We, on the other hand, will take this to the next level.</p>
@@ -119,18 +119,18 @@
 <a class="sourceLine" id="cb3-2" title="2"><span class="co">// things like strings and numbers.</span></a>
 <a class="sourceLine" id="cb3-3" title="3"><span class="co">//</span></a>
 <a class="sourceLine" id="cb3-4" title="4"><span class="co">// descBy :: (String, [a]) -&gt; [a]</span></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="kw">const</span> descBy <span class="op">=</span> (prop<span class="op">,</span> xs) <span class="op">=&gt;</span></a>
-<a class="sourceLine" id="cb3-6" title="6">  [...<span class="at">xs</span>].<span class="at">sort</span>((a<span class="op">,</span> b) <span class="op">=&gt;</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="kw">const</span> descBy <span class="op">=</span> (prop<span class="op">,</span> xs) <span class="kw">=&gt;</span></a>
+<a class="sourceLine" id="cb3-6" title="6">  [...<span class="at">xs</span>].<span class="at">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span></a>
 <a class="sourceLine" id="cb3-7" title="7">    a[prop] <span class="op">&lt;</span> b[prop] <span class="op">?</span> <span class="dv">1</span> : (a[prop] <span class="op">===</span> b[prop] <span class="op">?</span> <span class="dv">0</span> : <span class="dv">-1</span>)</a>
 <a class="sourceLine" id="cb3-8" title="8">  )</a>
 <a class="sourceLine" id="cb3-9" title="9"></a>
 <a class="sourceLine" id="cb3-10" title="10"><span class="co">// takeN :: (Number, [a]) -&gt; [a]</span></a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="kw">const</span> takeN <span class="op">=</span> (n<span class="op">,</span> xs) <span class="op">=&gt;</span></a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="kw">const</span> takeN <span class="op">=</span> (n<span class="op">,</span> xs) <span class="kw">=&gt;</span></a>
 <a class="sourceLine" id="cb3-12" title="12">  <span class="va">xs</span>.<span class="at">slice</span>(<span class="dv">0</span><span class="op">,</span> n)</a>
 <a class="sourceLine" id="cb3-13" title="13"></a>
 <a class="sourceLine" id="cb3-14" title="14"><span class="co">// mapProp :: (String, [a]) -&gt; [b]</span></a>
-<a class="sourceLine" id="cb3-15" title="15"><span class="kw">const</span> mapProp <span class="op">=</span> (prop<span class="op">,</span> xs) <span class="op">=&gt;</span></a>
-<a class="sourceLine" id="cb3-16" title="16">  <span class="va">xs</span>.<span class="at">map</span>(x <span class="op">=&gt;</span> x[prop])</a>
+<a class="sourceLine" id="cb3-15" title="15"><span class="kw">const</span> mapProp <span class="op">=</span> (prop<span class="op">,</span> xs) <span class="kw">=&gt;</span></a>
+<a class="sourceLine" id="cb3-16" title="16">  <span class="va">xs</span>.<span class="at">map</span>(x <span class="kw">=&gt;</span> x[prop])</a>
 <a class="sourceLine" id="cb3-17" title="17"></a>
 <a class="sourceLine" id="cb3-18" title="18"><span class="co">// 1. pass `score` and `xs` to `descBy`</span></a>
 <a class="sourceLine" id="cb3-19" title="19"><span class="co">// 2. pass the return value of `descBy`</span></a>
@@ -140,7 +140,7 @@
 <a class="sourceLine" id="cb3-23" title="23"><span class="co">//    the list and pull out each one&#39;s `name`</span></a>
 <a class="sourceLine" id="cb3-24" title="24"><span class="co">//</span></a>
 <a class="sourceLine" id="cb3-25" title="25"><span class="co">// getHighScorers :: [Object] -&gt; [String]</span></a>
-<a class="sourceLine" id="cb3-26" title="26"><span class="kw">const</span> getHighScorers <span class="op">=</span> xs <span class="op">=&gt;</span></a>
+<a class="sourceLine" id="cb3-26" title="26"><span class="kw">const</span> getHighScorers <span class="op">=</span> xs <span class="kw">=&gt;</span></a>
 <a class="sourceLine" id="cb3-27" title="27">  <span class="at">mapProp</span>(<span class="st">&#39;name&#39;</span><span class="op">,</span> <span class="at">takeN</span>(<span class="dv">3</span><span class="op">,</span> <span class="at">descBy</span>(<span class="st">&#39;score&#39;</span><span class="op">,</span> xs)))</a>
 <a class="sourceLine" id="cb3-28" title="28"></a>
 <a class="sourceLine" id="cb3-29" title="29"><span class="co">// results object here...</span></a>
@@ -156,7 +156,7 @@
 <a class="sourceLine" id="cb4-4" title="4"><span class="co">//   mapProp(&#39;name&#39;, takeN(3, descBy(&#39;score&#39;, xs)))</span></a>
 <a class="sourceLine" id="cb4-5" title="5"></a>
 <a class="sourceLine" id="cb4-6" title="6"><span class="co">// getHighScorers :: [Object] -&gt; [String]</span></a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="kw">const</span> getHighScorers <span class="op">=</span> xs <span class="op">=&gt;</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="kw">const</span> getHighScorers <span class="op">=</span> xs <span class="kw">=&gt;</span></a>
 <a class="sourceLine" id="cb4-8" title="8">  <span class="at">compose</span>(<span class="at">mapProp</span>(<span class="st">&#39;name&#39;</span>)<span class="op">,</span> <span class="at">takeN</span>(<span class="dv">3</span>)<span class="op">,</span> <span class="at">descBy</span>(<span class="st">&#39;score&#39;</span>))(xs)</a></code></pre></div>
 <p>Let’s first clarify what <code>compose</code> is doing:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="at">compose</span>(f<span class="op">,</span> g)(x) <span class="op">===</span> <span class="at">f</span>(<span class="at">g</span>(x))</a></code></pre></div>
@@ -166,20 +166,20 @@
 <a class="sourceLine" id="cb6-2" title="2"><span class="im">import</span> curry <span class="im">from</span> <span class="st">&#39;ramda/src/curry&#39;</span></a>
 <a class="sourceLine" id="cb6-3" title="3"></a>
 <a class="sourceLine" id="cb6-4" title="4"><span class="co">// descBy :: String -&gt; [a] -&gt; [a]</span></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="kw">const</span> descBy <span class="op">=</span> <span class="at">curry</span>((prop<span class="op">,</span> xs) <span class="op">=&gt;</span></a>
-<a class="sourceLine" id="cb6-6" title="6">  [...<span class="at">xs</span>].<span class="at">sort</span>((a<span class="op">,</span> b) <span class="op">=&gt;</span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="kw">const</span> descBy <span class="op">=</span> <span class="at">curry</span>((prop<span class="op">,</span> xs) <span class="kw">=&gt;</span></a>
+<a class="sourceLine" id="cb6-6" title="6">  [...<span class="at">xs</span>].<span class="at">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span></a>
 <a class="sourceLine" id="cb6-7" title="7">    a[prop] <span class="op">&lt;</span> b[prop] <span class="op">?</span> <span class="dv">1</span> : (a[prop] <span class="op">===</span> b[prop] <span class="op">?</span> <span class="dv">0</span> : <span class="dv">-1</span>)</a>
 <a class="sourceLine" id="cb6-8" title="8">  )</a>
 <a class="sourceLine" id="cb6-9" title="9">)</a>
 <a class="sourceLine" id="cb6-10" title="10"></a>
 <a class="sourceLine" id="cb6-11" title="11"><span class="co">// takeN :: Number -&gt; [a] -&gt; [a]</span></a>
-<a class="sourceLine" id="cb6-12" title="12"><span class="kw">const</span> takeN <span class="op">=</span> <span class="at">curry</span>((n<span class="op">,</span> xs) <span class="op">=&gt;</span></a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="kw">const</span> takeN <span class="op">=</span> <span class="at">curry</span>((n<span class="op">,</span> xs) <span class="kw">=&gt;</span></a>
 <a class="sourceLine" id="cb6-13" title="13">  <span class="va">xs</span>.<span class="at">slice</span>(<span class="dv">0</span><span class="op">,</span> n)</a>
 <a class="sourceLine" id="cb6-14" title="14">)</a>
 <a class="sourceLine" id="cb6-15" title="15"></a>
 <a class="sourceLine" id="cb6-16" title="16"><span class="co">// mapProp :: String -&gt; [a] -&gt; [b]</span></a>
-<a class="sourceLine" id="cb6-17" title="17"><span class="kw">const</span> mapProp <span class="op">=</span> <span class="at">curry</span>((prop<span class="op">,</span> xs) <span class="op">=&gt;</span></a>
-<a class="sourceLine" id="cb6-18" title="18">  <span class="va">xs</span>.<span class="at">map</span>(x <span class="op">=&gt;</span> x[prop])</a>
+<a class="sourceLine" id="cb6-17" title="17"><span class="kw">const</span> mapProp <span class="op">=</span> <span class="at">curry</span>((prop<span class="op">,</span> xs) <span class="kw">=&gt;</span></a>
+<a class="sourceLine" id="cb6-18" title="18">  <span class="va">xs</span>.<span class="at">map</span>(x <span class="kw">=&gt;</span> x[prop])</a>
 <a class="sourceLine" id="cb6-19" title="19">)</a>
 <a class="sourceLine" id="cb6-20" title="20"></a>
 <a class="sourceLine" id="cb6-21" title="21"><span class="co">// getHighScorers :: [Object] -&gt; [String]</span></a>
@@ -220,14 +220,14 @@
 <p>Once you adopt this pattern, you may find it initially difficult to inspect your data at a given point in the pipeline; however, here’s a tip that will solve most of your problems:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="at">compose</span>(</a>
 <a class="sourceLine" id="cb9-2" title="2">  <span class="at">mapProp</span>(<span class="st">&#39;name&#39;</span>)<span class="op">,</span></a>
-<a class="sourceLine" id="cb9-3" title="3">  x <span class="op">=&gt;</span> (<span class="va">console</span>.<span class="at">log</span>(x)<span class="op">,</span> x)<span class="op">,</span></a>
+<a class="sourceLine" id="cb9-3" title="3">  x <span class="kw">=&gt;</span> (<span class="va">console</span>.<span class="at">log</span>(x)<span class="op">,</span> x)<span class="op">,</span></a>
 <a class="sourceLine" id="cb9-4" title="4">  <span class="at">takeN</span>(<span class="dv">3</span>)<span class="op">,</span></a>
 <a class="sourceLine" id="cb9-5" title="5">  <span class="at">descBy</span>(<span class="st">&#39;score&#39;</span>)</a>
 <a class="sourceLine" id="cb9-6" title="6">)</a>
 <a class="sourceLine" id="cb9-7" title="7"></a>
 <a class="sourceLine" id="cb9-8" title="8"><span class="co">// or</span></a>
 <a class="sourceLine" id="cb9-9" title="9"></a>
-<a class="sourceLine" id="cb9-10" title="10"><span class="kw">const</span> logIt <span class="op">=</span> x <span class="op">=&gt;</span> (<span class="va">console</span>.<span class="at">log</span>(x)<span class="op">,</span> x)</a>
+<a class="sourceLine" id="cb9-10" title="10"><span class="kw">const</span> logIt <span class="op">=</span> x <span class="kw">=&gt;</span> (<span class="va">console</span>.<span class="at">log</span>(x)<span class="op">,</span> x)</a>
 <a class="sourceLine" id="cb9-11" title="11"></a>
 <a class="sourceLine" id="cb9-12" title="12"><span class="at">compose</span>(</a>
 <a class="sourceLine" id="cb9-13" title="13">  <span class="at">mapProp</span>(<span class="st">&#39;name&#39;</span>)<span class="op">,</span></a>

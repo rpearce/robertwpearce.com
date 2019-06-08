@@ -99,7 +99,7 @@
 <h2 id="our-goal">Our Goal</h2>
 <p>There are a few conditions that are required for us to meet our goal. We must construct a function that:</p>
 <ul>
-<li>only selects those with an 8.8 rating or higher</li>
+<li><p>only selects those with an 8.8 rating or higher</p></li>
 <li><p>returns a list of the selected titles interpolated in an HTML string that has this structure:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">&lt;div&gt;</span>TITLE: <span class="kw">&lt;strong&gt;</span>SCORE<span class="kw">&lt;/strong&gt;&lt;/div&gt;</span></a></code></pre></div></li>
 </ul>
@@ -109,7 +109,7 @@
 <a class="sourceLine" id="cb3-3" title="3"><span class="co">//</span></a>
 <a class="sourceLine" id="cb3-4" title="4"><span class="co">// output :: [Film] -&gt; [Html]</span></a></code></pre></div>
 <h2 id="step-1-get-the-html-part-working">Step 1: Get the HTML Part Working</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="va">films</span>.<span class="at">map</span>(film <span class="op">=&gt;</span> <span class="vs">`&lt;div&gt;</span><span class="sc">${</span><span class="va">film</span>.<span class="at">title</span><span class="sc">}</span><span class="vs">, &lt;strong&gt;</span><span class="sc">${</span><span class="va">film</span>.<span class="at">rating</span><span class="sc">}</span><span class="vs">&lt;/strong&gt;&lt;/div&gt;`</span>)</a>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="va">films</span>.<span class="at">map</span>(film <span class="kw">=&gt;</span> <span class="vs">`&lt;div&gt;</span><span class="sc">${</span><span class="va">film</span>.<span class="at">title</span><span class="sc">}</span><span class="vs">, &lt;strong&gt;</span><span class="sc">${</span><span class="va">film</span>.<span class="at">rating</span><span class="sc">}</span><span class="vs">&lt;/strong&gt;&lt;/div&gt;`</span>)</a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="co">// =&gt; [</span></a>
 <a class="sourceLine" id="cb4-3" title="3"><span class="co">//      &quot;&lt;div&gt;The Empire Strikes Back, &lt;strong&gt;8.8&lt;/strong&gt;&lt;/div&gt;&quot;,</span></a>
 <a class="sourceLine" id="cb4-4" title="4"><span class="co">//      &quot;&lt;div&gt;Pulp Fiction, &lt;strong&gt;8.9&lt;/strong&gt;&lt;/div&gt;&quot;,</span></a>
@@ -119,14 +119,14 @@
 <p><em><a href="https://goo.gl/mQmFBm">Try this code in the ramda REPL</a></em></p>
 <h2 id="step-2-extract-the-map-callback">Step 2: Extract the <code>map</code> Callback</h2>
 <div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="co">// filmHtml :: Film -&gt; Html</span></a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="kw">const</span> filmHtml <span class="op">=</span> film <span class="op">=&gt;</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw">const</span> filmHtml <span class="op">=</span> film <span class="kw">=&gt;</span></a>
 <a class="sourceLine" id="cb5-3" title="3">  <span class="vs">`&lt;div&gt;</span><span class="sc">${</span><span class="va">film</span>.<span class="at">title</span><span class="sc">}</span><span class="vs">, &lt;strong&gt;</span><span class="sc">${</span><span class="va">film</span>.<span class="at">rating</span><span class="sc">}</span><span class="vs">&lt;/strong&gt;&lt;/div&gt;`</span></a>
 <a class="sourceLine" id="cb5-4" title="4"></a>
 <a class="sourceLine" id="cb5-5" title="5"><span class="va">films</span>.<span class="at">map</span>(filmHtml)</a></code></pre></div>
 <p><em><a href="https://goo.gl/C4a1kZ">Try this code in the ramda REPL</a></em></p>
 <h2 id="step-3-filter-out-lower-scores">Step 3: <code>filter</code> Out Lower Scores</h2>
 <div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1">films</a>
-<a class="sourceLine" id="cb6-2" title="2">  .<span class="at">filter</span>(x <span class="op">=&gt;</span> <span class="va">x</span>.<span class="at">rating</span> <span class="op">&gt;=</span> <span class="fl">8.8</span>)</a>
+<a class="sourceLine" id="cb6-2" title="2">  .<span class="at">filter</span>(x <span class="kw">=&gt;</span> <span class="va">x</span>.<span class="at">rating</span> <span class="op">&gt;=</span> <span class="fl">8.8</span>)</a>
 <a class="sourceLine" id="cb6-3" title="3">  .<span class="at">map</span>(filmHtml)</a>
 <a class="sourceLine" id="cb6-4" title="4"></a>
 <a class="sourceLine" id="cb6-5" title="5"><span class="co">// =&gt; [</span></a>
@@ -136,7 +136,7 @@
 <p><em><a href="https://goo.gl/yTxfKQ">Try this code in the ramda REPL</a></em></p>
 <p>But wait! We can extract that <code>filter</code> callback, as well:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="co">// hasHighScore :: Film -&gt; Bool</span></a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="kw">const</span> hasHighScore <span class="op">=</span> x <span class="op">=&gt;</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw">const</span> hasHighScore <span class="op">=</span> x <span class="kw">=&gt;</span></a>
 <a class="sourceLine" id="cb7-3" title="3">  <span class="va">x</span>.<span class="at">rating</span> <span class="op">&gt;=</span> <span class="fl">8.8</span></a>
 <a class="sourceLine" id="cb7-4" title="4"></a>
 <a class="sourceLine" id="cb7-5" title="5">films</a>
@@ -176,7 +176,7 @@
 <p><em><a href="https://goo.gl/dFXCEK">Try this code in the ramda REPL</a></em></p>
 <h2 id="step-6-another-way-with-reduce">Step 6: Another Way With <code>reduce</code></h2>
 <p>We can accomplish the same goals as <code>filter</code> and <code>map</code> by making use of <code>reduce</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb10-1" title="1"><span class="va">films</span>.<span class="at">reduce</span>((acc<span class="op">,</span> x) <span class="op">=&gt;</span> <span class="op">{</span></a>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb10-1" title="1"><span class="va">films</span>.<span class="at">reduce</span>((acc<span class="op">,</span> x) <span class="kw">=&gt;</span> <span class="op">{</span></a>
 <a class="sourceLine" id="cb10-2" title="2">  <span class="cf">return</span> <span class="at">hasHighScore</span>(x)</a>
 <a class="sourceLine" id="cb10-3" title="3">    <span class="op">?</span> <span class="va">acc</span>.<span class="at">concat</span>(<span class="at">filmHtml</span>(x))</a>
 <a class="sourceLine" id="cb10-4" title="4">    : acc</a>
@@ -184,7 +184,7 @@
 <a class="sourceLine" id="cb10-6" title="6"></a>
 <a class="sourceLine" id="cb10-7" title="7"><span class="co">// or, for better performance</span></a>
 <a class="sourceLine" id="cb10-8" title="8"></a>
-<a class="sourceLine" id="cb10-9" title="9"><span class="va">films</span>.<span class="at">reduce</span>((acc<span class="op">,</span> x) <span class="op">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-9" title="9"><span class="va">films</span>.<span class="at">reduce</span>((acc<span class="op">,</span> x) <span class="kw">=&gt;</span> <span class="op">{</span></a>
 <a class="sourceLine" id="cb10-10" title="10">  <span class="cf">if</span> (<span class="at">hasHighScore</span>(x)) <span class="op">{</span></a>
 <a class="sourceLine" id="cb10-11" title="11">    <span class="va">acc</span>.<span class="at">push</span>(<span class="at">filmHtml</span>(x))</a>
 <a class="sourceLine" id="cb10-12" title="12">  <span class="op">}</span></a>
@@ -196,7 +196,7 @@
 <p>It’s also worth noting that you can do just about <em>anything</em> in JavaScript with the <code>reduce</code> function. I highly recommend going through <a href="https://twitter.com/kylehill">Kyle Hill</a>’s slides on <a href="https://omnifunction.herokuapp.com">reduce Is The Omnifunction</a>.</p>
 <p>But wait! We can extract the <code>reduce</code> callback like we did with <code>map</code> and <code>filter</code> before:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb11-1" title="1"><span class="co">// highScoresHtml :: ([Html], Film) -&gt; [Html]</span></a>
-<a class="sourceLine" id="cb11-2" title="2"><span class="kw">const</span> highScoresHtml <span class="op">=</span> (acc<span class="op">,</span> x) <span class="op">=&gt;</span></a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="kw">const</span> highScoresHtml <span class="op">=</span> (acc<span class="op">,</span> x) <span class="kw">=&gt;</span></a>
 <a class="sourceLine" id="cb11-3" title="3">  <span class="at">hasHighScore</span>(x)</a>
 <a class="sourceLine" id="cb11-4" title="4">    <span class="op">?</span> <span class="va">acc</span>.<span class="at">concat</span>(<span class="at">filmHtml</span>(x))</a>
 <a class="sourceLine" id="cb11-5" title="5">    : acc</a>

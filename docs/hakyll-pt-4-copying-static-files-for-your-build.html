@@ -98,26 +98,26 @@
 </ol>
 <h2 id="copying-files-the-long-way">Copying Files the Long Way</h2>
 <p>As of the time of this writing, the <a href="https://github.com/jaspervdj/hakyll/blob/a983c8cbc917ffa3ce81d2540b50bdb321588b92/data/example/site.hs#L10-L12">default hakyll example for copying files</a> looks like this:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" title="1">match <span class="st">&quot;images/*&quot;</span> <span class="fu">$</span> <span class="kw">do</span></a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" title="1">match <span class="st">&quot;images/*&quot;</span> <span class="op">$</span> <span class="kw">do</span></a>
 <a class="sourceLine" id="cb1-2" title="2">    route   idRoute</a>
 <a class="sourceLine" id="cb1-3" title="3">    compile copyFileCompiler</a></code></pre></div>
 <p>This is great and gets the job done! When I first looked at copying more files, I went down this path:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" title="1">match <span class="st">&quot;CNAME&quot;</span> <span class="fu">$</span> <span class="kw">do</span></a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" title="1">match <span class="st">&quot;CNAME&quot;</span> <span class="op">$</span> <span class="kw">do</span></a>
 <a class="sourceLine" id="cb2-2" title="2">    route   idRoute</a>
 <a class="sourceLine" id="cb2-3" title="3">    compile copyFileCompiler</a>
 <a class="sourceLine" id="cb2-4" title="4"></a>
 <a class="sourceLine" id="cb2-5" title="5"></a>
-<a class="sourceLine" id="cb2-6" title="6">match <span class="st">&quot;robots.txt&quot;</span> <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb2-6" title="6">match <span class="st">&quot;robots.txt&quot;</span> <span class="op">$</span> <span class="kw">do</span></a>
 <a class="sourceLine" id="cb2-7" title="7">    route   idRoute</a>
 <a class="sourceLine" id="cb2-8" title="8">    compile copyFileCompiler</a>
 <a class="sourceLine" id="cb2-9" title="9"></a>
 <a class="sourceLine" id="cb2-10" title="10"></a>
-<a class="sourceLine" id="cb2-11" title="11">match <span class="st">&quot;images/*&quot;</span> <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb2-11" title="11">match <span class="st">&quot;images/*&quot;</span> <span class="op">$</span> <span class="kw">do</span></a>
 <a class="sourceLine" id="cb2-12" title="12">    route   idRoute</a>
 <a class="sourceLine" id="cb2-13" title="13">    compile copyFileCompiler</a>
 <a class="sourceLine" id="cb2-14" title="14"></a>
 <a class="sourceLine" id="cb2-15" title="15"></a>
-<a class="sourceLine" id="cb2-16" title="16">match <span class="st">&quot;fonts/*&quot;</span> <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb2-16" title="16">match <span class="st">&quot;fonts/*&quot;</span> <span class="op">$</span> <span class="kw">do</span></a>
 <a class="sourceLine" id="cb2-17" title="17">    route   idRoute</a>
 <a class="sourceLine" id="cb2-18" title="18">    compile copyFileCompiler</a>
 <a class="sourceLine" id="cb2-19" title="19"></a>
@@ -142,7 +142,7 @@ fonts/*
 <a class="sourceLine" id="cb5-4" title="4">      , <span class="st">&quot;images/*&quot;</span></a>
 <a class="sourceLine" id="cb5-5" title="5">      , <span class="st">&quot;fonts/*&quot;</span></a>
 <a class="sourceLine" id="cb5-6" title="6">      , <span class="st">&quot;.well-known/*&quot;</span></a>
-<a class="sourceLine" id="cb5-7" title="7">      ] <span class="fu">$</span> \f <span class="ot">-&gt;</span> match f <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb5-7" title="7">      ] <span class="op">$</span> \f <span class="ot">-&gt;</span> match f <span class="op">$</span> <span class="kw">do</span></a>
 <a class="sourceLine" id="cb5-8" title="8">    route   idRoute</a>
 <a class="sourceLine" id="cb5-9" title="9">    compile copyFileCompiler</a></code></pre></div>
 <p>Nice! While this technique is not mentioned in the documentation, it is present in the <a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/web/site.hs#L27-L29">hakyll website’s <code>site.hs</code> file</a>, so we know we’re in good company if <a href="https://github.com/jaspervdj">jaspervdj</a> is already using it.</p>
@@ -150,12 +150,12 @@ fonts/*
 <h2 id="simplify-file-copying-with-pattern-composition-operators">Simplify File Copying With Pattern Composition Operators</h2>
 <p><a href="https://www.reddit.com/r/haskell/comments/ak9700/hakyll_pt_4_copying_static_files_for_your_build/ef3lv73/">In this /r/haskell reddit thread</a> by <a href="https://www.reddit.com/user/GAumala">GAumala</a>, they point out that <a href="https://jaspervdj.be/hakyll/reference/Hakyll-Core-Identifier-Pattern.html#g:3">hakyll’s pattern composition operators</a> can also be used to accomplish the same goal. Here is how we would could convert our <code>forM_</code> above to instead use <a href="https://jaspervdj.be/hakyll/reference/Hakyll-Core-Identifier-Pattern.html#v:.-124--124-."><code>.||.</code></a>:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb6-1" title="1">match (<span class="st">&quot;CNAME&quot;</span></a>
-<a class="sourceLine" id="cb6-2" title="2">       <span class="fu">.||.</span> <span class="st">&quot;favicon.ico&quot;</span></a>
-<a class="sourceLine" id="cb6-3" title="3">       <span class="fu">.||.</span> <span class="st">&quot;robots.txt&quot;</span></a>
-<a class="sourceLine" id="cb6-4" title="4">       <span class="fu">.||.</span> <span class="st">&quot;_config.yml&quot;</span></a>
-<a class="sourceLine" id="cb6-5" title="5">       <span class="fu">.||.</span> <span class="st">&quot;images/*&quot;</span></a>
-<a class="sourceLine" id="cb6-6" title="6">       <span class="fu">.||.</span> <span class="st">&quot;fonts/*&quot;</span></a>
-<a class="sourceLine" id="cb6-7" title="7">       <span class="fu">.||.</span> <span class="st">&quot;.well-known/*&quot;</span>) <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb6-2" title="2">       <span class="op">.||.</span> <span class="st">&quot;favicon.ico&quot;</span></a>
+<a class="sourceLine" id="cb6-3" title="3">       <span class="op">.||.</span> <span class="st">&quot;robots.txt&quot;</span></a>
+<a class="sourceLine" id="cb6-4" title="4">       <span class="op">.||.</span> <span class="st">&quot;_config.yml&quot;</span></a>
+<a class="sourceLine" id="cb6-5" title="5">       <span class="op">.||.</span> <span class="st">&quot;images/*&quot;</span></a>
+<a class="sourceLine" id="cb6-6" title="6">       <span class="op">.||.</span> <span class="st">&quot;fonts/*&quot;</span></a>
+<a class="sourceLine" id="cb6-7" title="7">       <span class="op">.||.</span> <span class="st">&quot;.well-known/*&quot;</span>) <span class="op">$</span> <span class="kw">do</span></a>
 <a class="sourceLine" id="cb6-8" title="8">    route   idRoute</a>
 <a class="sourceLine" id="cb6-9" title="9">    compile copyFileCompiler</a></code></pre></div>
 <p>While I understand the <code>forM_</code> better, this does seem to be more attractive!</p>

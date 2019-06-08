@@ -83,14 +83,14 @@
 <p>Converting addresses, cities and other locations to latitude and logitude and back again is something that is expected in the software application world today. Whether someone is asking for directions, <a href="http://www.brewpublik.com">plotting optimal beer delivery routes</a> or tagging a photo of their cronut in a local cafe, managing location data is an important skillset for developers to have. Numerous services, typically in the form of <a href="https://en.wikipedia.org/wiki/Application_programming_interface">application programming interfaces</a> (APIs), exist to provide folks with ways of accessing this data. Today we’ll be using the <a href="https://developers.google.com/maps/documentation/geocoding/start">Google Maps Geocoding API</a> to complete the task of acquiring the geo-data for any place name; however, we will be creating a <a href="https://nodejs.org">Node.js</a> server as a proxy (a go-between) for our request instead of embedding this request in a browser.</p>
 <h2 id="why-a-proxy-server">Why A Proxy Server?</h2>
 <p>If you are granted an API key for a service that is private and mapped to you, it is a good idea to keep it that way. If you commit this API key to source control or expose it via your frontend code, then someone could take your key and pretend to be you. In order to avoid this, it is recommended that you keep such keys hidden, for example, as environment variables set on a server. Thus, we are going to create a small server to act as a proxy between the client (a web browser, app or cURL) and the API in question: the Google Maps Geocoding API.</p>
-<h2 id="why-paperplane-as-a-node.js-server-framework">Why Paperplane as a Node.js Server Framework?</h2>
+<h2 id="why-paperplane-as-a-nodejs-server-framework">Why Paperplane as a Node.js Server Framework?</h2>
 <p>It is possible to do everything you need with Node’s <code>http</code> package, but I like the approach <a href="https://github.com/articulate/paperplane">paperplane</a> takes with viewing the request and response aspects of handling an HTTP request as a pure function where the request is the input and the response is what is returned from it:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" title="1"><span class="dt">Request</span> <span class="ot">-&gt;</span> <span class="dt">Response</span></a></code></pre></div>
 <p>whereas many Node frameworks’ handlers accept a function with the request and response as two arguments and not utilizing a return value, yielding the signature:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" title="1">(<span class="dt">IncomingMessage</span>, <span class="dt">ServerResponse</span>) <span class="ot">-&gt;</span> ()</a></code></pre></div>
 <p>The paperplane approach makes a good deal more sense to me. You can read more about the “why” on <a href="https://github.com/articulate/paperplane/blob/master/docs/getting-started.md">paperplane’s getting started guide</a>.</p>
 <h2 id="project-source-code">Project Source Code</h2>
-<p>The project we’ll be making can be seen in its entirety here: <a href="https://github.com/rpearce/geocoding-proxy/" class="uri">https://github.com/rpearce/geocoding-proxy/</a>.</p>
+<p>The project we’ll be making can be seen in its entirety here: <a href="https://github.com/rpearce/geocoding-proxy/">https://github.com/rpearce/geocoding-proxy/</a>.</p>
 <h2 id="pre-requisites">Pre-requisites</h2>
 <p><em>Note: what we’ll be making is by no means a production-level application, as that would be outside the scope of this post. However, there are some slightly advanced tangential topics that I will be glossing over (sometimes providing links to) in order to not write a book. Send me an email if I can be clearer in certain areas.</em></p>
 <p>This tutorial assumes that you already have installed Node.js (I use <a href="https://github.com/creationix/nvm">NVM</a> for managing Node versions and am using <code>v8.1</code>) and optionally the <a href="https://yarnpkg.com/lang/en/docs/install/">yarn package manager</a>.</p>
@@ -130,7 +130,7 @@
 <a class="sourceLine" id="cb10-11" title="11"><span class="co">// Application-specific code</span></a>
 <a class="sourceLine" id="cb10-12" title="12"><span class="kw">const</span> endpoints <span class="op">=</span> <span class="at">routes</span>(<span class="op">{</span></a>
 <a class="sourceLine" id="cb10-13" title="13">  <span class="st">&#39;/&#39;</span><span class="op">:</span> <span class="at">methods</span>(<span class="op">{</span></a>
-<a class="sourceLine" id="cb10-14" title="14">    <span class="dt">GET</span><span class="op">:</span> req <span class="op">=&gt;</span> (</a>
+<a class="sourceLine" id="cb10-14" title="14">    <span class="dt">GET</span><span class="op">:</span> req <span class="kw">=&gt;</span> (</a>
 <a class="sourceLine" id="cb10-15" title="15">      Promise</a>
 <a class="sourceLine" id="cb10-16" title="16">        .<span class="at">resolve</span>(<span class="st">&#39;hello world&#39;</span>)</a>
 <a class="sourceLine" id="cb10-17" title="17">        .<span class="at">then</span>(json)</a>
@@ -144,7 +144,7 @@
 <a class="sourceLine" id="cb10-25" title="25"><span class="co">// Server options</span></a>
 <a class="sourceLine" id="cb10-26" title="26"><span class="kw">const</span> opts <span class="op">=</span> <span class="op">{</span> <span class="dt">errLogger</span><span class="op">:</span> logger<span class="op">,</span> logger <span class="op">}</span></a>
 <a class="sourceLine" id="cb10-27" title="27"><span class="kw">const</span> port <span class="op">=</span> <span class="va">process</span>.<span class="va">env</span>.<span class="at">PORT</span> <span class="op">||</span> <span class="dv">3000</span></a>
-<a class="sourceLine" id="cb10-28" title="28"><span class="kw">const</span> listening <span class="op">=</span> err <span class="op">=&gt;</span> err <span class="op">?</span> <span class="va">console</span>.<span class="at">error</span>(err) : <span class="va">console</span>.<span class="at">info</span>(<span class="vs">`Listening on port: </span><span class="sc">${</span>port<span class="sc">}</span><span class="vs">`</span>)</a>
+<a class="sourceLine" id="cb10-28" title="28"><span class="kw">const</span> listening <span class="op">=</span> err <span class="kw">=&gt;</span> err <span class="op">?</span> <span class="va">console</span>.<span class="at">error</span>(err) : <span class="va">console</span>.<span class="at">info</span>(<span class="vs">`Listening on port: </span><span class="sc">${</span>port<span class="sc">}</span><span class="vs">`</span>)</a>
 <a class="sourceLine" id="cb10-29" title="29"></a>
 <a class="sourceLine" id="cb10-30" title="30"></a>
 <a class="sourceLine" id="cb10-31" title="31"><span class="co">// Start the server</span></a>
@@ -161,7 +161,7 @@
 <p>Now that we know our server works, let’s see if we can get it to echo back a location/address parameter we send it at a route we’ll create called <code>/geocode</code>. Let’s remove our <code>'/'</code> endpoint and “hello, world!” code and add some for geocoding:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">const</span> endpoints <span class="op">=</span> <span class="at">routes</span>(<span class="op">{</span></a>
 <a class="sourceLine" id="cb13-2" title="2">  <span class="st">&#39;/geocode/:address&#39;</span><span class="op">:</span> <span class="at">methods</span>(<span class="op">{</span></a>
-<a class="sourceLine" id="cb13-3" title="3">    <span class="dt">GET</span><span class="op">:</span> req <span class="op">=&gt;</span> (</a>
+<a class="sourceLine" id="cb13-3" title="3">    <span class="dt">GET</span><span class="op">:</span> req <span class="kw">=&gt;</span> (</a>
 <a class="sourceLine" id="cb13-4" title="4">      Promise</a>
 <a class="sourceLine" id="cb13-5" title="5">        .<span class="at">resolve</span>(<span class="va">req</span>.<span class="va">params</span>.<span class="at">address</span>)</a>
 <a class="sourceLine" id="cb13-6" title="6">        .<span class="at">then</span>(json)</a>
@@ -176,7 +176,7 @@
 <p>We’re almost there! Instead of echoing back whatever address the server receives, let’s instead make an HTTP GET request to the geocode API using the <code>axios</code> package:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">const</span> endpoints <span class="op">=</span> <span class="at">routes</span>(<span class="op">{</span></a>
 <a class="sourceLine" id="cb15-2" title="2">  <span class="st">&#39;/geocode/:address&#39;</span><span class="op">:</span> <span class="at">methods</span>(<span class="op">{</span></a>
-<a class="sourceLine" id="cb15-3" title="3">    <span class="dt">GET</span><span class="op">:</span> req <span class="op">=&gt;</span> (</a>
+<a class="sourceLine" id="cb15-3" title="3">    <span class="dt">GET</span><span class="op">:</span> req <span class="kw">=&gt;</span> (</a>
 <a class="sourceLine" id="cb15-4" title="4">      <span class="at">axios</span>(<span class="op">{</span></a>
 <a class="sourceLine" id="cb15-5" title="5">        <span class="dt">method</span><span class="op">:</span> <span class="st">&#39;GET&#39;</span><span class="op">,</span></a>
 <a class="sourceLine" id="cb15-6" title="6">        <span class="dt">url</span><span class="op">:</span> <span class="st">&#39;https://maps.googleapis.com/maps/api/geocode/json&#39;</span><span class="op">,</span></a>
@@ -202,7 +202,7 @@
 <a class="sourceLine" id="cb18-5" title="5"></a>
 <a class="sourceLine" id="cb18-6" title="6"><span class="kw">const</span> endpoints <span class="op">=</span> <span class="at">routes</span>(<span class="op">{</span></a>
 <a class="sourceLine" id="cb18-7" title="7">  <span class="st">&#39;/geocode/:address&#39;</span><span class="op">:</span> <span class="at">methods</span>(<span class="op">{</span></a>
-<a class="sourceLine" id="cb18-8" title="8">    <span class="dt">GET</span><span class="op">:</span> req <span class="op">=&gt;</span> (</a>
+<a class="sourceLine" id="cb18-8" title="8">    <span class="dt">GET</span><span class="op">:</span> req <span class="kw">=&gt;</span> (</a>
 <a class="sourceLine" id="cb18-9" title="9">      <span class="at">axios</span>(<span class="op">{</span></a>
 <a class="sourceLine" id="cb18-10" title="10">        <span class="dt">method</span><span class="op">:</span> <span class="st">&#39;GET&#39;</span><span class="op">,</span></a>
 <a class="sourceLine" id="cb18-11" title="11">        <span class="dt">url</span><span class="op">:</span> <span class="st">&#39;https://maps.googleapis.com/maps/api/geocode/json&#39;</span><span class="op">,</span></a>
@@ -221,13 +221,13 @@
 <a class="sourceLine" id="cb19-2" title="2">{<span class="st">&quot;results&quot;</span>:[{<span class="st">&quot;address_components&quot;</span>:[<span class="dt">{&quot;long_name&quot;:&quot;Auckland&quot;,&quot;short_name&quot;:&quot;Auckland&quot;,&quot;types&quot;:[&quot;locality&quot;,&quot;political&quot;]}</span>,<span class="dt">{&quot;long_name&quot;:&quot;Auckland&quot;,&quot;short_name&quot;:&quot;Auckland&quot;,&quot;types&quot;:[&quot;administrative_area_level_1&quot;,&quot;political&quot;]}</span>,{<span class="st">&quot;long_name&quot;</span>:<span class="st">&quot;New Zealand&quot;</span>,<span class="st">&quot;short_name&quot;</span>:<span class="st">&quot;NZ&quot;</span>,<span class="st">&quot;types&quot;</span>:[<span class="st">&quot;country&quot;</span>,<span class="st">&quot;political&quot;</span>]}],<span class="st">&quot;formatted_address&quot;</span>:<span class="st">&quot;Auckland, New Zealand&quot;</span>,<span class="st">&quot;geometry&quot;</span>:<span class="dt">{&quot;bounds&quot;:{&quot;northeast&quot;:{&quot;lat&quot;:-36.660571,&quot;lng&quot;:175.2871371},&quot;southwest&quot;:{&quot;lat&quot;:-37.0654751,&quot;lng&quot;:174.4438016}},&quot;location&quot;:{&quot;lat&quot;:-36.8484597,&quot;lng&quot;:174.7633315},&quot;location_type&quot;:&quot;APPROXIMATE&quot;,&quot;viewport&quot;:{&quot;northeast&quot;:{&quot;lat&quot;:-36.660571,&quot;lng&quot;:175.2871371},&quot;southwest&quot;:{&quot;lat&quot;:-37.0654751,&quot;lng&quot;:174.4438016}}}</span>,<span class="st">&quot;place_id&quot;</span>:<span class="st">&quot;ChIJ--acWvtHDW0RF5miQ2HvAAU&quot;</span>,<span class="st">&quot;types&quot;</span>:[<span class="st">&quot;locality&quot;</span>,<span class="st">&quot;political&quot;</span>]}],<span class="st">&quot;status&quot;</span>:<span class="st">&quot;OK&quot;</span>}</a></code></pre></div>
 <p>Hooray! We now have geocode response data for Auckland like:</p>
 <ul>
-<li><code>&quot;status&quot;:&quot;OK&quot;</code></li>
-<li><code>&quot;formatted_address&quot;:&quot;Auckland, New Zealand&quot;</code></li>
-<li><code>&quot;location&quot;:{&quot;lat&quot;:-36.8484597,&quot;lng&quot;:174.7633315}</code></li>
+<li><code>"status":"OK"</code></li>
+<li><code>"formatted_address":"Auckland, New Zealand"</code></li>
+<li><code>"location":{"lat":-36.8484597,"lng":174.7633315}</code></li>
 </ul>
 <h2 id="refactoring-the-routes">Refactoring the Routes</h2>
 <p>As you might imagine, having all of the request handling functions inside of paperplane’s <code>routes</code> function might get difficult to follow and modularize. With that in mind, let’s first pull the handler function out and into its own function:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">const</span> geocode <span class="op">=</span> req <span class="op">=&gt;</span></a>
+<div class="sourceCode" id="cb20"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">const</span> geocode <span class="op">=</span> req <span class="kw">=&gt;</span></a>
 <a class="sourceLine" id="cb20-2" title="2">  <span class="at">axios</span>(<span class="op">{</span></a>
 <a class="sourceLine" id="cb20-3" title="3">    <span class="dt">method</span><span class="op">:</span> <span class="st">&#39;GET&#39;</span><span class="op">,</span></a>
 <a class="sourceLine" id="cb20-4" title="4">    <span class="dt">url</span><span class="op">:</span> <span class="st">&#39;https://maps.googleapis.com/maps/api/geocode/json&#39;</span><span class="op">,</span></a>
@@ -252,7 +252,7 @@
 <a class="sourceLine" id="cb21-3" title="3"><span class="co">// ...</span></a>
 <a class="sourceLine" id="cb21-4" title="4"></a>
 <a class="sourceLine" id="cb21-5" title="5"><span class="co">// Application-specific code</span></a>
-<a class="sourceLine" id="cb21-6" title="6"><span class="kw">const</span> getGeocode <span class="op">=</span> <span class="at">curryN</span>(<span class="dv">2</span><span class="op">,</span> (key<span class="op">,</span> address) <span class="op">=&gt;</span></a>
+<a class="sourceLine" id="cb21-6" title="6"><span class="kw">const</span> getGeocode <span class="op">=</span> <span class="at">curryN</span>(<span class="dv">2</span><span class="op">,</span> (key<span class="op">,</span> address) <span class="kw">=&gt;</span></a>
 <a class="sourceLine" id="cb21-7" title="7">  <span class="at">axios</span>(<span class="op">{</span></a>
 <a class="sourceLine" id="cb21-8" title="8">    <span class="dt">method</span><span class="op">:</span> <span class="st">&#39;GET&#39;</span><span class="op">,</span></a>
 <a class="sourceLine" id="cb21-9" title="9">    <span class="dt">url</span><span class="op">:</span> <span class="st">&#39;https://maps.googleapis.com/maps/api/geocode/json&#39;</span><span class="op">,</span></a>
@@ -285,7 +285,7 @@
 </ol>
 <p>If this scares the hell out of you, fear not! Check out <a href="https://egghead.io/instructors/andrew-van-slaars">Andrew van Slaar’s Ramda lessons on egghead.io</a> and if you’re liking what you’re seeing, <a href="https://github.com/MostlyAdequate/mostly-adequate-guide">Dr. Boolean’s “Mostly Adequate Guide to Functional Programming”</a>.</p>
 <h2 id="all-of-the-code">All of the Code</h2>
-<p>The project itself can be found at <a href="https://github.com/rpearce/geocoding-proxy" class="uri">https://github.com/rpearce/geocoding-proxy</a>, but here is our <code>index.js</code> file in its entirety:</p>
+<p>The project itself can be found at <a href="https://github.com/rpearce/geocoding-proxy">https://github.com/rpearce/geocoding-proxy</a>, but here is our <code>index.js</code> file in its entirety:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb22-1" title="1"><span class="co">// Make our .env configuration file available</span></a>
 <a class="sourceLine" id="cb22-2" title="2"><span class="at">require</span>(<span class="st">&#39;dotenv&#39;</span>).<span class="at">config</span>()</a>
 <a class="sourceLine" id="cb22-3" title="3"></a>
@@ -298,7 +298,7 @@
 <a class="sourceLine" id="cb22-10" title="10"></a>
 <a class="sourceLine" id="cb22-11" title="11"></a>
 <a class="sourceLine" id="cb22-12" title="12"><span class="co">// Application-specific code</span></a>
-<a class="sourceLine" id="cb22-13" title="13"><span class="kw">const</span> getGeocode <span class="op">=</span> <span class="at">curryN</span>(<span class="dv">2</span><span class="op">,</span> (key<span class="op">,</span> address) <span class="op">=&gt;</span></a>
+<a class="sourceLine" id="cb22-13" title="13"><span class="kw">const</span> getGeocode <span class="op">=</span> <span class="at">curryN</span>(<span class="dv">2</span><span class="op">,</span> (key<span class="op">,</span> address) <span class="kw">=&gt;</span></a>
 <a class="sourceLine" id="cb22-14" title="14">  <span class="at">axios</span>(<span class="op">{</span></a>
 <a class="sourceLine" id="cb22-15" title="15">    <span class="dt">method</span><span class="op">:</span> <span class="st">&#39;GET&#39;</span><span class="op">,</span></a>
 <a class="sourceLine" id="cb22-16" title="16">    <span class="dt">url</span><span class="op">:</span> <span class="st">&#39;https://maps.googleapis.com/maps/api/geocode/json&#39;</span><span class="op">,</span></a>
@@ -327,7 +327,7 @@
 <a class="sourceLine" id="cb22-39" title="39"><span class="co">// Server options</span></a>
 <a class="sourceLine" id="cb22-40" title="40"><span class="kw">const</span> opts <span class="op">=</span> <span class="op">{</span> <span class="dt">errLogger</span><span class="op">:</span> logger<span class="op">,</span> logger <span class="op">}</span></a>
 <a class="sourceLine" id="cb22-41" title="41"><span class="kw">const</span> port <span class="op">=</span> <span class="va">process</span>.<span class="va">env</span>.<span class="at">PORT</span> <span class="op">||</span> <span class="dv">3000</span></a>
-<a class="sourceLine" id="cb22-42" title="42"><span class="kw">const</span> listening <span class="op">=</span> err <span class="op">=&gt;</span> err <span class="op">?</span> <span class="va">console</span>.<span class="at">error</span>(err) : <span class="va">console</span>.<span class="at">info</span>(<span class="vs">`Listening on port: </span><span class="sc">${</span>port<span class="sc">}</span><span class="vs">`</span>)</a>
+<a class="sourceLine" id="cb22-42" title="42"><span class="kw">const</span> listening <span class="op">=</span> err <span class="kw">=&gt;</span> err <span class="op">?</span> <span class="va">console</span>.<span class="at">error</span>(err) : <span class="va">console</span>.<span class="at">info</span>(<span class="vs">`Listening on port: </span><span class="sc">${</span>port<span class="sc">}</span><span class="vs">`</span>)</a>
 <a class="sourceLine" id="cb22-43" title="43"></a>
 <a class="sourceLine" id="cb22-44" title="44"></a>
 <a class="sourceLine" id="cb22-45" title="45"><span class="co">// Start the server</span></a>
