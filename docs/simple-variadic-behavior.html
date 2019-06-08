@@ -87,7 +87,7 @@
 <p>Once I <code>split</code> this file based on newlines, I needed a way of finding the indices of the metadata boundary, <code>---</code>, so that I could <code>splice</code> the array in to two pieces and be on my way. My first attempt at getting the indices looked like this:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">function</span> <span class="at">getMetadataIndices</span>(lines) <span class="op">{</span></a>
 <a class="sourceLine" id="cb2-2" title="2">  <span class="kw">var</span> arr <span class="op">=</span> []<span class="op">;</span></a>
-<a class="sourceLine" id="cb2-3" title="3">  <span class="va">lines</span>.<span class="at">forEach</span>((line<span class="op">,</span> i) <span class="op">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="va">lines</span>.<span class="at">forEach</span>((line<span class="op">,</span> i) <span class="kw">=&gt;</span> <span class="op">{</span></a>
 <a class="sourceLine" id="cb2-4" title="4">    <span class="cf">if</span> (<span class="ss">/</span><span class="sc">^</span><span class="ss">---/</span>.<span class="at">test</span>(line)) <span class="op">{</span></a>
 <a class="sourceLine" id="cb2-5" title="5">      <span class="va">arr</span>.<span class="at">push</span>(i)<span class="op">;</span></a>
 <a class="sourceLine" id="cb2-6" title="6">    <span class="op">}</span></a>
@@ -121,18 +121,18 @@
 <a class="sourceLine" id="cb5-2" title="2"><span class="op">};</span></a></code></pre></div>
 <p>Here, we access <code>Array</code>’s <code>prorotype</code> and add our own custom method, <code>clean</code> and pass it one argument. Next, we need to <code>filter</code> out all of the <code>undefined</code>s in our array.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="va">Array</span>.<span class="va">prototype</span>.<span class="at">clean</span> <span class="op">=</span> <span class="kw">function</span>(trash) <span class="op">{</span></a>
-<a class="sourceLine" id="cb6-2" title="2">  <span class="cf">return</span> <span class="kw">this</span>.<span class="at">filter</span>(item <span class="op">=&gt;</span> item <span class="op">!==</span> trash)<span class="op">;</span></a>
+<a class="sourceLine" id="cb6-2" title="2">  <span class="cf">return</span> <span class="kw">this</span>.<span class="at">filter</span>(item <span class="kw">=&gt;</span> item <span class="op">!==</span> trash)<span class="op">;</span></a>
 <a class="sourceLine" id="cb6-3" title="3"><span class="op">};</span></a></code></pre></div>
-<p>But what if we need to clean more than one value out? What if we need to clean <code>null</code>, <code>&quot;&quot;</code> and <code>undefined</code>?</p>
+<p>But what if we need to clean more than one value out? What if we need to clean <code>null</code>, <code>""</code> and <code>undefined</code>?</p>
 <h2 id="variadic-behavior">Variadic Behavior</h2>
 <p>In JavaScript, <em>variadic behavior</em> is a fancy term applied to functions that can accept and handle any number of arguments, and these are typically accessed within the function via the <code>arguments</code> object, which looks like an <code>Array</code> but is <em>not</em>. For example, this code will give you an error about <code>indexOf</code> not being defined on <code>arguments</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="va">Array</span>.<span class="va">prototype</span>.<span class="at">clean</span> <span class="op">=</span> <span class="kw">function</span>(trash) <span class="op">{</span></a>
-<a class="sourceLine" id="cb7-2" title="2">  <span class="cf">return</span> <span class="kw">this</span>.<span class="at">filter</span>(item <span class="op">=&gt;</span> <span class="va">arguments</span>.<span class="at">indexOf</span>(item) <span class="op">===</span> <span class="dv">-1</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb7-2" title="2">  <span class="cf">return</span> <span class="kw">this</span>.<span class="at">filter</span>(item <span class="kw">=&gt;</span> <span class="kw">arguments</span>.<span class="at">indexOf</span>(item) <span class="op">===</span> <span class="dv">-1</span>)<span class="op">;</span></a>
 <a class="sourceLine" id="cb7-3" title="3"><span class="op">};</span></a></code></pre></div>
 <p>Drats! <code>arguments</code> is very similar to an array — how can we get this to work? <code>slice</code> to the rescue!</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="va">Array</span>.<span class="va">prototype</span>.<span class="at">clean</span> <span class="op">=</span> <span class="kw">function</span>() <span class="op">{</span></a>
-<a class="sourceLine" id="cb8-2" title="2">  <span class="kw">const</span> args <span class="op">=</span> [].<span class="va">slice</span>.<span class="at">call</span>(arguments)<span class="op">;</span></a>
-<a class="sourceLine" id="cb8-3" title="3">  <span class="cf">return</span> <span class="kw">this</span>.<span class="at">filter</span>(item <span class="op">=&gt;</span> <span class="va">args</span>.<span class="at">indexOf</span>(item) <span class="op">===</span> <span class="dv">-1</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb8-2" title="2">  <span class="kw">const</span> args <span class="op">=</span> [].<span class="va">slice</span>.<span class="at">call</span>(<span class="kw">arguments</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb8-3" title="3">  <span class="cf">return</span> <span class="kw">this</span>.<span class="at">filter</span>(item <span class="kw">=&gt;</span> <span class="va">args</span>.<span class="at">indexOf</span>(item) <span class="op">===</span> <span class="dv">-1</span>)<span class="op">;</span></a>
 <a class="sourceLine" id="cb8-4" title="4"><span class="op">};</span></a></code></pre></div>
 <p>Without any additional arguments, <code>slice</code> makes a copy of an array and allows us to provide a custom receiver of array-like functionality: <code>arguments</code>. What is returned from the second line above is an array-ized <em>copy</em> of <code>arguments</code>. Now that <code>args</code> is an array of all the arguments that are passed to <code>clean</code>, we can pass as many options as we would like to clean out our array!</p>
 <p>Here is more example usage of such a method:</p>
@@ -153,11 +153,11 @@
 <a class="sourceLine" id="cb10-9" title="9"><span class="op">}</span></a>
 <a class="sourceLine" id="cb10-10" title="10"></a>
 <a class="sourceLine" id="cb10-11" title="11"><span class="va">Array</span>.<span class="va">prototype</span>.<span class="at">clean</span> <span class="op">=</span> <span class="kw">function</span>() <span class="op">{</span></a>
-<a class="sourceLine" id="cb10-12" title="12">  <span class="kw">const</span> args <span class="op">=</span> [].<span class="va">slice</span>.<span class="at">call</span>(arguments)<span class="op">;</span></a>
-<a class="sourceLine" id="cb10-13" title="13">  <span class="cf">return</span> <span class="kw">this</span>.<span class="at">filter</span>(item <span class="op">=&gt;</span> <span class="va">args</span>.<span class="at">indexOf</span>(item) <span class="op">===</span> <span class="dv">-1</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-12" title="12">  <span class="kw">const</span> args <span class="op">=</span> [].<span class="va">slice</span>.<span class="at">call</span>(<span class="kw">arguments</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-13" title="13">  <span class="cf">return</span> <span class="kw">this</span>.<span class="at">filter</span>(item <span class="kw">=&gt;</span> <span class="va">args</span>.<span class="at">indexOf</span>(item) <span class="op">===</span> <span class="dv">-1</span>)<span class="op">;</span></a>
 <a class="sourceLine" id="cb10-14" title="14"><span class="op">};</span></a></code></pre></div>
 <p>But could this be done <em>even</em> simpler?</p>
-<h2 id="p.s.-use-reduce-next-time">p.s. Use reduce next time</h2>
+<h2 id="ps-use-reduce-next-time">p.s. Use reduce next time</h2>
 <p>You may have been wondering why we didn’t use <code>reduce</code> like this from the start:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb11-1" title="1"><span class="va">lines</span>.<span class="at">reduce</span>(<span class="kw">function</span>(mem<span class="op">,</span> item<span class="op">,</span> i) <span class="op">{</span></a>
 <a class="sourceLine" id="cb11-2" title="2">  <span class="cf">if</span> (<span class="ss">/</span><span class="sc">^</span><span class="ss">---/</span>.<span class="at">test</span>(item)) <span class="op">{</span></a>

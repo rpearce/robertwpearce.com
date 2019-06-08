@@ -87,8 +87,8 @@
 <h2 id="overview">Overview</h2>
 <p>In this post we will use Elm to fetch and display the current weather based on the geocode data we receive from an input field.</p>
 <h2 id="project-source-code">Project Source Code</h2>
-<p>The project we’re making will be broken into parts here (branches will be named for each part): <a href="https://github.com/rpearce/elm-geocoding-darksky/" class="uri">https://github.com/rpearce/elm-geocoding-darksky/</a>. Be sure to check out the other branches to see the other parts as they become available.</p>
-<p>The code for this part is located in the <code>pt-3</code> branch: <a href="https://github.com/rpearce/elm-geocoding-darksky/tree/pt-3" class="uri">https://github.com/rpearce/elm-geocoding-darksky/tree/pt-3</a>.</p>
+<p>The project we’re making will be broken into parts here (branches will be named for each part): <a href="https://github.com/rpearce/elm-geocoding-darksky/">https://github.com/rpearce/elm-geocoding-darksky/</a>. Be sure to check out the other branches to see the other parts as they become available.</p>
+<p>The code for this part is located in the <code>pt-3</code> branch: <a href="https://github.com/rpearce/elm-geocoding-darksky/tree/pt-3">https://github.com/rpearce/elm-geocoding-darksky/tree/pt-3</a>.</p>
 <h2 id="steps-for-today">Steps for Today</h2>
 <ol>
 <li>Understanding DarkSky’s response data</li>
@@ -98,7 +98,7 @@
 <li>Calling fetchWeather and handling the response</li>
 <li>Displaying the current weather in our view</li>
 </ol>
-<h2 id="understanding-darkskys-response-data">1. Understanding DarkSky’s response data</h2>
+<h2 id="1-understanding-darkskys-response-data">1. Understanding DarkSky’s response data</h2>
 <p>Let’s get the weather data for Auckland, NZ (-36.8484597,174.7633315). If we start up our <a href="https://github.com/rpearce/DarkSky-proxy">DarkSky proxy</a> and run</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1">λ <span class="ex">curl</span> localhost:5051/forecast/-36.8484597,174.7633315</a></code></pre></div>
 <p>then we will see response data like this:</p>
@@ -118,7 +118,7 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1">λ <span class="ex">curl</span> localhost:5051/forecast/-36.8484597,174.7633315?units=si</a></code></pre></div>
 <p>Read more about <a href="https://darksky.net/dev/docs/forecast">DarkSky request parameters in the DarkSky docs</a> to customize your response data.</p>
 <p>Now that we’ve got our data in the correct units, let’s model this data in Elm!</p>
-<h2 id="modeling-the-darksky-response-data">2. Modeling the DarkSky response data</h2>
+<h2 id="2-modeling-the-darksky-response-data">2. Modeling the DarkSky response data</h2>
 <p>Based on our DarkSky response, let’s list out what we’re looking at:</p>
 <ul>
 <li>an object, <code>currently</code>, which has 3 notable properties:
@@ -167,7 +167,7 @@ initialWeatherCurrently =
     , temperature = 0
     }</code></pre>
 <p>These are defaults that we provide in the event that we have no data to work with (initially or if something goes wrong).</p>
-<h2 id="creating-darksky-json-decoders">3. Creating DarkSky JSON decoders</h2>
+<h2 id="3-creating-darksky-json-decoders">3. Creating DarkSky JSON decoders</h2>
 <p>Just as we did in the <a href="/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html#4-creating-json-decoders">geocoding post section on JSON decoding</a>, we want to leverage <a href="https://github.com/NoRedInk/elm-decode-pipeline">NoRedInk’s elm-decode-pipeline</a> to define how our JSON response should be structured and thus parsed.</p>
 <pre class="elm"><code>decodeWeather : Decoder Weather
 decodeWeather =
@@ -182,7 +182,7 @@ decodeWeatherCurrently =
         |&gt; required &quot;summary&quot; string
         |&gt; required &quot;temperature&quot; float</code></pre>
 <p>While we could use <a href="http://package.elm-lang.org/packages/elm-lang/core/5.1.1/Json-Decode#at">Json.Decode.at</a> to potentially have less code, there is absolutely nothing wrong with being verbose if it leads to clarity.</p>
-<h2 id="writing-our-fetchweather-http-function">4. Writing our fetchWeather HTTP function</h2>
+<h2 id="4-writing-our-fetchweather-http-function">4. Writing our fetchWeather HTTP function</h2>
 <p>We know that we’re going to have to send latitude and longitude <code>Coords</code> to our <a href="https://github.com/rpearce/DarkSky-proxy">DarkSky proxy server</a>, as well as any additional options, so let’s define the URL for that and the fetching function <a href="/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html#8-making-our-request">just like we did for geocoding</a>.</p>
 <pre class="elm"><code>weatherUrl : Coords -&gt; String
 weatherUrl ( lat, lng ) =
@@ -211,7 +211,7 @@ fetchWeather coords =
     | ReceiveGeocoding (Result Http.Error GeoModel)
     | ReceiveWeather (Result Http.Error Weather)
     | NoOp</code></pre>
-<h2 id="calling-fetchweather-and-handling-the-response">5. Calling fetchWeather and handling the response</h2>
+<h2 id="5-calling-fetchweather-and-handling-the-response">5. Calling fetchWeather and handling the response</h2>
 <p>When we <a href="/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html#9-handling-the-geocode-response">handled our geocode response in the prior post</a>, inside of <code>ReceiveGeocoding</code> we returned <code>( newModel, Cmd.none )</code>, for we had no further actions to take. Instead of our action in this tuple being <code>Cmd.none</code>, let’s instead call our <code>fetchWeather</code> function and pass it our geocoded coordinates:</p>
 <pre class="elm"><code>update : Msg -&gt; Model -&gt; ( Model, Cmd Msg )
 update msg model =
@@ -237,7 +237,7 @@ update msg model =
             ( model, Cmd.none )</code></pre>
 <p>Again, at the end of <code>ReceiveGeocoding</code>, we return our <code>newModel</code> as well as the command to go and fetch the weather with the coordinates we’re storing on our <code>newModel</code>.</p>
 <p>Whenever the HTTP request and decoding gives us back a result with the <code>Msg</code> type of <code>ReceiveWeather</code>, we then update the weather property on our model record to have the <code>currently</code> data parsed from the decoder.</p>
-<h2 id="displaying-the-current-weather-in-our-view">6. Displaying the current weather in our view</h2>
+<h2 id="6-displaying-the-current-weather-in-our-view">6. Displaying the current weather in our view</h2>
 <p>Finally, to make sure we’re doing each step correctly, let’s add the temperature to our view:</p>
 <pre class="elm"><code>view : Model -&gt; Html Msg
 view model =
@@ -258,7 +258,7 @@ view model =
 <p>Now, when you rebuild your code with <code>./build</code>, open <code>index.html</code> and submit a city/address name, you’ll first see the <code>Coords</code> update on the page and then see the <code>Weather</code> result once it’s done.</p>
 <h2 id="wrapping-up">Wrapping Up</h2>
 <p>Hooray! We can geocode an address and fetch the weather via two different proxy servers and display a result! That’s great, but our <code>Main.elm</code> file is getting quite large, so stay tuned for the next part where we pull our code into smaller chunks without losing clarity.</p>
-<p>If you’d like to check out the code from this part, it is located here: <a href="https://github.com/rpearce/elm-geocoding-darksky/tree/pt-3" class="uri">https://github.com/rpearce/elm-geocoding-darksky/tree/pt-3</a>.</p>
+<p>If you’d like to check out the code from this part, it is located here: <a href="https://github.com/rpearce/elm-geocoding-darksky/tree/pt-3">https://github.com/rpearce/elm-geocoding-darksky/tree/pt-3</a>.</p>
 <p>Until next time, <br> Robert</p>
     </section>
   </article>

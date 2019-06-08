@@ -14,9 +14,9 @@ updated: "2018-11-29"
 Things to do and see in and around Queenstown, Arrowtown & Glenorchy in New
 Zealand.
 
-* [Walks / Hikes](#walks-hikes)
-* [Food / Drink](#food-drink)
-* [Activities / Things To See](#activities-things-to-see)
+* [Walks / Hikes](#walks--hikes)
+* [Food / Drink](#food--drink)
+* [Activities / Things To See](#activities--things-to-see)
 * [Coworking](#coworking)
 
 Or go back to the [Otago index](/new-zealand/otago/index.html) or the

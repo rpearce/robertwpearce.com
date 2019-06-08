@@ -85,7 +85,7 @@
 <li><em>(wip) Pt. 6 – Customizing Markdown Compiler Options</em></li>
 </ul>
 <h2 id="overview">Overview</h2>
-<p>Out of the box, hakyll takes filenames and dates and outputs nice routes for your webpages, but what if you want your routes to be based off of a metadata field like <code>title</code>? In this post we’ll take a title like <code>&quot;Hakyll Pt. 5 – Generating Custom Post Filenames From a Title Slug&quot;</code> and have hakyll output routes like <code>&quot;hakyll-pt-5-generating-custom-post-filenames-from-a-title-slug&quot;</code>.</p>
+<p>Out of the box, hakyll takes filenames and dates and outputs nice routes for your webpages, but what if you want your routes to be based off of a metadata field like <code>title</code>? In this post we’ll take a title like <code>"Hakyll Pt. 5 – Generating Custom Post Filenames From a Title Slug"</code> and have hakyll output routes like <code>"hakyll-pt-5-generating-custom-post-filenames-from-a-title-slug"</code>.</p>
 <ol>
 <li><a href="#where-do-we-start-hakylls-route-function">Where Do We Start? Hakyll’s <code>route</code> Function</a></li>
 <li><a href="#looking-to-idroute-setextension-and-other-routes-functions-for-clues">Looking to <code>idRoute</code>, <code>setExtension</code> and Other <code>Routes</code> Functions for Clues</a></li>
@@ -107,8 +107,8 @@
 <p>Alright! Now, what does each one do?</p>
 <ul>
 <li><code>customRoute</code>: takes in a function that accepts an <code>Identifier</code> and returns a <code>FilePath</code> and returns that. Sounds like it could be useful, somehow… Let’s keep going.</li>
-<li><code>constRoute</code>: takes in a <code>FilePath</code>, wraps the value in a <code>const</code> function (which will always return the value it was passed) and then passes the function to <code>customRoute</code>! Okay, so this basically means if we say <code>constRoute &quot;foo.html&quot;</code>, then that’s what the route will come out as. Makes sense.</li>
-<li><code>gsubRoute</code>: this one’s purpose is to use patterns to replace parts of routes (like transforming <code>&quot;tags/rss/bar.xml&quot;</code> to <code>tags/bar.xml</code>). Useful! But not for our task.</li>
+<li><code>constRoute</code>: takes in a <code>FilePath</code>, wraps the value in a <code>const</code> function (which will always return the value it was passed) and then passes the function to <code>customRoute</code>! Okay, so this basically means if we say <code>constRoute "foo.html"</code>, then that’s what the route will come out as. Makes sense.</li>
+<li><code>gsubRoute</code>: this one’s purpose is to use patterns to replace parts of routes (like transforming <code>"tags/rss/bar.xml"</code> to <code>tags/bar.xml</code>). Useful! But not for our task.</li>
 <li><code>metadataRoute</code>: takes in a function that accepts <code>Metadata</code> and returns <code>Routes</code>, and then this function returns <code>Routes</code>. Since we want to access our <code>title</code> metadata to create a route, something that gives us access to <code>Metadata</code> and returns <code>Routes</code> is exactly what we want!</li>
 </ul>
 <h2 id="leveraging-hakylls-metadataroute-to-access-title-metadata">Leveraging Hakyll’s <code>metadataRoute</code> to Access Title Metadata</h2>
@@ -120,28 +120,28 @@
 <p>Therefore, our task is to write a function with the signature <code>Metadata -&gt; Routes</code> that finds the <code>title</code> field in the metadata, converts it to a URI slug, and transforms that <code>FilePath</code> into a <code>Routes</code>. Perhaps we could call it <code>titleRoute</code> and then extract the conversion from <code>Metadata</code> to <code>FilePath</code> to something like <code>fileNameFromTitle</code>? Good enough.</p>
 <p>Also, what did we see earlier that can take a <code>FilePath</code> and return <code>Routes</code>? <code>constRoute</code> to the rescue! With these initial bits figured out, let’s sketch this out :</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" title="1"><span class="ot">main ::</span> <span class="dt">IO</span> ()</a>
-<a class="sourceLine" id="cb1-2" title="2">main <span class="fu">=</span> hakyllWith config <span class="fu">$</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb1-3" title="3">    match <span class="st">&quot;posts/*&quot;</span> <span class="fu">$</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb1-4" title="4">        <span class="kw">let</span> ctx <span class="fu">=</span> constField <span class="st">&quot;type&quot;</span> <span class="st">&quot;article&quot;</span> <span class="fu">&lt;&gt;</span> postCtx</a>
+<a class="sourceLine" id="cb1-2" title="2">main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb1-3" title="3">    match <span class="st">&quot;posts/*&quot;</span> <span class="op">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb1-4" title="4">        <span class="kw">let</span> ctx <span class="ot">=</span> constField <span class="st">&quot;type&quot;</span> <span class="st">&quot;article&quot;</span> <span class="op">&lt;&gt;</span> postCtx</a>
 <a class="sourceLine" id="cb1-5" title="5"></a>
-<a class="sourceLine" id="cb1-6" title="6">        route <span class="fu">$</span> metadataRoute titleRoute <span class="co">-- THIS LINE</span></a>
-<a class="sourceLine" id="cb1-7" title="7">        compile <span class="fu">$</span> pandocCompilerCustom</a>
-<a class="sourceLine" id="cb1-8" title="8">            <span class="fu">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/post.html&quot;</span>    ctx</a>
-<a class="sourceLine" id="cb1-9" title="9">            <span class="fu">&gt;&gt;=</span> saveSnapshot <span class="st">&quot;content&quot;</span></a>
-<a class="sourceLine" id="cb1-10" title="10">            <span class="fu">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/default.html&quot;</span> ctx</a>
+<a class="sourceLine" id="cb1-6" title="6">        route <span class="op">$</span> metadataRoute titleRoute <span class="co">-- THIS LINE</span></a>
+<a class="sourceLine" id="cb1-7" title="7">        compile <span class="op">$</span> pandocCompilerCustom</a>
+<a class="sourceLine" id="cb1-8" title="8">            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/post.html&quot;</span>    ctx</a>
+<a class="sourceLine" id="cb1-9" title="9">            <span class="op">&gt;&gt;=</span> saveSnapshot <span class="st">&quot;content&quot;</span></a>
+<a class="sourceLine" id="cb1-10" title="10">            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/default.html&quot;</span> ctx</a>
 <a class="sourceLine" id="cb1-11" title="11"></a>
 <a class="sourceLine" id="cb1-12" title="12">    <span class="co">-- ...other rules</span></a>
 <a class="sourceLine" id="cb1-13" title="13"></a>
 <a class="sourceLine" id="cb1-14" title="14"></a>
 <a class="sourceLine" id="cb1-15" title="15"><span class="ot">titleRoute ::</span> <span class="dt">Metadata</span> <span class="ot">-&gt;</span> <span class="dt">Routes</span></a>
-<a class="sourceLine" id="cb1-16" title="16">titleRoute <span class="fu">=</span> constRoute <span class="fu">.</span> fileNameFromTitle</a>
+<a class="sourceLine" id="cb1-16" title="16">titleRoute <span class="ot">=</span> constRoute <span class="op">.</span> fileNameFromTitle</a>
 <a class="sourceLine" id="cb1-17" title="17"></a>
 <a class="sourceLine" id="cb1-18" title="18"></a>
 <a class="sourceLine" id="cb1-19" title="19"><span class="ot">fileNameFromTitle ::</span> <span class="dt">Metadata</span> <span class="ot">-&gt;</span> <span class="dt">FilePath</span></a>
-<a class="sourceLine" id="cb1-20" title="20">fileNameFromTitle <span class="fu">=</span> <span class="fu">undefined</span> <span class="co">-- ???</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-20" title="20">fileNameFromTitle <span class="ot">=</span> <span class="fu">undefined</span> <span class="co">-- ???</span></a></code></pre></div>
 <p>Great! This is progress! We have the outline of what we need to accomplish. The next task is to find the <code>title</code>, convert it to a slug and return a <code>FilePath</code>. But first, we need to take a detour and write a <code>toSlug</code> function that we can work with.</p>
 <h2 id="writing-our-own-uri-slug-function">Writing Our Own URI Slug Function</h2>
-<p>Taking inspiration from the archived project <a href="https://github.com/mrkkrp/slug" class="uri">https://github.com/mrkkrp/slug</a>, we can write a module, <code>Slug.hs</code>, with a main function, <code>toSlug</code> that takes in <code>Text</code> from <code>Data.Text</code> and transforms it from normal text to a slug. For example, <code>&quot;This example isn't good&quot;</code> would be transformed into <code>&quot;this-example-isnt-good&quot;</code>.</p>
+<p>Taking inspiration from the archived project <a href="https://github.com/mrkkrp/slug" class="uri">https://github.com/mrkkrp/slug</a>, we can write a module, <code>Slug.hs</code>, with a main function, <code>toSlug</code> that takes in <code>Text</code> from <code>Data.Text</code> and transforms it from normal text to a slug. For example, <code>"This example isn't good"</code> would be transformed into <code>"this-example-isnt-good"</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" title="1"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span></a>
 <a class="sourceLine" id="cb2-2" title="2"></a>
 <a class="sourceLine" id="cb2-3" title="3"></a>
@@ -154,40 +154,40 @@
 <a class="sourceLine" id="cb2-10" title="10"></a>
 <a class="sourceLine" id="cb2-11" title="11"><span class="ot">keepAlphaNum ::</span> <span class="dt">Char</span> <span class="ot">-&gt;</span> <span class="dt">Char</span></a>
 <a class="sourceLine" id="cb2-12" title="12">keepAlphaNum x</a>
-<a class="sourceLine" id="cb2-13" title="13">    <span class="fu">|</span> <span class="fu">isAlphaNum</span> x <span class="fu">=</span> x</a>
-<a class="sourceLine" id="cb2-14" title="14">    <span class="fu">|</span> <span class="fu">otherwise</span>    <span class="fu">=</span> <span class="ch">&#39; &#39;</span></a>
+<a class="sourceLine" id="cb2-13" title="13">    <span class="op">|</span> <span class="fu">isAlphaNum</span> x <span class="ot">=</span> x</a>
+<a class="sourceLine" id="cb2-14" title="14">    <span class="op">|</span> <span class="fu">otherwise</span>    <span class="ot">=</span> <span class="ch">&#39; &#39;</span></a>
 <a class="sourceLine" id="cb2-15" title="15"></a>
 <a class="sourceLine" id="cb2-16" title="16"></a>
 <a class="sourceLine" id="cb2-17" title="17"><span class="ot">clean ::</span> <span class="dt">T.Text</span> <span class="ot">-&gt;</span> <span class="dt">T.Text</span></a>
-<a class="sourceLine" id="cb2-18" title="18">clean <span class="fu">=</span></a>
-<a class="sourceLine" id="cb2-19" title="19">    T.map keepAlphaNum <span class="fu">.</span> T.replace <span class="st">&quot;&#39;&quot;</span> <span class="st">&quot;&quot;</span> <span class="fu">.</span> T.replace <span class="st">&quot;&amp;&quot;</span> <span class="st">&quot;and&quot;</span></a>
+<a class="sourceLine" id="cb2-18" title="18">clean <span class="ot">=</span></a>
+<a class="sourceLine" id="cb2-19" title="19">    T.map keepAlphaNum <span class="op">.</span> T.replace <span class="st">&quot;&#39;&quot;</span> <span class="st">&quot;&quot;</span> <span class="op">.</span> T.replace <span class="st">&quot;&amp;&quot;</span> <span class="st">&quot;and&quot;</span></a>
 <a class="sourceLine" id="cb2-20" title="20"></a>
 <a class="sourceLine" id="cb2-21" title="21"></a>
 <a class="sourceLine" id="cb2-22" title="22"><span class="ot">toSlug ::</span> <span class="dt">T.Text</span> <span class="ot">-&gt;</span> <span class="dt">T.Text</span></a>
-<a class="sourceLine" id="cb2-23" title="23">toSlug <span class="fu">=</span></a>
-<a class="sourceLine" id="cb2-24" title="24">    T.intercalate (T.singleton <span class="ch">&#39;-&#39;</span>) <span class="fu">.</span> T.words <span class="fu">.</span> T.toLower <span class="fu">.</span> clean</a></code></pre></div>
+<a class="sourceLine" id="cb2-23" title="23">toSlug <span class="ot">=</span></a>
+<a class="sourceLine" id="cb2-24" title="24">    T.intercalate (T.singleton <span class="ch">&#39;-&#39;</span>) <span class="op">.</span> T.words <span class="op">.</span> T.toLower <span class="op">.</span> clean</a></code></pre></div>
 <p>Once you do this, don’t forget to open up your project’s <code>.cabal</code> file, add in this line and run <code>stack build</code> eventually:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" title="1">executable site</a>
 <a class="sourceLine" id="cb3-2" title="2">  <span class="co">-- ...</span></a>
-<a class="sourceLine" id="cb3-3" title="3">  other<span class="fu">-</span>modules<span class="fu">:</span>    <span class="dt">Slug</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-3" title="3">  other<span class="op">-</span>modules<span class="op">:</span>    <span class="dt">Slug</span></a></code></pre></div>
 <p>Now that this is taken care of, let’s return to the remaining task!</p>
 <h2 id="retrieving-and-slugifying-our-titles">Retrieving and Slugifying our Titles</h2>
 <p>The last step in our journey is to look up the <code>title</code> in the <code>Metadata</code>, convert it to a slug and return a <code>FilePath</code>. Let’s look at the implementation and then talk about it:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" title="1"><span class="ot">titleRoute ::</span> <span class="dt">Metadata</span> <span class="ot">-&gt;</span> <span class="dt">Routes</span></a>
-<a class="sourceLine" id="cb4-2" title="2">titleRoute <span class="fu">=</span></a>
-<a class="sourceLine" id="cb4-3" title="3">    constRoute <span class="fu">.</span> fileNameFromTitle</a>
+<a class="sourceLine" id="cb4-2" title="2">titleRoute <span class="ot">=</span></a>
+<a class="sourceLine" id="cb4-3" title="3">    constRoute <span class="op">.</span> fileNameFromTitle</a>
 <a class="sourceLine" id="cb4-4" title="4"></a>
 <a class="sourceLine" id="cb4-5" title="5"></a>
 <a class="sourceLine" id="cb4-6" title="6"><span class="ot">fileNameFromTitle ::</span> <span class="dt">Metadata</span> <span class="ot">-&gt;</span> <span class="dt">FilePath</span></a>
-<a class="sourceLine" id="cb4-7" title="7">fileNameFromTitle <span class="fu">=</span></a>
-<a class="sourceLine" id="cb4-8" title="8">    T.unpack <span class="fu">.</span> (<span class="ot">`T.append`</span> <span class="st">&quot;.html&quot;</span>) <span class="fu">.</span> toSlug <span class="fu">.</span> T.pack <span class="fu">.</span> getTitleFromMeta</a>
+<a class="sourceLine" id="cb4-7" title="7">fileNameFromTitle <span class="ot">=</span></a>
+<a class="sourceLine" id="cb4-8" title="8">    T.unpack <span class="op">.</span> (<span class="ot">`T.append`</span> <span class="st">&quot;.html&quot;</span>) <span class="op">.</span> toSlug <span class="op">.</span> T.pack <span class="op">.</span> getTitleFromMeta</a>
 <a class="sourceLine" id="cb4-9" title="9"></a>
 <a class="sourceLine" id="cb4-10" title="10"></a>
 <a class="sourceLine" id="cb4-11" title="11"><span class="ot">getTitleFromMeta ::</span> <span class="dt">Metadata</span> <span class="ot">-&gt;</span> <span class="dt">String</span></a>
-<a class="sourceLine" id="cb4-12" title="12">getTitleFromMeta <span class="fu">=</span></a>
-<a class="sourceLine" id="cb4-13" title="13">    fromMaybe <span class="st">&quot;no title&quot;</span> <span class="fu">.</span> lookupString <span class="st">&quot;title&quot;</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-12" title="12">getTitleFromMeta <span class="ot">=</span></a>
+<a class="sourceLine" id="cb4-13" title="13">    fromMaybe <span class="st">&quot;no title&quot;</span> <span class="op">.</span> lookupString <span class="st">&quot;title&quot;</span></a></code></pre></div>
 <ol>
-<li><code>getTitleFromMeta</code>: use <code>Metadata</code>’s <a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Metadata.hs#L36-L37"><code>lookupString</code></a> function to search for <code>title</code> and handle the <code>Maybe String</code> return value by providing a fallback of <code>&quot;no title&quot;</code></li>
+<li><code>getTitleFromMeta</code>: use <code>Metadata</code>’s <a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Metadata.hs#L36-L37"><code>lookupString</code></a> function to search for <code>title</code> and handle the <code>Maybe String</code> return value by providing a fallback of <code>"no title"</code></li>
 <li><code>fileNameFromTitle</code>: once we get the <code>title</code> <code>String</code>, convert it to type <code>Text</code>, pass that to the slugify function, append <code>.html</code> to the slugified <code>title</code>, then convert it back to a <code>String</code> (<code>FilePath</code> is a type alias of <code>String</code>, so no worries here)</li>
 <li><code>titleRoute</code>: once we have a <code>FilePath</code> value, we pass it to <code>constRoute</code> to get back our <code>Routes</code> type that <code>metadataRoute</code> requires, and we’re done!</li>
 </ol>
