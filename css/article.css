@@ -162,6 +162,9 @@ code {
   font-size: 0.85rem;
   line-height: 1.75rem;
 }
+p code {
+  font-size: inherit;
+}
 .sourceCode:not(pre):not(code) {
   background: #011627;
   -webkit-overflow-scrolling: touch;
@@ -173,9 +176,10 @@ code {
 }
 code.sourceCode,
 pre.sourceCode {
-  color: white;
+  color: #fff;
   background: none;
   font-family: Consolas, Menlo, Monaco, source-code-pro, Courier New, monospace;
+  -webkit-font-feature-settings: normal;
   font-feature-settings: normal;
   text-align: left;
   white-space: pre;
@@ -199,12 +203,12 @@ pre.sourceCode {
   overflow: auto;
   padding: 1.3125rem;
 }
+/* Firefox */
 pre.sourceCode::-moz-selection {
-  /* Firefox */
   background: hsl(207, 4%, 16%);
 }
+/* Safari */
 pre.sourceCode::selection {
-  /* Safari */
   background: hsl(207, 4%, 16%);
 }
 /* Text Selection colour */
@@ -226,32 +230,51 @@ pre.sourceCode ::selection {
   padding: 0.15em 0.2em 0.05em;
   white-space: normal;
 }
-/*.token.attr-name {*/
-/*  color: rgb(173, 219, 103);*/
-/*  font-style: italic;*/
-/*}*/
-.co /* Comment */ {
+pre[data-line] {
+  padding: 1em 0 1em 3em;
+  position: relative;
+}
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+  font-size: inherit;
+}
+.co { /* Comment */
   color: rgb(128, 147, 147);
 }
-.ch, /* Char */
+.ch,  /* Char */
 .st { /* String */
   color: rgb(173, 219, 103);
 }
 .va { /* Variable */
   color: rgb(214, 222, 235);
 }
-.dv, /* DecVal */
-.bn, /* BaseN */
+.dv,  /* DecVal */
+.bn,  /* BaseN */
 .fl { /* Float */
   color: rgb(247, 140, 108);
 }
-.bu, /* BuiltIn */
-.cn, /* Constant */
-.at, /* Attribute (function) */
-.fu, /* Function */
+.bu,  /* BuiltIn */
+.cn,  /* Constant */
+.at,  /* Attribute (function) */
+.fu,  /* Function */
 .dt { /* DataType */
   color: rgb(130, 170, 255);
 }
+.im,  /* Import */
+.op,  /* Operator */
+.kw,  /* Keyword */
+.ot,  /* Other */
+.cf { /* ControlFlow */
+  color: #ffa7c4;
+}
+/*.token.attr-name {*/
+/*  color: rgb(173, 219, 103);*/
+/*  font-style: italic;*/
+/*}*/
 /*.token.punctuation {*/
 /*  color: rgb(199, 146, 234);*/
 /*}*/
@@ -264,13 +287,6 @@ pre.sourceCode ::selection {
 /*  color: rgb(255, 203, 139);*/
 /*}*/
 /*.token.tag,*/
-.im, /* Import */
-.op, /* Operator */
-.kw, /* Keyword */
-.ot, /* Other */
-.cf { /* ControlFlow */
-  color: #ffa7c4;
-}
 /*.token.boolean {*/
 /*  color: rgb(255, 88, 116);*/
 /*}*/
@@ -280,17 +296,24 @@ pre.sourceCode ::selection {
 /*.token.namespace {*/
 /*  color: rgb(178, 204, 214);*/
 /*}*/
-pre[data-line] {
-  padding: 1em 0 1em 3em;
-  position: relative;
+
+code.sourceCode > a.sourceLine:before {
+  display: inline-block;
+  content: attr(title);
+  text-align: right;
+  border-right: 1px solid rgba(128,147,147, 0.4);
+  color: rgb(128,147,147);
+  width: 30px;
+  padding-right: 10px;
+  margin-right: 10px;
 }
-h1 code,
-h2 code,
-h3 code,
-h4 code,
-h5 code,
-h6 code {
-  font-size: inherit;
+@media (max-width: 667px) {
+  .sourceCode:not(pre):not(code) {
+    border-radius: 0;
+  }
+  code.sourceCode > a.sourceLine:before {
+    display: none;
+  }
 }
 
 /*table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode, table.sourceCode pre*/
