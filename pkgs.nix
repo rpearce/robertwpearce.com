@@ -1,5 +1,7 @@
 let
-  config = {};
+  config = {
+    allowBroken = true;
+  };
 
   bootstrap = import <nixpkgs> { };
   nixpkgs = builtins.fromJSON (builtins.readFile ./nixpkgs.json);

@@ -9,6 +9,42 @@ My personal website: [https://robertwpearce.com](https://robertwpearce.com).
    λ ./make.sh help
    ```
 
+### CLI
+Print usage:
+```
+λ ./make.sh help
+```
+
+Build the project & output:
+```
+λ ./make.sh build
+```
+
+Run hakyll commands (see next section):
+```
+λ ./make.sh site <COMMAND>
+```
+
+Update project.nix from .cabal contents:
+```
+λ ./make.sh build-cabal
+```
+
+Use nix to build the project:
+```
+λ ./make.sh build-project
+```
+
+Start interactive REPL for project:
+```
+λ ./make.sh repl
+```
+
+Update pinned version of nixpkgs:
+```
+λ ./make.sh nixpkgs-update
+```
+
 ### Helpful hakyll commands
 Build the site:
 ```

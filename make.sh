@@ -4,6 +4,11 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+function build() {
+  build-cabal && build-project && site build
+  return 0
+}
+
 function build-cabal() {
   nix-shell --pure -p cabal2nix --run "cabal2nix ." > project.nix
   return 0
@@ -11,6 +16,11 @@ function build-cabal() {
 
 function build-project() {
   nix-build
+  return 0
+}
+
+function nixpkgs-update() {
+  nix-shell -p nix-prefetch-git --run "nix-prefetch-git https://github.com/NixOS/nixpkgs > nixpkgs.json" > project.nix
   return 0
 }
 
@@ -31,12 +41,6 @@ function site() {
   return 0
 }
 
-function run-tests() {
-  echo "Tests not implemented yet"
-  #nix-shell --pure --run "cabal new-test all"
-  return 0
-}
-
 function unknown-cmd() {
   echo "Unknown command: $@"
   echo ""
@@ -49,15 +53,22 @@ function usage() {
 Usage: $0 COMMAND
 
 Available commands:
-  build-all        Build the project & output
-  build-cabal      Update project.nix from .cabal contents
-  build-project    Use nix to build the project
-  help             Print usage
-  repl             Start interactive REPL for project
-  site             Run hakyll commands
-  test             Run tests
+  build             Build the project & output
+  build-cabal       Update project.nix from .cabal contents
+  build-project     Use nix to build the project
+  help              Print usage
+  nixpkgs-update    Update pinned version of nixpkgs
+  repl              Start interactive REPL for project
+  site              Run hakyll commands
 EOF
   return 0
+}
+
+function err-site() {
+  echo "No executable at ./result/bin/site"
+  echo ""
+  echo "Try running ./make.sh build"
+  return 1
 }
 
 # Check if no command is provided
@@ -70,8 +81,8 @@ cmd="$1"
 shift
 
 case "$cmd" in
-  "build-all")
-    build-cabal && build-project && site build
+  "build")
+    build
     ;;
   "build-cabal")
     build-cabal
@@ -86,10 +97,11 @@ case "$cmd" in
     repl
     ;;
   "site")
+    [[ -f ./result/bin/site ]] || err-site
     site $@
     ;;
-  "test")
-    run-tests
+  "nixpkgs-update")
+    nixpkgs-update
     ;;
   *)
     unknown-cmd cmd
