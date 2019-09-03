@@ -130,13 +130,13 @@ a.subscribe__link[href] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-color:#287cb4;
-  border:none;
-  color:#FFF;
-  padding:1em;
-  font-size:1rem;
-  font-weight:bold;
-  border-radius:3px
+  background-color: #287cb4;
+  border: none;
+  color: #fff;
+  padding: 1em;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 3px;
 }
 @media (max-width: 667px) {
   body {
@@ -144,8 +144,8 @@ a.subscribe__link[href] {
   }
   .layout--constrained {
     width: auto;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 1.3125rem;
+    margin-right: 1.3125rem;
   }
 
   /* SUBSCRIBE */
