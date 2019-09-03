@@ -22,11 +22,26 @@ body {
   font-size: 16px;
 }
 body {
+  --blue: #287cb4;
   font-family: "LatoRegular", Verdana, Helvetica, Arial, sans-serif;
   line-height: 1.643;
   color: #334249;
   margin: 0;
+  word-wrap: break-word;
+  font-kerning: normal;
+  -moz-font-feature-settings: "kern", "liga", "clig", "calt";
+  font-feature-settings: "kern", "liga", "clig", "calt";
 }
+body.light {
+  --inlineCode-bg: rgba(255, 229, 100, 0.2);
+  --inlineCode-text: #1a1a1a;
+  --textLink: var(--blue);
+}
+/*body.dark {*/
+/*  --inlineCode-bg: hsl(222, 14%, 25%);*/
+/*  --inlineCode-text: #e6e6e6;*/
+/*  --textLink: var(--blue)*/
+/*}*/
 body,
 input,
 button {
@@ -34,11 +49,12 @@ button {
 }
 a[href] {
   text-decoration: none;
-  color: #287cb4;
+  color: var(--textLink);
   border-bottom-width: 2px;
   border-bottom-style: solid;
   border-bottom-color: #abd3ed;
   word-wrap: break-word;
+  box-shadow: 0 1px 0 0 currentColor:
 }
 a[href]:hover,
 a[href]:focus {
@@ -114,24 +130,22 @@ a.subscribe__link[href] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-color:#287cb4;
-  border:none;
-  color:#FFF;
-  padding:1em;
-  font-size:1rem;
-  font-weight:bold;
-  border-radius:3px
+  background-color: #287cb4;
+  border: none;
+  color: #fff;
+  padding: 1em;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 3px;
 }
 @media (max-width: 667px) {
   body {
     font-family: Helvetica, Arial, sans-serif;
-    margin: 10px;
-    border: 1px solid #f2f2f2
   }
   .layout--constrained {
     width: auto;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 1.3125rem;
+    margin-right: 1.3125rem;
   }
 
   /* SUBSCRIBE */
