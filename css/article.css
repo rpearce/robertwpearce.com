@@ -54,8 +54,8 @@
   color: #206592;
   border-bottom-color: #206592;
 }
-.article p+p {
-  margin-top: 1.75rem;
+.article p + p {
+  margin-top: 1.75em;
 }
 .article hr {
   height: 0;
