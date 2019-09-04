@@ -158,12 +158,9 @@ pre {
   font-size: 0.85rem;
   line-height: 1.75rem;
 }
-code {
-  font-size: 0.85rem;
-  line-height: 1.75rem;
-}
-p code {
+pre code {
   font-size: inherit;
+  line-height: 1.75rem;
 }
 .sourceCode:not(pre):not(code) {
   background: #011627;
