@@ -92,29 +92,29 @@
 </ol>
 <h2 id="adding-a-sitemap-template">Adding a Sitemap Template</h2>
 <p>A sitemap.xml template, just like <a href="/hakyll-pt-1-setup-and-initial-customization.html#working-with-templates">the templates in the last post</a>, receives context fields to work with (variables, essentially), and outputs the result of applying said context to the template. Here is what our sitemap template will look like today in our project’s <code>templates/sitemap.xml</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span></a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw">&lt;urlset</span></a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="ot">  xmlns=</span><span class="st">&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;</span></a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="ot">  xmlns:news=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-news/0.9&quot;</span></a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="ot">  xmlns:xhtml=</span><span class="st">&quot;http://www.w3.org/1999/xhtml&quot;</span></a>
-<a class="sourceLine" id="cb1-6" title="6"><span class="ot">  xmlns:mobile=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-mobile/1.0&quot;</span></a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="ot">  xmlns:image=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-image/1.1&quot;</span></a>
-<a class="sourceLine" id="cb1-8" title="8"><span class="ot">  xmlns:video=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-video/1.1&quot;</span></a>
-<a class="sourceLine" id="cb1-9" title="9"><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-10" title="10">  <span class="kw">&lt;url&gt;</span></a>
-<a class="sourceLine" id="cb1-11" title="11">    <span class="kw">&lt;loc&gt;</span>$root$<span class="kw">&lt;/loc&gt;</span></a>
-<a class="sourceLine" id="cb1-12" title="12">    <span class="kw">&lt;changefreq&gt;</span>daily<span class="kw">&lt;/changefreq&gt;</span></a>
-<a class="sourceLine" id="cb1-13" title="13">    <span class="kw">&lt;priority&gt;</span>1.0<span class="kw">&lt;/priority&gt;</span></a>
-<a class="sourceLine" id="cb1-14" title="14">  <span class="kw">&lt;/url&gt;</span></a>
-<a class="sourceLine" id="cb1-15" title="15">$for(pages)$</a>
-<a class="sourceLine" id="cb1-16" title="16">  <span class="kw">&lt;url&gt;</span></a>
-<a class="sourceLine" id="cb1-17" title="17">    <span class="kw">&lt;loc&gt;</span>$root$$url$<span class="kw">&lt;/loc&gt;</span></a>
-<a class="sourceLine" id="cb1-18" title="18">    <span class="kw">&lt;lastmod&gt;</span>$if(updated)$$updated$$else$$if(date)$$date$$endif$$endif$<span class="kw">&lt;/lastmod&gt;</span></a>
-<a class="sourceLine" id="cb1-19" title="19">    <span class="kw">&lt;changefreq&gt;</span>weekly<span class="kw">&lt;/changefreq&gt;</span></a>
-<a class="sourceLine" id="cb1-20" title="20">    <span class="kw">&lt;priority&gt;</span>0.8<span class="kw">&lt;/priority&gt;</span></a>
-<a class="sourceLine" id="cb1-21" title="21">  <span class="kw">&lt;/url&gt;</span></a>
-<a class="sourceLine" id="cb1-22" title="22">$endfor$</a>
-<a class="sourceLine" id="cb1-23" title="23"><span class="kw">&lt;/urlset&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">&lt;urlset</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="ot">  xmlns=</span><span class="st">&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="ot">  xmlns:news=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-news/0.9&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="ot">  xmlns:xhtml=</span><span class="st">&quot;http://www.w3.org/1999/xhtml&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="ot">  xmlns:mobile=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-mobile/1.0&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="ot">  xmlns:image=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-image/1.1&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="ot">  xmlns:video=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-video/1.1&quot;</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="kw">&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>  <span class="kw">&lt;url&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>    <span class="kw">&lt;loc&gt;</span>$root$<span class="kw">&lt;/loc&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>    <span class="kw">&lt;changefreq&gt;</span>daily<span class="kw">&lt;/changefreq&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>    <span class="kw">&lt;priority&gt;</span>1.0<span class="kw">&lt;/priority&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>  <span class="kw">&lt;/url&gt;</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a>$for(pages)$</span>
+<span id="cb1-16"><a href="#cb1-16"></a>  <span class="kw">&lt;url&gt;</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>    <span class="kw">&lt;loc&gt;</span>$root$$url$<span class="kw">&lt;/loc&gt;</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a>    <span class="kw">&lt;lastmod&gt;</span>$if(updated)$$updated$$else$$if(date)$$date$$endif$$endif$<span class="kw">&lt;/lastmod&gt;</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a>    <span class="kw">&lt;changefreq&gt;</span>weekly<span class="kw">&lt;/changefreq&gt;</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a>    <span class="kw">&lt;priority&gt;</span>0.8<span class="kw">&lt;/priority&gt;</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a>  <span class="kw">&lt;/url&gt;</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a>$endfor$</span>
+<span id="cb1-23"><a href="#cb1-23"></a><span class="kw">&lt;/urlset&gt;</span></span></code></pre></div>
 <p>Apart from the normal sitemap boilerplate, you can see <code>root</code>, <code>pages</code>, <code>url</code>, <code>date</code> and <code>updated</code> context fields. While <code>date</code> and <code>updated</code> would come from your metadata fields defined for a post, and the <code>url</code> is built from hakyll’s <a href="https://github.com/jaspervdj/hakyll/blob/c85198d8cb6ce055c788e287c7f2470eac0aad36/lib/Hakyll/Web/Template/Context.hs#L192"><code>defaultContext</code></a>, the <code>root</code> and <code>pages</code> fields are custom defined in what will be our very own <code>sitemapCtx</code> context. In the next section, we’ll use this template to generate our sitemap.xml file.</p>
 <h2 id="generating-the-sitemap-xml-file">Generating the Sitemap XML File</h2>
 <p>If you <a href="http://localhost:8000/hakyll-pt-1-setup-and-initial-customization.html#installation-setup">create a hakyll project from scratch</a>, you will start out with a few files that we can add to our sitemap:</p>
@@ -128,39 +128,39 @@
 <li><code>posts/2015-12-07-tu-quoque.html</code></li>
 </ul>
 <p>You should note that your <code>site.hs</code> file also has the following:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" title="1"><span class="ot">main ::</span> <span class="dt">IO</span> ()</a>
-<a class="sourceLine" id="cb2-2" title="2">main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb2-3" title="3">    <span class="co">-- ...</span></a>
-<a class="sourceLine" id="cb2-4" title="4"></a>
-<a class="sourceLine" id="cb2-5" title="5">    match (fromList [<span class="st">&quot;about.rst&quot;</span>, <span class="st">&quot;contact.markdown&quot;</span>]) <span class="op">$</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb2-6" title="6">        route   <span class="op">$</span> setExtension <span class="st">&quot;html&quot;</span></a>
-<a class="sourceLine" id="cb2-7" title="7">        compile <span class="op">$</span> pandocCompiler</a>
-<a class="sourceLine" id="cb2-8" title="8">            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/default.html&quot;</span> defaultContext</a>
-<a class="sourceLine" id="cb2-9" title="9"></a>
-<a class="sourceLine" id="cb2-10" title="10"></a>
-<a class="sourceLine" id="cb2-11" title="11">    match <span class="st">&quot;posts/*&quot;</span> <span class="op">$</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb2-12" title="12">        route <span class="op">$</span> setExtension <span class="st">&quot;html&quot;</span></a>
-<a class="sourceLine" id="cb2-13" title="13">        compile <span class="op">$</span> pandocCompiler</a>
-<a class="sourceLine" id="cb2-14" title="14">            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/post.html&quot;</span>    postCtx</a>
-<a class="sourceLine" id="cb2-15" title="15">            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/default.html&quot;</span> postCtx</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb2-2"><a href="#cb2-2"></a>main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>    <span class="co">-- ...</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a>    match (fromList [<span class="st">&quot;about.rst&quot;</span>, <span class="st">&quot;contact.markdown&quot;</span>]) <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>        route   <span class="op">$</span> setExtension <span class="st">&quot;html&quot;</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>        compile <span class="op">$</span> pandocCompiler</span>
+<span id="cb2-8"><a href="#cb2-8"></a>            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/default.html&quot;</span> defaultContext</span>
+<span id="cb2-9"><a href="#cb2-9"></a></span>
+<span id="cb2-10"><a href="#cb2-10"></a></span>
+<span id="cb2-11"><a href="#cb2-11"></a>    match <span class="st">&quot;posts/*&quot;</span> <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a>        route <span class="op">$</span> setExtension <span class="st">&quot;html&quot;</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a>        compile <span class="op">$</span> pandocCompiler</span>
+<span id="cb2-14"><a href="#cb2-14"></a>            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/post.html&quot;</span>    postCtx</span>
+<span id="cb2-15"><a href="#cb2-15"></a>            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/default.html&quot;</span> postCtx</span></code></pre></div>
 <p>It’s important that you understand that any files you want to be loaded and sent to <code>templates/sitemap.xml</code> must first be <code>match</code>ed and <code>compile</code>d <em>before</em> the sitemap can be built. If you don’t do this, you’ll pull your hair out wondering why the file (or folder) you’re trying to include in the sitemap never shows up.</p>
 <p>Now, there is something that we are going to emulate to make this sitemap a reality (this should already be in <code>site.hs</code>):</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" title="1"><span class="ot">main ::</span> <span class="dt">IO</span> ()</a>
-<a class="sourceLine" id="cb3-2" title="2">main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb3-3" title="3">    <span class="co">-- ...</span></a>
-<a class="sourceLine" id="cb3-4" title="4"></a>
-<a class="sourceLine" id="cb3-5" title="5">    create [<span class="st">&quot;archive.html&quot;</span>] <span class="op">$</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb3-6" title="6">        route idRoute</a>
-<a class="sourceLine" id="cb3-7" title="7">        compile <span class="op">$</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb3-8" title="8">            posts <span class="ot">&lt;-</span> recentFirst <span class="op">=&lt;&lt;</span> loadAll <span class="st">&quot;posts/*&quot;</span></a>
-<a class="sourceLine" id="cb3-9" title="9">            <span class="kw">let</span> archiveCtx <span class="ot">=</span></a>
-<a class="sourceLine" id="cb3-10" title="10">                    listField <span class="st">&quot;posts&quot;</span> postCtx (<span class="fu">return</span> posts) <span class="ot">`mappend`</span></a>
-<a class="sourceLine" id="cb3-11" title="11">                    constField <span class="st">&quot;title&quot;</span> <span class="st">&quot;Archives&quot;</span>            <span class="ot">`mappend`</span></a>
-<a class="sourceLine" id="cb3-12" title="12">                    defaultContext</a>
-<a class="sourceLine" id="cb3-13" title="13"></a>
-<a class="sourceLine" id="cb3-14" title="14">            makeItem <span class="st">&quot;&quot;</span></a>
-<a class="sourceLine" id="cb3-15" title="15">                <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/archive.html&quot;</span> archiveCtx</a>
-<a class="sourceLine" id="cb3-16" title="16">                <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/default.html&quot;</span> archiveCtx</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb3-2"><a href="#cb3-2"></a>main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="co">-- ...</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a>    create [<span class="st">&quot;archive.html&quot;</span>] <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>        route idRoute</span>
+<span id="cb3-7"><a href="#cb3-7"></a>        compile <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>            posts <span class="ot">&lt;-</span> recentFirst <span class="op">=&lt;&lt;</span> loadAll <span class="st">&quot;posts/*&quot;</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>            <span class="kw">let</span> archiveCtx <span class="ot">=</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a>                    listField <span class="st">&quot;posts&quot;</span> postCtx (<span class="fu">return</span> posts) <span class="ot">`mappend`</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>                    constField <span class="st">&quot;title&quot;</span> <span class="st">&quot;Archives&quot;</span>            <span class="ot">`mappend`</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a>                    defaultContext</span>
+<span id="cb3-13"><a href="#cb3-13"></a></span>
+<span id="cb3-14"><a href="#cb3-14"></a>            makeItem <span class="st">&quot;&quot;</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a>                <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/archive.html&quot;</span> archiveCtx</span>
+<span id="cb3-16"><a href="#cb3-16"></a>                <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/default.html&quot;</span> archiveCtx</span></code></pre></div>
 <p>Reading the code above, this essentially says</p>
 <ol>
 <li>here’s a file we want to create that <em>does not yet exist</em> (how <code>create</code> differs from <code>match</code>)</li>
@@ -174,58 +174,58 @@
 <li>when you compile, load all the posts, load all the other pages, specify what the context to send to each template will be, then make the item, then pass the context to the sitemap template, ultimately building up an XML file</li>
 </ol>
 <p>This is almost the same! Let’s write it:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" title="1"><span class="ot">main ::</span> <span class="dt">IO</span> ()</a>
-<a class="sourceLine" id="cb4-2" title="2">main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb4-3" title="3">    <span class="co">-- ...</span></a>
-<a class="sourceLine" id="cb4-4" title="4"></a>
-<a class="sourceLine" id="cb4-5" title="5">    create [<span class="st">&quot;sitemap.xml&quot;</span>] <span class="op">$</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb4-6" title="6">        route idRoute</a>
-<a class="sourceLine" id="cb4-7" title="7">        compile <span class="op">$</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb4-8" title="8">            <span class="co">-- load and sort the posts</span></a>
-<a class="sourceLine" id="cb4-9" title="9">            posts <span class="ot">&lt;-</span> recentFirst <span class="op">=&lt;&lt;</span> loadAll <span class="st">&quot;posts/*&quot;</span></a>
-<a class="sourceLine" id="cb4-10" title="10"></a>
-<a class="sourceLine" id="cb4-11" title="11">            <span class="co">-- load individual pages from a list (globs DO NOT work here)</span></a>
-<a class="sourceLine" id="cb4-12" title="12">            singlePages <span class="ot">&lt;-</span> loadAll (fromList [<span class="st">&quot;about.rst&quot;</span>, <span class="st">&quot;contact.markdown&quot;</span>])</a>
-<a class="sourceLine" id="cb4-13" title="13"></a>
-<a class="sourceLine" id="cb4-14" title="14">                           <span class="co">-- mappend the posts and singlePages together</span></a>
-<a class="sourceLine" id="cb4-15" title="15">            <span class="kw">let</span> pages <span class="ot">=</span> posts <span class="op">&lt;&gt;</span> singlePages</a>
-<a class="sourceLine" id="cb4-16" title="16"></a>
-<a class="sourceLine" id="cb4-17" title="17">                           <span class="co">-- create the `pages` field with the postCtx</span></a>
-<a class="sourceLine" id="cb4-18" title="18">                           <span class="co">-- and return the `pages` value for it</span></a>
-<a class="sourceLine" id="cb4-19" title="19">                sitemapCtx <span class="ot">=</span> listField <span class="st">&quot;pages&quot;</span> postCtx (<span class="fu">return</span> pages)</a>
-<a class="sourceLine" id="cb4-20" title="20"></a>
-<a class="sourceLine" id="cb4-21" title="21">            <span class="co">-- make the item and apply our sitemap template</span></a>
-<a class="sourceLine" id="cb4-22" title="22">            makeItem <span class="st">&quot;&quot;</span></a>
-<a class="sourceLine" id="cb4-23" title="23">                <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/sitemap.xml&quot;</span> sitemapCtx</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb4-2"><a href="#cb4-2"></a>main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>    <span class="co">-- ...</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a></span>
+<span id="cb4-5"><a href="#cb4-5"></a>    create [<span class="st">&quot;sitemap.xml&quot;</span>] <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>        route idRoute</span>
+<span id="cb4-7"><a href="#cb4-7"></a>        compile <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>            <span class="co">-- load and sort the posts</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a>            posts <span class="ot">&lt;-</span> recentFirst <span class="op">=&lt;&lt;</span> loadAll <span class="st">&quot;posts/*&quot;</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a></span>
+<span id="cb4-11"><a href="#cb4-11"></a>            <span class="co">-- load individual pages from a list (globs DO NOT work here)</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a>            singlePages <span class="ot">&lt;-</span> loadAll (fromList [<span class="st">&quot;about.rst&quot;</span>, <span class="st">&quot;contact.markdown&quot;</span>])</span>
+<span id="cb4-13"><a href="#cb4-13"></a></span>
+<span id="cb4-14"><a href="#cb4-14"></a>                           <span class="co">-- mappend the posts and singlePages together</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a>            <span class="kw">let</span> pages <span class="ot">=</span> posts <span class="op">&lt;&gt;</span> singlePages</span>
+<span id="cb4-16"><a href="#cb4-16"></a></span>
+<span id="cb4-17"><a href="#cb4-17"></a>                           <span class="co">-- create the `pages` field with the postCtx</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a>                           <span class="co">-- and return the `pages` value for it</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a>                sitemapCtx <span class="ot">=</span> listField <span class="st">&quot;pages&quot;</span> postCtx (<span class="fu">return</span> pages)</span>
+<span id="cb4-20"><a href="#cb4-20"></a></span>
+<span id="cb4-21"><a href="#cb4-21"></a>            <span class="co">-- make the item and apply our sitemap template</span></span>
+<span id="cb4-22"><a href="#cb4-22"></a>            makeItem <span class="st">&quot;&quot;</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a>                <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/sitemap.xml&quot;</span> sitemapCtx</span></code></pre></div>
 <p>This is starting to look good! But what’s wrong here? Remember the <code>root</code> context bits? We’re going to need to define what that is, and the best way that I’ve found right now is simply as a <code>String</code>; if you want to do something fancy with configuration or reading it in dynamically, then go nuts.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb5-1" title="1"><span class="ot">root ::</span> <span class="dt">String</span></a>
-<a class="sourceLine" id="cb5-2" title="2">root <span class="ot">=</span> <span class="st">&quot;https://ourblog.com&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1"></a><span class="ot">root ::</span> <span class="dt">String</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>root <span class="ot">=</span> <span class="st">&quot;https://ourblog.com&quot;</span></span></code></pre></div>
 <p>With that defined, we can add it to our contexts:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb6-1" title="1"><span class="ot">main ::</span> <span class="dt">IO</span> ()</a>
-<a class="sourceLine" id="cb6-2" title="2">main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb6-3" title="3">    <span class="co">-- ...</span></a>
-<a class="sourceLine" id="cb6-4" title="4"></a>
-<a class="sourceLine" id="cb6-5" title="5">    create [<span class="st">&quot;sitemap.xml&quot;</span>] <span class="op">$</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb6-6" title="6">        route idRoute</a>
-<a class="sourceLine" id="cb6-7" title="7">        compile <span class="op">$</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb6-8" title="8">            posts <span class="ot">&lt;-</span> recentFirst <span class="op">=&lt;&lt;</span> loadAll <span class="st">&quot;posts/*&quot;</span></a>
-<a class="sourceLine" id="cb6-9" title="9">            singlePages <span class="ot">&lt;-</span> loadAll (fromList [<span class="st">&quot;about.rst&quot;</span>, <span class="st">&quot;contact.markdown&quot;</span>])</a>
-<a class="sourceLine" id="cb6-10" title="10">            <span class="kw">let</span> pages <span class="ot">=</span> posts <span class="op">&lt;&gt;</span> singlePages</a>
-<a class="sourceLine" id="cb6-11" title="11">                sitemapCtx <span class="ot">=</span></a>
-<a class="sourceLine" id="cb6-12" title="12">                    constField <span class="st">&quot;root&quot;</span> root <span class="op">&lt;&gt;</span> <span class="co">-- here</span></a>
-<a class="sourceLine" id="cb6-13" title="13">                    listField <span class="st">&quot;pages&quot;</span> postCtx (<span class="fu">return</span> pages)</a>
-<a class="sourceLine" id="cb6-14" title="14">            makeItem <span class="st">&quot;&quot;</span></a>
-<a class="sourceLine" id="cb6-15" title="15">                <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/sitemap.xml&quot;</span> sitemapCtx</a>
-<a class="sourceLine" id="cb6-16" title="16"></a>
-<a class="sourceLine" id="cb6-17" title="17"></a>
-<a class="sourceLine" id="cb6-18" title="18"><span class="co">-- ...</span></a>
-<a class="sourceLine" id="cb6-19" title="19"></a>
-<a class="sourceLine" id="cb6-20" title="20"></a>
-<a class="sourceLine" id="cb6-21" title="21"><span class="ot">postCtx ::</span> <span class="dt">Context</span> <span class="dt">String</span></a>
-<a class="sourceLine" id="cb6-22" title="22">postCtx <span class="ot">=</span></a>
-<a class="sourceLine" id="cb6-23" title="23">    constField <span class="st">&quot;root&quot;</span> root      <span class="op">&lt;&gt;</span> <span class="co">-- here</span></a>
-<a class="sourceLine" id="cb6-24" title="24">    dateField <span class="st">&quot;date&quot;</span> <span class="st">&quot;%Y-%m-%d&quot;</span> <span class="op">&lt;&gt;</span></a>
-<a class="sourceLine" id="cb6-25" title="25">    defaultContext</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb6-2"><a href="#cb6-2"></a>main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>    <span class="co">-- ...</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a>    create [<span class="st">&quot;sitemap.xml&quot;</span>] <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>        route idRoute</span>
+<span id="cb6-7"><a href="#cb6-7"></a>        compile <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>            posts <span class="ot">&lt;-</span> recentFirst <span class="op">=&lt;&lt;</span> loadAll <span class="st">&quot;posts/*&quot;</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>            singlePages <span class="ot">&lt;-</span> loadAll (fromList [<span class="st">&quot;about.rst&quot;</span>, <span class="st">&quot;contact.markdown&quot;</span>])</span>
+<span id="cb6-10"><a href="#cb6-10"></a>            <span class="kw">let</span> pages <span class="ot">=</span> posts <span class="op">&lt;&gt;</span> singlePages</span>
+<span id="cb6-11"><a href="#cb6-11"></a>                sitemapCtx <span class="ot">=</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a>                    constField <span class="st">&quot;root&quot;</span> root <span class="op">&lt;&gt;</span> <span class="co">-- here</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>                    listField <span class="st">&quot;pages&quot;</span> postCtx (<span class="fu">return</span> pages)</span>
+<span id="cb6-14"><a href="#cb6-14"></a>            makeItem <span class="st">&quot;&quot;</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a>                <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/sitemap.xml&quot;</span> sitemapCtx</span>
+<span id="cb6-16"><a href="#cb6-16"></a></span>
+<span id="cb6-17"><a href="#cb6-17"></a></span>
+<span id="cb6-18"><a href="#cb6-18"></a><span class="co">-- ...</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a></span>
+<span id="cb6-20"><a href="#cb6-20"></a></span>
+<span id="cb6-21"><a href="#cb6-21"></a><span class="ot">postCtx ::</span> <span class="dt">Context</span> <span class="dt">String</span></span>
+<span id="cb6-22"><a href="#cb6-22"></a>postCtx <span class="ot">=</span></span>
+<span id="cb6-23"><a href="#cb6-23"></a>    constField <span class="st">&quot;root&quot;</span> root      <span class="op">&lt;&gt;</span> <span class="co">-- here</span></span>
+<span id="cb6-24"><a href="#cb6-24"></a>    dateField <span class="st">&quot;date&quot;</span> <span class="st">&quot;%Y-%m-%d&quot;</span> <span class="op">&lt;&gt;</span></span>
+<span id="cb6-25"><a href="#cb6-25"></a>    defaultContext</span></code></pre></div>
 <p><em>Hint: if the <code>&lt;&gt;</code> is throwing you for a loop, it’s defined as the same as thing as <a href="https://wiki.haskell.org/Monoid"><code>mappend</code></a>.</em></p>
 <p>See how we defined <code>constField "root" root</code> in two places? We’re talking about two different contexts here: the <em>sitemap</em> context and the <em>post</em> context. While you could have the <code>postCtx</code> be combined with the <code>sitemapCtx</code>, thus giving the <code>pages</code> field access to the <code>root</code> field, you probably want to use <code>root</code> (and perhaps other constants) wherever you work with posts, so adding them to <code>postCtx</code> for use everywhere seems like the right thing to do.</p>
 <p>Once you’ve got all this, run the following to build (or rebuild) your <code>docs/sitemap.xml</code> file:</p>
@@ -245,32 +245,32 @@
 <li><code>new-zealand/otago/wanaka-area.md</code></li>
 </ul>
 <p>First, we make sure that our pages get compiled (we’ll use <code>postCtx</code> for them):</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb7-1" title="1"><span class="ot">main ::</span> <span class="dt">IO</span> ()</a>
-<a class="sourceLine" id="cb7-2" title="2">main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb7-3" title="3">    <span class="co">-- ...</span></a>
-<a class="sourceLine" id="cb7-4" title="4"></a>
-<a class="sourceLine" id="cb7-5" title="5">    match <span class="st">&quot;new-zealand/**&quot;</span> <span class="op">$</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb7-6" title="6">        route <span class="op">$</span> setExtension <span class="st">&quot;html&quot;</span></a>
-<a class="sourceLine" id="cb7-7" title="7">        compile <span class="op">$</span> pandocCompiler</a>
-<a class="sourceLine" id="cb7-8" title="8">            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/post.html&quot;</span>    postCtx</a>
-<a class="sourceLine" id="cb7-9" title="9">            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/default.html&quot;</span> postCtx</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb7-2"><a href="#cb7-2"></a>main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>    <span class="co">-- ...</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a></span>
+<span id="cb7-5"><a href="#cb7-5"></a>    match <span class="st">&quot;new-zealand/**&quot;</span> <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>        route <span class="op">$</span> setExtension <span class="st">&quot;html&quot;</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>        compile <span class="op">$</span> pandocCompiler</span>
+<span id="cb7-8"><a href="#cb7-8"></a>            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/post.html&quot;</span>    postCtx</span>
+<span id="cb7-9"><a href="#cb7-9"></a>            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/default.html&quot;</span> postCtx</span></code></pre></div>
 <p>And then we want to make sure we add them to our <code>create</code> function:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb8-1" title="1"><span class="ot">main ::</span> <span class="dt">IO</span> ()</a>
-<a class="sourceLine" id="cb8-2" title="2">main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb8-3" title="3">    <span class="co">-- ... match code up here</span></a>
-<a class="sourceLine" id="cb8-4" title="4"></a>
-<a class="sourceLine" id="cb8-5" title="5">    create [<span class="st">&quot;sitemap.xml&quot;</span>] <span class="op">$</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb8-6" title="6">        route idRoute</a>
-<a class="sourceLine" id="cb8-7" title="7">        compile <span class="op">$</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb8-8" title="8">            posts <span class="ot">&lt;-</span> recentFirst <span class="op">=&lt;&lt;</span> loadAll <span class="st">&quot;posts/*&quot;</span></a>
-<a class="sourceLine" id="cb8-9" title="9">            singlePages <span class="ot">&lt;-</span> loadAll (fromList [<span class="st">&quot;about.rst&quot;</span>, <span class="st">&quot;contact.markdown&quot;</span>])</a>
-<a class="sourceLine" id="cb8-10" title="10">            nzPages <span class="ot">&lt;-</span> loadAll <span class="st">&quot;new-zealand/**&quot;</span> <span class="co">-- here</span></a>
-<a class="sourceLine" id="cb8-11" title="11">            <span class="kw">let</span> pages <span class="ot">=</span> posts <span class="op">&lt;&gt;</span> singlePages <span class="op">&lt;&gt;</span> nzPages <span class="co">-- here</span></a>
-<a class="sourceLine" id="cb8-12" title="12">                sitemapCtx <span class="ot">=</span></a>
-<a class="sourceLine" id="cb8-13" title="13">                    constField <span class="st">&quot;root&quot;</span> root <span class="op">&lt;&gt;</span></a>
-<a class="sourceLine" id="cb8-14" title="14">                    listField <span class="st">&quot;pages&quot;</span> postCtx (<span class="fu">return</span> pages)</a>
-<a class="sourceLine" id="cb8-15" title="15">            makeItem <span class="st">&quot;&quot;</span></a>
-<a class="sourceLine" id="cb8-16" title="16">                <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/sitemap.xml&quot;</span> sitemapCtx</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb8-2"><a href="#cb8-2"></a>main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>    <span class="co">-- ... match code up here</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5"></a>    create [<span class="st">&quot;sitemap.xml&quot;</span>] <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a>        route idRoute</span>
+<span id="cb8-7"><a href="#cb8-7"></a>        compile <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a>            posts <span class="ot">&lt;-</span> recentFirst <span class="op">=&lt;&lt;</span> loadAll <span class="st">&quot;posts/*&quot;</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a>            singlePages <span class="ot">&lt;-</span> loadAll (fromList [<span class="st">&quot;about.rst&quot;</span>, <span class="st">&quot;contact.markdown&quot;</span>])</span>
+<span id="cb8-10"><a href="#cb8-10"></a>            nzPages <span class="ot">&lt;-</span> loadAll <span class="st">&quot;new-zealand/**&quot;</span> <span class="co">-- here</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a>            <span class="kw">let</span> pages <span class="ot">=</span> posts <span class="op">&lt;&gt;</span> singlePages <span class="op">&lt;&gt;</span> nzPages <span class="co">-- here</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a>                sitemapCtx <span class="ot">=</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a>                    constField <span class="st">&quot;root&quot;</span> root <span class="op">&lt;&gt;</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a>                    listField <span class="st">&quot;pages&quot;</span> postCtx (<span class="fu">return</span> pages)</span>
+<span id="cb8-15"><a href="#cb8-15"></a>            makeItem <span class="st">&quot;&quot;</span></span>
+<span id="cb8-16"><a href="#cb8-16"></a>                <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/sitemap.xml&quot;</span> sitemapCtx</span></code></pre></div>
 <p>I could not figure out how to mix globs (<code>new-zealand/**</code>) in with individual file paths (included in <code>fromList</code>), so I had to load them separately; if you figure out how, let me know!</p>
 <p>Once you’ve got all this, run the following to rebuild your <code>docs/sitemap.xml</code> file:</p>
 <ol>
@@ -293,7 +293,7 @@
 </main>
 
 <footer>
-  <section class="subscribe section--padded bg--gray">
+  <section class="subscribe section--padded">
   <div class="layout--constrained">
     <h2 class="subscribe__header">Get notified of new posts</h2>
 
