@@ -1,7 +1,7 @@
 { mkDerivation, base, hakyll, pandoc, stdenv, text, time }:
 mkDerivation {
   pname = "robertwpearce-com";
-  version = "0.1.0.1";
+  version = "0.1.0.2";
   src = ./.;
   isLibrary = false;
   isExecutable = true;

@@ -81,26 +81,26 @@ cmd="$1"
 shift
 
 case "$cmd" in
-  "build")
+  build)
     build
     ;;
-  "build-cabal")
+  build-cabal)
     build-cabal
     ;;
-  "build-project")
+  build-project)
     build-project
     ;;
-  "help")
+  help)
     usage
     ;;
-  "repl")
+  repl)
     repl
     ;;
-  "site")
+  site)
     [[ -f ./result/bin/site ]] || err-site
     site $@
     ;;
-  "nixpkgs-update")
+  nixpkgs-update)
     nixpkgs-update
     ;;
   *)
