@@ -109,43 +109,43 @@
 <h2 id="configuration-rules">Configuration Rules</h2>
 <p>Hakyll gives you the ability to override its <a href="https://jaspervdj.be/hakyll/reference/Hakyll-Core-Configuration.html">existing configuration rules</a> to change anything from the output directory (default <code>_site/</code>) to deploy commands to the host and port for previewing your site locally.</p>
 <p>Here is what the default configuration looks like in hakyll (<a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Configuration.hs#L88-L110">source</a>):</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" title="1"><span class="co">-- | Default configuration for a hakyll application</span></a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="ot">defaultConfiguration ::</span> <span class="dt">Configuration</span></a>
-<a class="sourceLine" id="cb1-3" title="3">defaultConfiguration <span class="ot">=</span> <span class="dt">Configuration</span></a>
-<a class="sourceLine" id="cb1-4" title="4">    { destinationDirectory <span class="ot">=</span> <span class="st">&quot;_site&quot;</span></a>
-<a class="sourceLine" id="cb1-5" title="5">    , storeDirectory       <span class="ot">=</span> <span class="st">&quot;_cache&quot;</span></a>
-<a class="sourceLine" id="cb1-6" title="6">    , tmpDirectory         <span class="ot">=</span> <span class="st">&quot;_cache/tmp&quot;</span></a>
-<a class="sourceLine" id="cb1-7" title="7">    , providerDirectory    <span class="ot">=</span> <span class="st">&quot;.&quot;</span></a>
-<a class="sourceLine" id="cb1-8" title="8">    , ignoreFile           <span class="ot">=</span> ignoreFile&#39;</a>
-<a class="sourceLine" id="cb1-9" title="9">    , deployCommand        <span class="ot">=</span> <span class="st">&quot;echo &#39;No deploy command specified&#39; &amp;&amp; exit 1&quot;</span></a>
-<a class="sourceLine" id="cb1-10" title="10">    , deploySite           <span class="ot">=</span> system <span class="op">.</span> deployCommand</a>
-<a class="sourceLine" id="cb1-11" title="11">    , inMemoryCache        <span class="ot">=</span> <span class="dt">True</span></a>
-<a class="sourceLine" id="cb1-12" title="12">    , previewHost          <span class="ot">=</span> <span class="st">&quot;127.0.0.1&quot;</span></a>
-<a class="sourceLine" id="cb1-13" title="13">    , previewPort          <span class="ot">=</span> <span class="dv">8000</span></a>
-<a class="sourceLine" id="cb1-14" title="14">    }</a>
-<a class="sourceLine" id="cb1-15" title="15">  <span class="kw">where</span></a>
-<a class="sourceLine" id="cb1-16" title="16">    ignoreFile&#39; path</a>
-<a class="sourceLine" id="cb1-17" title="17">        <span class="op">|</span> <span class="st">&quot;.&quot;</span>    <span class="ot">`isPrefixOf`</span> fileName <span class="ot">=</span> <span class="dt">True</span></a>
-<a class="sourceLine" id="cb1-18" title="18">        <span class="op">|</span> <span class="st">&quot;#&quot;</span>    <span class="ot">`isPrefixOf`</span> fileName <span class="ot">=</span> <span class="dt">True</span></a>
-<a class="sourceLine" id="cb1-19" title="19">        <span class="op">|</span> <span class="st">&quot;~&quot;</span>    <span class="ot">`isSuffixOf`</span> fileName <span class="ot">=</span> <span class="dt">True</span></a>
-<a class="sourceLine" id="cb1-20" title="20">        <span class="op">|</span> <span class="st">&quot;.swp&quot;</span> <span class="ot">`isSuffixOf`</span> fileName <span class="ot">=</span> <span class="dt">True</span></a>
-<a class="sourceLine" id="cb1-21" title="21">        <span class="op">|</span> <span class="fu">otherwise</span>                    <span class="ot">=</span> <span class="dt">False</span></a>
-<a class="sourceLine" id="cb1-22" title="22">      <span class="kw">where</span></a>
-<a class="sourceLine" id="cb1-23" title="23">          fileName <span class="ot">=</span> takeFileName path</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">-- | Default configuration for a hakyll application</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="ot">defaultConfiguration ::</span> <span class="dt">Configuration</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>defaultConfiguration <span class="ot">=</span> <span class="dt">Configuration</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>    { destinationDirectory <span class="ot">=</span> <span class="st">&quot;_site&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>    , storeDirectory       <span class="ot">=</span> <span class="st">&quot;_cache&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>    , tmpDirectory         <span class="ot">=</span> <span class="st">&quot;_cache/tmp&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>    , providerDirectory    <span class="ot">=</span> <span class="st">&quot;.&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>    , ignoreFile           <span class="ot">=</span> ignoreFile&#39;</span>
+<span id="cb1-9"><a href="#cb1-9"></a>    , deployCommand        <span class="ot">=</span> <span class="st">&quot;echo &#39;No deploy command specified&#39; &amp;&amp; exit 1&quot;</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>    , deploySite           <span class="ot">=</span> system <span class="op">.</span> deployCommand</span>
+<span id="cb1-11"><a href="#cb1-11"></a>    , inMemoryCache        <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>    , previewHost          <span class="ot">=</span> <span class="st">&quot;127.0.0.1&quot;</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>    , previewPort          <span class="ot">=</span> <span class="dv">8000</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>    }</span>
+<span id="cb1-15"><a href="#cb1-15"></a>  <span class="kw">where</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a>    ignoreFile&#39; path</span>
+<span id="cb1-17"><a href="#cb1-17"></a>        <span class="op">|</span> <span class="st">&quot;.&quot;</span>    <span class="ot">`isPrefixOf`</span> fileName <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a>        <span class="op">|</span> <span class="st">&quot;#&quot;</span>    <span class="ot">`isPrefixOf`</span> fileName <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a>        <span class="op">|</span> <span class="st">&quot;~&quot;</span>    <span class="ot">`isSuffixOf`</span> fileName <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a>        <span class="op">|</span> <span class="st">&quot;.swp&quot;</span> <span class="ot">`isSuffixOf`</span> fileName <span class="ot">=</span> <span class="dt">True</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a>        <span class="op">|</span> <span class="fu">otherwise</span>                    <span class="ot">=</span> <span class="dt">False</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a>      <span class="kw">where</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a>          fileName <span class="ot">=</span> takeFileName path</span></code></pre></div>
 <p>The <a href="https://jaspervdj.be/hakyll/tutorials/03-rules-routes-compilers.html">hakyll tutorial on rules, routes and compilers</a> makes reference to a <code>hakyllWith</code> function for customizing configuration, so let’s see how we can use that.</p>
 <p>The default hakyll <code>main</code> function in your <code>site.hs</code> file looks like this:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" title="1"><span class="ot">main ::</span> <span class="dt">IO</span> ()</a>
-<a class="sourceLine" id="cb2-2" title="2">main <span class="ot">=</span> hakyll <span class="op">$</span> <span class="kw">do</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb2-2"><a href="#cb2-2"></a>main <span class="ot">=</span> hakyll <span class="op">$</span> <span class="kw">do</span></span></code></pre></div>
 <p>What we can do is change <code>hakyll</code> to <code>hakyllWith</code> and pass a function that we’ll name <code>config</code> that makes use of the <code>defaultConfiguration</code> but returns a new, altered <a href="https://en.wikibooks.org/wiki/Haskell/More_on_datatypes#Named_Fields_.28Record_Syntax.29">record</a>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" title="1"><span class="ot">main ::</span> <span class="dt">IO</span> ()</a>
-<a class="sourceLine" id="cb3-2" title="2">main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb3-3" title="3">  <span class="co">-- ...</span></a>
-<a class="sourceLine" id="cb3-4" title="4"></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="ot">config ::</span> <span class="dt">Configuration</span></a>
-<a class="sourceLine" id="cb3-6" title="6">config <span class="ot">=</span> defaultConfiguration</a>
-<a class="sourceLine" id="cb3-7" title="7">    { destinationDirectory <span class="ot">=</span> <span class="st">&quot;docs&quot;</span></a>
-<a class="sourceLine" id="cb3-8" title="8">    , previewPort          <span class="ot">=</span> <span class="dv">5000</span></a>
-<a class="sourceLine" id="cb3-9" title="9">    }</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb3-2"><a href="#cb3-2"></a>main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="co">-- ...</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="ot">config ::</span> <span class="dt">Configuration</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>config <span class="ot">=</span> defaultConfiguration</span>
+<span id="cb3-7"><a href="#cb3-7"></a>    { destinationDirectory <span class="ot">=</span> <span class="st">&quot;docs&quot;</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>    , previewPort          <span class="ot">=</span> <span class="dv">5000</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>    }</span></code></pre></div>
 <p>Whenever we make a change to <code>site.hs</code>, we need to make sure we use <code>stack</code> to <code>build</code> it again and restart our server. We’ll also need to make sure we clean out our old output folder with the <code>clean</code> command. So, all together now:</p>
 <pre><code>λ stack exec site clean
 λ stack build
@@ -159,10 +159,10 @@
 <li>body content (everything else)</li>
 </ul>
 <p>From <a href="http://localhost:5000" class="uri">http://localhost:5000</a>, let’s click on the first post we see: <a href="http://localhost:5000/posts/2015-12-07-tu-quoque.html" class="uri">http://localhost:5000/posts/2015-12-07-tu-quoque.html</a>. If we open up the corresponding file, <code>2015-12-07-tu-quoque.html</code>, in our text editor, we can see there are two metadata fields: <code>title</code> and <code>author</code>. Let’s change them:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode md"><code class="sourceCode markdown"><a class="sourceLine" id="cb5-1" title="1">---</a>
-<a class="sourceLine" id="cb5-2" title="2">title: Some Latin Text</a>
-<a class="sourceLine" id="cb5-3" title="3">author: Some Roman Person</a>
-<a class="sourceLine" id="cb5-4" title="4">---</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1"></a>---</span>
+<span id="cb5-2"><a href="#cb5-2"></a>title: Some Latin Text</span>
+<span id="cb5-3"><a href="#cb5-3"></a>author: Some Roman Person</span>
+<span id="cb5-4"><a href="#cb5-4"></a>---</span></code></pre></div>
 <p>Refresh the page and see the changes!</p>
 <p>But note that despite changing the title of your blog post, the outputted HTML file is still located at <a href="http://localhost:5000/posts/2015-12-07-tu-quoque.html" class="uri">http://localhost:5000/posts/2015-12-07-tu-quoque.html</a>. This is because the <em>markdown filename</em> is what currently determines the outputted filename. We will change this in Part 5 of this series, but until then, if you change the title of your post, it would be a good idea to also change the filename.</p>
 <p>Feel free to edit these metadata fields and markdown content with your own blog post material.</p>
@@ -172,49 +172,49 @@
 <p>The HTML templates can be found in – you guessed it – the <code>templates/</code> folder.</p>
 <p>The first file we will look at is <code>templates/default.html</code> (hint: this template is also viewable online at <a href="https://github.com/jaspervdj/hakyll/blob/master/data/example/templates/default.html" class="uri">https://github.com/jaspervdj/hakyll/blob/master/data/example/templates/default.html</a>).</p>
 <p>Templates are nothing more than <code>.html</code> files but with a caveat (which you’d know about if you read the tutorial above): there is added context – drawn from markdown options or injected before compilation in <code>site.hs</code> – that can be used anywhere, so long as it is between <code>$</code> (dollar signs). Here is an example that uses the <code>title</code> property that is set in each file:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">&lt;title&gt;</span>$title$<span class="kw">&lt;/title&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">&lt;title&gt;</span>$title$<span class="kw">&lt;/title&gt;</span></span></code></pre></div>
 <p>Cool! Now what if we wanted to use our <code>author</code> metadata?</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;author&quot;</span><span class="ot"> content=</span><span class="st">&quot;$author$&quot;</span><span class="kw">&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;author&quot;</span><span class="ot"> content=</span><span class="st">&quot;$author$&quot;</span><span class="kw">&gt;</span></span></code></pre></div>
 <p>Oh no!</p>
 <pre><code>Compiling
   updated templates/default.html
   [ERROR] Missing field $author$ in context for item about.rst</code></pre>
 <p>This is because not all of our files being run through this default template have all the same fields. We can use conditionals to solve this:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb9-1" title="1">$if(author)$<span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;author&quot;</span><span class="ot"> content=</span><span class="st">&quot;$author$&quot;</span><span class="kw">&gt;</span>$endif$</a>
-<a class="sourceLine" id="cb9-2" title="2"></a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="co">&lt;!-- or, if you prefer --&gt;</span></a>
-<a class="sourceLine" id="cb9-4" title="4"></a>
-<a class="sourceLine" id="cb9-5" title="5">$if(author)$</a>
-<a class="sourceLine" id="cb9-6" title="6">  <span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;author&quot;</span><span class="ot"> content=</span><span class="st">&quot;$author$&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb9-7" title="7">$endif$</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb9-1"><a href="#cb9-1"></a>$if(author)$<span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;author&quot;</span><span class="ot"> content=</span><span class="st">&quot;$author$&quot;</span><span class="kw">&gt;</span>$endif$</span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co">&lt;!-- or, if you prefer --&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a></span>
+<span id="cb9-5"><a href="#cb9-5"></a>$if(author)$</span>
+<span id="cb9-6"><a href="#cb9-6"></a>  <span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;author&quot;</span><span class="ot"> content=</span><span class="st">&quot;$author$&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a>$endif$</span></code></pre></div>
 <p>Blog posts also should have a <code>description</code> and <code>keywords</code>, so let’s add those: to <code>posts/2015-12-07-tu-quoque.markdown</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode md"><code class="sourceCode markdown"><a class="sourceLine" id="cb10-1" title="1">---</a>
-<a class="sourceLine" id="cb10-2" title="2">title: My Blog Post</a>
-<a class="sourceLine" id="cb10-3" title="3">description: This is my great blog post</a>
-<a class="sourceLine" id="cb10-4" title="4">keywords: blog, first blog, best blog evar</a>
-<a class="sourceLine" id="cb10-5" title="5">author: I did it!</a>
-<a class="sourceLine" id="cb10-6" title="6">---</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1"></a>---</span>
+<span id="cb10-2"><a href="#cb10-2"></a>title: My Blog Post</span>
+<span id="cb10-3"><a href="#cb10-3"></a>description: This is my great blog post</span>
+<span id="cb10-4"><a href="#cb10-4"></a>keywords: blog, first blog, best blog evar</span>
+<span id="cb10-5"><a href="#cb10-5"></a>author: I did it!</span>
+<span id="cb10-6"><a href="#cb10-6"></a>---</span></code></pre></div>
 <p>We’ll then update our default template to handle those, as well:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">&lt;title&gt;</span>$title$<span class="kw">&lt;/title&gt;</span></a>
-<a class="sourceLine" id="cb11-2" title="2">$if(author)$<span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;author&quot;</span><span class="ot"> content=</span><span class="st">&quot;$author$&quot;</span><span class="kw">&gt;</span>$endif$</a>
-<a class="sourceLine" id="cb11-3" title="3">$if(keywords)$<span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;keywords&quot;</span><span class="ot"> content=</span><span class="st">&quot;$keywords$&quot;</span><span class="kw">&gt;</span>$endif$</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">&lt;title&gt;</span>$title$<span class="kw">&lt;/title&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>$if(author)$<span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;author&quot;</span><span class="ot"> content=</span><span class="st">&quot;$author$&quot;</span><span class="kw">&gt;</span>$endif$</span>
+<span id="cb11-3"><a href="#cb11-3"></a>$if(keywords)$<span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;keywords&quot;</span><span class="ot"> content=</span><span class="st">&quot;$keywords$&quot;</span><span class="kw">&gt;</span>$endif$</span></code></pre></div>
 <p>If you refresh <a href="http://localhost:5000/posts/2015-12-07-tu-quoque.html" class="uri">http://localhost:5000/posts/2015-12-07-tu-quoque.html</a> and open up the web inspector, you’ll now see that the <code>&lt;head&gt;</code> now contains not only your post’s <code>title</code>, but also all the other fields you specified!</p>
 <p>There are many other possibilities for this, as well. For instance, if you wanted to have different <code>og:type</code>s of pages, you could do:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb12-1" title="1">$if(type)$</a>
-<a class="sourceLine" id="cb12-2" title="2">  <span class="kw">&lt;meta</span><span class="ot"> property=</span><span class="st">&quot;og:type&quot;</span><span class="ot"> content=</span><span class="st">&quot;$type$&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb12-3" title="3">$else$</a>
-<a class="sourceLine" id="cb12-4" title="4">  <span class="kw">&lt;meta</span><span class="ot"> property=</span><span class="st">&quot;og:type&quot;</span><span class="ot"> content=</span><span class="st">&quot;website&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb12-5" title="5">$endif$</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb12-1"><a href="#cb12-1"></a>$if(type)$</span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="kw">&lt;meta</span><span class="ot"> property=</span><span class="st">&quot;og:type&quot;</span><span class="ot"> content=</span><span class="st">&quot;$type$&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>$else$</span>
+<span id="cb12-4"><a href="#cb12-4"></a>  <span class="kw">&lt;meta</span><span class="ot"> property=</span><span class="st">&quot;og:type&quot;</span><span class="ot"> content=</span><span class="st">&quot;website&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>$endif$</span></code></pre></div>
 <p>Check out the default template for this website here: <a href="https://github.com/rpearce/robertwpearce.com/blob/master/templates/default.html" class="uri">https://github.com/rpearce/robertwpearce.com/blob/master/templates/default.html</a>.</p>
 <h2 id="rendering-partials">Rendering Partials</h2>
 <p>Lastly for today, what if we want to reuse templates and specify where they should be rendered from other templates? Enter <a href="https://jaspervdj.be/hakyll/tutorials/04-compilers.html#partials">hakyll partials</a>.</p>
 <p>A common use of partials is for navigation across different templates. We can add a new file, <code>templates/nav.html</code>, and place the following in it (add some CSS classes and styling if you want it to look nice):</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">&lt;nav</span><span class="ot"> class=</span><span class="st">&quot;nav&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb13-2" title="2">  <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;/&quot;</span><span class="kw">&gt;</span>Home<span class="kw">&lt;/a&gt;</span></a>
-<a class="sourceLine" id="cb13-3" title="3">  <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;mailto:me@myemail.com&quot;</span><span class="kw">&gt;</span>Email Me<span class="kw">&lt;/a&gt;</span></a>
-<a class="sourceLine" id="cb13-4" title="4"><span class="kw">&lt;/nav&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">&lt;nav</span><span class="ot"> class=</span><span class="st">&quot;nav&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;/&quot;</span><span class="kw">&gt;</span>Home<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;mailto:me@myemail.com&quot;</span><span class="kw">&gt;</span>Email Me<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="kw">&lt;/nav&gt;</span></span></code></pre></div>
 <p>Now, this partial can be used anywhere. For example, from <code>templates/post.html</code>:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb14-1" title="1">$partial(&quot;templates/nav.html&quot;)$</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb14-1"><a href="#cb14-1"></a>$partial(&quot;templates/nav.html&quot;)$</span></code></pre></div>
 <h2 id="wrapping-up">Wrapping Up</h2>
 <p>In this lesson we learned how to get started with <a href="https://jaspervdj.be/hakyll">hakyll</a> and learned some of the ways for us to get started customizing it to our own needs. Next time, we’ll dive into <code>site.hs</code> to generate our own <code>sitemap.xml</code> file.</p>
 <p>Next up:</p>
@@ -232,7 +232,7 @@
 </main>
 
 <footer>
-  <section class="subscribe section--padded bg--gray">
+  <section class="subscribe section--padded">
   <div class="layout--constrained">
     <h2 class="subscribe__header">Get notified of new posts</h2>
 
