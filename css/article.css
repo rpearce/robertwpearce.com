@@ -66,7 +66,7 @@
 .article blockquote {
   margin-left: 1.5em;
   padding-left: 1em;
-  border-left: 4px solid var(----blockquoteBorderColor);
+  border-left: 4px solid var(--blockquoteBorderColor);
 }
 .article blockquote em {
   font-size: 1.286rem;
@@ -159,7 +159,7 @@ pre code {
   line-height: 1.75rem;
 }
 .sourceCode:not(pre):not(code) {
-  background: #011627;
+  background-color: #011627;
   -webkit-overflow-scrolling: touch;
   overflow: auto;
   margin-top: 1.75rem;
@@ -199,28 +199,28 @@ pre.sourceCode {
 }
 /* Firefox */
 pre.sourceCode::-moz-selection {
-  background: hsl(207, 4%, 16%);
+  background-color: hsl(207, 4%, 16%);
 }
 /* Safari */
 pre.sourceCode::selection {
-  background: hsl(207, 4%, 16%);
+  background-color: hsl(207, 4%, 16%);
 }
 /* Text Selection colour */
 pre.sourceCode::-moz-selection,
 pre.sourceCode ::-moz-selection {
   text-shadow: none;
-  background: hsla(0, 0%, 100%, 0.15);
+  background-color: hsla(0, 0%, 100%, 0.15);
 }
 pre.sourceCode::selection,
 pre.sourceCode ::selection {
   text-shadow: none;
-  background: hsla(0, 0%, 100%, 0.15);
+  background-color: hsla(0, 0%, 100%, 0.15);
 }
 /* Inline code */
 :not(pre) > code {
   border-radius: 0.3em;
-  background: var(--inlineCode-bg);
-  color: var(--inlineCode-text);
+  background-color: var(--inlineCodeBgColor);
+  color: var(--inlineCodeColor);
   padding: 0.15em 0.2em 0.05em;
   white-space: normal;
 }
