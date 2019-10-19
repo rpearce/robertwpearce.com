@@ -32,7 +32,7 @@ body.light {
   --inlineCodeColor: #1a1a1a;
   --inputBgColor: #fff;
   --inputBorderColor: #ccc;
-  --inputBorderColorFocus: #bedcf0;
+  --inputBorderColorFocus: #82aaff;
   --inputColor: #334249;
   --offsetSectionBgColor: #f5f5f5;
   --separatorColor: #f2f2f2;
@@ -43,21 +43,20 @@ body.light {
   --textLinkHoverColor: #206592;
 }
 body.dark {
-  --blockquoteBorderColor: rgba(255, 255, 255, 0.4);
-  --iframeBorderColor: rgba(255, 255, 255, 0.4);
-
+  --separatorColor: #424857;
   --authorTitleColor: hsla(0,0%,100%,0.65);
   --bgColor: #282c35;
-  --btnBgColor: #4d85ff;
+  --blockquoteBorderColor: var(--separatorColor);
+  --btnBgColor: #0047E2;
   --btnTextColor: #fff;
-  --inlineCodeBgColor: #424857;
+  --iframeBorderColor: var(--separatorColor);
+  --inlineCodeBgColor: var(--separatorColor);
   --inlineCodeColor: #e2e4e9;
   --inputBgColor: #282c35;
   --inputBorderColor: #282c35;
   --inputBorderColorFocus: #82aaff;
   --inputColor: #fff;
   --offsetSectionBgColor: #373c49;
-  --separatorColor: #424857;
   --textColor: hsla(0, 0%, 100%, 0.88);
   --textLinkBorderColor: #ffa7c4;
   --textLinkBorderWidth: 1px;
@@ -73,6 +72,8 @@ body {
   word-wrap: break-word;
   font-kerning: normal;
   -moz-font-feature-settings: "kern", "liga", "clig", "calt";
+  -ms-font-feature-settings: "kern", "liga", "clig", "calt";
+  -webkit-font-feature-settings: "kern", "liga", "clig", "calt";
   font-feature-settings: "kern", "liga", "clig", "calt";
   scroll-behavior: smooth;
 }
