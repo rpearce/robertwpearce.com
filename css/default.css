@@ -69,6 +69,7 @@ body {
   background-color: var(--bgColor);
   color: var(--textColor);
   margin: 0;
+  transition: color 0.2s ease-out, background 0.2s ease-out;
   word-wrap: break-word;
   font-kerning: normal;
   -moz-font-feature-settings: "kern", "liga", "clig", "calt";
