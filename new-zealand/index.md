@@ -18,3 +18,6 @@ Things to do and see in New Zealand.
   * [Queenstown, Arrow Town, Glenorchy](/new-zealand/otago/queenstown-area.html)
   * [Dunedin, Oamaru, The Catlins](/new-zealand/otago/dunedin-area.html)
 * [South Island Central to West Coast](/new-zealand/south-island-central-to-west-coast.html)
+
+## North Island
+* [Auckland](/new-zealand/auckland/index.html)

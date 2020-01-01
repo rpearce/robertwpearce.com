@@ -273,6 +273,20 @@
   </url>
 
   <url>
+    <loc>https://robertwpearce.com/new-zealand/auckland/index.html</loc>
+    <lastmod>2020-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://robertwpearce.com/new-zealand/auckland/waiheke-island.html</loc>
+    <lastmod>2020-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://robertwpearce.com/new-zealand/index.html</loc>
     <lastmod>2018-11-08</lastmod>
     <changefreq>weekly</changefreq>
