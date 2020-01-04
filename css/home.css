@@ -78,6 +78,24 @@
 .review__text {
   margin: 0 0 0 100px;
 }
+.secret {
+  margin-top: 2em;
+  padding: 2em 0;
+  border-top: 2px dashed var(--offsetSectionBgColor);
+  text-align: center;
+}
+a[href].secret__link {
+  display: inline-block;
+  padding: 0 2em;
+  border-bottom: none;
+}
+.secret__graphicG {
+  stroke: var(--secretGraphicColor);
+}
+a[href].secret__link:hover .secret__graphicG,
+a[href].secret__link:focus .secret__graphicG {
+  stroke: var(--secretGraphicHoverColor);
+}
 @media (max-width: 667px) {
   .author__name {
     font-size: 2rem;
