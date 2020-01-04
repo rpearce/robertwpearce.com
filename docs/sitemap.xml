@@ -8,14 +8,14 @@
 
   <url>
     <loc>https://robertwpearce.com/hakyll-pt-5-generating-custom-post-filenames-from-a-title-slug.html</loc>
-    <lastmod>2019-03-16</lastmod>
+    <lastmod>2020-01-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/hakyll-pt-4-copying-static-files-for-your-build.html</loc>
-    <lastmod>2018-01-29</lastmod>
+    <lastmod>2020-01-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -29,7 +29,7 @@
 
   <url>
     <loc>https://robertwpearce.com/hakyll-pt-2-generating-a-sitemap-xml-file.html</loc>
-    <lastmod>2018-11-17</lastmod>
+    <lastmod>2020-01-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -274,7 +274,14 @@
 
   <url>
     <loc>https://robertwpearce.com/new-zealand/auckland/index.html</loc>
-    <lastmod>2020-01-01</lastmod>
+    <lastmod>2020-01-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://robertwpearce.com/new-zealand/auckland/piha-muriwai-bethells-beach-mercer-bay-karekare-beach.html</loc>
+    <lastmod>2020-01-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -288,14 +295,14 @@
 
   <url>
     <loc>https://robertwpearce.com/new-zealand/index.html</loc>
-    <lastmod>2018-11-08</lastmod>
+    <lastmod>2020-01-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/new-zealand/otago/dunedin-area.html</loc>
-    <lastmod>2019-01-26</lastmod>
+    <lastmod>2020-01-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -309,14 +316,14 @@
 
   <url>
     <loc>https://robertwpearce.com/new-zealand/otago/queenstown-area.html</loc>
-    <lastmod>2018-11-29</lastmod>
+    <lastmod>2020-01-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/new-zealand/otago/wanaka-area.html</loc>
-    <lastmod>2018-11-08</lastmod>
+    <lastmod>2020-01-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

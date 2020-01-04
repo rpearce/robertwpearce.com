@@ -5,9 +5,10 @@ date: "2019-01-26"
 description: "Things to do and see in the Dunedin, Oamaru & The Catlins areas."
 image: "/images/florence-hill-lookout.jpg"
 keywords: "dunedin, oamaru, the catlins, moeraki boulders, new zealand"
-photoCredit: "theworldwithabackpack"
-photoWebsite: "https://www.instagram.com/theworldwithabackpack/"
+photoCredit: "emilycouldmakethat"
+photoWebsite: "https://www.instagram.com/emilycouldmakethat"
 title: "Dunedin, Oamaru, The Catlins"
+updated: "2020-01-04"
 ---
 
 Things to do and see in and around Dunedin, New Zealand.

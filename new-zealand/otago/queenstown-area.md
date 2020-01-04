@@ -5,10 +5,10 @@ date: "2018-11-08"
 description: "Things to do and see in the Queenstown, Arrowtown & Glenorchy areas."
 image: "/images/lake-wanaka.jpg"
 keywords: "queenstown, arrow town, glenorchy, new zealand"
-photoCredit: "theworldwithabackpack"
-photoWebsite: "https://www.instagram.com/theworldwithabackpack/"
+photoCredit: "emilycouldmakethat"
+photoWebsite: "https://www.instagram.com/emilycouldmakethat"
 title: "Queenstown, Arrowtown & Glenorchy"
-updated: "2018-11-29"
+updated: "2020-01-04"
 ---
 
 Things to do and see in and around Queenstown, Arrowtown & Glenorchy in New

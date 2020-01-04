@@ -5,9 +5,10 @@ date: "2018-11-08"
 description: "Things to do and see in New Zealand"
 image: "/images/lake-wanaka.jpg"
 keywords: "new zealand, otago, things to do, places to see"
-photoCredit: "theworldwithabackpack"
-photoWebsite: "https://www.instagram.com/theworldwithabackpack/"
+photoCredit: "emilycouldmakethat"
+photoWebsite: "https://www.instagram.com/emilycouldmakethat"
 title: "New Zealand Information Index"
+updated: "2020-01-04"
 ---
 
 Things to do and see in New Zealand.

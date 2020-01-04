@@ -5,9 +5,10 @@ date: "2018-11-08"
 description: "Things to do and see in the Wanaka, Albert Town, Hawea, Glendhu Bay, Cardrona & Cromwell areas."
 image: "/images/lake-wanaka.jpg"
 keywords: "wanaka, albert town, hawea, lake hawea, glendhu bay, cardrona, cromwell, new zealand"
-photoCredit: "theworldwithabackpack"
-photoWebsite: "https://www.instagram.com/theworldwithabackpack/"
+photoCredit: "emilycouldmakethat"
+photoWebsite: "https://www.instagram.com/emilycouldmakethat"
 title: "Wanaka, Albert Town, Hawea, Glendhu Bay, Cardrona & Cromwell"
+updated: "2020-01-04"
 ---
 
 Things to do and see in and around Wanaka, Albert Town, Hawea, Glendhu Bay,

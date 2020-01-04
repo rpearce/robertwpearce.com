@@ -7,7 +7,7 @@
         <description><![CDATA[Posts on JavaScript, Node.js, Haskell, Elm, Ruby and more.]]></description>
         <atom:link href="https://robertwpearce.com/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Sat, 16 Mar 2019 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>2020-01-04T00:00:00Z</lastBuildDate>
         <item>
     <title>Hakyll Pt. 5 – Generating Custom Post Filenames From a Title Slug</title>
     <link>https://robertwpearce.com/hakyll-pt-5-generating-custom-post-filenames-from-a-title-slug.html</link>
