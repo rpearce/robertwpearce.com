@@ -21,3 +21,4 @@ cabal.sandbox.config
 dist
 dist-*
 result
+.DS_Store
