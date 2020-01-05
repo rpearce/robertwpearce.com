@@ -10,7 +10,7 @@ photoWebsite: "https://www.instagram.com/emilycouldmakethat"
 title: "Hawkes Bay"
 ---
 
-Things to do and see in and around Hawkes Bay in New New Zealand.
+Things to do and see in and around Hawkes Bay in New Zealand.
 
 Or go back to the [main New Zealand index](/new-zealand/index.html).
 

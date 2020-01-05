@@ -342,4 +342,11 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://robertwpearce.com/new-zealand/taupo.html</loc>
+    <lastmod>2020-01-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>

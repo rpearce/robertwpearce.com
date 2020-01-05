@@ -22,4 +22,5 @@ Things to do and see in New Zealand.
 
 ## North Island
 * [Auckland](/new-zealand/auckland/index.html)
+* [Taupō](/new-zealand/taupo.html)
 * [Hawkes Bay](/new-zealand/hawkes-bay.html)
