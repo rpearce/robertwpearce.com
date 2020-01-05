@@ -39,7 +39,7 @@ Hands down one of my favourite walking areas. Drive to the parking area where
 there are some toilets, picnic tables and maps, then look at the maps to
 determine which route you want to take. I highly recommend ones that go through
 the redwood tree forest and also go up to the top of Te Mata Peak. We came back
-here again and again to talk. You should also read about the Māori legendary
+here again and again to walk. You should also read about the Māori legendary
 history of this area.
 https://goo.gl/maps/YpjM5iN8sYSzUCeV9
 
