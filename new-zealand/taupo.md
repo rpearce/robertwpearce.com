@@ -46,3 +46,7 @@ pineapple rings!
   with the brightest coloured lakes and weirdest coloured rocks you've ever
   seen, and down through bush again.
   * Make sure you go number 2 before you begin this early morning trek.
+
+## Between Taupō & Rotorua
+* Orakei Korako Geothermal Park: https://goo.gl/maps/prM372HM3pXYpz6p9
+* Waiotapu Thermal Wonderland: https://g.page/waiotapunz?share
