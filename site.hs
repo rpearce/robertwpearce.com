@@ -22,6 +22,7 @@ main = hakyllWith config $ do
           , "favicon.ico"
           , "robots.txt"
           , "_config.yml"
+          , "js/index.js"
           , "images/*"
           , "fonts/*"
           , ".well-known/*"
@@ -107,7 +108,7 @@ root =
 
 siteName :: String
 siteName =
-    "Robert Pearce | Freelance Software Developer"
+    "Robert Pearce | Senior Software Developer"
 
 
 config :: Configuration

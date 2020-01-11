@@ -1,0 +1,12 @@
+{
+  "name": "robertwpearce.com",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc index.ts --alwaysStrict"
+  },
+  "devDependencies": {
+    "typescript": "^3.7.4"
+  }
+}
