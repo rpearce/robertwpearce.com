@@ -5,12 +5,18 @@ set -o nounset
 set -o pipefail
 
 function build() {
-  build-cabal && build-project && site build
+  build-cabal && build-project && build-output
   return 0
 }
 
 function build-cabal() {
   nix-shell --pure -p cabal2nix --run "cabal2nix ." > project.nix
+  return 0
+}
+
+function build-output() {
+  yarn --cwd ./js build
+  site build
   return 0
 }
 
@@ -55,6 +61,7 @@ Usage: $0 COMMAND
 Available commands:
   build             Build the project & output
   build-cabal       Update project.nix from .cabal contents
+  build-output      Build the output
   build-project     Use nix to build the project
   help              Print usage
   nixpkgs-update    Update pinned version of nixpkgs
@@ -83,6 +90,9 @@ shift
 case "$cmd" in
   build)
     build
+    ;;
+  build-output)
+    build-output
     ;;
   build-cabal)
     build-cabal

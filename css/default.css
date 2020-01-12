@@ -195,6 +195,33 @@ figcaption {
   clip-path: inset(50%) !important;
   white-space: nowrap !important;
 }
+.toggle {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  padding: 0.1em 0.5em;
+  background-color: var(--btnBgColor);
+  color: var(--btnTextColor);
+  border: none;
+  border-radius: 20px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.toggle__day,
+.toggle__night {
+  vertical-align: middle;
+}
+.toggle__night {
+  margin-left: 0.75em;
+}
+.toggle.toggle--on .toggle__day,
+.toggle.toggle--off .toggle__night {
+  opacity: 0.4;
+}
 @media (max-width: 667px) {
   body {
     font-family: Helvetica, Arial, sans-serif;
