@@ -1,9 +1,23 @@
 (() => {
-  let state = {
+  interface State {
+    isActive: boolean
+  }
+
+  interface Classes {
+    dark: string,
+    light: string,
+    toggle: string,
+    toggleDay: string,
+    toggleNight: string,
+    toggleOff: string,
+    toggleOn: string,
+  }
+
+  let state: State = {
     isActive: localStorage.getItem(`isActive`) === `true`
   }
 
-  const cn = {
+  const cn: Classes = {
     dark: `dark`,
     light: `light`,
     toggle: `toggle`,
