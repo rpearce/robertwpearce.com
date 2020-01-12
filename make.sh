@@ -16,7 +16,7 @@ function build-cabal() {
 
 function build-output() {
   yarn --cwd ./js build
-  site build
+  site rebuild
   return 0
 }
 

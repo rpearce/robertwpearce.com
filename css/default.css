@@ -213,6 +213,7 @@ figcaption {
 }
 .toggle__day,
 .toggle__night {
+  display: inline-block;
   vertical-align: middle;
 }
 .toggle__night {
