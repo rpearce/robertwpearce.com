@@ -202,17 +202,21 @@ figcaption {
   margin: 0;
   padding: 0;
   font: inherit;
-  padding: 0.25em 0.5em;
+  padding: 0.1em 0.5em;
   background-color: var(--btnBgColor);
   color: var(--btnTextColor);
   border: none;
-  border-radius: 3px;
+  border-radius: 20px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 }
+.toggle__day,
 .toggle__night {
-  margin-left: 1em;
+  vertical-align: middle;
+}
+.toggle__night {
+  margin-left: 0.75em;
 }
 .toggle.toggle--on .toggle__day,
 .toggle.toggle--off .toggle__night {

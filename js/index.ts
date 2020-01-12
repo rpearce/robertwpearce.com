@@ -14,23 +14,10 @@
   }
 
   const updateBodyClass = () => {
-    if (state.isActive) {
-      document.body.classList.add(`dark`)
-      document.body.classList.remove(`light`)
-    } else {
-      document.body.classList.add(`light`)
-      document.body.classList.remove(`dark`)
-    }
-    //document.body.classList.replace(
-    //  state.isActive ? cn.dark : cn.light,
-    //  state.isActive ? cn.light : cn.dark,
-    //)
-  }
-
-  const setState = ({ isActive }) => {
-    localStorage.setItem(`isActive`, isActive)
-    state.isActive = isActive
-    updateBodyClass()
+    document.body.classList.replace(
+      state.isActive ? cn.light : cn.dark,
+      state.isActive ? cn.dark : cn.light,
+    )
   }
 
   const createToggleNightBtn = () => {
@@ -41,19 +28,25 @@
     toggleBtn.className = `${cn.toggle} ${state.isActive ? cn.toggleOn : cn.toggleOff}`
 
     toggleBtn.addEventListener(`click`, () => {
-      setState({ isActive: !state.isActive })
+      const _isActive = !state.isActive
+      state.isActive = _isActive
 
-      toggleBtn.setAttribute(`aria-checked`, String(state.isActive))
-      toggleBtn.className = `${cn.toggle} ${state.isActive ? cn.toggleOn : cn.toggleOff}`
+      localStorage.setItem(`isActive`, String(_isActive))
+      updateBodyClass()
+
+      toggleBtn.setAttribute(`aria-checked`, String(_isActive))
+      toggleBtn.className = `${cn.toggle} ${_isActive ? cn.toggleOn : cn.toggleOff}`
     })
 
     const dayEl = document.createElement(`span`)
-    dayEl.innerText = `🌞 Day`
+    dayEl.innerText = `🌞`
     dayEl.className = cn.toggleDay
+    dayEl.setAttribute(`aria-label`, `Day Mode`)
 
     const nightEl = document.createElement(`span`)
-    nightEl.innerText = `🌙 Night`
+    nightEl.innerText = `🌙`
     nightEl.className = cn.toggleNight
+    nightEl.setAttribute(`aria-label`, `Night Mode`)
 
     toggleBtn.appendChild(dayEl)
     toggleBtn.appendChild(nightEl)
@@ -63,9 +56,7 @@
 
   const init = () => {
     updateBodyClass()
-
-    const toggleNightBtn = createToggleNightBtn()
-    document.body.appendChild(toggleNightBtn)
+    document.body.appendChild(createToggleNightBtn())
   }
 
   init()
