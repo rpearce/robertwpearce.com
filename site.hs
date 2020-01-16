@@ -22,7 +22,7 @@ main = hakyllWith config $ do
           , "favicon.ico"
           , "robots.txt"
           , "_config.yml"
-          , "js/index.js"
+          , "js/dist/*"
           , "images/*"
           , "fonts/*"
           , ".well-known/*"

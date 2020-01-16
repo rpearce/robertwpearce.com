@@ -4,9 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "tsc index.ts --alwaysStrict"
+    "build": "tsc"
   },
   "devDependencies": {
+    "tslint": "^5.20.1",
     "typescript": "^3.7.4"
   }
 }

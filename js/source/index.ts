@@ -1,9 +1,9 @@
 (() => {
-  interface State {
+  interface IState {
     isActive: boolean
   }
 
-  interface Classes {
+  interface IClasses {
     dark: string,
     light: string,
     toggle: string,
@@ -13,11 +13,11 @@
     toggleOn: string,
   }
 
-  let state: State = {
-    isActive: localStorage.getItem(`isActive`) === `true`
+  const state: IState = {
+    isActive: false
   }
 
-  const cn: Classes = {
+  const cn: IClasses = {
     dark: `dark`,
     light: `light`,
     toggle: `toggle`,
@@ -42,14 +42,14 @@
     toggleBtn.className = `${cn.toggle} ${state.isActive ? cn.toggleOn : cn.toggleOff}`
 
     toggleBtn.addEventListener(`click`, () => {
-      const _isActive = !state.isActive
-      state.isActive = _isActive
+      const isActive = !state.isActive
+      state.isActive = isActive
 
-      localStorage.setItem(`isActive`, String(_isActive))
+      localStorage.setItem(`isActive`, String(isActive))
       updateBodyClass()
 
-      toggleBtn.setAttribute(`aria-checked`, String(_isActive))
-      toggleBtn.className = `${cn.toggle} ${_isActive ? cn.toggleOn : cn.toggleOff}`
+      toggleBtn.setAttribute(`aria-checked`, String(isActive))
+      toggleBtn.className = `${cn.toggle} ${isActive ? cn.toggleOn : cn.toggleOff}`
     })
 
     const dayEl = document.createElement(`span`)
@@ -69,6 +69,7 @@
   }
 
   const init = () => {
+    state.isActive = window.localStorage.getItem(`isActive`) === `true`
     updateBodyClass()
     document.body.appendChild(createToggleNightBtn())
   }

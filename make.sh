@@ -42,6 +42,16 @@ function repl() {
   return 0
 }
 
+function serve() {
+  if ! type "npx" &> /dev/null; then
+    echo "Error: npx not found. Please install nodejs to use this command."
+    return 1
+  fi
+
+  npx serve $@ ./docs
+  return 0
+}
+
 function site() {
   result/bin/site $@
   return 0
@@ -67,6 +77,7 @@ Available commands:
   nixpkgs-update    Update pinned version of nixpkgs
   repl              Start interactive REPL for project
   site              Run hakyll commands
+  serve             Serve up the output at a port
 EOF
   return 0
 }
@@ -103,15 +114,18 @@ case "$cmd" in
   help)
     usage
     ;;
+  nixpkgs-update)
+    nixpkgs-update
+    ;;
   repl)
     repl
+    ;;
+  serve)
+    serve $@
     ;;
   site)
     [[ -f ./result/bin/site ]] || err-site
     site $@
-    ;;
-  nixpkgs-update)
-    nixpkgs-update
     ;;
   *)
     unknown-cmd cmd
