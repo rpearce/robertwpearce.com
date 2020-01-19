@@ -152,8 +152,9 @@
 <span id="cb5-10"><a href="#cb5-10"></a><span class="fu">&lt;/Zoom&gt;</span></span></code></pre></div>
 <h2 id="whats-next-for-react-medium-image-zoom">What’s Next For <code>react-medium-image-zoom</code>?</h2>
 <ul>
-<li>performance improvements</li>
-<li>exploration into re-enabling higher-quality / higher-resolution images as part of the zoom process</li>
+<li>Smarter detection for image <code>naturalWidth</code> and <code>naturalHeight</code> so we don’t try to zoom anything when it’s already at its maximum dimensions. This would also re-enable the ability to not zoom beyond a source image’s natural dimensions once zoomed.</li>
+<li>Performance improvements (<code>requestAnimationFrame</code>, etc.)</li>
+<li>Explore re-enabling switching out lower-quality images with higher-quality ones as part of the zoom process</li>
 </ul>
 <h2 id="thank-you">Thank You</h2>
 <p>Thank you for reading this and for having an interest in <a href="https://www.npmjs.com/package/react-medium-image-zoom"><code>react-medium-image-zoom</code></a>! If you’d like to contribute to the project, need help or have constructive feedback, please open an issue on <a href="https://github.com/rpearce/react-medium-image-zoom/issues">the <code>react-medium-image-zoom</code> issue tracker</a>.</p>

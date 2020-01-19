@@ -144,9 +144,13 @@ zoom or unzoom based on events like clicks and scrolling:
 
 ## What's Next For `react-medium-image-zoom`?
 
-* performance improvements
-* exploration into re-enabling higher-quality / higher-resolution images as part
-  of the zoom process
+* Smarter detection for image `naturalWidth` and `naturalHeight` so we don't try
+  to zoom anything when it's already at its maximum dimensions. This would also
+  re-enable the ability to not zoom beyond a source image's natural dimensions
+  once zoomed.
+* Performance improvements (`requestAnimationFrame`, etc.)
+* Explore re-enabling switching out lower-quality images with higher-quality
+  ones as part of the zoom process
 
 ## Thank You
 
