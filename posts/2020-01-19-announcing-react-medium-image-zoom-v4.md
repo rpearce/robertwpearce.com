@@ -155,7 +155,7 @@ zoom or unzoom based on events like clicks and scrolling:
 ## Thank You
 
 Thank you for reading this and for having an interest in [`react-medium-image-zoom`](https://www.npmjs.com/package/react-medium-image-zoom)!
-If you'd like to contribute to the project, need help or have constructive
+If you'd like to contribute to the project, need help, or have constructive
 feedback, please open an issue on [the `react-medium-image-zoom` issue
 tracker](https://github.com/rpearce/react-medium-image-zoom/issues).
 
