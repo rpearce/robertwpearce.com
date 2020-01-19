@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Announcing react-medium-image-zoom v4</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="react-medium-image-zoom is an open source image zooming library based on medium.com's implementation of image zooming">
+    <meta name="author" content="Robert Pearce">
+    <meta name="keywords" content="react, react-medium-image-zoom, image zoom, image, zoom, reactjs">
+    <meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU">
+
+    <meta property="og:site_name" content="Robert Pearce | Senior Software Developer">
+    <meta property="og:title" content="Announcing react-medium-image-zoom v4">
+    <meta property="og:url" content="https://robertwpearce.com/announcing-react-medium-image-zoom-v4.html">
+    <meta property="og:description" content="react-medium-image-zoom is an open source image zooming library based on medium.com's implementation of image zooming">
+    <meta property="og:image" content="https://robertwpearce.com/images/te-mata-peak.jpg">
+    
+      <meta property="og:type" content="article">
+    
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="Robert Pearce | Senior Software Developer">
+    <meta property="twitter:title" content="Announcing react-medium-image-zoom v4">
+    <meta property="twitter:description" content="react-medium-image-zoom is an open source image zooming library based on medium.com's implementation of image zooming">
+    <meta property="twitter:image" content="https://robertwpearce.com/images/te-mata-peak.jpg">
+    <meta property="twitter:creator" content="@RobertWPearce">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="canonical" href="https://robertwpearce.com/announcing-react-medium-image-zoom-v4.html">
+    <link rel="stylesheet" href="/css/default.css" />
+    
+      <link rel="stylesheet" href="/css/article.css" />
+    
+  </head>
+  <body class="light">
+    <nav class="nav">
+  <div class="layout--constrained">
+    <a class="nav__link nav__skip" href="#content">Skip to content</a>
+    <a class="nav__link" href="/">Home</a>
+    <a class="nav__link" href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a>
+    <a class="nav__link" href="/atom.xml">atom</a>
+    <a class="nav__link" href="/rss.xml">rss</a>
+  </div>
+</nav>
+
+
+<main id="content" tabindex="-1">
+  <article class="article">
+    <header class="article__bg" style="background-image: url('/images/te-mata-peak.jpg')">
+      <div class="article__bgHeader">
+        <div class="layout--constrained">
+          <div class="article__bgTitleWrap">
+            <h1 class="article__bgTitle">
+              <a href="/announcing-react-medium-image-zoom-v4.html">Announcing react-medium-image-zoom v4</a>
+            </h1>
+            <div class="article__bgSubHeader">
+              <small class="italic">2020-01-19</small>
+              
+              
+              <small class="article__bgPhotoCred italic">
+                [ photo credit <a href="https://www.instagram.com/robertwpearce">robertwpearce</a> ]
+              </small>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="layout--constrained">
+      <header class="article__header">
+        <h1 class="article__title">
+          <a href="/announcing-react-medium-image-zoom-v4.html">Announcing react-medium-image-zoom v4</a>
+        </h1>
+        <small class="italic">2020-01-19</small>
+        
+      </header>
+      <p><em>tl;dr =&gt; I’ve release v4 of <a href="https://www.npmjs.com/package/react-medium-image-zoom">react-medium-image-zoom</a>, and you should consider use it for zooming images. Check out <a href="https://rpearce.github.io/react-medium-image-zoom/">the Storybook Examples</a> to see it in action.</em></p>
+<h2 id="history-of-react-medium-image-zoom">History of <code>react-medium-image-zoom</code></h2>
+<p>I wrote the first version of <a href="https://www.npmjs.com/package/react-medium-image-zoom"><code>react-medium-image-zoom</code></a> in 2016 in a 6m x 6m flat in London that my (now) wife and I lived in. At the time, I had been enamored with <a href="https://medium.design/image-zoom-on-medium-24d146fc0c20">medium.com’s image zooming</a> and wanted to share that with the <a href="https://reactjs.org/">React.js</a> masses, so I wrote the first implementation on nights and weekends, and once it published, it was quickly added to projects at my day job.</p>
+<h2 id="people-use-it">People Use It?!</h2>
+<p>Since then, <a href="https://www.npmjs.com/package/react-medium-image-zoom"><code>react-medium-image-zoom</code></a> has <strong>22</strong> <a href="https://allcontributors.org/">All Contributors</a>, has reached up to <strong>50k</strong> downloads a month, is used by <strong>638</strong> open source projects on GitHub, has <strong>49</strong> dependent packages on NPM, and has over <strong>708</strong> stars on GitHub. While that might not be staggering to anyone, that means the world to me – somebody else found value in something I made and put out into the world for free!</p>
+<h2 id="why-v4-was-needed">Why v4 Was Needed</h2>
+<p>Over the past 3.5 years, a number of issues were opened to ask for bug fixes, features and general questions, and there have even been a few pull requests, too! I am so grateful for all the effort put in by others to help me help them solve their issues.</p>
+<p>A point was eventually reached, however, where there were bugs that were unfixable with the implementation of the component, and the codebase was not something I wanted to work with any more.</p>
+<p>I <em>knew</em> it could be simpler! I <em>knew</em> it could be more accessible!</p>
+<h2 id="using-react-medium-image-zoom-v4">Using <code>react-medium-image-zoom</code> v4</h2>
+<p>Here is what using <a href="https://www.npmjs.com/package/react-medium-image-zoom"><code>react-medium-image-zoom</code></a> looks like now.</p>
+<p>First, you import the default, <a href="https://reactjs.org/docs/uncontrolled-components.html">uncontrolled component</a> and the static CSS file:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> Zoom <span class="im">from</span> <span class="st">&#39;react-medium-image-zoom&#39;</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> <span class="st">&#39;react-medium-image-zoom/dist/styles.css&#39;</span></span></code></pre></div>
+<p>And then you go about your day adding zooming capabilities to your images:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode jsx"><code class="sourceCode javascriptreact"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">&lt;Zoom&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="kw">&lt;img</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>    <span class="ot">alt</span><span class="op">=</span><span class="st">&quot;that wanaka tree&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>    <span class="ot">src</span><span class="op">=</span><span class="st">&quot;/path/to/thatwanakatree.jpg&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>    <span class="ot">width</span><span class="op">=</span><span class="st">&quot;500&quot;</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>  <span class="kw">/&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="fu">&lt;/Zoom&gt;</span></span></code></pre></div>
+<p>Did I mention that you can now zoom <em>anything you like</em>?</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode jsx"><code class="sourceCode javascriptreact"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">// &lt;picture&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">&lt;Zoom&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="kw">&lt;picture&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="kw">&lt;source</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>      <span class="ot">media</span><span class="op">=</span><span class="st">&quot;(max-width: 800px)&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>      <span class="ot">srcSet</span><span class="op">=</span><span class="st">&quot;/path/to/teAraiPoint.jpg&quot;</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>    <span class="kw">/&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>    <span class="kw">&lt;img</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>      <span class="ot">alt</span><span class="op">=</span><span class="st">&quot;that wanaka tree&quot;</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a>      <span class="ot">src</span><span class="op">=</span><span class="st">&quot;/path/to/thatwanakatree.jpg&quot;</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>      <span class="ot">width</span><span class="op">=</span><span class="st">&quot;500&quot;</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a>    <span class="kw">/&gt;</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a>  <span class="kw">&lt;/picture&gt;</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="fu">&lt;/Zoom&gt;</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="co">// &lt;figure&gt;</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="kw">&lt;figure&gt;</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a>  <span class="fu">&lt;Zoom&gt;</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a>    <span class="kw">&lt;img</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a>      <span class="ot">alt</span><span class="op">=</span><span class="st">&quot;that wanaka tree&quot;</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a>      <span class="ot">src</span><span class="op">=</span><span class="st">&quot;/path/to/thatwanakatree.jpg&quot;</span></span>
+<span id="cb3-22"><a href="#cb3-22"></a>      <span class="ot">width</span><span class="op">=</span><span class="st">&quot;500&quot;</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a>    <span class="kw">/&gt;</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a>  <span class="fu">&lt;/Zoom&gt;</span></span>
+<span id="cb3-25"><a href="#cb3-25"></a>  <span class="kw">&lt;figcaption&gt;</span>That Wanaka Tree<span class="kw">&lt;/figcaption&gt;</span></span>
+<span id="cb3-26"><a href="#cb3-26"></a><span class="kw">&lt;/figure&gt;</span></span>
+<span id="cb3-27"><a href="#cb3-27"></a></span>
+<span id="cb3-28"><a href="#cb3-28"></a><span class="co">// &lt;div&gt; that looks like a circle</span></span>
+<span id="cb3-29"><a href="#cb3-29"></a><span class="fu">&lt;Zoom&gt;</span></span>
+<span id="cb3-30"><a href="#cb3-30"></a>  <span class="kw">&lt;div</span></span>
+<span id="cb3-31"><a href="#cb3-31"></a>    <span class="ot">aria-label</span><span class="op">=</span><span class="st">&quot;A blue circle&quot;</span></span>
+<span id="cb3-32"><a href="#cb3-32"></a>    <span class="ot">style</span><span class="op">=</span><span class="va">{</span><span class="op">{</span></span>
+<span id="cb3-33"><a href="#cb3-33"></a>      <span class="dt">width</span><span class="op">:</span> <span class="dv">300</span><span class="op">,</span></span>
+<span id="cb3-34"><a href="#cb3-34"></a>      <span class="dt">height</span><span class="op">:</span> <span class="dv">300</span><span class="op">,</span></span>
+<span id="cb3-35"><a href="#cb3-35"></a>      <span class="dt">borderRadius</span><span class="op">:</span> <span class="st">&#39;50%&#39;</span><span class="op">,</span></span>
+<span id="cb3-36"><a href="#cb3-36"></a>      <span class="dt">backgroundColor</span><span class="op">:</span> <span class="st">&#39;#0099ff&#39;</span></span>
+<span id="cb3-37"><a href="#cb3-37"></a>    <span class="op">}</span><span class="va">}</span></span>
+<span id="cb3-38"><a href="#cb3-38"></a>  <span class="kw">/&gt;</span></span>
+<span id="cb3-39"><a href="#cb3-39"></a><span class="fu">&lt;/Zoom&gt;</span></span></code></pre></div>
+<p>If you find that you want to use the library as a <a href="https://reactjs.org/docs/forms.html#controlled-components">controlled component</a>, you import the <code>Controlled</code> component like this:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">import</span> <span class="op">{</span> Controlled <span class="im">as</span> Zoom <span class="op">}</span> <span class="im">from</span> <span class="st">&#39;react-medium-image-zoom&#39;</span></span></code></pre></div>
+<p>And then you tell dictate whether or not it should be zoomed and provide a callback for the library to give you hints about when you should probably zoom or unzoom based on events like clicks and scrolling:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode jsx"><code class="sourceCode javascriptreact"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">&lt;Zoom</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="ot">isZoomed</span><span class="op">=</span><span class="va">{</span><span class="kw">true</span><span class="va">}</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="ot">onZoomChange</span><span class="op">=</span><span class="va">{</span>isZoomed <span class="kw">=&gt;</span> <span class="op">{</span> <span class="va">console</span>.<span class="at">log</span>(<span class="op">{</span> isZoomed <span class="op">}</span>) <span class="op">}</span><span class="va">}</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="fu">&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>  <span class="kw">&lt;img</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a>    <span class="ot">alt</span><span class="op">=</span><span class="st">&quot;that wanaka tree&quot;</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>    <span class="ot">src</span><span class="op">=</span><span class="st">&quot;/path/to/thatwanakatree.jpg&quot;</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>    <span class="ot">width</span><span class="op">=</span><span class="st">&quot;500&quot;</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a>  <span class="kw">/&gt;</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="fu">&lt;/Zoom&gt;</span></span></code></pre></div>
+<h2 id="whats-next-for-react-medium-image-zoom">What’s Next For <code>react-medium-image-zoom</code>?</h2>
+<ul>
+<li>performance improvements</li>
+<li>exploration into re-enabling higher-quality / higher-resolution images as part of the zoom process</li>
+</ul>
+<h2 id="thank-you">Thank You</h2>
+<p>Thank you for reading this and for having an interest in <a href="https://www.npmjs.com/package/react-medium-image-zoom"><code>react-medium-image-zoom</code></a>! If you’d like to contribute to the project, need help or have constructive feedback, please open an issue on <a href="https://github.com/rpearce/react-medium-image-zoom/issues">the <code>react-medium-image-zoom</code> issue tracker</a>.</p>
+<p>Thank you for reading! <br /> Robert</p>
+    </section>
+  </article>
+</main>
+
+<footer>
+  <section class="subscribe section--padded">
+  <div class="layout--constrained">
+    <h2 class="subscribe__header">Get notified of new posts</h2>
+
+    <form action="//robertwpearce.us13.list-manage.com/subscribe/post?u=2df44e8960266388bff165fa6&amp;id=ee2f2a3737" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate class="subscribe__form">
+      <div style="position: absolute; left: -5000px;" aria-hidden="true">
+        <input type="text" name="b_2df44e8960266388bff165fa6_ee2f2a3737" tabindex="-1" value="">
+      </div>
+      <div class="subscribe__section">
+        <input type="email" value="" id="mce-EMAIL" class="subscribe__input" name="EMAIL" placeholder="you@greatemail.com" aria-label="Email Address">
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe__submit">
+      </div>
+      <small>Note: I will <em>never</em> give out your email nor spam you. Unsubscribe at any time.</small>
+    </form>
+    <p>
+      <small>(or subscribe to the <a href="/atom.xml" class="subscribe__link">atom</a> or <a class="subscribe__link" href="/rss.xml">rss</a> feeds)</small>
+    </p>
+  </div>
+</section>
+
+</footer>
+
+    <script async src="/js/dist/index.js"></script>
+  </body>
+</html>
