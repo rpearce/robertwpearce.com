@@ -1,7 +1,7 @@
 "use strict";
 (function () {
     var state = {
-        isActive: localStorage.getItem("isActive") === "true"
+        isActive: false
     };
     var cn = {
         dark: "dark",
@@ -21,12 +21,12 @@
         toggleBtn.setAttribute("aria-checked", String(state.isActive));
         toggleBtn.className = cn.toggle + " " + (state.isActive ? cn.toggleOn : cn.toggleOff);
         toggleBtn.addEventListener("click", function () {
-            var _isActive = !state.isActive;
-            state.isActive = _isActive;
-            localStorage.setItem("isActive", String(_isActive));
+            var isActive = !state.isActive;
+            state.isActive = isActive;
+            localStorage.setItem("isActive", String(isActive));
             updateBodyClass();
-            toggleBtn.setAttribute("aria-checked", String(_isActive));
-            toggleBtn.className = cn.toggle + " " + (_isActive ? cn.toggleOn : cn.toggleOff);
+            toggleBtn.setAttribute("aria-checked", String(isActive));
+            toggleBtn.className = cn.toggle + " " + (isActive ? cn.toggleOn : cn.toggleOff);
         });
         var dayEl = document.createElement("span");
         dayEl.innerText = "\uD83C\uDF1E";
@@ -41,6 +41,7 @@
         return toggleBtn;
     };
     var init = function () {
+        state.isActive = window.localStorage.getItem("isActive") === "true";
         updateBodyClass();
         document.body.appendChild(createToggleNightBtn());
     };

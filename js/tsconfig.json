@@ -2,7 +2,7 @@
   "compilerOptions": {
     "lib": ["dom", "es2019"],
     "outDir": "dist",
-    "sourceMap": true,
+    "sourceMap": false,
     "strict": true,
     "target": "es5"
   },

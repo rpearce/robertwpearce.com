@@ -18,7 +18,6 @@ _cache
 cabal-dev
 cabal.project.local
 cabal.sandbox.config
-dist
 dist-*
 result
 .DS_Store

@@ -224,6 +224,15 @@ pre.sourceCode ::selection {
   padding: 0.15em 0.2em 0.05em;
   white-space: normal;
 }
+a[href] > code {
+  box-shadow: 0 1px 0 var(--textLinkColor);
+  border-radius: 3px;
+}
+a[href]:hover > code,
+a[href]:focus > code,
+a[href]:visited > code {
+  box-shadow: 0 1px 0 var(--textLinkHoverColor);
+}
 pre[data-line] {
   padding: 1em 0 1em 3em;
   position: relative;
