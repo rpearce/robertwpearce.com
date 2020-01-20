@@ -197,6 +197,11 @@ figcaption {
 }
 .toggle {
   position: absolute;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
   top: 1em;
   right: 1em;
   margin: 0;
@@ -210,6 +215,11 @@ figcaption {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+}
+.nav .toggle {
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 .toggle__day,
 .toggle__night {

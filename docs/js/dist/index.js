@@ -44,7 +44,10 @@
     var init = function () {
         state.isActive = window.localStorage.getItem("isActive") === "true";
         updateBodyClass();
-        document.body.appendChild(createToggleNightBtn());
+        var el = document.querySelector("[data-nav-wrap]") || document.body;
+        if (el) {
+            el.appendChild(createToggleNightBtn());
+        }
     };
     init();
 })();

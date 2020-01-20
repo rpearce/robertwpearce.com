@@ -71,8 +71,14 @@
 
   const init = () => {
     state.isActive = window.localStorage.getItem(`isActive`) === `true`
+
     updateBodyClass()
-    document.body.appendChild(createToggleNightBtn())
+
+    const el = document.querySelector(`[data-nav-wrap]`) || document.body
+
+    if (el) {
+      el.appendChild(createToggleNightBtn())
+    }
   }
 
   init()
