@@ -57,6 +57,8 @@
             <div class="article__bgSubHeader">
               <small class="italic">2020-01-19</small>
               
+              <small class="italic">(updated: 2020-01-20)</small>
+              
               
               <small class="article__bgPhotoCred italic">
                 [ photo credit <a href="https://www.instagram.com/robertwpearce">robertwpearce</a> ]
@@ -74,12 +76,14 @@
         </h1>
         <small class="italic">2020-01-19</small>
         
+        <small class="italic">(updated: 2020-01-20)</small>
+        
       </header>
       <p><em>tl;dr =&gt; I’ve release v4 of <a href="https://www.npmjs.com/package/react-medium-image-zoom">react-medium-image-zoom</a>, and you should consider using it for zooming images. Check out <a href="https://rpearce.github.io/react-medium-image-zoom/">the Storybook Examples</a> to see it in action.</em></p>
 <h2 id="history-of-react-medium-image-zoom">History of <code>react-medium-image-zoom</code></h2>
 <p>I wrote the first version of <a href="https://www.npmjs.com/package/react-medium-image-zoom"><code>react-medium-image-zoom</code></a> in 2016 in a 6m x 6m flat in London that my (now) wife and I lived in. At the time, I had been enamored with <a href="https://medium.design/image-zoom-on-medium-24d146fc0c20">medium.com’s image zooming</a> and wanted to share that with the <a href="https://reactjs.org/">React.js</a> masses, so I wrote the first implementation on nights and weekends, and once it published, it was quickly added to projects at my day job.</p>
 <h2 id="people-use-it">People Use It?!</h2>
-<p>Since then, <a href="https://www.npmjs.com/package/react-medium-image-zoom"><code>react-medium-image-zoom</code></a> has <strong>22</strong> <a href="https://allcontributors.org/">All Contributors</a>, has reached up to <strong>50k</strong> downloads a month, is used by <strong>638</strong> open source projects on GitHub, has <strong>49</strong> dependent packages on NPM, and has over <strong>708</strong> stars on GitHub. While that might not be staggering to anyone, that means the world to me – somebody else found value in something I made and put out into the world for free!</p>
+<p>Since then, <a href="https://www.npmjs.com/package/react-medium-image-zoom"><code>react-medium-image-zoom</code></a> has <strong>22</strong> <a href="https://allcontributors.org/">All Contributors</a>, has reached up to <strong>50k</strong> downloads per month, is used by <strong>638</strong> open source projects on GitHub, has <strong>49</strong> dependent packages on NPM, and has over <strong>708</strong> stars on GitHub. While that might not be staggering to anyone, that means the world to me – somebody else found value in something I made and put out into the world for free!</p>
 <h2 id="why-v4-was-needed">Why v4 Was Needed</h2>
 <p>Over the past 3.5 years, a number of issues were opened to ask for bug fixes, features and general questions, and there have even been a few pull requests, too! I am so grateful for all the effort put in by others to help me help them solve their issues.</p>
 <p>A point was eventually reached, however, where there were bugs that were unfixable with the implementation of the component, and the codebase was not something I wanted to work with any more.</p>
@@ -139,7 +143,7 @@
 <span id="cb3-39"><a href="#cb3-39"></a><span class="fu">&lt;/Zoom&gt;</span></span></code></pre></div>
 <p>If you find that you want to use the library as a <a href="https://reactjs.org/docs/forms.html#controlled-components">controlled component</a>, you import the <code>Controlled</code> component like this:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">import</span> <span class="op">{</span> Controlled <span class="im">as</span> Zoom <span class="op">}</span> <span class="im">from</span> <span class="st">&#39;react-medium-image-zoom&#39;</span></span></code></pre></div>
-<p>And then you tell dictate whether or not it should be zoomed and provide a callback for the library to give you hints about when you should probably zoom or unzoom based on events like clicks and scrolling:</p>
+<p>And then you dictate whether or not it should be zoomed and provide a callback for the library to give you hints about when you should probably zoom or unzoom based on events like clicks and scrolling:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode jsx"><code class="sourceCode javascriptreact"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">&lt;Zoom</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a>  <span class="ot">isZoomed</span><span class="op">=</span><span class="va">{</span><span class="kw">true</span><span class="va">}</span></span>
 <span id="cb5-3"><a href="#cb5-3"></a>  <span class="ot">onZoomChange</span><span class="op">=</span><span class="va">{</span>isZoomed <span class="kw">=&gt;</span> <span class="op">{</span> <span class="va">console</span>.<span class="at">log</span>(<span class="op">{</span> isZoomed <span class="op">}</span>) <span class="op">}</span><span class="va">}</span></span>

@@ -7,6 +7,7 @@ keywords: "react, react-medium-image-zoom, image zoom, image, zoom, reactjs"
 photoCredit: "robertwpearce"
 photoWebsite: "https://www.instagram.com/robertwpearce"
 title: "Announcing react-medium-image-zoom v4"
+updated: "2020-01-20"
 ---
 
 _tl;dr => I've release v4 of [react-medium-image-zoom](https://www.npmjs.com/package/react-medium-image-zoom),
@@ -27,7 +28,7 @@ it was quickly added to projects at my day job.
 
 Since then, [`react-medium-image-zoom`](https://www.npmjs.com/package/react-medium-image-zoom)
 has **22** [All Contributors](https://allcontributors.org/), has reached up to
-**50k** downloads a month, is used by **638** open source projects on GitHub,
+**50k** downloads per month, is used by **638** open source projects on GitHub,
 has **49** dependent packages on NPM, and has over **708** stars on GitHub.
 While that might not be staggering to anyone, that means the world to me –
 somebody else found value in something I made and put out into the world for
@@ -125,9 +126,9 @@ import the `Controlled` component like this:
 import { Controlled as Zoom } from 'react-medium-image-zoom'
 ```
 
-And then you tell dictate whether or not it should be zoomed and provide a
-callback for the library to give you hints about when you should probably
-zoom or unzoom based on events like clicks and scrolling:
+And then you dictate whether or not it should be zoomed and provide a callback
+for the library to give you hints about when you should probably zoom or unzoom
+based on events like clicks and scrolling:
 
 ```jsx
 <Zoom
