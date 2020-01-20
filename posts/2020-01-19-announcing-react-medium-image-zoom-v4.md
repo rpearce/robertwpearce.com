@@ -10,7 +10,7 @@ title: "Announcing react-medium-image-zoom v4"
 ---
 
 _tl;dr => I've release v4 of [react-medium-image-zoom](https://www.npmjs.com/package/react-medium-image-zoom),
-and you should consider use it for zooming images. Check out [the Storybook
+and you should consider using it for zooming images. Check out [the Storybook
 Examples](https://rpearce.github.io/react-medium-image-zoom/) to see it in
 action._
 
