@@ -18,6 +18,7 @@
     var createToggleNightBtn = function () {
         var toggleBtn = document.createElement("button");
         toggleBtn.type = "button";
+        toggleBtn.setAttribute("role", "switch");
         toggleBtn.setAttribute("aria-checked", String(state.isActive));
         toggleBtn.className = cn.toggle + " " + (state.isActive ? cn.toggleOn : cn.toggleOff);
         toggleBtn.addEventListener("click", function () {
