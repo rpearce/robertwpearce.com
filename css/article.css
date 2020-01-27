@@ -249,7 +249,8 @@ h6 code {
   color: rgb(128, 147, 147);
 }
 .ch,  /* Char */
-.st { /* String */
+.st,  /* String */
+.vs { /* ??? */
   color: rgb(173, 219, 103);
 }
 .va { /* Variable */

@@ -7,6 +7,13 @@
   </url>
 
   <url>
+    <loc>https://robertwpearce.com/javascript-understand-array-prototype-map-by-reimplementing-it.html</loc>
+    <lastmod>2020-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://robertwpearce.com/announcing-react-medium-image-zoom-v4.html</loc>
     <lastmod>2020-01-20</lastmod>
     <changefreq>weekly</changefreq>
