@@ -1,4 +1,5 @@
 "use strict";
+;
 (function () {
     var state = {
         isActive: false
@@ -10,7 +11,7 @@
         toggleDay: "toggle__day",
         toggleNight: "toggle__night",
         toggleOff: "toggle--off",
-        toggleOn: "toggle--on",
+        toggleOn: "toggle--on"
     };
     var updateBodyClass = function () {
         document.body.classList.replace(state.isActive ? cn.light : cn.dark, state.isActive ? cn.dark : cn.light);

@@ -1,46 +1,48 @@
-(() => {
-  interface IState {
+;((): void => {
+  interface State {
     isActive: boolean
   }
 
-  interface IClasses {
-    dark: string,
-    light: string,
-    toggle: string,
-    toggleDay: string,
-    toggleNight: string,
-    toggleOff: string,
-    toggleOn: string,
+  interface Classes {
+    dark: string
+    light: string
+    toggle: string
+    toggleDay: string
+    toggleNight: string
+    toggleOff: string
+    toggleOn: string
   }
 
-  const state: IState = {
+  const state: State = {
     isActive: false
   }
 
-  const cn: IClasses = {
+  const cn: Classes = {
     dark: `dark`,
     light: `light`,
     toggle: `toggle`,
     toggleDay: `toggle__day`,
     toggleNight: `toggle__night`,
     toggleOff: `toggle--off`,
-    toggleOn: `toggle--on`,
+    toggleOn: `toggle--on`
   }
 
-  const updateBodyClass = () => {
+  const updateBodyClass = (): void => {
     document.body.classList.replace(
       state.isActive ? cn.light : cn.dark,
-      state.isActive ? cn.dark : cn.light,
+      state.isActive ? cn.dark : cn.light
     )
   }
 
-  const createToggleNightBtn = () => {
+  const createToggleNightBtn = (): HTMLElement => {
     const toggleBtn = document.createElement(`button`)
 
     toggleBtn.type = `button`
     toggleBtn.setAttribute(`role`, `switch`)
     toggleBtn.setAttribute(`aria-checked`, String(state.isActive))
-    toggleBtn.className = `${cn.toggle} ${state.isActive ? cn.toggleOn : cn.toggleOff}`
+    toggleBtn.className = `${cn.toggle} ${
+      state.isActive ? cn.toggleOn : cn.toggleOff
+    }`
 
     toggleBtn.addEventListener(`click`, () => {
       const isActive = !state.isActive
@@ -50,7 +52,9 @@
       updateBodyClass()
 
       toggleBtn.setAttribute(`aria-checked`, String(isActive))
-      toggleBtn.className = `${cn.toggle} ${isActive ? cn.toggleOn : cn.toggleOff}`
+      toggleBtn.className = `${cn.toggle} ${
+        isActive ? cn.toggleOn : cn.toggleOff
+      }`
     })
 
     const dayEl = document.createElement(`span`)
@@ -69,7 +73,7 @@
     return toggleBtn
   }
 
-  const init = () => {
+  const init = (): void => {
     state.isActive = window.localStorage.getItem(`isActive`) === `true`
 
     updateBodyClass()
