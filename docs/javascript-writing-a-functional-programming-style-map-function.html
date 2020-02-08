@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>JavaScript: Writing a Functional Programming-Style map Function</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Robert Pearce">
+    <meta name="keywords" content="javascript, map, map function, functional programming, js, programming">
+    <meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU">
+
+    <meta property="og:site_name" content="Robert Pearce | Senior Software Developer">
+    <meta property="og:title" content="JavaScript: Writing a Functional Programming-Style map Function">
+    <meta property="og:url" content="https://robertwpearce.com/javascript-writing-a-functional-programming-style-map-function.html">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://robertwpearce.com/images/.jpg">
+    
+      <meta property="og:type" content="article">
+    
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="Robert Pearce | Senior Software Developer">
+    <meta property="twitter:title" content="JavaScript: Writing a Functional Programming-Style map Function">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://robertwpearce.com/images/.jpg">
+    <meta property="twitter:creator" content="@RobertWPearce">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="canonical" href="https://robertwpearce.com/javascript-writing-a-functional-programming-style-map-function.html">
+    <link rel="stylesheet" href="/css/default.css" />
+    
+      <link rel="stylesheet" href="/css/article.css" />
+    
+  </head>
+  <body class="light">
+    <nav class="nav">
+  <div class="layout--constrained" data-nav-wrap>
+    <a class="nav__link nav__skip" href="#content">Skip to content</a>
+    <a class="nav__link" href="/">Home</a>
+    <a class="nav__link" href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a>
+    <a class="nav__link" href="/atom.xml">atom</a>
+    <a class="nav__link" href="/rss.xml">rss</a>
+  </div>
+</nav>
+
+
+<main id="content" tabindex="-1">
+  <article class="article">
+    <header class="article__bg" style="background-image: url('/images/.jpg')">
+      <div class="article__bgHeader">
+        <div class="layout--constrained">
+          <div class="article__bgTitleWrap">
+            <h1 class="article__bgTitle">
+              <a href="/javascript-writing-a-functional-programming-style-map-function.html">JavaScript: Writing a Functional Programming-Style map Function</a>
+            </h1>
+            <div class="article__bgSubHeader">
+              <small class="italic">2020-02-06</small>
+              
+              
+              <small class="article__bgPhotoCred italic">
+                [ photo credit <a href="https://www.instagram.com/robertwpearce">robertwpearce</a> ]
+              </small>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="layout--constrained">
+      <header class="article__header">
+        <h1 class="article__title">
+          <a href="/javascript-writing-a-functional-programming-style-map-function.html">JavaScript: Writing a Functional Programming-Style map Function</a>
+        </h1>
+        <small class="italic">2020-02-06</small>
+        
+      </header>
+      <p>In this post, we will write a functional programming-style implementation of JavaScript’s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map"><code>map</code></a> function that not only works with <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array"><code>Array</code></a> but any data structure that implements a <code>map</code> method. Such data structures are known as <a href="https://github.com/hemanth/functional-programming-jargon#functor"><code>Functors</code></a>, and some examples of <code>Functors</code> are the <a href="https://github.com/hemanth/functional-programming-jargon#algebraic-data-type">Algebraic Data Types</a> <a href="https://crocks.dev/docs/crocks/Maybe.html"><code>Maybe</code></a> and <a href="https://crocks.dev/docs/crocks/Async.html"><code>Async</code></a> (prior knowledge of them is not required, and out of the two, we’ll only use <code>Maybe</code>). By the end of this post, you will:</p>
+<ul>
+<li>know how to implement a generic <code>map</code> function that includes functions for <code>map</code>ping <code>Array</code>s, <code>Object</code>s, and <code>Functor</code>s</li>
+<li>understand how to use <code>map</code> in a variety of scenarios</li>
+<li>know how to write a simple <code>compose</code> function and use composition</li>
+<li>know how to reliably test values for their types</li>
+<li>have received a small introduction to Algebraic Data Types via <a href="https://crocks.dev"><code>crocks.js</code></a></li>
+</ul>
+<p>This is a big post, so buckle up!</p>
+<!--If you'd prefer to see a ~5 minute recording of what we'll do in this post, you-->
+<!--can watch the video below; otherwise, carry on!-->
+<!--<iframe-->
+<!--  width="560"-->
+<!--  height="315"-->
+<!--  src="https://www.youtube-nocookie.com/embed/n_VTQJARW-o"-->
+<!--  frameborder="0"-->
+<!--  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"-->
+<!--  allowfullscreen-->
+<!--</iframe>-->
+<hr />
+<p><em>Note: if you’re not familiar with <code>Array.prototype.map</code> already, check out my video on <a href="https://www.youtube.com/watch?v=tjjg3_jyD7M">Using JavaScript’s Array.prototype.map Method</a> or my post on <a href="https://robertwpearce.com/javascript-understand-array-prototype-map-by-reimplementing-it.html">JavaScript: Understand Array.prototype.map by Reimplementing It</a>.</em></p>
+<p><em>Also, a library that implements a solid <code>map</code> function is <a href="https://crocks.dev">crocks.js</a>, and we will use its implementation as our template. If you want to skip this article entirely, you can go and view <a href="https://github.com/evilsoft/crocks/blob/e4517493079538960d53715ef25d72c264cfecf0/src/pointfree/map.js#L15-L38">its source</a>.</em></p>
+<h2 id="the-goal-map-all-the-things">The Goal: <code>map</code> All the Things</h2>
+<p>Today we are going to write a <code>map</code> function that does the following:</p>
+<ul>
+<li>accepts a transformation function that takes in some argument of type <code>a</code> and transforms it into a value of type <code>b</code>; i.e., <code>(a -&gt; b)</code></li>
+<li>accepts and handles any of the following data types:
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array"><code>Array</code></a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object"><code>Object</code></a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function"><code>Function</code></a></li>
+<li><a href="https://github.com/hemanth/functional-programming-jargon#functor"><code>Functors</code></a> (e.g., <a href="https://crocks.dev/docs/crocks/Maybe.html"><code>Maybe</code></a>)</li>
+</ul></li>
+</ul>
+<p>Sounds easy, right? We’ll see!</p>
+<h2 id="defining-our-map-function">Defining Our <code>map</code> Function</h2>
+<p>There are some things we already know about our <code>map</code> function:</p>
+<ul>
+<li>it’s called <code>map</code> (yay! nailed it!)</li>
+<li>it takes a function and some data</li>
+<li>it returns the data as transformed by said function</li>
+</ul>
+<p>Let’s sketch it out:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">const</span> map <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>  <span class="co">// ???</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="op">}</span></span></code></pre></div>
+<p>Okay, it’s a start. This could conceivably be used like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1"></a><span class="at">map</span>(x <span class="kw">=&gt;</span> <span class="va">x</span>.<span class="at">id</span><span class="op">,</span> [<span class="op">{</span> <span class="dt">id</span><span class="op">:</span> <span class="dv">1</span> <span class="op">},</span> <span class="op">{</span> <span class="dt">id</span><span class="op">:</span> <span class="dv">2</span> <span class="op">}</span>])     <span class="co">// [1, 2]</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="at">map</span>(x <span class="kw">=&gt;</span> <span class="va">x</span>.<span class="at">id</span><span class="op">,</span> [<span class="op">{</span> <span class="dt">id</span><span class="op">:</span> <span class="st">&#39;a&#39;</span> <span class="op">},</span> <span class="op">{</span> <span class="dt">id</span><span class="op">:</span> <span class="st">&#39;b&#39;</span> <span class="op">}</span>]) <span class="co">// [&#39;a&#39;, &#39;b&#39;]</span></span></code></pre></div>
+<p>But we can quickly see that our <code>x =&gt; x.id</code> is starting to get repetitive. We could pull that into a function, <code>propId</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">const</span> propId <span class="op">=</span> x <span class="kw">=&gt;</span> <span class="va">x</span>.<span class="at">id</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="at">map</span>(propId<span class="op">,</span> [<span class="op">{</span> <span class="dt">id</span><span class="op">:</span> <span class="dv">1</span> <span class="op">},</span> <span class="op">{</span> <span class="dt">id</span><span class="op">:</span> <span class="dv">2</span> <span class="op">}</span>])     <span class="co">// [1, 2]</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="at">map</span>(propId<span class="op">,</span> [<span class="op">{</span> <span class="dt">id</span><span class="op">:</span> <span class="st">&#39;a&#39;</span> <span class="op">},</span> <span class="op">{</span> <span class="dt">id</span><span class="op">:</span> <span class="st">&#39;b&#39;</span> <span class="op">}</span>]) <span class="co">// [&#39;a&#39;, &#39;b&#39;]</span></span></code></pre></div>
+<p>Alas, we’re back where we started – it’s still repetitive!</p>
+<p>Instead, what if we could <a href="https://github.com/hemanth/functional-programming-jargon#partial-application"><em>partially apply</em></a> the <code>x =&gt; x.id</code> to <code>map</code>, store that partially applied function in a variable, and then use that to call with our different data?</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">const</span> mapId <span class="op">=</span> <span class="at">map</span>(x <span class="kw">=&gt;</span> <span class="va">x</span>.<span class="at">id</span>)</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="at">mapId</span>([<span class="op">{</span> <span class="dt">id</span><span class="op">:</span> <span class="dv">1</span> <span class="op">},</span> <span class="op">{</span> <span class="dt">id</span><span class="op">:</span> <span class="dv">2</span> <span class="op">}</span>])     <span class="co">// [1, 2]</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="at">mapId</span>([<span class="op">{</span> <span class="dt">id</span><span class="op">:</span> <span class="st">&#39;a&#39;</span> <span class="op">},</span> <span class="op">{</span> <span class="dt">id</span><span class="op">:</span> <span class="st">&#39;b&#39;</span> <span class="op">}</span>]) <span class="co">// [&#39;a&#39;, &#39;b&#39;]</span></span></code></pre></div>
+<p><em>Wondering why the data comes last? Check out <a href="https://youtu.be/m3svKOdZijA">Brian Lonsdorf’s “Hey Underscore, You’re Doing It Wrong!” talk</a>. The tl;dr is that you should arrange your arguments from least likely to change to most likely to change in order to pave the way for partial application and greater code reuse.</em></p>
+<p>Nice! Now, let’s go back to our sketch. Let’s turn our <em>binary</em> function (which means it has <em>two</em> parameters) to instead be a series of <em>unary</em> functions (which means they only accept <em>one</em> parameter at a time; <a href="https://github.com/hemanth/functional-programming-jargon#arity">read more about function arity here</a>):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">const</span> map <span class="op">=</span> fn <span class="kw">=&gt;</span> m <span class="kw">=&gt;</span> <span class="op">{</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="co">// ???</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="op">}</span></span></code></pre></div>
+<p>Wow, that was easy. By default, languages like <a href="http://learnyouahaskell.com/higher-order-functions">Haskell</a> and <a href="https://guide.elm-lang.org">Elm</a> automatically <a href="https://robertwpearce.com/ramda-chops-function-currying.html">curry</a> all of their function parameters. There are ways to automate that in JavaScript (see <a href="https://robertwpearce.com/ramda-chops-function-currying.html">my article on currying</a>), but for today, we will <em>manually</em> curry functions by using arrow functions to simulate it: <code>const sum = a =&gt; b =&gt; a + b</code>, for example.</p>
+<p>Lastly, on the function definition side, it would be helpful for readers of our code to understand more about the types that are intended. In lieu of JavaScript not having a static type checker and me not knowing <a href="https://www.typescriptlang.org/">TypeScript</a> yet, we’ll do this using a Haskell-style pseudo-type signature:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">map</span><span class="ot"> ::</span> <span class="dt">Functor</span> f <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> f b</span></code></pre></div>
+<p>And we can use that as a comment above our function:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">// map :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="kw">const</span> map <span class="op">=</span> fn <span class="kw">=&gt;</span> m <span class="kw">=&gt;</span> <span class="op">{</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="co">// ???</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="op">}</span></span></code></pre></div>
+<p>Woah, woah, woah! What’s all this? Let’s break it down.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">map</span><span class="ot"> ::</span> <span class="dt">Functor</span> f <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> f b</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co">--  |     |            |     |   |      |</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co">--  1     2            3     4   5      6</span></span></code></pre></div>
+<ol>
+<li>Can be read, “has the type of”</li>
+<li>Anything after the <code>::</code> and before the <code>=&gt;</code> in a signature is a <a href="http://www.learnyouahaskell.com/types-and-typeclasses">class constraint</a>. This dictates that we’re going to use something in the type signature that obeys the <a href="https://wiki.haskell.org/Functor">Functor Laws</a>, <em>identity</em> and <a href="https://robertwpearce.com/ramda-chops-function-composition.html"><em>composition</em></a>. The lowercase <code>f</code> represents what the <code>Functor</code> will be in the signature.</li>
+<li>Our <code>map</code>ping function; e.g., <code>x =&gt; x.id</code>, like we did above.</li>
+<li><code>-&gt;</code> Arrows are used in type signatures to say “then return…”. In our <code>map</code> signature, we say, “We accept a function from <code>a</code> to <code>b</code> then return a function that accepts <code>f</code> of <code>a</code> and then return <code>f</code> of <code>b</code>”. If we were summing three numbers, <code>sum3 :: Number -&gt; Number -&gt; Number -&gt; Number</code>, this would read, “<code>sum3</code> has the type of an expression that accepts a <code>Number</code> that returns a function that accepts a <code>Number</code> then return a function that accepts a <code>Number</code> and then return a <code>Number</code>.”</li>
+<li><code>f a</code> says that a <code>Functor</code>, <code>f</code>, wraps some other type, <code>a</code>. A concrete example of this would be <code>[Number]</code>, which would be a list of numbers; in JavaScript parlance, an <code>Array</code> of <code>Number</code>s.</li>
+<li><code>f b</code> says that a <code>Functor</code>, <code>f</code>, wraps some other type, <code>b</code>. Why isn’t it <code>a</code>? This signifies that when we take in the <code>Functor</code> of any type <code>a</code>, it’s totally cool if you want to change the return type inside the <code>Functor</code>. For example, when we take <code>[{ id: 'a' }, { id: 'b' }]</code> and use <code>map</code> to turn that into <code>['a', 'b']</code>, we’re taking <code>[Object]</code> (a list of <code>Object</code>s) and turning that into <code>[String]</code> (a list of <code>String</code>s).</li>
+</ol>
+<p>All together now! “<code>map</code> has the type of an expression where <code>f</code> is a <code>Functor</code>, and it accepts a function from <code>a</code> to <code>b</code> then returns a function that accepts <code>f</code> of <code>a</code> and then returns <code>f</code> of <code>b</code>.”</p>
+<h2 id="map-an-array"><code>map</code> an <code>Array</code></h2>
+<p>Let’s <code>map</code> an <code>Array</code>!</p>
+<p><em>If you’re not familiar with <code>Array.prototype.map</code> already, check out my video video on <a href="https://www.youtube.com/watch?v=tjjg3_jyD7M">Using JavaScript’s Array.prototype.map Method</a> or my post on <a href="https://robertwpearce.com/javascript-understand-array-prototype-map-by-reimplementing-it.html">JavaScript: Understand Array.prototype.map by Reimplementing It</a>.</em></p>
+<p>Remember our <code>Functor</code> class constraint?</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">map</span><span class="ot"> ::</span> <span class="dt">Functor</span> f <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> f b</span></code></pre></div>
+<p>Guess what? <code>Array</code>s are <code>Functor</code>s! The easy way to figure this out is to ask, “Is this <code>map</code>pable?” Here’s how we can do a quick check that <code>Array</code> adheres to the laws of <em>identity</em> and <em>composition</em>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">// identity</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>[<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>].<span class="at">map</span>(x <span class="kw">=&gt;</span> x) <span class="co">// [1,2,3]</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co">// composition</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="kw">const</span> add10 <span class="op">=</span> x <span class="kw">=&gt;</span> x <span class="op">+</span> <span class="dv">10</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="kw">const</span> mult2 <span class="op">=</span> x <span class="kw">=&gt;</span> x <span class="op">*</span> <span class="dv">2</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a>[<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>].<span class="at">map</span>(add10).<span class="at">map</span>(mult2)     <span class="co">// [ 22, 24, 26 ]</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="co">// is equivalent to...</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a>[<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>].<span class="at">map</span>(x <span class="kw">=&gt;</span> <span class="at">mult2</span>(<span class="at">add10</span>(x))) <span class="co">// [ 22, 24, 26 ]</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a></span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="co">// another example of the composition law</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a><span class="kw">const</span> compose <span class="op">=</span> (f<span class="op">,</span> g) <span class="kw">=&gt;</span> x <span class="kw">=&gt;</span> <span class="at">f</span>(<span class="at">g</span>(x))</span>
+<span id="cb10-13"><a href="#cb10-13"></a><span class="at">mult2</span>(<span class="at">add10</span>(<span class="dv">2</span>)) <span class="op">===</span> <span class="at">compose</span>(mult2<span class="op">,</span> add10)(<span class="dv">2</span>) <span class="co">// true</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a></span>
+<span id="cb10-15"><a href="#cb10-15"></a><span class="co">// and applied back to our prior example</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a>[<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>].<span class="at">map</span>(add10).<span class="at">map</span>(mult2)      <span class="co">// [ 22, 24, 26 ]</span></span>
+<span id="cb10-17"><a href="#cb10-17"></a>[<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>].<span class="at">map</span>(x <span class="kw">=&gt;</span> <span class="at">mult2</span>(<span class="at">add10</span>(x)))  <span class="co">// [ 22, 24, 26 ]</span></span>
+<span id="cb10-18"><a href="#cb10-18"></a>[<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>].<span class="at">map</span>(<span class="at">compose</span>(mult2<span class="op">,</span> add10)) <span class="co">// [ 22, 24, 26 ]</span></span></code></pre></div>
+<p>Since we kow that <code>Array</code> is <code>map</code>pable, we can use our <code>map</code> function to check if the <code>f a</code> parameter is an <code>Array</code> and then use <code>map</code> with the function that goes from <code>a</code> to <code>b</code>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1"></a><span class="co">// map :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">const</span> map <span class="op">=</span> fn <span class="kw">=&gt;</span> m <span class="kw">=&gt;</span> <span class="op">{</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>  <span class="cf">if</span> (<span class="at">isArray</span>(m)) <span class="op">{</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a>    <span class="cf">return</span> <span class="at">mapArray</span>(fn<span class="op">,</span> m)</span>
+<span id="cb11-5"><a href="#cb11-5"></a>  <span class="op">}</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="op">}</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="co">// isArray :: a -&gt; Bool</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a><span class="kw">const</span> isArray <span class="op">=</span> x <span class="kw">=&gt;</span> <span class="va">Array</span>.<span class="at">isArray</span>(x)</span>
+<span id="cb11-10"><a href="#cb11-10"></a></span>
+<span id="cb11-11"><a href="#cb11-11"></a><span class="co">// mapArray :: (a -&gt; b) -&gt; Array -&gt; Array</span></span>
+<span id="cb11-12"><a href="#cb11-12"></a><span class="kw">const</span> mapArray <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> <span class="va">m</span>.<span class="at">map</span>(x <span class="kw">=&gt;</span> <span class="at">fn</span>(x))</span></code></pre></div>
+<p>Here, we check to see if the argument, <code>m</code>, is an <code>Array</code> (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray">read more about Array.isArray()</a>), then we call a function, <code>mapArray</code>, that handles the <code>map</code>ping of the <code>Array</code>.</p>
+<p>You might be thinking: why <code>m.map(x =&gt; fn(x))</code> and not <code>m.map(fn)</code>? As you might remember from <a href="https://robertwpearce.com/javascript-understand-array-prototype-map-by-reimplementing-it.html">my article on re-implementing <code>Array.prototype.map</code></a>, there are a few other arguments that the native implementation of <code>map</code> provide, as well as some potential changes to the <code>this</code> keyword in your callback function scope. Instead of allowing those to pass through, we simply take the first argument, the currently iterated value, and send that to the callback function.</p>
+<p>Now that we’ve seen the easy way to do <code>map</code> with <code>Array</code>, let’s see what this would look like if we felt like implementing <code>mapArray</code> ourselves:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">// mapArray :: (a -&gt; b) -&gt; Array -&gt; Array</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="kw">const</span> mapArray <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> <span class="op">{</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="kw">const</span> newArray <span class="op">=</span> []</span>
+<span id="cb12-4"><a href="#cb12-4"></a></span>
+<span id="cb12-5"><a href="#cb12-5"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="va">m</span>.<span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) <span class="op">{</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a>    newArray[i] <span class="op">=</span> <span class="at">fn</span>(m[i])</span>
+<span id="cb12-7"><a href="#cb12-7"></a>  <span class="op">}</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a></span>
+<span id="cb12-9"><a href="#cb12-9"></a>  <span class="cf">return</span> newArray</span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="op">}</span></span></code></pre></div>
+<p>Not too shabby! All we do is create a new <code>Array</code> and set the results of calling the callback function with each item to its index in the new <code>Array</code> and then return that <code>Array</code>.</p>
+<p>Do you think our <code>map</code> function can handle an <code>Array</code> of <code>Array</code>s?</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1"></a><span class="at">map</span>(x <span class="kw">=&gt;</span> x <span class="op">*</span> <span class="dv">2</span>)([ [<span class="dv">1</span><span class="op">,</span><span class="dv">2</span>]<span class="op">,</span> [<span class="dv">3</span><span class="op">,</span><span class="dv">4</span>]<span class="op">,</span> [<span class="dv">5</span><span class="op">,</span><span class="dv">6</span>] ])</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="co">// Array(3) [ NaN, NaN, NaN ]</span></span></code></pre></div>
+<p>While we can successfully iterate over the 3 items in the top-level <code>Array</code>, our callback function can’t perform operations like <code>[1,2] * 2</code>! We need to do another <code>map</code> on the nested <code>Array</code>s:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1"></a><span class="at">map</span>(<span class="at">map</span>(x <span class="kw">=&gt;</span> x <span class="op">*</span> <span class="dv">2</span>))([ [<span class="dv">1</span><span class="op">,</span><span class="dv">2</span>]<span class="op">,</span> [<span class="dv">3</span><span class="op">,</span><span class="dv">4</span>]<span class="op">,</span> [<span class="dv">5</span><span class="op">,</span><span class="dv">6</span>] ])</span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="co">// [ [2,4], [6,8], [10,12] ]</span></span></code></pre></div>
+<p>Well done! What else can you <code>map</code>? We’re now going to get out of charted waters and go out into the unknown.</p>
+<h2 id="map-an-object"><code>map</code> an <code>Object</code></h2>
+<p>Let’s say we have an <code>i18n</code> (short for “internationalization”) object that we’ve been given that has a terribly annoying issue: every translation is prefixed with an underscore (<code>_</code>)!</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">const</span> i18n <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="st">&#39;en-US&#39;</span><span class="op">:</span> <span class="op">{</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a>    <span class="dt">dayMode</span><span class="op">:</span> <span class="st">&#39;_Day mode&#39;</span><span class="op">,</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a>    <span class="dt">greeting</span><span class="op">:</span> <span class="st">&#39;_Hello!&#39;</span><span class="op">,</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a>    <span class="dt">nightMode</span><span class="op">:</span> <span class="st">&#39;_Night Mode&#39;</span></span>
+<span id="cb15-6"><a href="#cb15-6"></a>  <span class="op">},</span></span>
+<span id="cb15-7"><a href="#cb15-7"></a>  <span class="st">&#39;es-ES&#39;</span><span class="op">:</span> <span class="op">{</span></span>
+<span id="cb15-8"><a href="#cb15-8"></a>    <span class="dt">dayMode</span><span class="op">:</span> <span class="st">&#39;_Modo día&#39;</span><span class="op">,</span></span>
+<span id="cb15-9"><a href="#cb15-9"></a>    <span class="dt">greeting</span><span class="op">:</span> <span class="st">&#39;_¡Hola!&#39;</span></span>
+<span id="cb15-10"><a href="#cb15-10"></a>    <span class="dt">nightMode</span><span class="op">:</span> <span class="st">&#39;_Modo nocturno&#39;</span></span>
+<span id="cb15-11"><a href="#cb15-11"></a>  <span class="op">}</span></span>
+<span id="cb15-12"><a href="#cb15-12"></a><span class="op">}</span></span></code></pre></div>
+<p>We could manually delete each one, or we could find and replace with our text editor, or we could write a <code>for</code> loop to do this. But because we’re super awesome functional programmers, we’ll try to <code>map</code> over the <code>Object</code> and write a function that removes the prefixed underscore.</p>
+<p>Before we can do this, we need to see what happens when we call <code>.map()</code> on an <code>Object</code>:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1"></a>i18n[<span class="st">&#39;en-US&#39;</span>].<span class="at">map</span>(x <span class="kw">=&gt;</span> <span class="va">x</span>.<span class="at">slice</span>(<span class="dv">1</span>))</span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="co">// TypeError: i18n[&#39;en-US&#39;].map is not a function</span></span></code></pre></div>
+<p>Oh no! If we can’t even fix the <code>en-US</code> <code>Object</code>, how are are we supposed to fix <em>all</em> of them? Let’s update our <code>map</code> function to handle working with <code>Object</code>s.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1"></a><span class="co">// map :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="kw">const</span> map <span class="op">=</span> fn <span class="kw">=&gt;</span> m <span class="kw">=&gt;</span> <span class="op">{</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="cf">if</span> (<span class="at">isArray</span>(m)) <span class="op">{</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a>    <span class="cf">return</span> <span class="at">mapArray</span>(fn<span class="op">,</span> m)</span>
+<span id="cb17-5"><a href="#cb17-5"></a>  <span class="op">}</span></span>
+<span id="cb17-6"><a href="#cb17-6"></a></span>
+<span id="cb17-7"><a href="#cb17-7"></a>  <span class="cf">if</span> (<span class="at">isObject</span>(m)) <span class="op">{</span></span>
+<span id="cb17-8"><a href="#cb17-8"></a>    <span class="cf">return</span> <span class="at">mapObj</span>(fn<span class="op">,</span> m)</span>
+<span id="cb17-9"><a href="#cb17-9"></a>  <span class="op">}</span></span>
+<span id="cb17-10"><a href="#cb17-10"></a><span class="op">}</span></span>
+<span id="cb17-11"><a href="#cb17-11"></a></span>
+<span id="cb17-12"><a href="#cb17-12"></a><span class="co">// isObject :: a -&gt; Bool</span></span>
+<span id="cb17-13"><a href="#cb17-13"></a><span class="kw">const</span> isObject <span class="op">=</span> x <span class="kw">=&gt;</span></span>
+<span id="cb17-14"><a href="#cb17-14"></a>  <span class="op">!!</span>x <span class="op">&amp;&amp;</span> <span class="va">Object</span>.<span class="va">prototype</span>.<span class="va">toString</span>.<span class="at">call</span>(x) <span class="op">===</span> <span class="st">&#39;[object Object]&#39;</span></span>
+<span id="cb17-15"><a href="#cb17-15"></a></span>
+<span id="cb17-16"><a href="#cb17-16"></a><span class="co">// mapObj :: (a -&gt; b) -&gt; { k: a } -&gt; { k: b }</span></span>
+<span id="cb17-17"><a href="#cb17-17"></a><span class="kw">const</span> mapObj <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> <span class="op">{</span></span>
+<span id="cb17-18"><a href="#cb17-18"></a>  <span class="kw">const</span> obj <span class="op">=</span> <span class="op">{}</span></span>
+<span id="cb17-19"><a href="#cb17-19"></a></span>
+<span id="cb17-20"><a href="#cb17-20"></a>  <span class="cf">for</span> (<span class="kw">const</span> [k<span class="op">,</span> v] <span class="kw">of</span> <span class="va">Object</span>.<span class="at">entries</span>(m)) <span class="op">{</span></span>
+<span id="cb17-21"><a href="#cb17-21"></a>    obj[k] <span class="op">=</span> <span class="at">fn</span>(v)</span>
+<span id="cb17-22"><a href="#cb17-22"></a>  <span class="op">}</span></span>
+<span id="cb17-23"><a href="#cb17-23"></a></span>
+<span id="cb17-24"><a href="#cb17-24"></a>  <span class="cf">return</span> obj</span>
+<span id="cb17-25"><a href="#cb17-25"></a><span class="op">}</span></span></code></pre></div>
+<p>Here, we test if something is an object by using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toString"><code>Object.prototype.toString</code></a> and make sure to <code>.call(x)</code> instead of just <code>.toString(x)</code>, for this reason:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1"></a><span class="va">Object</span>.<span class="va">prototype</span>.<span class="at">toString</span>(<span class="kw">null</span>)</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="co">// &quot;[object Object]&quot;</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a></span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="va">Object</span>.<span class="va">prototype</span>.<span class="va">toString</span>.<span class="at">call</span>(<span class="kw">null</span>)</span>
+<span id="cb18-5"><a href="#cb18-5"></a><span class="co">// &quot;[object Null]&quot;</span></span>
+<span id="cb18-6"><a href="#cb18-6"></a></span>
+<span id="cb18-7"><a href="#cb18-7"></a><span class="va">Object</span>.<span class="va">prototype</span>.<span class="at">toString</span>([])</span>
+<span id="cb18-8"><a href="#cb18-8"></a><span class="co">// &quot;[object Object]&quot;</span></span>
+<span id="cb18-9"><a href="#cb18-9"></a></span>
+<span id="cb18-10"><a href="#cb18-10"></a><span class="va">Object</span>.<span class="va">prototype</span>.<span class="va">toString</span>.<span class="at">call</span>([])</span>
+<span id="cb18-11"><a href="#cb18-11"></a><span class="co">// &quot;[object Array]&quot;</span></span>
+<span id="cb18-12"><a href="#cb18-12"></a></span>
+<span id="cb18-13"><a href="#cb18-13"></a><span class="va">Object</span>.<span class="va">prototype</span>.<span class="va">toString</span>.<span class="at">call</span>(<span class="op">{}</span>)</span>
+<span id="cb18-14"><a href="#cb18-14"></a><span class="co">// &quot;[object Object]&quot;</span></span></code></pre></div>
+<p>We then use our new <code>mapObj</code> function whose signature is</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb19-1"><a href="#cb19-1"></a><span class="ot">mapObj ::</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> { k<span class="op">:</span> a } <span class="ot">-&gt;</span> { k<span class="op">:</span> b }</span></code></pre></div>
+<p><code>mapObj</code> takes a function from <code>a</code> to <code>b</code> then returns a function that accepts an <code>Object</code> with a key(s) and some value, <code>a</code> and returns an <code>Object</code> with a key(s) and some value <code>b</code>. In short, it maps the <em>values</em> of an <code>Object</code>. Our <code>mapObj</code> function is nothing more than a <code>for</code> loop over each value! It calls the callback function with value and returns a new object with the same key but an updated value.</p>
+<p>Let’s try it out:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw">const</span> i18n <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>  <span class="st">&#39;en-US&#39;</span><span class="op">:</span> <span class="op">{</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a>    <span class="dt">dayMode</span><span class="op">:</span> <span class="st">&#39;_Day mode&#39;</span><span class="op">,</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a>    <span class="dt">greeting</span><span class="op">:</span> <span class="st">&#39;_Hello!&#39;</span><span class="op">,</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a>    <span class="dt">nightMode</span><span class="op">:</span> <span class="st">&#39;_Night Mode&#39;</span></span>
+<span id="cb20-6"><a href="#cb20-6"></a>  <span class="op">},</span></span>
+<span id="cb20-7"><a href="#cb20-7"></a>  <span class="st">&#39;es-ES&#39;</span><span class="op">:</span> <span class="op">{</span></span>
+<span id="cb20-8"><a href="#cb20-8"></a>    <span class="dt">dayMode</span><span class="op">:</span> <span class="st">&#39;_Modo día&#39;</span><span class="op">,</span></span>
+<span id="cb20-9"><a href="#cb20-9"></a>    <span class="dt">greeting</span><span class="op">:</span> <span class="st">&#39;_¡Hola!&#39;</span><span class="op">,</span></span>
+<span id="cb20-10"><a href="#cb20-10"></a>    <span class="dt">nightMode</span><span class="op">:</span> <span class="st">&#39;_Modo nocturno&#39;</span></span>
+<span id="cb20-11"><a href="#cb20-11"></a>  <span class="op">}</span></span>
+<span id="cb20-12"><a href="#cb20-12"></a><span class="op">}</span></span>
+<span id="cb20-13"><a href="#cb20-13"></a><span class="at">map</span>(x <span class="kw">=&gt;</span> <span class="va">x</span>.<span class="at">slice</span>(<span class="dv">1</span>))(i18n[<span class="st">&#39;en-US&#39;</span>])</span>
+<span id="cb20-14"><a href="#cb20-14"></a><span class="co">// {</span></span>
+<span id="cb20-15"><a href="#cb20-15"></a><span class="co">//   dayMode: &#39;Day mode&#39;,</span></span>
+<span id="cb20-16"><a href="#cb20-16"></a><span class="co">//   greeting: &#39;Hello!&#39;,</span></span>
+<span id="cb20-17"><a href="#cb20-17"></a><span class="co">//   nightMode: &#39;Night Mode&#39;</span></span>
+<span id="cb20-18"><a href="#cb20-18"></a><span class="co">// }</span></span></code></pre></div>
+<p>Okay – what about our enire <code>i18n</code> object?</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1"></a><span class="at">map</span>(<span class="at">map</span>(x <span class="kw">=&gt;</span> <span class="va">x</span>.<span class="at">slice</span>(<span class="dv">1</span>)))(i18n)</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="co">// {</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="co">//  &#39;en-US&#39;: {</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="co">//    dayMode: &#39;Day mode&#39;,</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a><span class="co">//    greeting: &#39;Hello!&#39;,</span></span>
+<span id="cb21-6"><a href="#cb21-6"></a><span class="co">//    nightMode: &#39;Night Mode&#39;</span></span>
+<span id="cb21-7"><a href="#cb21-7"></a><span class="co">//  },</span></span>
+<span id="cb21-8"><a href="#cb21-8"></a><span class="co">//  &#39;es-ES&#39;: {</span></span>
+<span id="cb21-9"><a href="#cb21-9"></a><span class="co">//    dayMode: &#39;Modo día&#39;,</span></span>
+<span id="cb21-10"><a href="#cb21-10"></a><span class="co">//    greeting: &#39;¡Hola!&#39;,</span></span>
+<span id="cb21-11"><a href="#cb21-11"></a><span class="co">//    nightMode: &#39;Modo nocturno&#39;</span></span>
+<span id="cb21-12"><a href="#cb21-12"></a><span class="co">//  }</span></span>
+<span id="cb21-13"><a href="#cb21-13"></a><span class="co">// }</span></span></code></pre></div>
+<p>Since we’re dealing with nested objects, we need to use <code>map</code> on an <code>Object</code> inside an <code>Object</code>! We pass a nested <code>map</code>ping function, and our little underscore problem is gone!</p>
+<h2 id="map-a-function"><code>map</code> a <code>Function</code></h2>
+<h2 id="map-a-functor"><code>map</code> a <code>Functor</code></h2>
+<h2 id="wrapping-up">Wrapping Up</h2>
+<hr />
+<p>Thank you for reading! <br /> Robert</p>
+    </section>
+  </article>
+</main>
+
+<footer>
+  <section class="subscribe section--padded">
+  <div class="layout--constrained">
+    <h2 class="subscribe__header">Get notified of new posts</h2>
+
+    <form action="//robertwpearce.us13.list-manage.com/subscribe/post?u=2df44e8960266388bff165fa6&amp;id=ee2f2a3737" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate class="subscribe__form">
+      <div style="position: absolute; left: -5000px;" aria-hidden="true">
+        <input type="text" name="b_2df44e8960266388bff165fa6_ee2f2a3737" tabindex="-1" value="">
+      </div>
+      <div class="subscribe__section">
+        <input type="email" value="" id="mce-EMAIL" class="subscribe__input" name="EMAIL" placeholder="you@greatemail.com" aria-label="Email Address">
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe__submit">
+      </div>
+      <small>Note: I will <em>never</em> give out your email nor spam you. Unsubscribe at any time.</small>
+    </form>
+    <p>
+      <small>(or subscribe to the <a href="/atom.xml" class="subscribe__link">atom</a> or <a class="subscribe__link" href="/rss.xml">rss</a> feeds)</small>
+    </p>
+  </div>
+</section>
+
+</footer>
+
+    <script async src="/js/dist/index.js"></script>
+  </body>
+</html>

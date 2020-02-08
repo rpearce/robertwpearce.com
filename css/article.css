@@ -225,13 +225,13 @@ pre.sourceCode ::selection {
   white-space: normal;
 }
 a[href] > code {
-  box-shadow: 0 1px 0 var(--textLinkColor);
-  border-radius: 3px;
+  border-radius: 3px 3px 0 0;
+  border-bottom: 1px solid var(--textLinkColor);
 }
 a[href]:hover > code,
 a[href]:focus > code,
 a[href]:visited > code {
-  box-shadow: 0 1px 0 var(--textLinkHoverColor);
+  border-bottom: 1px solid var(--textLinkHoverColor);
 }
 pre[data-line] {
   padding: 1em 0 1em 3em;

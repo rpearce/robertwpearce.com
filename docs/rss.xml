@@ -7,8 +7,16 @@
         <description><![CDATA[Posts on JavaScript, Node.js, Haskell, Elm, Ruby and more.]]></description>
         <atom:link href="https://robertwpearce.com/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Mon, 27 Jan 2020 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Thu, 06 Feb 2020 00:00:00 UT</lastBuildDate>
         <item>
+    <title>JavaScript: Writing a Functional Programming-Style map Function</title>
+    <link>https://robertwpearce.com/javascript-writing-a-functional-programming-style-map-function.html</link>
+    <description><![CDATA[]]></description>
+    <pubDate>Thu, 06 Feb 2020 00:00:00 UT</pubDate>
+    <guid>https://robertwpearce.com/javascript-writing-a-functional-programming-style-map-function.html</guid>
+    <dc:creator>Robert Pearce</dc:creator>
+</item>
+<item>
     <title>JavaScript: Understand Array.prototype.map by Reimplementing It</title>
     <link>https://robertwpearce.com/javascript-understand-array-prototype-map-by-reimplementing-it.html</link>
     <description><![CDATA[Write your own implementation of JavaScript's Array.prototype.map method.]]></description>
