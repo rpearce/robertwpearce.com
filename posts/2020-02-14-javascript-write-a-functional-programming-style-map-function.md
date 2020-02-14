@@ -18,8 +18,9 @@ known as
 and some examples of `Functors` are the [Algebraic Data Types](https://github.com/hemanth/functional-programming-jargon#algebraic-data-type)
 [`Maybe`](https://crocks.dev/docs/crocks/Maybe.html) and
 [`Async`](https://crocks.dev/docs/crocks/Async.html) (prior knowledge of them is
-not required, and out of the two, we'll only use `Maybe`). By the end of this
-post, you will:
+not required, and out of the two, we'll only use `Maybe`).
+
+By the end of this post, you will:
 * know how to implement a generic `map` function that includes functions for
   `map`ping `Array`s, `Object`s, and `Functor`s
 * understand how to use `map` in a variety of scenarios
@@ -28,18 +29,6 @@ post, you will:
 * have received a small introduction to Algebraic Data Types via [`crocks.js`](https://crocks.dev)
 
 This is a big post, so buckle up!
-
-<!--If you'd prefer to see a ~5 minute recording of what we'll do in this post, you-->
-<!--can watch the video below; otherwise, carry on!-->
-
-<!--<iframe-->
-<!--  width="560"-->
-<!--  height="315"-->
-<!--  src="https://www.youtube-nocookie.com/embed/n_VTQJARW-o"-->
-<!--  frameborder="0"-->
-<!--  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"-->
-<!--  allowfullscreen-->
-<!--</iframe>-->
 
 * * *
 
@@ -52,6 +41,15 @@ _Also, a library that implements a solid `map` function is
 [crocks.js](https://crocks.dev), and we will use its implementation as our
 template. If you want to skip this article entirely, you can go and view [its
 source](https://github.com/evilsoft/crocks/blob/e4517493079538960d53715ef25d72c264cfecf0/src/pointfree/map.js#L15-L38)._
+
+## Overview
+
+1. [The Goal: `map` All the Things](#the-goal-map-all-the-things)
+1. [Defining Our `map` Function](#defining-our-map-function)
+1. [`map` an `Array`](#map-an-array)
+1. [`map` an `Object`](#map-an-object)
+1. [`map` a `Function`](#map-a-function)
+1. [`map` a `Functor`](#map-a-functor)
 
 ## The Goal: `map` All the Things
 Today we are going to write a `map` function that does the following:
@@ -94,7 +92,7 @@ could pull that into a function, `propId`:
 const propId = x => x.id
 map(propId, [{ id: 1 }, { id: 2 }])     // [1, 2]
 map(propId, [{ id: 'a' }, { id: 'b' }]) // ['a', 'b']
-```
+~~~
 
 Alas, we're back where we started – it's still repetitive!
 
@@ -176,7 +174,7 @@ map :: Functor f => (a -> b) -> f a -> f b
    summing three numbers, `sum3 :: Number -> Number -> Number -> Number`, this
    would read, "`sum3` has the type of an expression that accepts a `Number`
    that returns a function that accepts a `Number` then return a function that
-   accepts a `Number` and then return a `Number`."
+   accepts a `Number` and then returns a `Number`."
 1. `f a` says that a `Functor`, `f`, wraps some other type, `a`. A concrete
    example of this would be `[Number]`, which would be a list of numbers; in
    JavaScript parlance, an `Array` of `Number`s.

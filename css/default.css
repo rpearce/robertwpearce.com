@@ -40,7 +40,6 @@ body.light {
   --separatorColor: #f2f2f2;
   --textColor: #334249;
   --textLinkBorderColor: #287cb4;
-  --textLinkBorderWidth: 2px;
   --textLinkColor: #287cb4;
   --textLinkHoverColor: #206592;
 }
@@ -52,7 +51,7 @@ body.dark {
   --btnBgColor: #0047E2;
   --btnTextColor: #fff;
   --iframeBorderColor: var(--separatorColor);
-  --inlineCodeBgColor: var(--separatorColor);
+  --inlineCodeBgColor: rgba(115, 124, 153, 0.2);
   --inlineCodeColor: #e2e4e9;
   --inputBgColor: #282c35;
   --inputBorderColor: #282c35;
@@ -65,7 +64,6 @@ body.dark {
   --secretGraphicHoverColor: rgba(255, 167, 196, 0.75);
   --textColor: hsla(0, 0%, 100%, 0.88);
   --textLinkBorderColor: #ffa7c4;
-  --textLinkBorderWidth: 1px;
   --textLinkColor: rgb(255, 167, 196);
   --textLinkHoverColor: rgba(255, 167, 196, 0.75);
 }
@@ -96,9 +94,7 @@ button {
 a[href] {
   text-decoration: none;
   color: var(--textLinkColor);
-  border-bottom-width: var(--textLinkBorderWidth);
-  border-bottom-style: solid;
-  border-bottom-color: var(--textLinkBorderColor);
+  box-shadow: 0 1px 0 0 currentColor;
   word-wrap: break-word;
 }
 a[href]:hover,
