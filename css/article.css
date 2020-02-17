@@ -26,7 +26,6 @@
   margin: 0;
 }
 .article h1 > a[href] {
-  border-bottom: none;
   color: inherit;
 }
 .article h1,
@@ -97,7 +96,6 @@
 }
 .article__bgSubHeader a[href] {
   color: inherit;
-  border-color: #fff;
 }
 .article__bgPhotoCred {
   margin-left: 1em;
@@ -216,6 +214,31 @@ pre.sourceCode ::selection {
   text-shadow: none;
   background-color: hsla(0, 0%, 100%, 0.15);
 }
+
+pre.sourceCode:not(.numberSource) > code > span > a { display: none; }
+
+/* ENABLE FOR SOURCE LINES */
+pre.numberSource.sourceCode > code { counter-reset: source-line 0; }
+pre.numberSource.sourceCode > code > span { counter-increment: source-line; }
+pre.numberSource.sourceCode > code > span > a { box-shadow: none; }
+pre.numberSource.sourceCode > code > span > a:first-child::before {
+  content: counter(source-line) "|";
+  position: relative;
+  left: -1em;
+  text-align: right;
+  vertical-align: baseline;
+  border: none;
+  display: inline-block;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: 2.5em;
+  color: rgb(128,147,147);
+}
+
 /* Inline code */
 :not(pre) > code {
   border-radius: 0.3em;
@@ -225,13 +248,7 @@ pre.sourceCode ::selection {
   white-space: normal;
 }
 a[href] > code {
-  box-shadow: 0 1px 0 var(--textLinkColor);
-  border-radius: 3px;
-}
-a[href]:hover > code,
-a[href]:focus > code,
-a[href]:visited > code {
-  box-shadow: 0 1px 0 var(--textLinkHoverColor);
+  border-radius: 3px 3px 0 0;
 }
 pre[data-line] {
   padding: 1em 0 1em 3em;
