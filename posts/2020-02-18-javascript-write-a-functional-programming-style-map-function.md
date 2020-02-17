@@ -1,11 +1,11 @@
 ---
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-description: ""
-image: "/images/.jpg"
+description: "Learn how to write a generic map function to map Arrays, Objects, and Functors."
+image: "/images/queenstown-wharf.jpg"
 keywords: "javascript, map, map function, functional programming, js, programming"
-photoCredit: "robertwpearce"
-photoWebsite: "https://www.instagram.com/robertwpearce"
+photoCredit: "emilycouldmakethat"
+photoWebsite: "https://www.instagram.com/emilycouldmakethat"
 title: "JavaScript: Writing a Functional Programming-Style map Function"
 ---
 
@@ -26,7 +26,7 @@ By the end of this post, you will:
 * understand how to use `map` in a variety of scenarios
 * know how to write a simple `compose` function and use composition
 * know how to reliably test values for their types
-* have received a small introduction to algebraic data types via [`crocks.js`](https://crocks.dev)
+* have received a small introduction to algebraic data types via [`crocks`](https://crocks.dev)
 
 This is a big post, so buckle up! If you want to see the final product, check
 out this CodeSandbox: https://codesandbox.io/s/bitter-grass-tknwb.
@@ -39,7 +39,7 @@ Method](https://www.youtube.com/watch?v=tjjg3_jyD7M) or my post on [JavaScript:
 Understand Array.prototype.map by Reimplementing It](https://robertwpearce.com/javascript-understand-array-prototype-map-by-reimplementing-it.html)._
 
 _Also, a library that implements a solid `map` function is
-[crocks.js](https://crocks.dev), and we will use its implementation as our
+[crocks](https://crocks.dev), and we will use its implementation as our
 template. If you want to skip this article entirely, you can go and view [its
 source](https://github.com/evilsoft/crocks/blob/e4517493079538960d53715ef25d72c264cfecf0/src/pointfree/map.js#L15-L38)._
 
@@ -94,7 +94,7 @@ could pull that into a function, `propId`:
 const propId = x => x.id
 map(propId, [{ id: 1 }, { id: 2 }])     // [1, 2]
 map(propId, [{ id: 'a' }, { id: 'b' }]) // ['a', 'b']
-~~~
+```
 
 Alas, we're back where we started – it's still repetitive!
 
@@ -145,7 +145,7 @@ Haskell-style pseudo-type signature:
 map :: Functor f => (a -> b) -> f a -> f b
 ```
 
-And we can use that as a comment above our function:
+And we can place that as a comment above our function:
 
 ```javascript
 // map :: Functor f => (a -> b) -> f a -> f b
@@ -167,7 +167,9 @@ map :: Functor f => (a -> b) -> f a -> f b
    constraint](http://www.learnyouahaskell.com/types-and-typeclasses). This
    dictates that we're going to use something in the type signature that obeys
    the [Functor Laws](https://wiki.haskell.org/Functor), _identity_ and
-   [_composition_](https://robertwpearce.com/ramda-chops-function-composition.html).
+   [_composition_](https://robertwpearce.com/ramda-chops-function-composition.html)
+   ([view the Functor Laws described using JavaScript
+   here](https://github.com/hemanth/functional-programming-jargon#functor)).
    The lowercase `f` represents what the `Functor` will be in the signature.
 1. Our `map`ping function; e.g., `x => x.id`, like we did above.
 1. `->` Arrows are used in type signatures to say "then return...". In our
@@ -175,7 +177,7 @@ map :: Functor f => (a -> b) -> f a -> f b
    function that accepts `f` of `a` and then return `f` of `b`". If we were
    summing three numbers, `sum3 :: Number -> Number -> Number -> Number`, this
    would read, "`sum3` has the type of an expression that accepts a `Number`
-   that returns a function that accepts a `Number` then return a function that
+   that returns a function that accepts a `Number` then returns a function that
    accepts a `Number` and then returns a `Number`."
 1. `f a` says that a `Functor`, `f`, wraps some other type, `a`. A concrete
    example of this would be `[Number]`, which would be a list of numbers; in
@@ -188,14 +190,14 @@ map :: Functor f => (a -> b) -> f a -> f b
    that into `[String]` (a list of `String`s).
 
 All together now! "`map` has the type of an expression where `f` is a `Functor`,
-and it accepts a function from `a` to `b` then returns a function that accepts
-`f` of `a` and then returns `f` of `b`."
+and it accepts a function from `a` to `b`, then returns a function that accepts
+`f` of `a`, and then returns `f` of `b`."
 
 ## `map` an `Array`
 Let's `map` an `Array`!
 
 _If you're not familiar with `Array.prototype.map` already, check out my video
-video on [Using JavaScript's Array.prototype.map Method](https://www.youtube.com/watch?v=tjjg3_jyD7M)
+on [Using JavaScript's Array.prototype.map Method](https://www.youtube.com/watch?v=tjjg3_jyD7M)
 or my post on [JavaScript: Understand Array.prototype.map by Reimplementing
 It](https://robertwpearce.com/javascript-understand-array-prototype-map-by-reimplementing-it.html)._
 
@@ -245,7 +247,7 @@ const map = fn => m => {
 // isArray :: a -> Bool
 const isArray = x => Array.isArray(x)
 
-// mapArray :: (a -> b) -> Array a -> Array b
+// mapArray :: ((a -> b), Array a) -> Array b
 const mapArray = (fn, m) => m.map(x => fn(x))
 ```
 
@@ -260,13 +262,15 @@ there are a few other arguments that the native implementation of `map` provide,
 as well as some potential changes to the `this` keyword in your callback
 function scope. Instead of allowing those to pass through, we simply take the
 first argument, the currently iterated value, and send that to the callback
-function.
+function. (Check out [ramda.js' `addIndex`
+function](https://ramdajs.com/docs/#addIndex) to see a different pattern for
+working with indices and `Array`s.)
 
 Now that we've seen the easy way to do `map` with `Array`, let's see what this
 would look like if we felt like implementing `mapArray` ourselves:
 
 ```javascript
-// mapArray :: (a -> b) -> Array a -> Array b
+// mapArray :: ((a -> b), Array a) -> Array b
 const mapArray = (fn, m) => {
   const newArray = []
 
@@ -346,7 +350,7 @@ const map = fn => m => {
   }
 
   if (isObject(m)) {
-    return mapObj(fn, m)
+    return mapObject(fn, m)
   }
 }
 
@@ -354,8 +358,8 @@ const map = fn => m => {
 const isObject = x =>
   !!x && Object.prototype.toString.call(x) === '[object Object]'
 
-// mapObj :: (a -> b) -> { k: a } -> { k: b }
-const mapObj = (fn, m) => {
+// mapObject :: ((a -> b), { k: a }) -> { k: b }
+const mapObject = (fn, m) => {
   const obj = {}
 
   for (const [k, v] of Object.entries(m)) {
@@ -386,18 +390,19 @@ Object.prototype.toString.call({})
 // "[object Object]"
 ```
 
-We then use our new `mapObj` function, and its signature is
+We then use our new `mapObject` function, and its signature is
 
 ```haskell
-mapObj :: (a -> b) -> { k: a } -> { k: b }
+mapObject :: ((a -> b), { k: a }) -> { k: b }
 ```
 
-`mapObj` takes a function from `a` to `b` then returns a function that accepts
-an `Object` with a key(s) and some value, `a` and returns an `Object` with a
-key(s) and some value `b`. In short, it maps the _values_ of an `Object`. Our
-`mapObj` function is nothing more than a `for` loop over each value! It calls
-the callback function with value and returns a new object with the same key but
-an updated value.
+`mapObject` takes a function from `a` to `b` and an `Object` with a key(s) and
+some value(s), `a`, and returns an `Object` with a key(s) and some value(s) `b`.
+In short, it maps the _values_ of an `Object`. Our `mapObject` function is
+nothing more than a `for` loop over each value returned from
+[`Object.entries()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries)!
+It calls the callback function with each value and returns a new object with the
+same key but a new, updated value.
 
 Let's try it out:
 
@@ -536,7 +541,7 @@ const isFunction = x => typeof x === 'function'
 // isFunctor :: a -> Bool
 const isFunctor  = x => !!x && isFunction(x['map'])
 
-// mapFunctor :: Functor f => (a -> b) -> f a -> f b
+// mapFunctor :: Functor f => ((a -> b), f a) -> f b
 const mapFunctor = (fn, m) => m.map(fn)
 ```
 
@@ -551,19 +556,24 @@ them separate and only call the callback to `Array.prototype.map` with the
 currently iterated item. Here's the difference:
 
 ```javascript
-// mapArray :: (a -> b) -> Array a -> Array b
+// mapArray :: ((a -> b), Array a) -> Array b
 const mapArray = (fn, m) => m.map(x => (fn(x))
 
-// mapFunctor :: Functor f => (a -> b) -> f a -> f b
+// mapFunctor :: Functor f => ((a -> b), f a) -> f b
 const mapFunctor = (fn, m) => m.map(fn)
 ```
 
+If you don't care about this, it's totally acceptable to not include the `Array`
+bits at all and use the `Functor` `map` ([`fmap`
+anyone?](https://en.wikibooks.org/wiki/Haskell/The_Functor_class)) to handle the
+`map`ping of `Array`s, since they're `Functor`s.
+
 To test our `Functor` `map`ping, we'll use a library,
-[crocks](https://crocks.dev), to provide us access to an [algebraic data types](https://github.com/hemanth/functional-programming-jargon#algebraic-data-type)
+[crocks](https://crocks.dev), to provide us access to an [algebraic data type](https://github.com/hemanth/functional-programming-jargon#algebraic-data-type)
 called [`Maybe`](https://crocks.dev/docs/crocks/Maybe.html).
 
 ```javascript
-import { option, prop } from 'crocks'
+import { compose, option, prop } from 'crocks'
 
 const company = {
   name: 'Pearce Software, LLC',
@@ -574,8 +584,8 @@ const company = {
   ]
 }
 
-prop('locations', company) // Just [String]
 prop('foo', company)       // Nothing
+prop('locations', company) // Just [String]
 
 option([], prop('foo', company))
 // []
@@ -596,22 +606,22 @@ getLocations(company)
 // ]
 ```
 
-Woah, woah, woah! What's all this `Just` and `Nothing` stuff? We're not going to
+Pump the breaks! What's all this `Just` and `Nothing` stuff? We're not going to
 focus on `Maybe`s today, but the short version is that the `locations` property
 _may_ or _may not_ be in the object, so we encapsulate that uncertainty inside
 of a `Maybe` algebraic data type via the `prop` function, and we provide a
 default value via the `option` function that the `Maybe` can fall back to in the
-event of not being able to find `locations`. If you're an egghead.io subscriber,
-Andy Van Slaars has a great course, [Safer JavaScript with the Maybe
-Type](https://egghead.io/courses/safer-javascript-with-the-maybe-type), or you
-can check out [a Haskell article on The Functor
+event of not being able to find `locations`. If you're an
+[egghead.io](https://egghead.io) subscriber, [Andy Van
+Slaars](https://twitter.com/avanslaars/) has a great course, [Safer JavaScript
+with the Maybe Type](https://egghead.io/courses/safer-javascript-with-the-maybe-type),
+or you can check out [a Haskell article on The Functor
 class](https://en.wikibooks.org/wiki/Haskell/The_Functor_class).
 
 Why does this matter? We want to `map` a `Maybe`, and the `prop` function will
 give us access to one. Let's see what it looks like:
 
 ```javascript
-// use crocks' compose instead of our own
 import { compose, option, prop } from 'crocks'
 
 const upcase = x => x.toUpperCase()
@@ -633,14 +643,15 @@ Okay, cool! But why are we `map`ping twice?
 
 When we work with algebraic data types like `Maybe`, instead of writing `if
 (dataIsValid) doSomething`, the `map` method on a `Maybe` gives us access to
-the value inside the `Maybe` (our `locations`) but _only if the data is
-available_.
+the value inside the `Maybe` (our `locations`), but it does so _only if the data
+is available_.
 
 Once we have access to the `locations`, we then use `map` again to `upcase` each
 location.
 
 ## `throw`ing Out Bad Data
-What happens if the our argument to `map` aren't `Function`s?
+What happens if the arguments passed to `map` aren't a `Function` and a
+`Functor`?
 
 ```javascript
 map(null)([1,2,3])    // TypeError: fn is not a function
@@ -649,7 +660,7 @@ map(null)(null)       // undefined
 ```
 
 I think we can provide some more helpful messaging to guide users of our `map`
-tool.
+tool on how to use it correctly.
 
 ```javascript
 // map :: Functor f => (a -> b) -> f a -> f b
@@ -722,7 +733,7 @@ const isFunctor  = x => !!x && isFunction(x['map'])
 const isObject = x =>
   !!x && Object.prototype.toString.call(x) === '[object Object]'
 
-// mapArray :: (a -> b) -> Array -> Array
+// mapArray :: ((a -> b), Array a) -> Array b
 const mapArray = (fn, m) => {
   const newArray = []
 
@@ -746,7 +757,7 @@ const mapObj = (fn, m) => {
   return obj
 }
 
-// mapFunctor :: Functor f => (a -> b) -> f a -> f b
+// mapFunctor :: Functor f => ((a -> b), f a) -> f b
 const mapFunctor = (fn, m) => m.map(fn)
 ```
 
