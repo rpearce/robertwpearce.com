@@ -87,7 +87,7 @@
 a[href].secret__link {
   display: inline-block;
   padding: 0 2em;
-  border-bottom: none;
+  box-shadow: none;
 }
 .secret__graphicG {
   stroke: var(--secretGraphicColor);
