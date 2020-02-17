@@ -15,7 +15,7 @@ function that not only works with [`Array`](https://developer.mozilla.org/en-US/
 but any data structure that implements a `map` method. Such data structures are
 known as
 [`Functors`](https://github.com/hemanth/functional-programming-jargon#functor),
-and some examples of `Functors` are the [Algebraic Data Types](https://github.com/hemanth/functional-programming-jargon#algebraic-data-type)
+and some examples of `Functors` are the [algebraic data types](https://github.com/hemanth/functional-programming-jargon#algebraic-data-type)
 [`Maybe`](https://crocks.dev/docs/crocks/Maybe.html) and
 [`Async`](https://crocks.dev/docs/crocks/Async.html) (prior knowledge of them is
 not required, and out of the two, we'll only use `Maybe`).
@@ -26,9 +26,10 @@ By the end of this post, you will:
 * understand how to use `map` in a variety of scenarios
 * know how to write a simple `compose` function and use composition
 * know how to reliably test values for their types
-* have received a small introduction to Algebraic Data Types via [`crocks.js`](https://crocks.dev)
+* have received a small introduction to algebraic data types via [`crocks.js`](https://crocks.dev)
 
-This is a big post, so buckle up!
+This is a big post, so buckle up! If you want to see the final product, check
+out this CodeSandbox: https://codesandbox.io/s/bitter-grass-tknwb.
 
 * * *
 
@@ -50,6 +51,7 @@ source](https://github.com/evilsoft/crocks/blob/e4517493079538960d53715ef25d72c2
 1. [`map` an `Object`](#map-an-object)
 1. [`map` a `Function`](#map-a-function)
 1. [`map` a `Functor`](#map-a-functor)
+1. [`throw`ing Out Bad Data](#throwing-out-bad-data)
 
 ## The Goal: `map` All the Things
 Today we are going to write a `map` function that does the following:
@@ -243,7 +245,7 @@ const map = fn => m => {
 // isArray :: a -> Bool
 const isArray = x => Array.isArray(x)
 
-// mapArray :: (a -> b) -> Array -> Array
+// mapArray :: (a -> b) -> Array a -> Array b
 const mapArray = (fn, m) => m.map(x => fn(x))
 ```
 
@@ -264,7 +266,7 @@ Now that we've seen the easy way to do `map` with `Array`, let's see what this
 would look like if we felt like implementing `mapArray` ourselves:
 
 ```javascript
-// mapArray :: (a -> b) -> Array -> Array
+// mapArray :: (a -> b) -> Array a -> Array b
 const mapArray = (fn, m) => {
   const newArray = []
 
@@ -301,20 +303,20 @@ and go out into the unknown.
 
 ## `map` an `Object`
 Let's say we have an `i18n` (short for "internationalization") object that we've
-been given that has a terribly annoying issue: every translation is prefixed
-with an underscore (`_`)!
+been given that has a terribly annoying issue: every translation is prefixed and
+suffixed with an underscore (`_`)!
 
 ```javascript
 const i18n = {
   'en-US': {
-    dayMode: '_Day mode',
-    greeting: '_Hello!',
-    nightMode: '_Night Mode'
+    dayMode: '_Day mode_',
+    greeting: '_Hello!_',
+    nightMode: '_Night Mode_'
   },
   'es-ES': {
-    dayMode: '_Modo día',
-    greeting: '_¡Hola!'
-    nightMode: '_Modo nocturno'
+    dayMode: '_Modo día_',
+    greeting: '_¡Hola!_'
+    nightMode: '_Modo nocturno_'
   }
 }
 ```
@@ -322,7 +324,8 @@ const i18n = {
 We could manually delete each one, or we could find and replace with our text
 editor, or we could write a `for` loop to do this. But because we're super
 awesome functional programmers, we'll try to `map` over the `Object` and write a
-function that removes the prefixed underscore.
+function that removes the prefixed & suffixed underscores (...then we copy and
+paste that?  work with me here!).
 
 Before we can do this, we need to see what happens when we call `.map()` on an
 `Object`:
@@ -383,7 +386,7 @@ Object.prototype.toString.call({})
 // "[object Object]"
 ```
 
-We then use our new `mapObj` function whose signature is
+We then use our new `mapObj` function, and its signature is
 
 ```haskell
 mapObj :: (a -> b) -> { k: a } -> { k: b }
@@ -401,17 +404,17 @@ Let's try it out:
 ```javascript
 const i18n = {
   'en-US': {
-    dayMode: '_Day mode',
-    greeting: '_Hello!',
-    nightMode: '_Night Mode'
+    dayMode: '_Day mode_',
+    greeting: '_Hello!_',
+    nightMode: '_Night Mode_'
   },
   'es-ES': {
-    dayMode: '_Modo día',
-    greeting: '_¡Hola!',
-    nightMode: '_Modo nocturno'
+    dayMode: '_Modo día_',
+    greeting: '_¡Hola!_'
+    nightMode: '_Modo nocturno_'
   }
 }
-map(x => x.slice(1))(i18n['en-US'])
+map(x => x.slice(1, -1))(i18n['en-US'])
 // {
 //   dayMode: 'Day mode',
 //   greeting: 'Hello!',
@@ -422,7 +425,7 @@ map(x => x.slice(1))(i18n['en-US'])
 Okay – what about our enire `i18n` object?
 
 ```javascript
-map(map(x => x.slice(1)))(i18n)
+map(map(x => x.slice(1, -1)))(i18n)
 // {
 //  'en-US': {
 //    dayMode: 'Day mode',
@@ -442,10 +445,310 @@ inside an `Object`! We pass a nested `map`ping function, and our little
 underscore problem is gone!
 
 ## `map` a `Function`
+Remember our functions `mult2` and `add10` from before?
+
+```javascript
+const add10 = x => x + 10
+const mult2 = x => x * 2
+```
+
+What would happen if we used those as the arguments to our `map` function and
+wanted them to be automatically composed together so that we can then provide a
+value later?
+
+```javascript
+map(add10)(mult2)     // undefined
+map(add10)(mult2)(12) // TypeError: map(...)(...) is not a function
+```
+
+Time for our `map` function to handle a `Function` as the second argument and
+`compose` the two functions together:
+
+```javascript
+// map :: Functor f => (a -> b) -> f a -> f b
+const map = fn => m => {
+  if (isFunction(m)) {
+    return compose(fn, m)
+  }
+
+  if (isArray(m)) {
+    return mapArray(fn, m)
+  }
+
+  if (isObject(m)) {
+    return mapObj(fn, m)
+  }
+}
+
+// isFunction :: a -> Bool
+const isFunction = x => typeof x === 'function'
+
+// compose :: ((b -> c), (a -> b)) -> a -> c
+const compose = (f, g) => x => f(g(x))
+```
+
+And when we run our previously failed code again,
+
+```javascript
+map(add10)(mult2)     // function compose(x)
+map(add10)(mult2)(12) // 44
+```
+
+we can see that calling `map` with two functions returns a composition of those
+two functions, and calling that result with a primitive value (`12`) gives us
+back our result, `44`.
 
 ## `map` a `Functor`
+When we learned about `map`ping `Array`s before, we learned that `Array`s are
+`Functor`s because they adhere to the laws of _identity_ and _composition_;
+i.e., they are `map`pable.
+
+There are all sorts of other data structures that implement a `map` method, just
+like `Array.prototype` does, and we want to be able to handle those, too!
+
+We currently have all the tools required to implement `map` for `Functor`s
+without even knowing how they might work! All we need to know is, "Does it
+implement `map` as a `Function`?" Let's see what we can come up with!
+
+```javascript
+// map :: Functor f => (a -> b) -> f a -> f b
+const map = fn => m => {
+  if (isFunction(m)) {
+    return compose(fn, m)
+  }
+
+  if (isArray(m)) {
+    return mapArray(fn, m)
+  }
+
+  if (isFunctor(m)) {
+    return mapFunctor(fn, m)
+  }
+
+  if (isObject(m)) {
+    return mapObj(fn, m)
+  }
+}
+
+// isFunction :: a -> Bool
+const isFunction = x => typeof x === 'function'
+
+// isFunctor :: a -> Bool
+const isFunctor  = x => !!x && isFunction(x['map'])
+
+// mapFunctor :: Functor f => (a -> b) -> f a -> f b
+const mapFunctor = (fn, m) => m.map(fn)
+```
+
+That is surprisingly simple, isn't it? We use our `isFunction` check from before
+to test if `m` has a `map` property that is a `Function`, then we call `map` on
+`m` and pass it the callback `Function` in `mapFunctor`.
+
+You might be thinking that `mapArray` and `mapFunctor` could use the same handler
+because `Array`s are `Functors`, and you are correct; however, because of the
+extra implementation bits that come back from `Array.prototype.map`, we'll keep
+them separate and only call the callback to `Array.prototype.map` with the
+currently iterated item. Here's the difference:
+
+```javascript
+// mapArray :: (a -> b) -> Array a -> Array b
+const mapArray = (fn, m) => m.map(x => (fn(x))
+
+// mapFunctor :: Functor f => (a -> b) -> f a -> f b
+const mapFunctor = (fn, m) => m.map(fn)
+```
+
+To test our `Functor` `map`ping, we'll use a library,
+[crocks](https://crocks.dev), to provide us access to an [algebraic data types](https://github.com/hemanth/functional-programming-jargon#algebraic-data-type)
+called [`Maybe`](https://crocks.dev/docs/crocks/Maybe.html).
+
+```javascript
+import { option, prop } from 'crocks'
+
+const company = {
+  name: 'Pearce Software, LLC',
+  locations: [
+    'Charleston, SC, USA',
+    'Auckland, NZ',
+    'London, England, UK'
+  ]
+}
+
+prop('locations', company) // Just [String]
+prop('foo', company)       // Nothing
+
+option([], prop('foo', company))
+// []
+
+option([], prop('locations', company))
+// [
+//   'Charleston, SC, USA',
+//   'Auckland, NZ',
+//   'London, England, UK'
+// ]
+
+const getLocations = compose(option([]), prop('locations'))
+getLocations(company)
+// [
+//   'Charleston, SC, USA',
+//   'Auckland, NZ',
+//   'London, England, UK'
+// ]
+```
+
+Woah, woah, woah! What's all this `Just` and `Nothing` stuff? We're not going to
+focus on `Maybe`s today, but the short version is that the `locations` property
+_may_ or _may not_ be in the object, so we encapsulate that uncertainty inside
+of a `Maybe` algebraic data type via the `prop` function, and we provide a
+default value via the `option` function that the `Maybe` can fall back to in the
+event of not being able to find `locations`. If you're an egghead.io subscriber,
+Andy Van Slaars has a great course, [Safer JavaScript with the Maybe
+Type](https://egghead.io/courses/safer-javascript-with-the-maybe-type), or you
+can check out [a Haskell article on The Functor
+class](https://en.wikibooks.org/wiki/Haskell/The_Functor_class).
+
+Why does this matter? We want to `map` a `Maybe`, and the `prop` function will
+give us access to one. Let's see what it looks like:
+
+```javascript
+// use crocks' compose instead of our own
+import { compose, option, prop } from 'crocks'
+
+const upcase = x => x.toUpperCase()
+
+const getLocations =
+  compose(option([]), map(map(upcase)), prop('locations'))
+
+getLocations({}) // []
+
+getLocations(company)
+// [
+//   'CHARLESTON, SC, USA',
+//   'AUCKLAND, NZ',
+//   'LONDON, ENGLAND, UK'
+// ]
+```
+
+Okay, cool! But why are we `map`ping twice?
+
+When we work with algebraic data types like `Maybe`, instead of writing `if
+(dataIsValid) doSomething`, the `map` method on a `Maybe` gives us access to
+the value inside the `Maybe` (our `locations`) but _only if the data is
+available_.
+
+Once we have access to the `locations`, we then use `map` again to `upcase` each
+location.
+
+## `throw`ing Out Bad Data
+What happens if the our argument to `map` aren't `Function`s?
+
+```javascript
+map(null)([1,2,3])    // TypeError: fn is not a function
+map(x => x * 2)(null) // undefined
+map(null)(null)       // undefined
+```
+
+I think we can provide some more helpful messaging to guide users of our `map`
+tool.
+
+```javascript
+// map :: Functor f => (a -> b) -> f a -> f b
+const map = fn => m => {
+  if (!isFunction(fn)) {
+    throw new TypeError(`map: Please provide a Function for the first argument`)
+  }
+
+  // ...our other handlers...
+
+  throw new TypeError(`map: Please provide a Functor or Object for the second argument`)
+}
+
+map(null)([1,2,3])    // TypeError: map: Please provide a Function for the first argument
+map(x => x * 2)(null) // TypeError: map: Please provide a Functor or Object for the second argument
+map(null)(null)       // TypeError: map: Please provide a Function for the first argument
+```
+
+Now, when we provide bad arguments, we're told exactly what we need to do.
 
 ## Wrapping Up
+Congratulations and thank you for making it to the end! If you want to play
+around with what we created, check out this CodeSandbox:
+https://codesandbox.io/s/bitter-grass-tknwb.
+
+Here is our code from today in its entirety:
+
+```javascript
+const { compose, option, prop } = require('crocks')
+
+// map :: Functor f => (a -> b) -> f a -> f b
+const map = fn => m => {
+  if (!isFunction(fn)) {
+    throw new TypeError(`map: Please provide a Function for the first argument`)
+  }
+
+  if (isFunction(m)) {
+    return compose(fn, m)
+  }
+
+  if (isArray(m)) {
+    return mapArray(fn, m)
+  }
+
+  if (isFunctor(m)) {
+    return mapFunctor(fn, m)
+  }
+
+  if (isObject(m)) {
+    return mapObj(fn, m)
+  }
+
+  throw new TypeError(`map: Please provide a Functor or Object for the second argument`)
+}
+
+// we're opting for crocks' compose, instead
+// compose :: ((b -> c), (a -> b)) -> a -> c
+// const compose = (f, g) => x => f(g(x))
+
+// isArray :: a -> Bool
+const isArray = x => Array.isArray(x)
+
+// isFunction :: a -> Bool
+const isFunction = x => typeof x === 'function'
+
+// isFunctor :: a -> Bool
+const isFunctor  = x => !!x && isFunction(x['map'])
+
+// isObject :: a -> Bool
+const isObject = x =>
+  !!x && Object.prototype.toString.call(x) === '[object Object]'
+
+// mapArray :: (a -> b) -> Array -> Array
+const mapArray = (fn, m) => {
+  const newArray = []
+
+  for (let i = 0; i < m.length; i++) {
+    newArray.push(fn(m[i]))
+  }
+
+  return newArray
+}
+// realistically, you should use this mapArray:
+// const mapArray = (fn, m) => m.map(x => fn(x))
+
+// mapObj :: (a -> b) -> { k: a } -> { k: b }
+const mapObj = (fn, m) => {
+  const obj = {}
+
+  for (const [k, v] of Object.entries(m)) {
+    obj[k] = fn(v)
+  }
+
+  return obj
+}
+
+// mapFunctor :: Functor f => (a -> b) -> f a -> f b
+const mapFunctor = (fn, m) => m.map(fn)
+```
 
 * * *
 
