@@ -117,7 +117,7 @@ applying_](https://github.com/hemanth/functional-programming-jargon#partial-appl
 the function to `map`, we can!
 
 ```javascript
-const mapId = map(x => x.id)
+const mapId = map.bind(null, x => x.id)
 mapId([{ id: 1 }, { id: 2 }])     // [1, 2]
 mapId([{ id: 'a' }, { id: 'b' }]) // ['a', 'b']
 ```
