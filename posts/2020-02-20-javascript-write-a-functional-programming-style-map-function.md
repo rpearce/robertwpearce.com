@@ -75,7 +75,7 @@ Sounds easy, right? We'll see!
 There are some things we already know about our `map` function:
 * it's called `map` (yay! nailed it!)
 * it takes a function (`fn`) and then some datum (`m`[^2])[^3]
-* it returns the data as transformed by said function
+* it returns the datum as transformed by said function
 
 [^2]: `m` for [`Monoid`](https://github.com/hemanth/functional-programming-jargon#monoid) &ensp;
 
