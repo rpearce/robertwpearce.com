@@ -10,7 +10,7 @@ import qualified Data.Time.Clock  as Clock
 import           Data.Time.Format (TimeLocale, defaultTimeLocale, formatTime,
                                    parseTimeM)
 import           Slug             (toSlug)
-import           Text.Pandoc      (Extension (Ext_auto_identifiers, Ext_fenced_code_attributes, Ext_smart),
+import           Text.Pandoc      (Extension (Ext_auto_identifiers, Ext_fenced_code_attributes, Ext_smart, Ext_footnotes),
                                    Extensions, ReaderOptions, WriterOptions,
                                    extensionsFromList, githubMarkdownExtensions,
                                    readerExtensions, writerExtensions)
@@ -210,6 +210,7 @@ pandocExtensionsCustom =
         [ Ext_auto_identifiers
         , Ext_fenced_code_attributes
         , Ext_smart
+        , Ext_footnotes
         ]
 
 

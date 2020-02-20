@@ -103,6 +103,9 @@ a[href]:visited {
   color: var(--textLinkHoverColor);
   border-bottom-color: var(--textLinkHoverColor);
 }
+a[href].footnote-ref {
+  box-shadow: none;
+}
 img {
   display: block;
   border: 0;

@@ -7,12 +7,12 @@
         <description><![CDATA[Posts on JavaScript, Node.js, Haskell, Elm, Ruby and more.]]></description>
         <atom:link href="https://robertwpearce.com/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Tue, 18 Feb 2020 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Thu, 20 Feb 2020 00:00:00 UT</lastBuildDate>
         <item>
     <title>JavaScript: Writing a Functional Programming-Style map Function</title>
     <link>https://robertwpearce.com/javascript-writing-a-functional-programming-style-map-function.html</link>
     <description><![CDATA[Learn how to write a generic map function to map Arrays, Objects, and Functors.]]></description>
-    <pubDate>Tue, 18 Feb 2020 00:00:00 UT</pubDate>
+    <pubDate>Thu, 20 Feb 2020 00:00:00 UT</pubDate>
     <guid>https://robertwpearce.com/javascript-writing-a-functional-programming-style-map-function.html</guid>
     <dc:creator>Robert Pearce</dc:creator>
 </item>
