@@ -8,8 +8,16 @@
         <name>Robert Pearce</name>
         <email>me@robertwpearce.com</email>
     </author>
-    <updated>2020-02-20T00:00:00Z</updated>
+    <updated>2020-02-24T00:00:00Z</updated>
     <entry>
+    <title>Catch Low-Hanging Accessibility Fruit with axe-core</title>
+    <link href="https://robertwpearce.com/catch-low-hanging-accessibility-fruit-with-axe-core.html" />
+    <id>https://robertwpearce.com/catch-low-hanging-accessibility-fruit-with-axe-core.html</id>
+    <published>2020-02-24T00:00:00Z</published>
+    <updated>2020-02-24T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Automate away easy-to-catch accessibility issues]]></summary>
+</entry>
+<entry>
     <title>JavaScript: Writing a Functional Programming-Style map Function</title>
     <link href="https://robertwpearce.com/javascript-writing-a-functional-programming-style-map-function.html" />
     <id>https://robertwpearce.com/javascript-writing-a-functional-programming-style-map-function.html</id>
