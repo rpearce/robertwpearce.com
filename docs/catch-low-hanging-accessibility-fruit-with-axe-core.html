@@ -130,9 +130,23 @@
 <span id="cb1-51"><a href="#cb1-51"></a><span class="co">//   }</span></span>
 <span id="cb1-52"><a href="#cb1-52"></a><span class="co">//  ]</span></span></code></pre></div>
 <p>It can detect all sorts of accessibility issues, so long as the environment in which it’s being tested supports the browser features used in <code>axe-core</code>’s tests. For example, <code>jsdom</code>, which <code>jest</code> uses as its browser mocking engine, <a href="https://github.com/jsdom/jsdom/pull/2719">only recently added some support for <code>Range</code></a>, it seems there are still some aspects missing, and this prevents <code>axe-core</code> from being able to test things like the accessibility of text color on certain backgrounds.</p>
-<p>That said, the sheer number of issues that can be caught with this tool is staggering. If you work with tools like React and combine this with Deque’s <a href="https://github.com/dequelabs/react-axe"><code>react-axe</code></a> tool and <a href="https://github.com/evcohen/eslint-plugin-jsx-a11y"><code>eslint-plugin-jsx-a11y</code></a>, you are sure to catch heaps of issues you might accidentally overlook. <em>Note: these tools are not replacements for real accessibility testing.</em></p>
+<p>That said, the sheer number of issues that can be caught with this tool is staggering. If you work with tools like React and combine this with Deque’s <a href="https://github.com/dequelabs/react-axe"><code>react-axe</code></a> tool and <a href="https://github.com/evcohen/eslint-plugin-jsx-a11y"><code>eslint-plugin-jsx-a11y</code></a>, you are sure to catch heaps of issues you might accidentally overlook. Note, however, that these tools are not replacements for real accessibility testing.</p>
 <p>Here is an example in a real OSS project of mine that uses this <code>axe-core</code> technique with <code>@testing-library/react</code>: <a href="https://github.com/rpearce/react-medium-image-zoom/blob/6721f87370d968361d9d0d14cd30d752832877d1/__tests__/Uncontrolled.js#L27" class="uri">https://github.com/rpearce/react-medium-image-zoom/blob/6721f87370d968361d9d0d14cd30d752832877d1/__tests__/Uncontrolled.js#L27</a>.</p>
-<p>What are you waiting for?</p>
+<hr />
+<p>If you are using <code>jest</code> and want a custom matcher, there is a project, <a href="https://github.com/nickcolley/jest-axe"><code>jest-axe</code></a>, that allows you to do so:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">// from https://github.com/nickcolley/jest-axe#usage</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">const</span> <span class="op">{</span> axe<span class="op">,</span> toHaveNoViolations <span class="op">}</span> <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;jest-axe&#39;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="va">expect</span>.<span class="at">extend</span>(toHaveNoViolations)</span>
+<span id="cb2-5"><a href="#cb2-5"></a></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="at">it</span>(<span class="st">&#39;should demonstrate this matcher`s usage&#39;</span><span class="op">,</span> <span class="kw">async</span> () <span class="kw">=&gt;</span> <span class="op">{</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>  <span class="kw">const</span> render <span class="op">=</span> () <span class="kw">=&gt;</span> <span class="st">&#39;&lt;img src=&quot;#&quot;/&gt;&#39;</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a></span>
+<span id="cb2-9"><a href="#cb2-9"></a>  <span class="co">// pass anything that outputs html to axe</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>  <span class="kw">const</span> html <span class="op">=</span> <span class="at">render</span>()</span>
+<span id="cb2-11"><a href="#cb2-11"></a></span>
+<span id="cb2-12"><a href="#cb2-12"></a>  <span class="at">expect</span>(<span class="cf">await</span> <span class="at">axe</span>(html)).<span class="at">toHaveNoViolations</span>()</span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="op">}</span>)</span></code></pre></div>
 <hr />
 <p>Thank you for reading! <br /> Robert</p>
     </section>

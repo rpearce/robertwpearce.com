@@ -84,14 +84,33 @@ That said, the sheer number of issues that can be caught with this tool is
 staggering. If you work with tools like React and combine this with Deque's
 [`react-axe`](https://github.com/dequelabs/react-axe) tool and
 [`eslint-plugin-jsx-a11y`](https://github.com/evcohen/eslint-plugin-jsx-a11y),
-you are sure to catch heaps of issues you might accidentally overlook. _Note:
-these tools are not replacements for real accessibility testing._
+you are sure to catch heaps of issues you might accidentally overlook. Note,
+however, that these tools are not replacements for real accessibility testing.
 
 Here is an example in a real OSS project of mine that uses this `axe-core`
 technique with `@testing-library/react`:
 https://github.com/rpearce/react-medium-image-zoom/blob/6721f87370d968361d9d0d14cd30d752832877d1/__tests__/Uncontrolled.js#L27.
 
-What are you waiting for?
+* * *
+
+If you are using `jest` and want a custom matcher, there is a project,
+[`jest-axe`](https://github.com/nickcolley/jest-axe), that allows you to do so:
+
+```javascript
+// from https://github.com/nickcolley/jest-axe#usage
+const { axe, toHaveNoViolations } = require('jest-axe')
+
+expect.extend(toHaveNoViolations)
+
+it('should demonstrate this matcher`s usage', async () => {
+  const render = () => '<img src="#"/>'
+
+  // pass anything that outputs html to axe
+  const html = render()
+
+  expect(await axe(html)).toHaveNoViolations()
+})
+```
 
 * * *
 
