@@ -26,7 +26,7 @@ function build-project() {
 }
 
 function nixpkgs-update() {
-  nix-shell -p nix-prefetch-git --run "nix-prefetch-git https://github.com/NixOS/nixpkgs > nixpkgs.json" > project.nix
+  nix-shell -p nix-prefetch-git --run "nix-prefetch-git https://github.com/NixOS/nixpkgs > nixpkgs.json"
   return 0
 }
 
