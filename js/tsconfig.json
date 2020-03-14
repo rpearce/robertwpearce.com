@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "es2019"],
+    "lib": ["dom", "es2020"],
     "outDir": "dist",
     "sourceMap": false,
     "strict": true,
