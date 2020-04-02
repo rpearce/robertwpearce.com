@@ -26,7 +26,7 @@ function build-project() {
 }
 
 function nixpkgs-update() {
-  nix-shell -p nix-prefetch-git --run "nix-prefetch-git https://github.com/NixOS/nixpkgs > nixpkgs.json"
+  nix-shell -p niv --run "niv update nixpkgs"
   return 0
 }
 
@@ -57,15 +57,6 @@ function site() {
   return 0
 }
 
-function watch-posts() {
-  if ! type "fswatch" &> /dev/null; then
-    echo "Error: fswatch not found. Please install fswatch to use this command."
-    return 1
-  fi
-
-  fswatch -or ./posts | xargs -n 1 ./make.sh site rebuild
-}
-
 function unknown-cmd() {
   echo "Unknown command: $@"
   echo ""
@@ -87,7 +78,6 @@ Available commands:
   repl              Start interactive REPL for project
   site              Run hakyll commands
   serve             Serve up the output at a port
-  watch-posts       Watch posts and run build-output when changes detected
 EOF
   return 0
 }
@@ -136,9 +126,6 @@ case "$cmd" in
   site)
     [[ -f ./result/bin/site ]] || err-site
     site $1
-    ;;
-  watch-posts)
-    watch-posts
     ;;
   *)
     unknown-cmd cmd

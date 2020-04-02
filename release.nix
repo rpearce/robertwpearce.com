@@ -1,7 +1,8 @@
-{ pkgs ? import ./pkgs.nix
-}:
+{ }:
 
 let
+  sources = import ./nix/sources.nix;
+  pkgs = (import sources.nixpkgs) { config = { allowUnfree = true; }; };
   haskellPackages = pkgs.haskellPackages;
   project = haskellPackages.callPackage ./project.nix { };
 in

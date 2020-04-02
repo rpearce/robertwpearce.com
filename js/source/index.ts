@@ -14,7 +14,7 @@
   }
 
   const state: State = {
-    isActive: false
+    isActive: false,
   }
 
   const cn: Classes = {
@@ -24,7 +24,7 @@
     toggleDay: `toggle__day`,
     toggleNight: `toggle__night`,
     toggleOff: `toggle--off`,
-    toggleOn: `toggle--on`
+    toggleOn: `toggle--on`,
   }
 
   const updateBodyClass = (): void => {

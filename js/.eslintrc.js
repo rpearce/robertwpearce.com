@@ -3,15 +3,15 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   env: {
     es6: true,
-    node: true
+    node: true,
   },
   extends: [
     'plugin:prettier/recommended',
     'plugin:@typescript-eslint/recommended',
-    'prettier/@typescript-eslint'
+    'prettier/@typescript-eslint',
   ],
   parserOptions: {
-    ecmaVersion: 2019
+    ecmaVersion: 2019,
   },
   plugins: ['@typescript-eslint'],
   rules: {
@@ -19,6 +19,6 @@ module.exports = {
     'no-trailing-spaces': 'error',
     'object-curly-spacing': ['error', 'always'],
     quotes: ['error', 'single', { allowTemplateLiterals: true }],
-    semi: ['error', 'never']
-  }
+    semi: ['error', 'never'],
+  },
 }
