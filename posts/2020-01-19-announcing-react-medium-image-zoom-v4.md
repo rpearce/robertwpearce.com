@@ -7,7 +7,7 @@ keywords: "react, react-medium-image-zoom, image zoom, image, zoom, reactjs"
 photoCredit: "robertwpearce"
 photoWebsite: "https://www.instagram.com/robertwpearce"
 title: "Announcing react-medium-image-zoom v4"
-updated: "2020-01-20"
+updated: "2020-01-20T00:00:00Z"
 ---
 
 _tl;dr => I've release v4 of [react-medium-image-zoom](https://www.npmjs.com/package/react-medium-image-zoom),

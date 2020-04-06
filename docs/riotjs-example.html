@@ -84,9 +84,9 @@
 <p><span style="text-decoration:line-through;">While I am not a fan of Facebook’s JSX (and don’t use it–more to come in future blog posts on this), Riot’s pre-compiled syntax is much easier to swallow.</span> Given you have a <code>package.json</code> set up, you can easily install the Riot compiler as a development dependency</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a>$ <span class="ex">npm</span> install riot --save-dev</span></code></pre></div>
 <p>and then set up Riot to run as an NPM script and watch for any changes</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1"></a><span class="st">&quot;scripts&quot;</span><span class="op">:</span> <span class="op">{</span></span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1"></a><span class="st">&quot;scripts&quot;</span><span class="op">:</span> {</span>
 <span id="cb2-2"><a href="#cb2-2"></a>  <span class="st">&quot;watch:riot&quot;</span><span class="op">:</span> <span class="st">&quot;riot -w src/ build/&quot;</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="op">}</span></span></code></pre></div>
+<span id="cb2-3"><a href="#cb2-3"></a>}</span></code></pre></div>
 <p>which is then run by a simple</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a>$ <span class="ex">npm</span> run watch:riot</span></code></pre></div>
 <p>Alternatively, you can <a href="https://muut.com/riotjs/download.html">download the riot.js library</a> via any of their recommended methods.</p>
@@ -118,7 +118,7 @@
 <span id="cb7-2"><a href="#cb7-2"></a>  <span class="kw">&lt;riot-tabs&gt;&lt;/riot-tabs&gt;</span></span>
 <span id="cb7-3"><a href="#cb7-3"></a></span>
 <span id="cb7-4"><a href="#cb7-4"></a>  <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;path/to/riot-2.0.1.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a>  <span class="kw">&lt;script&gt;</span><span class="va">riot</span>.<span class="at">mount</span>(<span class="st">&#39;riot-tabs&#39;</span>)<span class="kw">&lt;/script&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="kw">&lt;script&gt;</span>riot<span class="op">.</span><span class="fu">mount</span>(<span class="st">&#39;riot-tabs&#39;</span>)<span class="kw">&lt;/script&gt;</span></span>
 <span id="cb7-6"><a href="#cb7-6"></a><span class="kw">&lt;/body&gt;</span></span></code></pre></div>
 <p>When we run this code through the browser, we’re going to receive an error telling us that <code>'tabs'</code> is not a thing. Congrats! Time for Step 2.</p>
 <h3 id="step-2-creating-your-custom-tag">Step 2: Creating Your Custom Tag</h3>

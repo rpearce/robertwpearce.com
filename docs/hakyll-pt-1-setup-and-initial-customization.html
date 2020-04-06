@@ -159,10 +159,10 @@
 <li>body content (everything else)</li>
 </ul>
 <p>From <a href="http://localhost:5000" class="uri">http://localhost:5000</a>, let’s click on the first post we see: <a href="http://localhost:5000/posts/2015-12-07-tu-quoque.html" class="uri">http://localhost:5000/posts/2015-12-07-tu-quoque.html</a>. If we open up the corresponding file, <code>2015-12-07-tu-quoque.html</code>, in our text editor, we can see there are two metadata fields: <code>title</code> and <code>author</code>. Let’s change them:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1"></a>---</span>
-<span id="cb5-2"><a href="#cb5-2"></a>title: Some Latin Text</span>
-<span id="cb5-3"><a href="#cb5-3"></a>author: Some Roman Person</span>
-<span id="cb5-4"><a href="#cb5-4"></a>---</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">---</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="an">title:</span><span class="co"> Some Latin Text</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="an">author:</span><span class="co"> Some Roman Person</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co">---</span></span></code></pre></div>
 <p>Refresh the page and see the changes!</p>
 <p>But note that despite changing the title of your blog post, the outputted HTML file is still located at <a href="http://localhost:5000/posts/2015-12-07-tu-quoque.html" class="uri">http://localhost:5000/posts/2015-12-07-tu-quoque.html</a>. This is because the <em>markdown filename</em> is what currently determines the outputted filename. We will change this in Part 5 of this series, but until then, if you change the title of your post, it would be a good idea to also change the filename.</p>
 <p>Feel free to edit these metadata fields and markdown content with your own blog post material.</p>
@@ -188,12 +188,12 @@
 <span id="cb9-6"><a href="#cb9-6"></a>  <span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;author&quot;</span><span class="ot"> content=</span><span class="st">&quot;$author$&quot;</span><span class="kw">&gt;</span></span>
 <span id="cb9-7"><a href="#cb9-7"></a>$endif$</span></code></pre></div>
 <p>Blog posts also should have a <code>description</code> and <code>keywords</code>, so let’s add those: to <code>posts/2015-12-07-tu-quoque.markdown</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1"></a>---</span>
-<span id="cb10-2"><a href="#cb10-2"></a>title: My Blog Post</span>
-<span id="cb10-3"><a href="#cb10-3"></a>description: This is my great blog post</span>
-<span id="cb10-4"><a href="#cb10-4"></a>keywords: blog, first blog, best blog evar</span>
-<span id="cb10-5"><a href="#cb10-5"></a>author: I did it!</span>
-<span id="cb10-6"><a href="#cb10-6"></a>---</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">---</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="an">title:</span><span class="co"> My Blog Post</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="an">description:</span><span class="co"> This is my great blog post</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="an">keywords:</span><span class="co"> blog, first blog, best blog evar</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="an">author:</span><span class="co"> I did it!</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="co">---</span></span></code></pre></div>
 <p>We’ll then update our default template to handle those, as well:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">&lt;title&gt;</span>$title$<span class="kw">&lt;/title&gt;</span></span>
 <span id="cb11-2"><a href="#cb11-2"></a>$if(author)$<span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;author&quot;</span><span class="ot"> content=</span><span class="st">&quot;$author$&quot;</span><span class="kw">&gt;</span>$endif$</span>

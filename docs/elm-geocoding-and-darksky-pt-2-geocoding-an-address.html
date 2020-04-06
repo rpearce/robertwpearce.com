@@ -117,25 +117,25 @@
 <p>I like to keep my models/type aliases fairly clean and primed for re-use in type definitions, so I created a separate type alias, <code>Coords</code>, to represent <code>( Float, Float )</code>.</p>
 <h2 id="2-understanding-googles-geocode-response-data">2: Understanding Google’s geocode response data</h2>
 <p>Let’s take a look at what a geocoding request’s response data for <code>Auckland</code> looks like so we can understand what we’re working with.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1"></a><span class="op">{</span></span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1"></a>{</span>
 <span id="cb2-2"><a href="#cb2-2"></a>  <span class="st">&quot;results&quot;</span><span class="op">:</span> [</span>
-<span id="cb2-3"><a href="#cb2-3"></a>    <span class="op">{</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a>      <span class="st">&quot;geometry&quot;</span><span class="op">:</span> <span class="op">{</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a>        <span class="st">&quot;location&quot;</span><span class="op">:</span> <span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>    {</span>
+<span id="cb2-4"><a href="#cb2-4"></a>      <span class="st">&quot;geometry&quot;</span><span class="op">:</span> {</span>
+<span id="cb2-5"><a href="#cb2-5"></a>        <span class="st">&quot;location&quot;</span><span class="op">:</span> {</span>
 <span id="cb2-6"><a href="#cb2-6"></a>          <span class="st">&quot;lat&quot;</span><span class="op">:</span> <span class="fl">-36.8484597</span><span class="op">,</span></span>
 <span id="cb2-7"><a href="#cb2-7"></a>          <span class="st">&quot;lng&quot;</span><span class="op">:</span> <span class="fl">174.7633315</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a>        <span class="op">},</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>        }<span class="op">,</span></span>
 <span id="cb2-9"><a href="#cb2-9"></a>        <span class="co">// ...</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a>      <span class="op">},</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>      }<span class="op">,</span></span>
 <span id="cb2-11"><a href="#cb2-11"></a>      <span class="co">// ...</span></span>
-<span id="cb2-12"><a href="#cb2-12"></a>    <span class="op">}</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a>    }</span>
 <span id="cb2-13"><a href="#cb2-13"></a>  ]<span class="op">,</span></span>
 <span id="cb2-14"><a href="#cb2-14"></a>  <span class="st">&quot;status&quot;</span><span class="op">:</span> <span class="st">&quot;OK&quot;</span></span>
-<span id="cb2-15"><a href="#cb2-15"></a><span class="op">}</span></span></code></pre></div>
+<span id="cb2-15"><a href="#cb2-15"></a>}</span></code></pre></div>
 <p>If you’ve set up your <a href="/node-js-geocoding-proxy-with-paperplane.html">geocoding proxy</a>, you can see these same results by running this command:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a>λ <span class="ex">curl</span> localhost:5050/geocode/Auckland</span></code></pre></div>
 <p>We can see here that we get back a <code>status</code> string and a <code>results</code> list where one of the results contains a <code>geometry</code> object, and inside of that, we find <code>location</code> and finally, our quarry: <code>lat</code> and <code>lng</code>. If we were searching for this with JavaScript, we might find this data like so:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1"></a><span class="va">response</span>.<span class="va">results</span>.<span class="at">find</span>(x <span class="kw">=&gt;</span> x[<span class="st">&#39;geometry&#39;</span>]).<span class="va">geometry</span>.<span class="at">location</span></span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1"></a>response<span class="op">.</span><span class="at">results</span><span class="op">.</span><span class="fu">find</span>(x <span class="kw">=&gt;</span> x[<span class="st">&#39;geometry&#39;</span>])<span class="op">.</span><span class="at">geometry</span><span class="op">.</span><span class="at">location</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="co">// { lat: -36.8484597, lng: 174.7633315 }</span></span></code></pre></div>
 <p>What would happen in vanilla JavaScript if there were no results, or those object keys didn’t exist? Elm steps up to help us solve for the unexpected.</p>
 <h2 id="3-modeling-the-geocode-response-data">3: Modeling the geocode response data</h2>

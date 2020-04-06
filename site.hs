@@ -3,17 +3,14 @@
 
 import           Hakyll
 
-import           Control.Monad    (forM_, msum)
-import           Data.Maybe       (fromJust, fromMaybe)
-import qualified Data.Text        as T
-import qualified Data.Time.Clock  as Clock
-import           Data.Time.Format (TimeLocale, defaultTimeLocale, formatTime,
-                                   parseTimeM)
-import           Slug             (toSlug)
-import           Text.Pandoc      (Extension (Ext_auto_identifiers, Ext_fenced_code_attributes, Ext_smart, Ext_footnotes),
-                                   Extensions, ReaderOptions, WriterOptions,
-                                   extensionsFromList, githubMarkdownExtensions,
-                                   readerExtensions, writerExtensions)
+import           Control.Monad (forM_)
+import           Data.Maybe    (fromMaybe)
+import qualified Data.Text     as T
+import           Slug          (toSlug)
+import           Text.Pandoc   (Extension (Ext_auto_identifiers, Ext_fenced_code_attributes, Ext_footnotes, Ext_smart),
+                                Extensions, ReaderOptions, WriterOptions,
+                                extensionsFromList, githubMarkdownExtensions,
+                                readerExtensions, writerExtensions)
 
 
 main :: IO ()
@@ -84,7 +81,7 @@ main = hakyllWith config $ do
                     constField "root" root         <>
                     constField "siteName" siteName <>
                     listField "pages" postCtx (return pages)
-            makeItem ""
+            makeItem ("" :: String)
                 >>= loadAndApplyTemplate "templates/sitemap.xml" sitemapCtx
 
 
@@ -127,7 +124,6 @@ config =
 feedCtx :: Context String
 feedCtx =
     titleCtx     <>
-    updatedField <>
     postCtx      <>
     bodyField "description"
 
@@ -143,33 +139,6 @@ postCtx =
 titleCtx :: Context String
 titleCtx =
     field "title" updatedTitle
-
-
-updatedField :: Context String
-updatedField = field "updated" $ \i -> do
-    let locale = defaultTimeLocale
-    time <- getUpdatedUTC locale $ itemIdentifier i
-    return $ formatTime locale "%Y-%m-%dT%H:%M:%SZ" time
-
-
--- ripped from https://github.com/jaspervdj/hakyll/blob/c85198d8cb6ce055c788e287c7f2470eac0aad36/lib/Hakyll/Web/Template/Context.hs#L296
-getUpdatedUTC :: MonadMetadata m => TimeLocale -> Identifier -> m Clock.UTCTime
-getUpdatedUTC locale id' = do
-    metadata <- getMetadata id'
-    let tryField k fmt = lookupString k metadata >>= parseTime' fmt
-    maybe empty' return $ msum [tryField "updated" fmt | fmt <- formats]
-  where
-    empty'     = fail $ "Hakyll.Web.Template.Context.getUpdatedUTC: " ++ "could not parse time for " ++ show id'
-    parseTime' = parseTimeM True locale
-    formats    =
-        [ "%a, %d %b %Y %H:%M:%S %Z"
-        , "%Y-%m-%dT%H:%M:%S%Z"
-        , "%Y-%m-%d %H:%M:%S%Z"
-        , "%Y-%m-%d"
-        , "%B %e, %Y %l:%M %p"
-        , "%B %e, %Y"
-        , "%b %d, %Y"
-        ]
 
 
 -- TITLE HELPERS

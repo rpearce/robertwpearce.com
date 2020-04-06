@@ -1,23 +1,45 @@
-{ }:
+{ compiler ? "ghc883"
+, sources ? import ./nix/sources.nix
+}:
 
 let
-  sources = import ./nix/sources.nix;
-  pkgs = (import sources.nixpkgs) { config = { allowUnfree = true; }; };
-  haskellPackages = pkgs.haskellPackages;
-  project = haskellPackages.callPackage ./project.nix { };
+  overlay = _: pkgs: { niv = import sources.niv { }; };
+  pkgs = import sources.nixpkgs {
+    config = {
+      packageOverrides = pkgz: rec {
+        haskellPackages = pkgz.haskellPackages.override {
+          overrides = hpNew: hpOld: rec {
+            hakyll = hpOld.hakyll.overrideAttrs(old: {
+              configureFlags = "-f watchServer -f previewServer";
+              patches = [ ./hakyll.patch ];
+            });
+            project = hpNew.callPackage ./project.nix { };
+          };
+        };
+      };
+    };
+    overlays = [ overlay ];
+  };
+
+  haskellPackages = pkgs.haskell.packages.${compiler};
 in
   {
-    project = project;
+    project = pkgs.haskellPackages.project;
 
     shell = haskellPackages.shellFor {
       packages = p: with p; [
-        project
+        pkgs.haskellPackages.project
       ];
-
       buildInputs = with haskellPackages; [
         cabal-install
+        ghcid
+        hlint
+        niv
+        ormolu
+        pkgs.cacert
+        pkgs.nix
       ];
-
-      withHoogle = true;
+      #withHoogle = true;
     };
   }
+

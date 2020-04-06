@@ -103,21 +103,21 @@
 <span id="cb2-4"><a href="#cb2-4"></a></span>
 <span id="cb2-5"><a href="#cb2-5"></a><span class="co">// which is the same as</span></span>
 <span id="cb2-6"><a href="#cb2-6"></a></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="kw">function</span> <span class="at">add</span>(a) <span class="op">{</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a>  <span class="cf">return</span> <span class="kw">function</span>(b) <span class="op">{</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="kw">function</span> <span class="fu">add</span>(a) {</span>
+<span id="cb2-8"><a href="#cb2-8"></a>  <span class="cf">return</span> <span class="kw">function</span>(b) {</span>
 <span id="cb2-9"><a href="#cb2-9"></a>    <span class="cf">return</span> a <span class="op">+</span> b</span>
-<span id="cb2-10"><a href="#cb2-10"></a>  <span class="op">}</span></span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="op">}</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>  }</span>
+<span id="cb2-11"><a href="#cb2-11"></a>}</span>
 <span id="cb2-12"><a href="#cb2-12"></a></span>
 <span id="cb2-13"><a href="#cb2-13"></a><span class="co">// and then</span></span>
 <span id="cb2-14"><a href="#cb2-14"></a></span>
 <span id="cb2-15"><a href="#cb2-15"></a><span class="co">// add10 :: Number -&gt; Number</span></span>
-<span id="cb2-16"><a href="#cb2-16"></a><span class="kw">const</span> add10 <span class="op">=</span> <span class="at">add</span>(<span class="dv">10</span>)</span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="kw">const</span> add10 <span class="op">=</span> add(<span class="dv">10</span>)</span>
 <span id="cb2-17"><a href="#cb2-17"></a></span>
 <span id="cb2-18"><a href="#cb2-18"></a>add10 <span class="co">// =&gt; Function</span></span>
-<span id="cb2-19"><a href="#cb2-19"></a><span class="at">add10</span>(<span class="dv">4</span>) <span class="co">// =&gt; 14</span></span></code></pre></div>
+<span id="cb2-19"><a href="#cb2-19"></a>add10(<span class="dv">4</span>) <span class="co">// =&gt; 14</span></span></code></pre></div>
 <p>Note the change in type signature: we now have singular arguments that are accepted at a time instead of the tuple style. When we provide the first argument, we are then returned a function that will sit and wait until all the functions are applied before giving us a value. This method can be useful in many situations, but consider the following:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1"></a><span class="at">add</span>(<span class="dv">10</span>)(<span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1"></a>add(<span class="dv">10</span>)(<span class="dv">4</span>)</span></code></pre></div>
 <p>That feels awkward, right? Fear not! There is a way.</p>
 <h2 id="the-curry-function">The <code>curry</code> Function</h2>
 <p>Ramda provides us a function named <code>curry</code> that will take what might be considered a “normal” JavaScript function definition with multiple parameters and turn it into a function that will keep returning a function until all of its parameters have been supplied. Check it out!</p>
@@ -126,14 +126,14 @@
 <span id="cb4-3"><a href="#cb4-3"></a><span class="kw">const</span> oldAdd <span class="op">=</span> (a<span class="op">,</span> b) <span class="kw">=&gt;</span></span>
 <span id="cb4-4"><a href="#cb4-4"></a>  a <span class="op">+</span> b</span>
 <span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="kw">const</span> add <span class="op">=</span> <span class="at">curry</span>(oldAdd)</span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="kw">const</span> add <span class="op">=</span> curry(oldAdd)</span>
 <span id="cb4-7"><a href="#cb4-7"></a></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="at">add</span>(<span class="dv">10</span>) <span class="co">// =&gt; Function</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="at">add</span>(<span class="dv">10</span>)(<span class="dv">4</span>) <span class="co">// =&gt; 14</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="at">add</span>(<span class="dv">10</span><span class="op">,</span> <span class="dv">4</span>) <span class="co">// =&gt; 14</span></span></code></pre></div>
+<span id="cb4-8"><a href="#cb4-8"></a>add(<span class="dv">10</span>) <span class="co">// =&gt; Function</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a>add(<span class="dv">10</span>)(<span class="dv">4</span>) <span class="co">// =&gt; 14</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a>add(<span class="dv">10</span><span class="op">,</span> <span class="dv">4</span>) <span class="co">// =&gt; 14</span></span></code></pre></div>
 <p>Or if you want to have <code>curry</code> baked in to your original <code>add</code> function:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">// add :: Number -&gt; Number -&gt; Number</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="kw">const</span> add <span class="op">=</span> <span class="at">curry</span>((a<span class="op">,</span> b) <span class="op">-&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="kw">const</span> add <span class="op">=</span> curry((a<span class="op">,</span> b) <span class="op">-&gt;</span></span>
 <span id="cb5-3"><a href="#cb5-3"></a>  a <span class="op">+</span> b</span>
 <span id="cb5-4"><a href="#cb5-4"></a>)</span></code></pre></div>
 <p>The magical <code>curry</code> function doesn’t care when you provide arguments or how you do so – it will just keep returning you partially applied functions until all arguments have been applied, at which point it will give you back a value.</p>
@@ -164,15 +164,15 @@
 <div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">// curry :: ((a, b, c) -&gt; d) -&gt; a -&gt; b -&gt; c -&gt; d</span></span>
 <span id="cb7-2"><a href="#cb7-2"></a><span class="co">//</span></span>
 <span id="cb7-3"><a href="#cb7-3"></a><span class="co">// 1. we accept a function</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="kw">const</span> curry <span class="op">=</span> (fn) <span class="kw">=&gt;</span> <span class="op">{</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="kw">const</span> curry <span class="op">=</span> (fn) <span class="kw">=&gt;</span> {</span>
 <span id="cb7-5"><a href="#cb7-5"></a>  <span class="co">// 2. we return a function taking any `n` arguments</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a>  <span class="cf">return</span> (...<span class="at">xs</span>) <span class="kw">=&gt;</span> <span class="op">{</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>  <span class="cf">return</span> (<span class="op">...</span><span class="at">xs</span>) <span class="kw">=&gt;</span> {</span>
 <span id="cb7-7"><a href="#cb7-7"></a>    <span class="co">// make sure we have a populated list to work with;</span></span>
 <span id="cb7-8"><a href="#cb7-8"></a>    <span class="co">// `undefined` is the value for the Unit type in</span></span>
 <span id="cb7-9"><a href="#cb7-9"></a>    <span class="co">// crocks and calling our function must utilize some</span></span>
 <span id="cb7-10"><a href="#cb7-10"></a>    <span class="co">// sort of value.</span></span>
 <span id="cb7-11"><a href="#cb7-11"></a>    <span class="kw">const</span> args <span class="op">=</span></span>
-<span id="cb7-12"><a href="#cb7-12"></a>      <span class="va">xs</span>.<span class="at">length</span> <span class="op">?</span> xs : [ <span class="kw">undefined</span> ]</span>
+<span id="cb7-12"><a href="#cb7-12"></a>      xs<span class="op">.</span><span class="at">length</span> <span class="op">?</span> xs <span class="op">:</span> [ <span class="kw">undefined</span> ]</span>
 <span id="cb7-13"><a href="#cb7-13"></a></span>
 <span id="cb7-14"><a href="#cb7-14"></a>    <span class="co">// if the number of args sent are</span></span>
 <span id="cb7-15"><a href="#cb7-15"></a>    <span class="co">// less than that required, then</span></span>
@@ -180,12 +180,12 @@
 <span id="cb7-17"><a href="#cb7-17"></a>    <span class="co">// return a new version of our function</span></span>
 <span id="cb7-18"><a href="#cb7-18"></a>    <span class="co">// that is still waiting for more</span></span>
 <span id="cb7-19"><a href="#cb7-19"></a>    <span class="co">// arguments to be applied.</span></span>
-<span id="cb7-20"><a href="#cb7-20"></a>    <span class="cf">if</span> (<span class="va">args</span>.<span class="at">length</span> <span class="op">&lt;</span> <span class="va">fn</span>.<span class="at">length</span>) <span class="op">{</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a>    <span class="cf">if</span> (args<span class="op">.</span><span class="at">length</span> <span class="op">&lt;</span> fn<span class="op">.</span><span class="at">length</span>) {</span>
 <span id="cb7-21"><a href="#cb7-21"></a>      <span class="co">// way of safely creating a new function</span></span>
 <span id="cb7-22"><a href="#cb7-22"></a>      <span class="co">// and binding arguments to it without</span></span>
 <span id="cb7-23"><a href="#cb7-23"></a>      <span class="co">// calling it.</span></span>
-<span id="cb7-24"><a href="#cb7-24"></a>      <span class="cf">return</span> <span class="at">curry</span>(<span class="va">Function</span>.<span class="va">bind</span>.<span class="at">apply</span>(fn<span class="op">,</span> [ <span class="kw">null</span> ].<span class="at">concat</span>(args)))</span>
-<span id="cb7-25"><a href="#cb7-25"></a>    <span class="op">}</span></span>
+<span id="cb7-24"><a href="#cb7-24"></a>      <span class="cf">return</span> curry(<span class="bu">Function</span><span class="op">.</span><span class="at">bind</span><span class="op">.</span><span class="fu">apply</span>(fn<span class="op">,</span> [ <span class="kw">null</span> ]<span class="op">.</span><span class="fu">concat</span>(args)))</span>
+<span id="cb7-25"><a href="#cb7-25"></a>    }</span>
 <span id="cb7-26"><a href="#cb7-26"></a></span>
 <span id="cb7-27"><a href="#cb7-27"></a>    <span class="co">// if we&#39;ve provided all arguments,</span></span>
 <span id="cb7-28"><a href="#cb7-28"></a>    <span class="co">// then let&#39;s apply them and give</span></span>
@@ -201,9 +201,9 @@
 <span id="cb7-38"><a href="#cb7-38"></a>    <span class="co">//</span></span>
 <span id="cb7-39"><a href="#cb7-39"></a>    <span class="co">// </span><span class="al">NOTE</span><span class="co">: `applyCurry` is defined below.</span></span>
 <span id="cb7-40"><a href="#cb7-40"></a>    <span class="kw">const</span> val <span class="op">=</span></span>
-<span id="cb7-41"><a href="#cb7-41"></a>      <span class="va">args</span>.<span class="at">length</span> <span class="op">===</span> <span class="va">fn</span>.<span class="at">length</span></span>
-<span id="cb7-42"><a href="#cb7-42"></a>        <span class="op">?</span> <span class="va">fn</span>.<span class="at">apply</span>(<span class="kw">null</span><span class="op">,</span> args)</span>
-<span id="cb7-43"><a href="#cb7-43"></a>        : <span class="va">args</span>.<span class="at">reduce</span>(applyCurry<span class="op">,</span> fn)</span>
+<span id="cb7-41"><a href="#cb7-41"></a>      args<span class="op">.</span><span class="at">length</span> <span class="op">===</span> fn<span class="op">.</span><span class="at">length</span></span>
+<span id="cb7-42"><a href="#cb7-42"></a>        <span class="op">?</span> fn<span class="op">.</span><span class="fu">apply</span>(<span class="kw">null</span><span class="op">,</span> args)</span>
+<span id="cb7-43"><a href="#cb7-43"></a>        <span class="op">:</span> args<span class="op">.</span><span class="fu">reduce</span>(applyCurry<span class="op">,</span> fn)</span>
 <span id="cb7-44"><a href="#cb7-44"></a></span>
 <span id="cb7-45"><a href="#cb7-45"></a>    <span class="co">// 3. if our value is still a function, then</span></span>
 <span id="cb7-46"><a href="#cb7-46"></a>    <span class="co">// let&#39;s return the curried version of our</span></span>
@@ -212,16 +212,16 @@
 <span id="cb7-49"><a href="#cb7-49"></a>    <span class="co">//</span></span>
 <span id="cb7-50"><a href="#cb7-50"></a>    <span class="co">// otherwise, we&#39;re all done here, so</span></span>
 <span id="cb7-51"><a href="#cb7-51"></a>    <span class="co">// let&#39;s return the value.</span></span>
-<span id="cb7-52"><a href="#cb7-52"></a>    <span class="cf">return</span> <span class="at">isFunction</span>(val)</span>
-<span id="cb7-53"><a href="#cb7-53"></a>      <span class="op">?</span> <span class="at">curry</span>(val)</span>
-<span id="cb7-54"><a href="#cb7-54"></a>      : val</span>
-<span id="cb7-55"><a href="#cb7-55"></a>  <span class="op">}</span></span>
-<span id="cb7-56"><a href="#cb7-56"></a><span class="op">}</span></span>
+<span id="cb7-52"><a href="#cb7-52"></a>    <span class="cf">return</span> isFunction(val)</span>
+<span id="cb7-53"><a href="#cb7-53"></a>      <span class="op">?</span> curry(val)</span>
+<span id="cb7-54"><a href="#cb7-54"></a>      <span class="op">:</span> val</span>
+<span id="cb7-55"><a href="#cb7-55"></a>  }</span>
+<span id="cb7-56"><a href="#cb7-56"></a>}</span>
 <span id="cb7-57"><a href="#cb7-57"></a></span>
-<span id="cb7-58"><a href="#cb7-58"></a><span class="kw">const</span> applyCurry <span class="op">=</span> (fn<span class="op">,</span> arg) <span class="kw">=&gt;</span> <span class="op">{</span></span>
+<span id="cb7-58"><a href="#cb7-58"></a><span class="kw">const</span> applyCurry <span class="op">=</span> (fn<span class="op">,</span> arg) <span class="kw">=&gt;</span> {</span>
 <span id="cb7-59"><a href="#cb7-59"></a>  <span class="co">// return whatever we received if</span></span>
 <span id="cb7-60"><a href="#cb7-60"></a>  <span class="co">// fn is actually NOT a function.</span></span>
-<span id="cb7-61"><a href="#cb7-61"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="at">isFunction</span>(fn)) <span class="op">{</span> <span class="cf">return</span> fn <span class="op">}</span></span>
+<span id="cb7-61"><a href="#cb7-61"></a>  <span class="cf">if</span> (<span class="op">!</span>isFunction(fn)) { <span class="cf">return</span> fn }</span>
 <span id="cb7-62"><a href="#cb7-62"></a></span>
 <span id="cb7-63"><a href="#cb7-63"></a>  <span class="co">// if we have more than 1 argument</span></span>
 <span id="cb7-64"><a href="#cb7-64"></a>  <span class="co">// remaining to be applied, then let&#39;s</span></span>
@@ -232,38 +232,38 @@
 <span id="cb7-69"><a href="#cb7-69"></a>  <span class="co">// and call that function with the argument;</span></span>
 <span id="cb7-70"><a href="#cb7-70"></a>  <span class="co">// our `[ undefined ]` default saves us from</span></span>
 <span id="cb7-71"><a href="#cb7-71"></a>  <span class="co">// some potential headache here.</span></span>
-<span id="cb7-72"><a href="#cb7-72"></a>  <span class="cf">return</span> <span class="va">fn</span>.<span class="at">length</span> <span class="op">&gt;</span> <span class="dv">1</span></span>
-<span id="cb7-73"><a href="#cb7-73"></a>    <span class="op">?</span> <span class="va">fn</span>.<span class="at">bind</span>(<span class="kw">null</span><span class="op">,</span> arg)</span>
-<span id="cb7-74"><a href="#cb7-74"></a>    : <span class="va">fn</span>.<span class="at">call</span>(<span class="kw">null</span><span class="op">,</span> arg)</span>
-<span id="cb7-75"><a href="#cb7-75"></a><span class="op">}</span></span>
+<span id="cb7-72"><a href="#cb7-72"></a>  <span class="cf">return</span> fn<span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">1</span></span>
+<span id="cb7-73"><a href="#cb7-73"></a>    <span class="op">?</span> fn<span class="op">.</span><span class="fu">bind</span>(<span class="kw">null</span><span class="op">,</span> arg)</span>
+<span id="cb7-74"><a href="#cb7-74"></a>    <span class="op">:</span> fn<span class="op">.</span><span class="fu">call</span>(<span class="kw">null</span><span class="op">,</span> arg)</span>
+<span id="cb7-75"><a href="#cb7-75"></a>}</span>
 <span id="cb7-76"><a href="#cb7-76"></a></span>
 <span id="cb7-77"><a href="#cb7-77"></a><span class="kw">const</span> isFunction <span class="op">=</span> x <span class="kw">=&gt;</span></span>
 <span id="cb7-78"><a href="#cb7-78"></a>  <span class="kw">typeof</span> x <span class="op">===</span> <span class="st">&#39;function&#39;</span></span></code></pre></div>
 <p>With all of these checks in here, we can now run the following code and have it all work:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">const</span> add <span class="op">=</span> <span class="at">curry</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> a <span class="op">+</span> b)</span>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">const</span> add <span class="op">=</span> curry((a<span class="op">,</span> b) <span class="kw">=&gt;</span> a <span class="op">+</span> b)</span>
 <span id="cb8-2"><a href="#cb8-2"></a></span>
 <span id="cb8-3"><a href="#cb8-3"></a>add <span class="co">// =&gt; Function</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="at">add</span>(<span class="dv">1</span>) <span class="co">// =&gt; Function</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="at">add</span>(<span class="dv">1</span>)(<span class="dv">2</span>) <span class="co">// =&gt; 3</span></span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="at">add</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span>) <span class="co">// =&gt; 3</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="at">add</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">99</span>) <span class="co">// =&gt; 3 (we don&#39;t care about the last one!)</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="at">add</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">99</span><span class="op">,</span> <span class="dv">2000</span>) <span class="co">// =&gt; 3 (we don&#39;t care about the last two!)</span></span></code></pre></div>
+<span id="cb8-4"><a href="#cb8-4"></a>add(<span class="dv">1</span>) <span class="co">// =&gt; Function</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>add(<span class="dv">1</span>)(<span class="dv">2</span>) <span class="co">// =&gt; 3</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a>add(<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span>) <span class="co">// =&gt; 3</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a>add(<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">99</span>) <span class="co">// =&gt; 3 (we don&#39;t care about the last one!)</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a>add(<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">99</span><span class="op">,</span> <span class="dv">2000</span>) <span class="co">// =&gt; 3 (we don&#39;t care about the last two!)</span></span></code></pre></div>
 <h2 id="curry-in-action"><code>curry</code> In Action</h2>
 <p>If all of your functions are curried, you can start writing code that you never would have been able to before. Here is a small taste that we will cover more fully in a future Ramda Chops:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">// addOrRemove :: a -&gt; Array -&gt; Array</span></span>
 <span id="cb9-2"><a href="#cb9-2"></a><span class="kw">const</span> addOrRemove <span class="op">=</span> x <span class="kw">=&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a>  <span class="at">ifElse</span>(</span>
-<span id="cb9-4"><a href="#cb9-4"></a>    <span class="at">contains</span>(x)<span class="op">,</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a>    <span class="at">without</span>(<span class="kw">of</span>(x))<span class="op">,</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a>    <span class="at">append</span>(x)</span>
+<span id="cb9-3"><a href="#cb9-3"></a>  ifElse(</span>
+<span id="cb9-4"><a href="#cb9-4"></a>    contains(x)<span class="op">,</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a>    without(<span class="kw">of</span>(x))<span class="op">,</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a>    append(x)</span>
 <span id="cb9-7"><a href="#cb9-7"></a>  )</span>
 <span id="cb9-8"><a href="#cb9-8"></a></span>
 <span id="cb9-9"><a href="#cb9-9"></a><span class="co">// addOrRemoveTest :: Array -&gt; Array</span></span>
 <span id="cb9-10"><a href="#cb9-10"></a><span class="kw">const</span> addOrRemoveTest <span class="op">=</span></span>
-<span id="cb9-11"><a href="#cb9-11"></a>  <span class="at">addOrRemove</span>(<span class="st">&#39;test&#39;</span>)</span>
+<span id="cb9-11"><a href="#cb9-11"></a>  addOrRemove(<span class="st">&#39;test&#39;</span>)</span>
 <span id="cb9-12"><a href="#cb9-12"></a></span>
-<span id="cb9-13"><a href="#cb9-13"></a><span class="at">addOrRemoveTest</span>([ <span class="st">&#39;thing&#39;</span> ]) <span class="co">// =&gt; [&quot;thing&quot;, &quot;test&quot;]</span></span>
-<span id="cb9-14"><a href="#cb9-14"></a><span class="at">addOrRemoveTest</span>([ <span class="st">&#39;thing&#39;</span><span class="op">,</span> <span class="st">&#39;test&#39;</span> ]) <span class="co">// =&gt; [&quot;thing&quot;]</span></span></code></pre></div>
+<span id="cb9-13"><a href="#cb9-13"></a>addOrRemoveTest([ <span class="st">&#39;thing&#39;</span> ]) <span class="co">// =&gt; [&quot;thing&quot;, &quot;test&quot;]</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a>addOrRemoveTest([ <span class="st">&#39;thing&#39;</span><span class="op">,</span> <span class="st">&#39;test&#39;</span> ]) <span class="co">// =&gt; [&quot;thing&quot;]</span></span></code></pre></div>
 <p>(<a href="https://goo.gl/5uRhS2">View this example in a live REPL</a>)</p>
 <p>The <code>addOrRemove</code> function almost reads like English: “If something contains <code>x</code>, give me back that something without <code>x</code>; otherwise, append <code>x</code> to that something.” What is worth understanding here is that these functions each accept a number of arguments where <em>the most generic/reusable are provided first</em> (this is a tenet of Functional Programming). Here, we are able to create a very reusable function with partially applied values that sits and waits until the final bit – an array – is provided.</p>
 <hr />

@@ -57,7 +57,7 @@
             <div class="article__bgSubHeader">
               <small class="italic">2017-06-22</small>
               
-              <small class="italic">(updated: 2017-07-29)</small>
+              <small class="italic">(updated: 2017-07-29T00:00:00Z)</small>
               
               
               <small class="article__bgPhotoCred italic">
@@ -76,7 +76,7 @@
         </h1>
         <small class="italic">2017-06-22</small>
         
-        <small class="italic">(updated: 2017-07-29)</small>
+        <small class="italic">(updated: 2017-07-29T00:00:00Z)</small>
         
       </header>
       <p><em>tl;dr =&gt; use a proxy server when private API keys are involved; <a href="https://github.com/articulate/paperplane">paperplane</a> is a great functional server framework.</em></p>
@@ -118,37 +118,37 @@
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a>λ <span class="fu">touch</span> index.js</span></code></pre></div>
 <p>Next, let’s import the packages we’ll be using and create a basic “Hello, World!” server:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">// Make our .env configuration file available</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="at">require</span>(<span class="st">&#39;dotenv&#39;</span>).<span class="at">config</span>()</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="pp">require</span>(<span class="st">&#39;dotenv&#39;</span>)<span class="op">.</span><span class="fu">config</span>()</span>
 <span id="cb10-3"><a href="#cb10-3"></a></span>
 <span id="cb10-4"><a href="#cb10-4"></a></span>
 <span id="cb10-5"><a href="#cb10-5"></a><span class="co">// Import libraries</span></span>
-<span id="cb10-6"><a href="#cb10-6"></a><span class="kw">const</span> http <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;http&#39;</span>)</span>
-<span id="cb10-7"><a href="#cb10-7"></a><span class="kw">const</span> <span class="op">{</span> compose <span class="op">}</span> <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;ramda&#39;</span>)</span>
-<span id="cb10-8"><a href="#cb10-8"></a><span class="kw">const</span> <span class="op">{</span> json<span class="op">,</span> logger<span class="op">,</span> methods<span class="op">,</span> mount<span class="op">,</span> parseJson<span class="op">,</span> routes <span class="op">}</span> <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;paperplane&#39;</span>)</span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="kw">const</span> http <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;http&#39;</span>)</span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="kw">const</span> { compose } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;ramda&#39;</span>)</span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="kw">const</span> { json<span class="op">,</span> logger<span class="op">,</span> methods<span class="op">,</span> mount<span class="op">,</span> parseJson<span class="op">,</span> routes } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;paperplane&#39;</span>)</span>
 <span id="cb10-9"><a href="#cb10-9"></a></span>
 <span id="cb10-10"><a href="#cb10-10"></a></span>
 <span id="cb10-11"><a href="#cb10-11"></a><span class="co">// Application-specific code</span></span>
-<span id="cb10-12"><a href="#cb10-12"></a><span class="kw">const</span> endpoints <span class="op">=</span> <span class="at">routes</span>(<span class="op">{</span></span>
-<span id="cb10-13"><a href="#cb10-13"></a>  <span class="st">&#39;/&#39;</span><span class="op">:</span> <span class="at">methods</span>(<span class="op">{</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a><span class="kw">const</span> endpoints <span class="op">=</span> routes({</span>
+<span id="cb10-13"><a href="#cb10-13"></a>  <span class="st">&#39;/&#39;</span><span class="op">:</span> methods({</span>
 <span id="cb10-14"><a href="#cb10-14"></a>    <span class="dt">GET</span><span class="op">:</span> req <span class="kw">=&gt;</span> (</span>
-<span id="cb10-15"><a href="#cb10-15"></a>      Promise</span>
-<span id="cb10-16"><a href="#cb10-16"></a>        .<span class="at">resolve</span>(<span class="st">&#39;hello world&#39;</span>)</span>
-<span id="cb10-17"><a href="#cb10-17"></a>        .<span class="at">then</span>(json)</span>
+<span id="cb10-15"><a href="#cb10-15"></a>      <span class="bu">Promise</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a>        <span class="op">.</span><span class="fu">resolve</span>(<span class="st">&#39;hello world&#39;</span>)</span>
+<span id="cb10-17"><a href="#cb10-17"></a>        <span class="op">.</span><span class="fu">then</span>(json)</span>
 <span id="cb10-18"><a href="#cb10-18"></a>    )</span>
-<span id="cb10-19"><a href="#cb10-19"></a>  <span class="op">}</span>)</span>
-<span id="cb10-20"><a href="#cb10-20"></a><span class="op">}</span>)</span>
+<span id="cb10-19"><a href="#cb10-19"></a>  })</span>
+<span id="cb10-20"><a href="#cb10-20"></a>})</span>
 <span id="cb10-21"><a href="#cb10-21"></a></span>
-<span id="cb10-22"><a href="#cb10-22"></a><span class="kw">const</span> app <span class="op">=</span> <span class="at">compose</span>(endpoints<span class="op">,</span> parseJson)</span>
+<span id="cb10-22"><a href="#cb10-22"></a><span class="kw">const</span> app <span class="op">=</span> compose(endpoints<span class="op">,</span> parseJson)</span>
 <span id="cb10-23"><a href="#cb10-23"></a></span>
 <span id="cb10-24"><a href="#cb10-24"></a></span>
 <span id="cb10-25"><a href="#cb10-25"></a><span class="co">// Server options</span></span>
-<span id="cb10-26"><a href="#cb10-26"></a><span class="kw">const</span> opts <span class="op">=</span> <span class="op">{</span> <span class="dt">errLogger</span><span class="op">:</span> logger<span class="op">,</span> logger <span class="op">}</span></span>
-<span id="cb10-27"><a href="#cb10-27"></a><span class="kw">const</span> port <span class="op">=</span> <span class="va">process</span>.<span class="va">env</span>.<span class="at">PORT</span> <span class="op">||</span> <span class="dv">3000</span></span>
-<span id="cb10-28"><a href="#cb10-28"></a><span class="kw">const</span> listening <span class="op">=</span> err <span class="kw">=&gt;</span> err <span class="op">?</span> <span class="va">console</span>.<span class="at">error</span>(err) : <span class="va">console</span>.<span class="at">info</span>(<span class="vs">`Listening on port: </span><span class="sc">${</span>port<span class="sc">}</span><span class="vs">`</span>)</span>
+<span id="cb10-26"><a href="#cb10-26"></a><span class="kw">const</span> opts <span class="op">=</span> { <span class="dt">errLogger</span><span class="op">:</span> logger<span class="op">,</span> logger }</span>
+<span id="cb10-27"><a href="#cb10-27"></a><span class="kw">const</span> port <span class="op">=</span> <span class="bu">process</span><span class="op">.</span><span class="at">env</span><span class="op">.</span><span class="at">PORT</span> <span class="op">||</span> <span class="dv">3000</span></span>
+<span id="cb10-28"><a href="#cb10-28"></a><span class="kw">const</span> listening <span class="op">=</span> err <span class="kw">=&gt;</span> err <span class="op">?</span> <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(err) <span class="op">:</span> <span class="bu">console</span><span class="op">.</span><span class="fu">info</span>(<span class="vs">`Listening on port: </span><span class="sc">${</span>port<span class="sc">}</span><span class="vs">`</span>)</span>
 <span id="cb10-29"><a href="#cb10-29"></a></span>
 <span id="cb10-30"><a href="#cb10-30"></a></span>
 <span id="cb10-31"><a href="#cb10-31"></a><span class="co">// Start the server</span></span>
-<span id="cb10-32"><a href="#cb10-32"></a><span class="va">http</span>.<span class="at">createServer</span>(<span class="at">mount</span>(app<span class="op">,</span> opts)).<span class="at">listen</span>(port<span class="op">,</span> listening)</span></code></pre></div>
+<span id="cb10-32"><a href="#cb10-32"></a>http<span class="op">.</span><span class="fu">createServer</span>(mount(app<span class="op">,</span> opts))<span class="op">.</span><span class="fu">listen</span>(port<span class="op">,</span> listening)</span></code></pre></div>
 <p><em>(Read up more on how paperplane works on its <a href="https://github.com/articulate/paperplane/blob/master/docs/getting-started.md">getting started page</a> or by taking a look at <a href="https://github.com/articulate/paperplane/blob/master/demo/index.js">the demo application</a>. Also check out <a href="http://ramdajs.com/docs/#compose">Ramda’s compose function</a> to learn about effective function composition.)</em></p>
 <p>We can start the server in a terminal window by running</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a>λ <span class="ex">node</span> index.js</span>
@@ -159,36 +159,36 @@
 <p>It works!</p>
 <h2 id="hello-location">Hello, Location</h2>
 <p>Now that we know our server works, let’s see if we can get it to echo back a location/address parameter we send it at a route we’ll create called <code>/geocode</code>. Let’s remove our <code>'/'</code> endpoint and “hello, world!” code and add some for geocoding:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">const</span> endpoints <span class="op">=</span> <span class="at">routes</span>(<span class="op">{</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>  <span class="st">&#39;/geocode/:address&#39;</span><span class="op">:</span> <span class="at">methods</span>(<span class="op">{</span></span>
+<div class="sourceCode" id="cb13"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">const</span> endpoints <span class="op">=</span> routes({</span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="st">&#39;/geocode/:address&#39;</span><span class="op">:</span> methods({</span>
 <span id="cb13-3"><a href="#cb13-3"></a>    <span class="dt">GET</span><span class="op">:</span> req <span class="kw">=&gt;</span> (</span>
-<span id="cb13-4"><a href="#cb13-4"></a>      Promise</span>
-<span id="cb13-5"><a href="#cb13-5"></a>        .<span class="at">resolve</span>(<span class="va">req</span>.<span class="va">params</span>.<span class="at">address</span>)</span>
-<span id="cb13-6"><a href="#cb13-6"></a>        .<span class="at">then</span>(json)</span>
+<span id="cb13-4"><a href="#cb13-4"></a>      <span class="bu">Promise</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a>        <span class="op">.</span><span class="fu">resolve</span>(req<span class="op">.</span><span class="at">params</span><span class="op">.</span><span class="at">address</span>)</span>
+<span id="cb13-6"><a href="#cb13-6"></a>        <span class="op">.</span><span class="fu">then</span>(json)</span>
 <span id="cb13-7"><a href="#cb13-7"></a>    )</span>
-<span id="cb13-8"><a href="#cb13-8"></a>  <span class="op">}</span>)</span>
-<span id="cb13-9"><a href="#cb13-9"></a><span class="op">}</span>)</span></code></pre></div>
+<span id="cb13-8"><a href="#cb13-8"></a>  })</span>
+<span id="cb13-9"><a href="#cb13-9"></a>})</span></code></pre></div>
 <p>The <code>req</code> object gives us a <code>params</code> object with the key <code>address</code>, since that was what we specified we’d like our parameter to be named by setting the <code>/geocode/:address</code> key in the <code>routes</code> function argument.</p>
 <p>With the new endpoint added, save the file, restart your server (stop it with <code>Ctrl + C</code>), and run cURL with a city name this time:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a>λ <span class="ex">curl</span> localhost:5050/geocode/Auckland</span>
 <span id="cb14-2"><a href="#cb14-2"></a><span class="st">&quot;Auckland&quot;</span></span></code></pre></div>
 <h2 id="sending-to-the-geocoding-api">Sending to the Geocoding API</h2>
 <p>We’re almost there! Instead of echoing back whatever address the server receives, let’s instead make an HTTP GET request to the geocode API using the <code>axios</code> package:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">const</span> endpoints <span class="op">=</span> <span class="at">routes</span>(<span class="op">{</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a>  <span class="st">&#39;/geocode/:address&#39;</span><span class="op">:</span> <span class="at">methods</span>(<span class="op">{</span></span>
+<div class="sourceCode" id="cb15"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">const</span> endpoints <span class="op">=</span> routes({</span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="st">&#39;/geocode/:address&#39;</span><span class="op">:</span> methods({</span>
 <span id="cb15-3"><a href="#cb15-3"></a>    <span class="dt">GET</span><span class="op">:</span> req <span class="kw">=&gt;</span> (</span>
-<span id="cb15-4"><a href="#cb15-4"></a>      <span class="at">axios</span>(<span class="op">{</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a>      axios({</span>
 <span id="cb15-5"><a href="#cb15-5"></a>        <span class="dt">method</span><span class="op">:</span> <span class="st">&#39;GET&#39;</span><span class="op">,</span></span>
 <span id="cb15-6"><a href="#cb15-6"></a>        <span class="dt">url</span><span class="op">:</span> <span class="st">&#39;https://maps.googleapis.com/maps/api/geocode/json&#39;</span><span class="op">,</span></span>
-<span id="cb15-7"><a href="#cb15-7"></a>        <span class="dt">params</span><span class="op">:</span> <span class="op">{</span></span>
-<span id="cb15-8"><a href="#cb15-8"></a>          <span class="dt">key</span><span class="op">:</span> <span class="va">process</span>.<span class="va">env</span>.<span class="at">GEO_KEY</span><span class="op">,</span></span>
-<span id="cb15-9"><a href="#cb15-9"></a>          <span class="dt">address</span><span class="op">:</span> <span class="va">req</span>.<span class="va">params</span>.<span class="at">address</span></span>
-<span id="cb15-10"><a href="#cb15-10"></a>        <span class="op">}</span></span>
-<span id="cb15-11"><a href="#cb15-11"></a>      <span class="op">}</span>)</span>
-<span id="cb15-12"><a href="#cb15-12"></a>      .<span class="at">then</span>(json)</span>
+<span id="cb15-7"><a href="#cb15-7"></a>        <span class="dt">params</span><span class="op">:</span> {</span>
+<span id="cb15-8"><a href="#cb15-8"></a>          <span class="dt">key</span><span class="op">:</span> <span class="bu">process</span><span class="op">.</span><span class="at">env</span><span class="op">.</span><span class="at">GEO_KEY</span><span class="op">,</span></span>
+<span id="cb15-9"><a href="#cb15-9"></a>          <span class="dt">address</span><span class="op">:</span> req<span class="op">.</span><span class="at">params</span><span class="op">.</span><span class="at">address</span></span>
+<span id="cb15-10"><a href="#cb15-10"></a>        }</span>
+<span id="cb15-11"><a href="#cb15-11"></a>      })</span>
+<span id="cb15-12"><a href="#cb15-12"></a>      <span class="op">.</span><span class="fu">then</span>(json)</span>
 <span id="cb15-13"><a href="#cb15-13"></a>    )</span>
-<span id="cb15-14"><a href="#cb15-14"></a>  <span class="op">}</span>)</span>
-<span id="cb15-15"><a href="#cb15-15"></a><span class="op">}</span>)</span></code></pre></div>
+<span id="cb15-14"><a href="#cb15-14"></a>  })</span>
+<span id="cb15-15"><a href="#cb15-15"></a>})</span></code></pre></div>
 <p>In this code, we are using the JavaScript Promise-based axios tool to create a GET request to the geocode API. Take note of our <code>params</code> object here; since we’re using the <code>dotenv</code> package and configuring that above, we get access to the <code>GEO_KEY</code> value in our <code>.env</code> file, and we separately get to pass on the <code>address</code> param, as well. When this request is sent, the <code>url</code> will look like:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a><span class="ex">https</span>://maps.googleapis.com/maps/api/geocode/json?key=abcdefg<span class="kw">&amp;</span><span class="va">address=</span>Auckland</span></code></pre></div>
 <p>After restarting your server, run <code>λ curl localhost:5050/geocode/Auckland</code> again.</p>
@@ -196,26 +196,26 @@
 <span id="cb17-2"><a href="#cb17-2"></a>{<span class="st">&quot;message&quot;</span>:<span class="st">&quot;Converting circular structure to JSON&quot;</span>,<span class="st">&quot;name&quot;</span>:<span class="st">&quot;TypeError&quot;</span>}</span></code></pre></div>
 <p>Uh oh! If we log the axios result, we’ll see a big response object that we don’t care too much about right now. The only key we want right now from this big response is the <code>data</code> key, so we can use <a href="http://ramdajs.com/docs/#prop">Ramda’s prop method</a> to simply access this object key and pass its return value down the chain:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1"></a><span class="co">// add `prop` to the require statement</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a><span class="kw">const</span> <span class="op">{</span> compose<span class="op">,</span> prop <span class="op">}</span> <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;ramda&#39;</span>)</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="kw">const</span> { compose<span class="op">,</span> prop } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;ramda&#39;</span>)</span>
 <span id="cb18-3"><a href="#cb18-3"></a></span>
 <span id="cb18-4"><a href="#cb18-4"></a><span class="co">// ...</span></span>
 <span id="cb18-5"><a href="#cb18-5"></a></span>
-<span id="cb18-6"><a href="#cb18-6"></a><span class="kw">const</span> endpoints <span class="op">=</span> <span class="at">routes</span>(<span class="op">{</span></span>
-<span id="cb18-7"><a href="#cb18-7"></a>  <span class="st">&#39;/geocode/:address&#39;</span><span class="op">:</span> <span class="at">methods</span>(<span class="op">{</span></span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="kw">const</span> endpoints <span class="op">=</span> routes({</span>
+<span id="cb18-7"><a href="#cb18-7"></a>  <span class="st">&#39;/geocode/:address&#39;</span><span class="op">:</span> methods({</span>
 <span id="cb18-8"><a href="#cb18-8"></a>    <span class="dt">GET</span><span class="op">:</span> req <span class="kw">=&gt;</span> (</span>
-<span id="cb18-9"><a href="#cb18-9"></a>      <span class="at">axios</span>(<span class="op">{</span></span>
+<span id="cb18-9"><a href="#cb18-9"></a>      axios({</span>
 <span id="cb18-10"><a href="#cb18-10"></a>        <span class="dt">method</span><span class="op">:</span> <span class="st">&#39;GET&#39;</span><span class="op">,</span></span>
 <span id="cb18-11"><a href="#cb18-11"></a>        <span class="dt">url</span><span class="op">:</span> <span class="st">&#39;https://maps.googleapis.com/maps/api/geocode/json&#39;</span><span class="op">,</span></span>
-<span id="cb18-12"><a href="#cb18-12"></a>        <span class="dt">params</span><span class="op">:</span> <span class="op">{</span></span>
-<span id="cb18-13"><a href="#cb18-13"></a>          <span class="dt">key</span><span class="op">:</span> <span class="va">process</span>.<span class="va">env</span>.<span class="at">GEO_KEY</span><span class="op">,</span></span>
-<span id="cb18-14"><a href="#cb18-14"></a>          <span class="dt">address</span><span class="op">:</span> <span class="va">req</span>.<span class="va">params</span>.<span class="at">address</span></span>
-<span id="cb18-15"><a href="#cb18-15"></a>        <span class="op">}</span></span>
-<span id="cb18-16"><a href="#cb18-16"></a>      <span class="op">}</span>)</span>
-<span id="cb18-17"><a href="#cb18-17"></a>      .<span class="at">then</span>(<span class="at">prop</span>(<span class="st">&#39;data&#39;</span>))</span>
-<span id="cb18-18"><a href="#cb18-18"></a>      .<span class="at">then</span>(json)</span>
+<span id="cb18-12"><a href="#cb18-12"></a>        <span class="dt">params</span><span class="op">:</span> {</span>
+<span id="cb18-13"><a href="#cb18-13"></a>          <span class="dt">key</span><span class="op">:</span> <span class="bu">process</span><span class="op">.</span><span class="at">env</span><span class="op">.</span><span class="at">GEO_KEY</span><span class="op">,</span></span>
+<span id="cb18-14"><a href="#cb18-14"></a>          <span class="dt">address</span><span class="op">:</span> req<span class="op">.</span><span class="at">params</span><span class="op">.</span><span class="at">address</span></span>
+<span id="cb18-15"><a href="#cb18-15"></a>        }</span>
+<span id="cb18-16"><a href="#cb18-16"></a>      })</span>
+<span id="cb18-17"><a href="#cb18-17"></a>      <span class="op">.</span><span class="fu">then</span>(prop(<span class="st">&#39;data&#39;</span>))</span>
+<span id="cb18-18"><a href="#cb18-18"></a>      <span class="op">.</span><span class="fu">then</span>(json)</span>
 <span id="cb18-19"><a href="#cb18-19"></a>    )</span>
-<span id="cb18-20"><a href="#cb18-20"></a>  <span class="op">}</span>)</span>
-<span id="cb18-21"><a href="#cb18-21"></a><span class="op">}</span>)</span></code></pre></div>
+<span id="cb18-20"><a href="#cb18-20"></a>  })</span>
+<span id="cb18-21"><a href="#cb18-21"></a>})</span></code></pre></div>
 <p>If all the stars have aligned and you restart and rerun the command again, you should see</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1"></a>λ <span class="ex">curl</span> localhost:5050/geocode/Auckland</span>
 <span id="cb19-2"><a href="#cb19-2"></a>{<span class="st">&quot;results&quot;</span>:[{<span class="st">&quot;address_components&quot;</span>:[<span class="dt">{&quot;long_name&quot;:&quot;Auckland&quot;,&quot;short_name&quot;:&quot;Auckland&quot;,&quot;types&quot;:[&quot;locality&quot;,&quot;political&quot;]}</span>,<span class="dt">{&quot;long_name&quot;:&quot;Auckland&quot;,&quot;short_name&quot;:&quot;Auckland&quot;,&quot;types&quot;:[&quot;administrative_area_level_1&quot;,&quot;political&quot;]}</span>,{<span class="st">&quot;long_name&quot;</span>:<span class="st">&quot;New Zealand&quot;</span>,<span class="st">&quot;short_name&quot;</span>:<span class="st">&quot;NZ&quot;</span>,<span class="st">&quot;types&quot;</span>:[<span class="st">&quot;country&quot;</span>,<span class="st">&quot;political&quot;</span>]}],<span class="st">&quot;formatted_address&quot;</span>:<span class="st">&quot;Auckland, New Zealand&quot;</span>,<span class="st">&quot;geometry&quot;</span>:<span class="dt">{&quot;bounds&quot;:{&quot;northeast&quot;:{&quot;lat&quot;:-36.660571,&quot;lng&quot;:175.2871371},&quot;southwest&quot;:{&quot;lat&quot;:-37.0654751,&quot;lng&quot;:174.4438016}},&quot;location&quot;:{&quot;lat&quot;:-36.8484597,&quot;lng&quot;:174.7633315},&quot;location_type&quot;:&quot;APPROXIMATE&quot;,&quot;viewport&quot;:{&quot;northeast&quot;:{&quot;lat&quot;:-36.660571,&quot;lng&quot;:175.2871371},&quot;southwest&quot;:{&quot;lat&quot;:-37.0654751,&quot;lng&quot;:174.4438016}}}</span>,<span class="st">&quot;place_id&quot;</span>:<span class="st">&quot;ChIJ--acWvtHDW0RF5miQ2HvAAU&quot;</span>,<span class="st">&quot;types&quot;</span>:[<span class="st">&quot;locality&quot;</span>,<span class="st">&quot;political&quot;</span>]}],<span class="st">&quot;status&quot;</span>:<span class="st">&quot;OK&quot;</span>}</span></code></pre></div>
@@ -228,54 +228,54 @@
 <h2 id="refactoring-the-routes">Refactoring the Routes</h2>
 <p>As you might imagine, having all of the request handling functions inside of paperplane’s <code>routes</code> function might get difficult to follow and modularize. With that in mind, let’s first pull the handler function out and into its own function:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw">const</span> geocode <span class="op">=</span> req <span class="kw">=&gt;</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a>  <span class="at">axios</span>(<span class="op">{</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>  axios({</span>
 <span id="cb20-3"><a href="#cb20-3"></a>    <span class="dt">method</span><span class="op">:</span> <span class="st">&#39;GET&#39;</span><span class="op">,</span></span>
 <span id="cb20-4"><a href="#cb20-4"></a>    <span class="dt">url</span><span class="op">:</span> <span class="st">&#39;https://maps.googleapis.com/maps/api/geocode/json&#39;</span><span class="op">,</span></span>
-<span id="cb20-5"><a href="#cb20-5"></a>    <span class="dt">params</span><span class="op">:</span> <span class="op">{</span></span>
-<span id="cb20-6"><a href="#cb20-6"></a>      <span class="dt">key</span><span class="op">:</span> <span class="va">process</span>.<span class="va">env</span>.<span class="at">GEO_KEY</span><span class="op">,</span></span>
-<span id="cb20-7"><a href="#cb20-7"></a>      <span class="dt">address</span><span class="op">:</span> <span class="va">req</span>.<span class="va">params</span>.<span class="at">address</span></span>
-<span id="cb20-8"><a href="#cb20-8"></a>    <span class="op">}</span></span>
-<span id="cb20-9"><a href="#cb20-9"></a>  <span class="op">}</span>)</span>
-<span id="cb20-10"><a href="#cb20-10"></a>  .<span class="at">then</span>(<span class="at">prop</span>(<span class="st">&#39;data&#39;</span>))</span>
-<span id="cb20-11"><a href="#cb20-11"></a>  .<span class="at">then</span>(json)</span>
+<span id="cb20-5"><a href="#cb20-5"></a>    <span class="dt">params</span><span class="op">:</span> {</span>
+<span id="cb20-6"><a href="#cb20-6"></a>      <span class="dt">key</span><span class="op">:</span> <span class="bu">process</span><span class="op">.</span><span class="at">env</span><span class="op">.</span><span class="at">GEO_KEY</span><span class="op">,</span></span>
+<span id="cb20-7"><a href="#cb20-7"></a>      <span class="dt">address</span><span class="op">:</span> req<span class="op">.</span><span class="at">params</span><span class="op">.</span><span class="at">address</span></span>
+<span id="cb20-8"><a href="#cb20-8"></a>    }</span>
+<span id="cb20-9"><a href="#cb20-9"></a>  })</span>
+<span id="cb20-10"><a href="#cb20-10"></a>  <span class="op">.</span><span class="fu">then</span>(prop(<span class="st">&#39;data&#39;</span>))</span>
+<span id="cb20-11"><a href="#cb20-11"></a>  <span class="op">.</span><span class="fu">then</span>(json)</span>
 <span id="cb20-12"><a href="#cb20-12"></a></span>
-<span id="cb20-13"><a href="#cb20-13"></a><span class="kw">const</span> endpoints <span class="op">=</span> <span class="at">routes</span>(<span class="op">{</span></span>
-<span id="cb20-14"><a href="#cb20-14"></a>  <span class="st">&#39;/geocode/:address&#39;</span><span class="op">:</span> <span class="at">methods</span>(<span class="op">{</span></span>
+<span id="cb20-13"><a href="#cb20-13"></a><span class="kw">const</span> endpoints <span class="op">=</span> routes({</span>
+<span id="cb20-14"><a href="#cb20-14"></a>  <span class="st">&#39;/geocode/:address&#39;</span><span class="op">:</span> methods({</span>
 <span id="cb20-15"><a href="#cb20-15"></a>    <span class="dt">GET</span><span class="op">:</span> geocode</span>
-<span id="cb20-16"><a href="#cb20-16"></a>  <span class="op">}</span>)</span>
-<span id="cb20-17"><a href="#cb20-17"></a><span class="op">}</span>)</span></code></pre></div>
+<span id="cb20-16"><a href="#cb20-16"></a>  })</span>
+<span id="cb20-17"><a href="#cb20-17"></a>})</span></code></pre></div>
 <p>You could now abstract the <code>geocode</code> function to another file if you wanted to, as well as the object that is passed to routes (think of a routes file that requires in the different handlers it needs).</p>
 <h3 id="leveraging-ramda">Leveraging Ramda</h3>
 <p>We can refactor the code above even further and make it a bit more functional and closer to being <a href="https://lucasmreis.github.io/blog/pointfree-javascript">“point-free”</a> by including a few Ramda helpers:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">const</span> <span class="op">{</span> compose<span class="op">,</span> composeP<span class="op">,</span> curryN<span class="op">,</span> path<span class="op">,</span> prop <span class="op">}</span> <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;ramda&#39;</span>)</span>
+<div class="sourceCode" id="cb21"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">const</span> { compose<span class="op">,</span> composeP<span class="op">,</span> curryN<span class="op">,</span> path<span class="op">,</span> prop } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;ramda&#39;</span>)</span>
 <span id="cb21-2"><a href="#cb21-2"></a></span>
 <span id="cb21-3"><a href="#cb21-3"></a><span class="co">// ...</span></span>
 <span id="cb21-4"><a href="#cb21-4"></a></span>
 <span id="cb21-5"><a href="#cb21-5"></a><span class="co">// Application-specific code</span></span>
-<span id="cb21-6"><a href="#cb21-6"></a><span class="kw">const</span> getGeocode <span class="op">=</span> <span class="at">curryN</span>(<span class="dv">2</span><span class="op">,</span> (key<span class="op">,</span> address) <span class="kw">=&gt;</span></span>
-<span id="cb21-7"><a href="#cb21-7"></a>  <span class="at">axios</span>(<span class="op">{</span></span>
+<span id="cb21-6"><a href="#cb21-6"></a><span class="kw">const</span> getGeocode <span class="op">=</span> curryN(<span class="dv">2</span><span class="op">,</span> (key<span class="op">,</span> address) <span class="kw">=&gt;</span></span>
+<span id="cb21-7"><a href="#cb21-7"></a>  axios({</span>
 <span id="cb21-8"><a href="#cb21-8"></a>    <span class="dt">method</span><span class="op">:</span> <span class="st">&#39;GET&#39;</span><span class="op">,</span></span>
 <span id="cb21-9"><a href="#cb21-9"></a>    <span class="dt">url</span><span class="op">:</span> <span class="st">&#39;https://maps.googleapis.com/maps/api/geocode/json&#39;</span><span class="op">,</span></span>
-<span id="cb21-10"><a href="#cb21-10"></a>    <span class="dt">params</span><span class="op">:</span> <span class="op">{</span> key<span class="op">,</span> address <span class="op">}</span></span>
-<span id="cb21-11"><a href="#cb21-11"></a>  <span class="op">}</span>)</span>
-<span id="cb21-12"><a href="#cb21-12"></a>  .<span class="at">then</span>(<span class="at">prop</span>(<span class="st">&#39;data&#39;</span>))</span>
+<span id="cb21-10"><a href="#cb21-10"></a>    <span class="dt">params</span><span class="op">:</span> { key<span class="op">,</span> address }</span>
+<span id="cb21-11"><a href="#cb21-11"></a>  })</span>
+<span id="cb21-12"><a href="#cb21-12"></a>  <span class="op">.</span><span class="fu">then</span>(prop(<span class="st">&#39;data&#39;</span>))</span>
 <span id="cb21-13"><a href="#cb21-13"></a>})</span>
 <span id="cb21-14"><a href="#cb21-14"></a></span>
-<span id="cb21-15"><a href="#cb21-15"></a><span class="kw">const</span> geocode <span class="op">=</span> <span class="at">compose</span>(</span>
-<span id="cb21-16"><a href="#cb21-16"></a>  <span class="at">composeP</span>(</span>
+<span id="cb21-15"><a href="#cb21-15"></a><span class="kw">const</span> geocode <span class="op">=</span> compose(</span>
+<span id="cb21-16"><a href="#cb21-16"></a>  composeP(</span>
 <span id="cb21-17"><a href="#cb21-17"></a>    json<span class="op">,</span></span>
-<span id="cb21-18"><a href="#cb21-18"></a>    <span class="at">getGeocode</span>(<span class="va">process</span>.<span class="va">env</span>.<span class="at">GEO_KEY</span>)<span class="op">,</span></span>
+<span id="cb21-18"><a href="#cb21-18"></a>    getGeocode(<span class="bu">process</span><span class="op">.</span><span class="at">env</span><span class="op">.</span><span class="at">GEO_KEY</span>)<span class="op">,</span></span>
 <span id="cb21-19"><a href="#cb21-19"></a>  )<span class="op">,</span></span>
-<span id="cb21-20"><a href="#cb21-20"></a>  <span class="at">path</span>([<span class="st">&#39;params&#39;</span><span class="op">,</span> <span class="st">&#39;address&#39;</span>])</span>
+<span id="cb21-20"><a href="#cb21-20"></a>  path([<span class="st">&#39;params&#39;</span><span class="op">,</span> <span class="st">&#39;address&#39;</span>])</span>
 <span id="cb21-21"><a href="#cb21-21"></a>)</span>
 <span id="cb21-22"><a href="#cb21-22"></a></span>
-<span id="cb21-23"><a href="#cb21-23"></a><span class="kw">const</span> endpoints <span class="op">=</span> <span class="at">routes</span>(<span class="op">{</span></span>
-<span id="cb21-24"><a href="#cb21-24"></a>  <span class="st">&#39;/geocode/:address&#39;</span><span class="op">:</span> <span class="at">methods</span>(<span class="op">{</span></span>
+<span id="cb21-23"><a href="#cb21-23"></a><span class="kw">const</span> endpoints <span class="op">=</span> routes({</span>
+<span id="cb21-24"><a href="#cb21-24"></a>  <span class="st">&#39;/geocode/:address&#39;</span><span class="op">:</span> methods({</span>
 <span id="cb21-25"><a href="#cb21-25"></a>    <span class="dt">GET</span><span class="op">:</span> geocode</span>
-<span id="cb21-26"><a href="#cb21-26"></a>  <span class="op">}</span>)</span>
-<span id="cb21-27"><a href="#cb21-27"></a><span class="op">}</span>)</span>
+<span id="cb21-26"><a href="#cb21-26"></a>  })</span>
+<span id="cb21-27"><a href="#cb21-27"></a>})</span>
 <span id="cb21-28"><a href="#cb21-28"></a></span>
-<span id="cb21-29"><a href="#cb21-29"></a><span class="kw">const</span> app <span class="op">=</span> <span class="at">compose</span>(endpoints<span class="op">,</span> parseJson)</span></code></pre></div>
+<span id="cb21-29"><a href="#cb21-29"></a><span class="kw">const</span> app <span class="op">=</span> compose(endpoints<span class="op">,</span> parseJson)</span></code></pre></div>
 <p>This code accomplishes the same goal as before, but now we have accomplished a few things:</p>
 <ol>
 <li>We no longer access <code>req.params.address</code> – what happens if any of those returned <code>null</code> or <code>undefined</code>? Instead, we use Ramda’s <a href="http://ramdajs.com/docs/#path">path helper</a>.</li>
@@ -287,66 +287,66 @@
 <h2 id="all-of-the-code">All of the Code</h2>
 <p>The project itself can be found at <a href="https://github.com/rpearce/geocoding-proxy">https://github.com/rpearce/geocoding-proxy</a>, but here is our <code>index.js</code> file in its entirety:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1"></a><span class="co">// Make our .env configuration file available</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="at">require</span>(<span class="st">&#39;dotenv&#39;</span>).<span class="at">config</span>()</span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="pp">require</span>(<span class="st">&#39;dotenv&#39;</span>)<span class="op">.</span><span class="fu">config</span>()</span>
 <span id="cb22-3"><a href="#cb22-3"></a></span>
 <span id="cb22-4"><a href="#cb22-4"></a></span>
 <span id="cb22-5"><a href="#cb22-5"></a><span class="co">// Import libraries</span></span>
-<span id="cb22-6"><a href="#cb22-6"></a><span class="kw">const</span> http <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;http&#39;</span>)</span>
-<span id="cb22-7"><a href="#cb22-7"></a><span class="kw">const</span> axios <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;axios&#39;</span>)</span>
-<span id="cb22-8"><a href="#cb22-8"></a><span class="kw">const</span> <span class="op">{</span> compose<span class="op">,</span> composeP<span class="op">,</span> curryN<span class="op">,</span> path<span class="op">,</span> prop <span class="op">}</span> <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;ramda&#39;</span>)</span>
-<span id="cb22-9"><a href="#cb22-9"></a><span class="kw">const</span> <span class="op">{</span> json<span class="op">,</span> logger<span class="op">,</span> methods<span class="op">,</span> mount<span class="op">,</span> parseJson<span class="op">,</span> routes <span class="op">}</span> <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;paperplane&#39;</span>)</span>
+<span id="cb22-6"><a href="#cb22-6"></a><span class="kw">const</span> http <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;http&#39;</span>)</span>
+<span id="cb22-7"><a href="#cb22-7"></a><span class="kw">const</span> axios <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;axios&#39;</span>)</span>
+<span id="cb22-8"><a href="#cb22-8"></a><span class="kw">const</span> { compose<span class="op">,</span> composeP<span class="op">,</span> curryN<span class="op">,</span> path<span class="op">,</span> prop } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;ramda&#39;</span>)</span>
+<span id="cb22-9"><a href="#cb22-9"></a><span class="kw">const</span> { json<span class="op">,</span> logger<span class="op">,</span> methods<span class="op">,</span> mount<span class="op">,</span> parseJson<span class="op">,</span> routes } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;paperplane&#39;</span>)</span>
 <span id="cb22-10"><a href="#cb22-10"></a></span>
 <span id="cb22-11"><a href="#cb22-11"></a></span>
 <span id="cb22-12"><a href="#cb22-12"></a><span class="co">// Application-specific code</span></span>
-<span id="cb22-13"><a href="#cb22-13"></a><span class="kw">const</span> getGeocode <span class="op">=</span> <span class="at">curryN</span>(<span class="dv">2</span><span class="op">,</span> (key<span class="op">,</span> address) <span class="kw">=&gt;</span></span>
-<span id="cb22-14"><a href="#cb22-14"></a>  <span class="at">axios</span>(<span class="op">{</span></span>
+<span id="cb22-13"><a href="#cb22-13"></a><span class="kw">const</span> getGeocode <span class="op">=</span> curryN(<span class="dv">2</span><span class="op">,</span> (key<span class="op">,</span> address) <span class="kw">=&gt;</span></span>
+<span id="cb22-14"><a href="#cb22-14"></a>  axios({</span>
 <span id="cb22-15"><a href="#cb22-15"></a>    <span class="dt">method</span><span class="op">:</span> <span class="st">&#39;GET&#39;</span><span class="op">,</span></span>
 <span id="cb22-16"><a href="#cb22-16"></a>    <span class="dt">url</span><span class="op">:</span> <span class="st">&#39;https://maps.googleapis.com/maps/api/geocode/json&#39;</span><span class="op">,</span></span>
-<span id="cb22-17"><a href="#cb22-17"></a>    <span class="dt">params</span><span class="op">:</span> <span class="op">{</span> key<span class="op">,</span> address <span class="op">}</span></span>
-<span id="cb22-18"><a href="#cb22-18"></a>  <span class="op">}</span>)</span>
-<span id="cb22-19"><a href="#cb22-19"></a>  .<span class="at">then</span>(<span class="at">prop</span>(<span class="st">&#39;data&#39;</span>))</span>
+<span id="cb22-17"><a href="#cb22-17"></a>    <span class="dt">params</span><span class="op">:</span> { key<span class="op">,</span> address }</span>
+<span id="cb22-18"><a href="#cb22-18"></a>  })</span>
+<span id="cb22-19"><a href="#cb22-19"></a>  <span class="op">.</span><span class="fu">then</span>(prop(<span class="st">&#39;data&#39;</span>))</span>
 <span id="cb22-20"><a href="#cb22-20"></a>)</span>
 <span id="cb22-21"><a href="#cb22-21"></a></span>
-<span id="cb22-22"><a href="#cb22-22"></a><span class="kw">const</span> geocode <span class="op">=</span> <span class="at">compose</span>(</span>
-<span id="cb22-23"><a href="#cb22-23"></a>  <span class="at">composeP</span>(</span>
+<span id="cb22-22"><a href="#cb22-22"></a><span class="kw">const</span> geocode <span class="op">=</span> compose(</span>
+<span id="cb22-23"><a href="#cb22-23"></a>  composeP(</span>
 <span id="cb22-24"><a href="#cb22-24"></a>    json<span class="op">,</span></span>
-<span id="cb22-25"><a href="#cb22-25"></a>    <span class="at">getGeocode</span>(<span class="va">process</span>.<span class="va">env</span>.<span class="at">GEO_KEY</span>)<span class="op">,</span></span>
+<span id="cb22-25"><a href="#cb22-25"></a>    getGeocode(<span class="bu">process</span><span class="op">.</span><span class="at">env</span><span class="op">.</span><span class="at">GEO_KEY</span>)<span class="op">,</span></span>
 <span id="cb22-26"><a href="#cb22-26"></a>  )<span class="op">,</span></span>
-<span id="cb22-27"><a href="#cb22-27"></a>  <span class="at">path</span>([<span class="st">&#39;params&#39;</span><span class="op">,</span> <span class="st">&#39;address&#39;</span>])</span>
+<span id="cb22-27"><a href="#cb22-27"></a>  path([<span class="st">&#39;params&#39;</span><span class="op">,</span> <span class="st">&#39;address&#39;</span>])</span>
 <span id="cb22-28"><a href="#cb22-28"></a>)</span>
 <span id="cb22-29"><a href="#cb22-29"></a></span>
-<span id="cb22-30"><a href="#cb22-30"></a><span class="kw">const</span> endpoints <span class="op">=</span> <span class="at">routes</span>(<span class="op">{</span></span>
-<span id="cb22-31"><a href="#cb22-31"></a>  <span class="st">&#39;/geocode/:address&#39;</span><span class="op">:</span> <span class="at">methods</span>(<span class="op">{</span></span>
+<span id="cb22-30"><a href="#cb22-30"></a><span class="kw">const</span> endpoints <span class="op">=</span> routes({</span>
+<span id="cb22-31"><a href="#cb22-31"></a>  <span class="st">&#39;/geocode/:address&#39;</span><span class="op">:</span> methods({</span>
 <span id="cb22-32"><a href="#cb22-32"></a>    <span class="dt">GET</span><span class="op">:</span> geocode</span>
-<span id="cb22-33"><a href="#cb22-33"></a>  <span class="op">}</span>)</span>
-<span id="cb22-34"><a href="#cb22-34"></a><span class="op">}</span>)</span>
+<span id="cb22-33"><a href="#cb22-33"></a>  })</span>
+<span id="cb22-34"><a href="#cb22-34"></a>})</span>
 <span id="cb22-35"><a href="#cb22-35"></a></span>
-<span id="cb22-36"><a href="#cb22-36"></a><span class="kw">const</span> app <span class="op">=</span> <span class="at">compose</span>(endpoints<span class="op">,</span> parseJson)</span>
+<span id="cb22-36"><a href="#cb22-36"></a><span class="kw">const</span> app <span class="op">=</span> compose(endpoints<span class="op">,</span> parseJson)</span>
 <span id="cb22-37"><a href="#cb22-37"></a></span>
 <span id="cb22-38"><a href="#cb22-38"></a></span>
 <span id="cb22-39"><a href="#cb22-39"></a><span class="co">// Server options</span></span>
-<span id="cb22-40"><a href="#cb22-40"></a><span class="kw">const</span> opts <span class="op">=</span> <span class="op">{</span> <span class="dt">errLogger</span><span class="op">:</span> logger<span class="op">,</span> logger <span class="op">}</span></span>
-<span id="cb22-41"><a href="#cb22-41"></a><span class="kw">const</span> port <span class="op">=</span> <span class="va">process</span>.<span class="va">env</span>.<span class="at">PORT</span> <span class="op">||</span> <span class="dv">3000</span></span>
-<span id="cb22-42"><a href="#cb22-42"></a><span class="kw">const</span> listening <span class="op">=</span> err <span class="kw">=&gt;</span> err <span class="op">?</span> <span class="va">console</span>.<span class="at">error</span>(err) : <span class="va">console</span>.<span class="at">info</span>(<span class="vs">`Listening on port: </span><span class="sc">${</span>port<span class="sc">}</span><span class="vs">`</span>)</span>
+<span id="cb22-40"><a href="#cb22-40"></a><span class="kw">const</span> opts <span class="op">=</span> { <span class="dt">errLogger</span><span class="op">:</span> logger<span class="op">,</span> logger }</span>
+<span id="cb22-41"><a href="#cb22-41"></a><span class="kw">const</span> port <span class="op">=</span> <span class="bu">process</span><span class="op">.</span><span class="at">env</span><span class="op">.</span><span class="at">PORT</span> <span class="op">||</span> <span class="dv">3000</span></span>
+<span id="cb22-42"><a href="#cb22-42"></a><span class="kw">const</span> listening <span class="op">=</span> err <span class="kw">=&gt;</span> err <span class="op">?</span> <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(err) <span class="op">:</span> <span class="bu">console</span><span class="op">.</span><span class="fu">info</span>(<span class="vs">`Listening on port: </span><span class="sc">${</span>port<span class="sc">}</span><span class="vs">`</span>)</span>
 <span id="cb22-43"><a href="#cb22-43"></a></span>
 <span id="cb22-44"><a href="#cb22-44"></a></span>
 <span id="cb22-45"><a href="#cb22-45"></a><span class="co">// Start the server</span></span>
-<span id="cb22-46"><a href="#cb22-46"></a><span class="va">http</span>.<span class="at">createServer</span>(<span class="at">mount</span>(app<span class="op">,</span> opts)).<span class="at">listen</span>(port<span class="op">,</span> listening)</span></code></pre></div>
+<span id="cb22-46"><a href="#cb22-46"></a>http<span class="op">.</span><span class="fu">createServer</span>(mount(app<span class="op">,</span> opts))<span class="op">.</span><span class="fu">listen</span>(port<span class="op">,</span> listening)</span></code></pre></div>
 <h2 id="conclusion">Conclusion</h2>
 <p>Tools like Node.js with paperplane make it very easy to create proxy servers to handle your requests in a safe fashion, so use them and always keep your API keys secret!</p>
 <h2 id="update-2017-07-30">Update: 2017-07-30</h2>
 <p>I’ve seen a some feedback asking about CORS (cross-origin resource sharing), so here’s how you can do it (useful for running things on localhost):</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">const</span> <span class="op">{</span> cors<span class="op">,</span> ... <span class="op">}</span> <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;paperplane&#39;</span>)</span>
+<div class="sourceCode" id="cb23"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">const</span> { cors<span class="op">,</span> <span class="op">...</span> } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;paperplane&#39;</span>)</span>
 <span id="cb23-2"><a href="#cb23-2"></a></span>
 <span id="cb23-3"><a href="#cb23-3"></a><span class="co">// ...</span></span>
 <span id="cb23-4"><a href="#cb23-4"></a></span>
 <span id="cb23-5"><a href="#cb23-5"></a><span class="co">// Server options</span></span>
-<span id="cb23-6"><a href="#cb23-6"></a><span class="kw">const</span> corsOpts <span class="op">=</span> <span class="op">{</span> <span class="dt">methods</span><span class="op">:</span> <span class="st">&#39;GET&#39;</span> <span class="op">}</span></span>
-<span id="cb23-7"><a href="#cb23-7"></a><span class="kw">const</span> corsApp <span class="op">=</span> <span class="at">cors</span>(app<span class="op">,</span> corsOpts)</span>
+<span id="cb23-6"><a href="#cb23-6"></a><span class="kw">const</span> corsOpts <span class="op">=</span> { <span class="dt">methods</span><span class="op">:</span> <span class="st">&#39;GET&#39;</span> }</span>
+<span id="cb23-7"><a href="#cb23-7"></a><span class="kw">const</span> corsApp <span class="op">=</span> cors(app<span class="op">,</span> corsOpts)</span>
 <span id="cb23-8"><a href="#cb23-8"></a><span class="co">// ...</span></span>
 <span id="cb23-9"><a href="#cb23-9"></a></span>
 <span id="cb23-10"><a href="#cb23-10"></a><span class="co">// Start the server</span></span>
-<span id="cb23-11"><a href="#cb23-11"></a><span class="va">http</span>.<span class="at">createServer</span>(<span class="at">mount</span>(corsApp<span class="op">,</span> opts)).<span class="at">listen</span>(port<span class="op">,</span> listening)</span></code></pre></div>
+<span id="cb23-11"><a href="#cb23-11"></a>http<span class="op">.</span><span class="fu">createServer</span>(mount(corsApp<span class="op">,</span> opts))<span class="op">.</span><span class="fu">listen</span>(port<span class="op">,</span> listening)</span></code></pre></div>
 <p>Read more about paperplane’s CORS API in <a href="https://github.com/articulate/paperplane/blob/master/docs/API.md#cors">paperplane’s CORS docs</a>.</p>
     </section>
   </article>

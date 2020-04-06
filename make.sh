@@ -5,7 +5,9 @@ set -o nounset
 set -o pipefail
 
 function build() {
-  build-cabal && build-project && build-output
+  build-cabal
+  build-project
+  build-output
   return 0
 }
 

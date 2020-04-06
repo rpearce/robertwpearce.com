@@ -80,35 +80,35 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> axe <span class="im">from</span> <span class="st">&#39;axe-core&#39;</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a></span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="kw">const</span> isA11y <span class="op">=</span> html <span class="kw">=&gt;</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a>  <span class="kw">new</span> <span class="at">Promise</span>((resolve<span class="op">,</span> reject) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>    <span class="va">axe</span>.<span class="at">run</span>(html<span class="op">,</span> <span class="op">{},</span> (err<span class="op">,</span> result<span class="op">={}</span>) <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a>      <span class="kw">const</span> <span class="op">{</span> violations<span class="op">=</span>[] <span class="op">}</span> <span class="op">=</span> result</span>
+<span id="cb1-4"><a href="#cb1-4"></a>  <span class="kw">new</span> <span class="bu">Promise</span>((resolve<span class="op">,</span> reject) <span class="kw">=&gt;</span> {</span>
+<span id="cb1-5"><a href="#cb1-5"></a>    axe<span class="op">.</span><span class="fu">run</span>(html<span class="op">,</span> {}<span class="op">,</span> (err<span class="op">,</span> result<span class="op">=</span>{}) <span class="kw">=&gt;</span> {</span>
+<span id="cb1-6"><a href="#cb1-6"></a>      <span class="kw">const</span> { violations<span class="op">=</span>[] } <span class="op">=</span> result</span>
 <span id="cb1-7"><a href="#cb1-7"></a></span>
-<span id="cb1-8"><a href="#cb1-8"></a>      <span class="cf">if</span> (err) <span class="op">{</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a>        <span class="at">reject</span>(err)</span>
-<span id="cb1-10"><a href="#cb1-10"></a>      <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> (<span class="va">violations</span>.<span class="at">length</span> <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">{</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a>        <span class="at">reject</span>(violations)</span>
-<span id="cb1-12"><a href="#cb1-12"></a>      <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>      <span class="cf">if</span> (err) {</span>
+<span id="cb1-9"><a href="#cb1-9"></a>        reject(err)</span>
+<span id="cb1-10"><a href="#cb1-10"></a>      } <span class="cf">else</span> <span class="cf">if</span> (violations<span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb1-11"><a href="#cb1-11"></a>        reject(violations)</span>
+<span id="cb1-12"><a href="#cb1-12"></a>      } <span class="cf">else</span> {</span>
 <span id="cb1-13"><a href="#cb1-13"></a>        <span class="co">// Uncomment to view incomplete/unavailable tests &amp; why</span></span>
 <span id="cb1-14"><a href="#cb1-14"></a>        <span class="co">//console.log(result.incomplete)</span></span>
-<span id="cb1-15"><a href="#cb1-15"></a>        <span class="at">resolve</span>(<span class="kw">true</span>)</span>
-<span id="cb1-16"><a href="#cb1-16"></a>      <span class="op">}</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a>    <span class="op">}</span>)</span>
-<span id="cb1-18"><a href="#cb1-18"></a>  <span class="op">}</span>)</span>
+<span id="cb1-15"><a href="#cb1-15"></a>        resolve(<span class="kw">true</span>)</span>
+<span id="cb1-16"><a href="#cb1-16"></a>      }</span>
+<span id="cb1-17"><a href="#cb1-17"></a>    })</span>
+<span id="cb1-18"><a href="#cb1-18"></a>  })</span>
 <span id="cb1-19"><a href="#cb1-19"></a></span>
-<span id="cb1-20"><a href="#cb1-20"></a><span class="at">test</span>(<span class="st">&#39;bad form&#39;</span><span class="op">,</span> <span class="kw">async</span> () <span class="kw">=&gt;</span> <span class="op">{</span></span>
-<span id="cb1-21"><a href="#cb1-21"></a>  <span class="kw">const</span> wrap <span class="op">=</span> <span class="va">document</span>.<span class="at">createElement</span>(<span class="st">&#39;div&#39;</span>)</span>
-<span id="cb1-22"><a href="#cb1-22"></a>  <span class="va">wrap</span>.<span class="at">innerHTML</span> <span class="op">=</span> <span class="vs">`</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a>test(<span class="st">&#39;bad form&#39;</span><span class="op">,</span> <span class="kw">async</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb1-21"><a href="#cb1-21"></a>  <span class="kw">const</span> wrap <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&#39;div&#39;</span>)</span>
+<span id="cb1-22"><a href="#cb1-22"></a>  wrap<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> <span class="vs">`</span></span>
 <span id="cb1-23"><a href="#cb1-23"></a><span class="vs">    &lt;form&gt;</span></span>
 <span id="cb1-24"><a href="#cb1-24"></a><span class="vs">      &lt;div&gt;Enter your name&lt;/div&gt;</span></span>
 <span id="cb1-25"><a href="#cb1-25"></a><span class="vs">      &lt;input type=&quot;text&quot; /&gt;</span></span>
 <span id="cb1-26"><a href="#cb1-26"></a><span class="vs">      &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;</span></span>
 <span id="cb1-27"><a href="#cb1-27"></a><span class="vs">    &lt;/form&gt;</span></span>
 <span id="cb1-28"><a href="#cb1-28"></a><span class="vs">  `</span></span>
-<span id="cb1-29"><a href="#cb1-29"></a>  <span class="va">document</span>.<span class="va">body</span>.<span class="at">appendChild</span>(wrap)</span>
+<span id="cb1-29"><a href="#cb1-29"></a>  <span class="bu">document</span><span class="op">.</span><span class="at">body</span><span class="op">.</span><span class="fu">appendChild</span>(wrap)</span>
 <span id="cb1-30"><a href="#cb1-30"></a></span>
-<span id="cb1-31"><a href="#cb1-31"></a>  <span class="at">expect</span>(<span class="cf">await</span> <span class="at">isA11y</span>(wrap)).<span class="at">toEqual</span>(<span class="kw">true</span>)</span>
-<span id="cb1-32"><a href="#cb1-32"></a><span class="op">}</span>)</span>
+<span id="cb1-31"><a href="#cb1-31"></a>  expect(<span class="cf">await</span> isA11y(wrap))<span class="op">.</span><span class="fu">toEqual</span>(<span class="kw">true</span>)</span>
+<span id="cb1-32"><a href="#cb1-32"></a>})</span>
 <span id="cb1-33"><a href="#cb1-33"></a><span class="co">// Failed: Array [</span></span>
 <span id="cb1-34"><a href="#cb1-34"></a><span class="co">//   Object {</span></span>
 <span id="cb1-35"><a href="#cb1-35"></a><span class="co">//     &quot;description&quot;: &quot;Ensures every form element has a label&quot;,</span></span>
@@ -135,18 +135,18 @@
 <hr />
 <p>If you are using <code>jest</code> and want a custom matcher, there is a project, <a href="https://github.com/nickcolley/jest-axe"><code>jest-axe</code></a>, that allows you to do so:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">// from https://github.com/nickcolley/jest-axe#usage</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">const</span> <span class="op">{</span> axe<span class="op">,</span> toHaveNoViolations <span class="op">}</span> <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;jest-axe&#39;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">const</span> { axe<span class="op">,</span> toHaveNoViolations } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;jest-axe&#39;</span>)</span>
 <span id="cb2-3"><a href="#cb2-3"></a></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="va">expect</span>.<span class="at">extend</span>(toHaveNoViolations)</span>
+<span id="cb2-4"><a href="#cb2-4"></a>expect<span class="op">.</span><span class="fu">extend</span>(toHaveNoViolations)</span>
 <span id="cb2-5"><a href="#cb2-5"></a></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="at">it</span>(<span class="st">&#39;should demonstrate this matcher`s usage&#39;</span><span class="op">,</span> <span class="kw">async</span> () <span class="kw">=&gt;</span> <span class="op">{</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>it(<span class="st">&#39;should demonstrate this matcher`s usage&#39;</span><span class="op">,</span> <span class="kw">async</span> () <span class="kw">=&gt;</span> {</span>
 <span id="cb2-7"><a href="#cb2-7"></a>  <span class="kw">const</span> render <span class="op">=</span> () <span class="kw">=&gt;</span> <span class="st">&#39;&lt;img src=&quot;#&quot;/&gt;&#39;</span></span>
 <span id="cb2-8"><a href="#cb2-8"></a></span>
 <span id="cb2-9"><a href="#cb2-9"></a>  <span class="co">// pass anything that outputs html to axe</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a>  <span class="kw">const</span> html <span class="op">=</span> <span class="at">render</span>()</span>
+<span id="cb2-10"><a href="#cb2-10"></a>  <span class="kw">const</span> html <span class="op">=</span> render()</span>
 <span id="cb2-11"><a href="#cb2-11"></a></span>
-<span id="cb2-12"><a href="#cb2-12"></a>  <span class="at">expect</span>(<span class="cf">await</span> <span class="at">axe</span>(html)).<span class="at">toHaveNoViolations</span>()</span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="op">}</span>)</span></code></pre></div>
+<span id="cb2-12"><a href="#cb2-12"></a>  expect(<span class="cf">await</span> axe(html))<span class="op">.</span><span class="fu">toHaveNoViolations</span>()</span>
+<span id="cb2-13"><a href="#cb2-13"></a>})</span></code></pre></div>
 <hr />
 <p>Thank you for reading! <br /> Robert</p>
     </section>

@@ -139,12 +139,12 @@
 <span id="cb6-8"><a href="#cb6-8"></a>  <span class="kw">&lt;body&gt;</span></span>
 <span id="cb6-9"><a href="#cb6-9"></a>    <span class="kw">&lt;script</span><span class="ot"> type=</span><span class="st">&quot;text/javascript&quot;</span><span class="ot"> src=</span><span class="st">&quot;elm.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></span>
 <span id="cb6-10"><a href="#cb6-10"></a>    <span class="kw">&lt;script&gt;</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a>      (<span class="kw">function</span>(global) <span class="op">{</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a>        <span class="kw">var</span> node <span class="op">=</span> <span class="va">document</span>.<span class="at">createElement</span>(<span class="st">&#39;div&#39;</span>)</span>
-<span id="cb6-13"><a href="#cb6-13"></a>        <span class="va">document</span>.<span class="va">body</span>.<span class="at">appendChild</span>(node)</span>
-<span id="cb6-14"><a href="#cb6-14"></a>        <span class="kw">var</span> app <span class="op">=</span> <span class="va">Elm</span>.<span class="va">Main</span>.<span class="at">embed</span>(node)</span>
-<span id="cb6-15"><a href="#cb6-15"></a>        <span class="va">global</span>.<span class="at">app</span> <span class="op">=</span> app</span>
-<span id="cb6-16"><a href="#cb6-16"></a>      <span class="op">}</span>)(window)</span>
+<span id="cb6-11"><a href="#cb6-11"></a>      (<span class="kw">function</span>(<span class="bu">global</span>) {</span>
+<span id="cb6-12"><a href="#cb6-12"></a>        <span class="kw">var</span> node <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&#39;div&#39;</span>)</span>
+<span id="cb6-13"><a href="#cb6-13"></a>        <span class="bu">document</span><span class="op">.</span><span class="at">body</span><span class="op">.</span><span class="fu">appendChild</span>(node)</span>
+<span id="cb6-14"><a href="#cb6-14"></a>        <span class="kw">var</span> app <span class="op">=</span> Elm<span class="op">.</span><span class="at">Main</span><span class="op">.</span><span class="fu">embed</span>(node)</span>
+<span id="cb6-15"><a href="#cb6-15"></a>        <span class="bu">global</span><span class="op">.</span><span class="at">app</span> <span class="op">=</span> app</span>
+<span id="cb6-16"><a href="#cb6-16"></a>      })(<span class="bu">window</span>)</span>
 <span id="cb6-17"><a href="#cb6-17"></a>    <span class="kw">&lt;/script&gt;</span></span>
 <span id="cb6-18"><a href="#cb6-18"></a>  <span class="kw">&lt;/body&gt;</span></span>
 <span id="cb6-19"><a href="#cb6-19"></a><span class="kw">&lt;/html&gt;</span></span></code></pre></div>

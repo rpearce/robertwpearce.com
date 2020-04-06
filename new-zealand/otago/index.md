@@ -8,7 +8,7 @@ keywords: "otago, central otago, new zealand, things to do, hikes, coworking, re
 photoCredit: "emilycouldmakethat"
 photoWebsite: "https://www.instagram.com/emilycouldmakethat"
 title: "Otago, New Zealand"
-updated: "2018-11-29"
+updated: "2018-11-29T00:00:00Z"
 ---
 
 Things to do and see in New Zealand's Otago region.

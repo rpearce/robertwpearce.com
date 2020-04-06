@@ -96,64 +96,64 @@
 <span id="cb1-2"><a href="#cb1-2"></a>arr[<span class="dv">2</span>] <span class="co">// TypeError is thrown</span></span></code></pre></div>
 <p>What happens if you try to access the <code>length</code> property on what you think should be an array but ends up being <code>null</code> or <code>undefined</code>?</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">const</span> arr <span class="op">=</span> <span class="kw">null</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="va">arr</span>.<span class="at">length</span> <span class="co">// TypeError is thrown</span></span></code></pre></div>
+<span id="cb2-2"><a href="#cb2-2"></a>arr<span class="op">.</span><span class="at">length</span> <span class="co">// TypeError is thrown</span></span></code></pre></div>
 <p>One solution is to do the “value or default” approach to keep the errors at bay:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">const</span> arr <span class="op">=</span> <span class="kw">undefined</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="kw">const</span> xs <span class="op">=</span> arr <span class="op">||</span> []</span>
 <span id="cb3-3"><a href="#cb3-3"></a>xs[<span class="dv">2</span>] <span class="co">// undefined</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="va">xs</span>.<span class="at">length</span> <span class="co">// 0</span></span></code></pre></div>
+<span id="cb3-4"><a href="#cb3-4"></a>xs<span class="op">.</span><span class="at">length</span> <span class="co">// 0</span></span></code></pre></div>
 <p>An approach we could take to avoid the errors being thrown would be to use ramda’s <a href="http://ramdajs.com/docs/#prop"><code>prop</code></a> helper:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">import</span> prop <span class="im">from</span> <span class="st">&#39;ramda/src/prop&#39;</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a></span>
 <span id="cb4-3"><a href="#cb4-3"></a><span class="kw">const</span> arr <span class="op">=</span> <span class="kw">undefined</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="at">prop</span>(<span class="dv">2</span><span class="op">,</span> arr) <span class="co">// undefined</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="at">prop</span>(<span class="st">&#39;length&#39;</span><span class="op">,</span> arr) <span class="co">// undefined</span></span></code></pre></div>
+<span id="cb4-4"><a href="#cb4-4"></a>prop(<span class="dv">2</span><span class="op">,</span> arr) <span class="co">// undefined</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>prop(<span class="st">&#39;length&#39;</span><span class="op">,</span> arr) <span class="co">// undefined</span></span></code></pre></div>
 <p><em>Ramda’s <a href="http://ramdajs.com/docs/#length"><code>length</code></a> function would accomplish a similar goal for <code>prop('length')</code>.</em></p>
 <p>But if we want a default to be returned in lieu of our data not being present, we can turn to <a href="http://ramdajs.com/docs/#propOr"><code>propOr</code></a>:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1"></a><span class="im">import</span> propOr <span class="im">from</span> <span class="st">&#39;ramda/src/propOr&#39;</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a></span>
 <span id="cb5-3"><a href="#cb5-3"></a><span class="kw">const</span> arr <span class="op">=</span> <span class="kw">undefined</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="at">propOr</span>(<span class="op">{},</span> <span class="dv">2</span><span class="op">,</span> arr) <span class="co">// {}</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="at">propOr</span>(<span class="dv">0</span><span class="op">,</span> <span class="st">&#39;length&#39;</span><span class="op">,</span> arr) <span class="co">// 0</span></span></code></pre></div>
+<span id="cb5-4"><a href="#cb5-4"></a>propOr({}<span class="op">,</span> <span class="dv">2</span><span class="op">,</span> arr) <span class="co">// {}</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>propOr(<span class="dv">0</span><span class="op">,</span> <span class="st">&#39;length&#39;</span><span class="op">,</span> arr) <span class="co">// 0</span></span></code></pre></div>
 <p>If you need to select multiple properties without fear, then the <a href="http://ramdajs.com/docs/#props"><code>props</code></a> or <a href="http://ramdajs.com/docs/#pick"><code>pick</code></a> functions may be for you.</p>
 <h2 id="path--pathor"><code>path</code> &amp; <code>pathOr</code></h2>
 <p>What if we are working in a deeply nested data structure where multiple keys in our hierarchy may or may not exist? Enter <a href="http://ramdajs.com/docs/#path"><code>path</code></a> and <a href="http://ramdajs.com/docs/#pathOr"><code>pathOr</code></a>. These work similarly to <code>prop</code> and <code>propOr</code> except that they use an array syntax to dive into data structures and ultimately check for a <em>value</em>, whereas the <code>prop</code> family checks for a property’s presence.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1"></a><span class="im">import</span> path <span class="im">from</span> <span class="st">&#39;ramda/src/path&#39;</span></span>
 <span id="cb6-2"><a href="#cb6-2"></a></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="kw">const</span> data <span class="op">=</span> <span class="op">{</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a>  <span class="dt">courses</span><span class="op">:</span> <span class="op">{</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a>    <span class="dt">abc123</span><span class="op">:</span> <span class="op">{</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="kw">const</span> data <span class="op">=</span> {</span>
+<span id="cb6-4"><a href="#cb6-4"></a>  <span class="dt">courses</span><span class="op">:</span> {</span>
+<span id="cb6-5"><a href="#cb6-5"></a>    <span class="dt">abc123</span><span class="op">:</span> {</span>
 <span id="cb6-6"><a href="#cb6-6"></a>      <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;How To Build a Tiny House&#39;</span><span class="op">,</span></span>
 <span id="cb6-7"><a href="#cb6-7"></a>      <span class="dt">dueAt</span><span class="op">:</span> <span class="st">&#39;2018-01-30&#39;</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a>    <span class="op">}</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a>  <span class="op">}</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="op">}</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>    }</span>
+<span id="cb6-9"><a href="#cb6-9"></a>  }</span>
+<span id="cb6-10"><a href="#cb6-10"></a>}</span>
 <span id="cb6-11"><a href="#cb6-11"></a></span>
 <span id="cb6-12"><a href="#cb6-12"></a><span class="co">// getCourseTitle :: String -&gt; String | undefined</span></span>
 <span id="cb6-13"><a href="#cb6-13"></a><span class="kw">const</span> getCourseTitle <span class="op">=</span> courseId <span class="kw">=&gt;</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a>  <span class="at">path</span>([<span class="st">&#39;courses&#39;</span><span class="op">,</span> courseId<span class="op">,</span> <span class="st">&#39;title&#39;</span>])</span>
+<span id="cb6-14"><a href="#cb6-14"></a>  path([<span class="st">&#39;courses&#39;</span><span class="op">,</span> courseId<span class="op">,</span> <span class="st">&#39;title&#39;</span>])</span>
 <span id="cb6-15"><a href="#cb6-15"></a></span>
-<span id="cb6-16"><a href="#cb6-16"></a><span class="at">getCourseTitle</span>(<span class="st">&#39;abc123&#39;</span>)(data) <span class="co">// &quot;How To Build a Tiny House&quot;</span></span>
-<span id="cb6-17"><a href="#cb6-17"></a><span class="at">getCourseTitle</span>(<span class="st">&#39;def456&#39;</span>)(data) <span class="co">// undefined</span></span></code></pre></div>
+<span id="cb6-16"><a href="#cb6-16"></a>getCourseTitle(<span class="st">&#39;abc123&#39;</span>)(data) <span class="co">// &quot;How To Build a Tiny House&quot;</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a>getCourseTitle(<span class="st">&#39;def456&#39;</span>)(data) <span class="co">// undefined</span></span></code></pre></div>
 <p><em><a href="https://goo.gl/fdujHu">Try this code in the ramda REPL</a></em></p>
 <p>Or if we’d always like to default to a value, we can use <code>pathOr</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1"></a><span class="im">import</span> pathOr <span class="im">from</span> <span class="st">&#39;ramda/src/path&#39;</span></span>
 <span id="cb7-2"><a href="#cb7-2"></a></span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="kw">const</span> data <span class="op">=</span> <span class="op">{</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a>  <span class="dt">courses</span><span class="op">:</span> <span class="op">{</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a>    <span class="dt">abc123</span><span class="op">:</span> <span class="op">{</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="kw">const</span> data <span class="op">=</span> {</span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="dt">courses</span><span class="op">:</span> {</span>
+<span id="cb7-5"><a href="#cb7-5"></a>    <span class="dt">abc123</span><span class="op">:</span> {</span>
 <span id="cb7-6"><a href="#cb7-6"></a>      <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;How To Build a Tiny House&#39;</span><span class="op">,</span></span>
 <span id="cb7-7"><a href="#cb7-7"></a>      <span class="dt">dueAt</span><span class="op">:</span> <span class="st">&#39;2018-01-30&#39;</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a>    <span class="op">}</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a>  <span class="op">}</span></span>
-<span id="cb7-10"><a href="#cb7-10"></a><span class="op">}</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>    }</span>
+<span id="cb7-9"><a href="#cb7-9"></a>  }</span>
+<span id="cb7-10"><a href="#cb7-10"></a>}</span>
 <span id="cb7-11"><a href="#cb7-11"></a></span>
 <span id="cb7-12"><a href="#cb7-12"></a><span class="co">// getCourseTitle :: String -&gt; String</span></span>
 <span id="cb7-13"><a href="#cb7-13"></a><span class="kw">const</span> getCourseTitle <span class="op">=</span> courseId <span class="kw">=&gt;</span></span>
-<span id="cb7-14"><a href="#cb7-14"></a>  <span class="at">pathOr</span>(<span class="st">&#39;My Course&#39;</span><span class="op">,</span> [<span class="st">&#39;courses&#39;</span><span class="op">,</span> courseId<span class="op">,</span> <span class="st">&#39;title&#39;</span>])</span>
+<span id="cb7-14"><a href="#cb7-14"></a>  pathOr(<span class="st">&#39;My Course&#39;</span><span class="op">,</span> [<span class="st">&#39;courses&#39;</span><span class="op">,</span> courseId<span class="op">,</span> <span class="st">&#39;title&#39;</span>])</span>
 <span id="cb7-15"><a href="#cb7-15"></a></span>
-<span id="cb7-16"><a href="#cb7-16"></a><span class="at">getCourseTitle</span>(<span class="st">&#39;abc123&#39;</span>)(data) <span class="co">// &quot;How To Build a Tiny House&quot;</span></span>
-<span id="cb7-17"><a href="#cb7-17"></a><span class="at">getCourseTitle</span>(<span class="st">&#39;def456&#39;</span>)(data) <span class="co">// &quot;My Course&quot;</span></span></code></pre></div>
+<span id="cb7-16"><a href="#cb7-16"></a>getCourseTitle(<span class="st">&#39;abc123&#39;</span>)(data) <span class="co">// &quot;How To Build a Tiny House&quot;</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a>getCourseTitle(<span class="st">&#39;def456&#39;</span>)(data) <span class="co">// &quot;My Course&quot;</span></span></code></pre></div>
 <p><em><a href="https://goo.gl/PXD1ju">Try this code in the ramda REPL</a></em></p>
 <hr />
 <p>As I said before, there are <em>many</em> different ways to solve this problem, but I’ve found the <code>propOr</code> and <code>pathOr</code> family of ramda functions to be a great starting point.</p>
