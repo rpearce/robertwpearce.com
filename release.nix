@@ -31,7 +31,6 @@ in
         pkgs.haskellPackages.project
       ];
       buildInputs = with haskellPackages; [
-        cabal-install
         ghcid
         hlint
         niv
@@ -42,4 +41,3 @@ in
       #withHoogle = true;
     };
   }
-

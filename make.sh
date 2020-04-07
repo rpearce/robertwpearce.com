@@ -28,7 +28,7 @@ function build-project() {
 }
 
 function nixpkgs-update() {
-  nix-shell -p niv --run "niv update nixpkgs"
+  nix-shell --pure --run "niv update nixpkgs"
   return 0
 }
 
@@ -40,7 +40,7 @@ function no-cmd() {
 }
 
 function repl() {
-  nix-shell --pure --run "cabal new-repl"
+  nix-shell --pure --run "ghci"
   return 0
 }
 
