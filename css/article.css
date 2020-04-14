@@ -92,7 +92,7 @@
   margin-left: -1em;
   margin-right: -1em;
   padding: 1em;
-  background-color: rgba(0,0,0,0.75);
+  background-color: #000;
 }
 .article__bgSubHeader a[href] {
   color: inherit;

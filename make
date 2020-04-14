@@ -2,7 +2,7 @@
 
 set -o errexit
 set -o nounset
-set -o pipefail
+set -eou pipefail
 
 function build() {
   build-cabal
@@ -23,12 +23,7 @@ function build-output() {
 }
 
 function build-project() {
-  nix-build
-  return 0
-}
-
-function nixpkgs-update() {
-  nix-shell --pure --run "niv update nixpkgs"
+  nix-build --show-trace
   return 0
 }
 
@@ -44,13 +39,8 @@ function repl() {
   return 0
 }
 
-function serve() {
-  if ! type "npx" &> /dev/null; then
-    echo "Error: npx not found. Please install nodejs to use this command."
-    return 1
-  fi
-
-  npx serve $@ ./docs
+function shell() {
+  nix-shell --pure
   return 0
 }
 
@@ -66,6 +56,16 @@ function unknown-cmd() {
   return 1
 }
 
+function update-niv() {
+  nix-shell --pure --run "niv update niv"
+  return 0
+}
+
+function update-nixpkgs() {
+  nix-shell --pure --run "niv update nixpkgs"
+  return 0
+}
+
 function usage() {
   cat <<EOF
 Usage: $0 COMMAND
@@ -76,10 +76,11 @@ Available commands:
   build-output      Build the output
   build-project     Use nix to build the project
   help              Print usage
-  nixpkgs-update    Update pinned version of nixpkgs
-  repl              Start interactive REPL for project
+  repl              Start interactive Haskell REPL for project
+  shell             Run nix-shell --pure
   site              Run hakyll commands
-  serve             Serve up the output at a port
+  update-niv        Update pinned version of niv
+  update-nixpkgs    Update pinned version of nixpkgs
 EOF
   return 0
 }
@@ -116,18 +117,21 @@ case "$cmd" in
   help)
     usage
     ;;
-  nixpkgs-update)
-    nixpkgs-update
-    ;;
   repl)
     repl
     ;;
-  serve)
-    serve $@
+  shell)
+    shell
     ;;
   site)
     [[ -f ./result/bin/site ]] || err-site
     site $1
+    ;;
+  update-niv)
+    update-niv
+    ;;
+  update-nixpkgs)
+    update-nixpkgs
     ;;
   *)
     unknown-cmd cmd

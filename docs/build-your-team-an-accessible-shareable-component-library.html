@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Build Your Team an Accessible, Shareable Component Library</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Use React and TypeScript to build your team an accessible, shareable component library that can be included in as many projects as you can manage.">
+    <meta name="author" content="Robert Pearce">
+    <meta name="keywords" content="javascript, react, react library, react component library, component library, storybook, accessibility">
+    <meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU">
+
+    <meta property="og:site_name" content="Robert Pearce | Senior Software Developer">
+    <meta property="og:title" content="Build Your Team an Accessible, Shareable Component Library">
+    <meta property="og:url" content="https://robertwpearce.com/build-your-team-an-accessible-shareable-component-library.html">
+    <meta property="og:description" content="Use React and TypeScript to build your team an accessible, shareable component library that can be included in as many projects as you can manage.">
+    <meta property="og:image" content="https://robertwpearce.com/images/mangawhai-heads.jpg">
+    
+      <meta property="og:type" content="article">
+    
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="Robert Pearce | Senior Software Developer">
+    <meta property="twitter:title" content="Build Your Team an Accessible, Shareable Component Library">
+    <meta property="twitter:description" content="Use React and TypeScript to build your team an accessible, shareable component library that can be included in as many projects as you can manage.">
+    <meta property="twitter:image" content="https://robertwpearce.com/images/mangawhai-heads.jpg">
+    <meta property="twitter:creator" content="@RobertWPearce">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="canonical" href="https://robertwpearce.com/build-your-team-an-accessible-shareable-component-library.html">
+    <link rel="stylesheet" href="/css/default.css" />
+    
+      <link rel="stylesheet" href="/css/article.css" />
+    
+  </head>
+  <body class="light">
+    <nav class="nav">
+  <div class="layout--constrained" data-nav-wrap>
+    <a class="nav__link nav__skip" href="#content">Skip to content</a>
+    <a class="nav__link" href="/">Home</a>
+    <a class="nav__link" href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a>
+    <a class="nav__link" href="/atom.xml">atom</a>
+    <a class="nav__link" href="/rss.xml">rss</a>
+  </div>
+</nav>
+
+
+<main id="content" tabindex="-1">
+  <article class="article">
+    <header class="article__bg" style="background-image: url('/images/mangawhai-heads.jpg')">
+      <div class="article__bgHeader">
+        <div class="layout--constrained">
+          <div class="article__bgTitleWrap">
+            <h1 class="article__bgTitle">
+              <a href="/build-your-team-an-accessible-shareable-component-library.html">Build Your Team an Accessible, Shareable Component Library</a>
+            </h1>
+            <div class="article__bgSubHeader">
+              <small class="italic">2020-04-27</small>
+              
+              
+              <small class="article__bgPhotoCred italic">
+                [ photo credit <a href="https://www.instagram.com/emilycouldmakethat">emilycouldmakethat</a> ]
+              </small>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="layout--constrained">
+      <header class="article__header">
+        <h1 class="article__title">
+          <a href="/build-your-team-an-accessible-shareable-component-library.html">Build Your Team an Accessible, Shareable Component Library</a>
+        </h1>
+        <small class="italic">2020-04-27</small>
+        
+      </header>
+      <p>Today we’re going to dive into building a frontend component library from start to finish that you can share privately with your team or publicly with everyone!</p>
+<p>By the end of this post, you will be able to use <a href="https://www.typescriptlang.org">TypeScript</a>, <a href="https://github.com/facebook/react">React</a>, <a href="https://github.com/storybookjs/storybook">Storybook</a>, and more to provide a simple way to create accessible components that can be included in all of your projects.</p>
+<p>If you’d like to skip to the code, here is the example component library we’re going to make: <a href="https://github.com/rpearce/example-component-library" class="uri">https://github.com/rpearce/example-component-library</a>.</p>
+<h2 id="overview">Overview</h2>
+<p>This is a big post that covers a lot of ground, so buckle up.</p>
+<ol>
+<li><a href="#when-should-i-make-a-component-library-and-why">When Should I Make a Component Library and Why?</a></li>
+<li><a href="#project-api-usage">Project API (Usage)</a></li>
+<li><a href="#main-project-tools">Main Project Tools</a></li>
+<li><a href="#project-structure">Project Structure</a></li>
+<li><a href="#component-structure">Component Structure</a></li>
+<li><a href="#creating-the-project">Creating the Project</a></li>
+<li><a href="#typescript-setup">TypeScript Setup</a></li>
+<li><a href="#linting-setup">Linting Setup</a></li>
+<li><a href="#testing-setup">Testing Setup</a></li>
+<li><a href="#typescript-setup">Storybook Setup</a></li>
+<li><a href="#an-example-component">An Example Component</a></li>
+<li><a href="#building-our-typescript">Building Our TypeScript</a></li>
+<li><a href="#building-our-css">Building Our CSS</a></li>
+<li><a href="#building-our-stories">Building Our Stories</a></li>
+<li><a href="#continuous-integration-notes">Continuous Integration Notes</a></li>
+<li><a href="#publishing-notes">Publishing Notes</a></li>
+</ol>
+<h2 id="when-should-i-make-a-component-library-and-why">When Should I Make a Component Library and Why?</h2>
+<h3 id="scenario-1-component-entropy">Scenario 1: Component Entropy</h3>
+<p>Components make up large parts of our applications. As projects age, components can become increasingly coupled with other components, business logic, and application state management tools like <a href="https://github.com/reduxjs/redux">redux</a>.</p>
+<p>These components usually start out small, focused, and pure. As time passes and the imperative of timely code delivery takes its toll, these components become harder to compose, harder to reason about, and cause us to yearn for simpler, less-involved times.</p>
+<p>Instead of rewriting those components in place and repeating the same process, consider extracting and developing each one in isolation in a library. This will allow you to keep each one’s surface area small and keep your business logic, state management, routing logic, etc., where it belongs: in your application.</p>
+<p>With this scenario, a good intermediary step, before pulling components into their own project, would be to create a folder in your application for these components and set up a tool like storybook to house the individual examples and compositions of them.</p>
+<h3 id="scenario-2-multiple-projects-or-the-possibility-of-multiple-projects">Scenario 2: Multiple Projects (or The Possibility of Multiple Projects)</h3>
+<p>Consider this exchange:</p>
+<blockquote>
+<p><strong>Them</strong>: You know that spinner/widget/dropdown/search thing we have over here? It looks and works great! We want the same thing over here and over here. How difficult is that?</p>
+<p><strong>Me</strong>: Those are different projects, and that is really more like 4 different components working together, so a) hard to do cleanly but good for the long-term or b) easy (for now) if I copy and paste.</p>
+<p><strong>Them</strong>: We need to ship.</p>
+<p><strong>Me</strong>: Okay, so copy and paste it is…</p>
+</blockquote>
+<p>What’s special about this exchange is that <em>both sets of concerns and perspectives are valid</em>. Software stakeholders typically want and need to ship features and fixes quickly, and they usually want to maintain brand consistency across their ecosystems. Software developers at those companies want to be able to ship features and fixes and maintain brand consistency, but they are also aware of the cost of short-term decision making (this is a way of accruing technical debt).</p>
+<p>We know that even the best code is useless to a business if there are no customers around paying to use it, but we also know that suboptimal tech decision making can grind projects to a halt over time, averting the stakeholder’s directive of shipping features and fixes quickly.</p>
+<p>So what can we do to not only amend the scenario above but also make this undesired state unrepresentable in the future? We can start our projects with an accompanying component library! For existing projects, we can begin moving them in that direction.</p>
+<h2 id="project-api-usage">Project API (Usage)</h2>
+<p>Let’s first define how we are going to include our components in our project.</p>
+<h3 id="js-imports">JS Imports</h3>
+<p>Component JavaScript can be imported in a few different ways:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">// import from the main (or module) specification in</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co">// package.json, depending on your bundler and its version</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> { Circle } <span class="im">from</span> <span class="st">&#39;mylib&#39;</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co">// straight from the ESModule build</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="im">import</span> Circle <span class="im">from</span> <span class="st">&#39;mylib/dist/esm/Circle&#39;</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co">// straight from the CommonJS build</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="im">import</span> Circle <span class="im">from</span> <span class="st">&#39;mylib/dist/cjs/Circle&#39;</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co">// straight from the Universal Module Definition build</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="im">import</span> Circle <span class="im">from</span> <span class="st">&#39;mylib/dist/umd/Circle&#39;</span></span></code></pre></div>
+<h3 id="css-imports">CSS Imports</h3>
+<p>Component CSS can be imported like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1"></a><span class="im">import</span> <span class="st">&#39;mylib/dist/css/Circle/styles.css&#39;</span></span></code></pre></div>
+<p>If you know you will use all of the components and wish to import all of their CSS at once:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">import</span> <span class="st">&#39;mylib/dist/css/styles.css&#39;</span></span></code></pre></div>
+<p>The JS import is simple enough, but you might be wondering, “What’s the deal with importing CSS like this? I thought we were on to things like styled-components, emotion, CSS modules, etc?”</p>
+<p>These tools are great if the consuming application can bundle up and inject the styles using the same instance of the tool, but can you guarantee each app will use these same styling tools? If so, by all means go that direction. However, if your library is injecting its own styles into the document at runtime, you will not only potentially run into style specificity / collision issues if you don’t have the application styles load last, but strict content security policies will potentially disallow the dynamically added styles from even being applied!</p>
+<p>The solution? Go with the lowest common denominator: regular, vanilla CSS (or something that outputs regular, vanilla CSS). We’ll come back to this in <a href="#an-example-component">the example component section</a>.</p>
+<h2 id="main-project-tools">Main Project Tools</h2>
+<p>It’s time to build the project! Here are the main tools we will use:</p>
+<ul>
+<li><a href="https://nodejs.org/en/">NodeJS</a> (version <code>13.13.0</code>)</li>
+<li><a href="https://www.typescriptlang.org">TypeScript</a></li>
+<li><a href="https://github.com/facebook/react">React</a></li>
+<li><a href="https://github.com/storybookjs/storybook">Storybook (UI examples)</a></li>
+<li><a href="https://github.com/facebook/jest">jest</a> (testing)</li>
+<li><a href="https://github.com/dequelabs/axe-core">axe-core</a> (testing accessibility)</li>
+<li>linting
+<ul>
+<li><a href="https://github.com/eslint/eslint">eslint</a> with <a href="https://github.com/prettier/prettier">prettier</a></li>
+<li><a href="https://www.npmjs.com/package/husky">husky</a> with <a href="https://www.npmjs.com/package/lint-staged">lint-staged</a>; only on <code>pre-push</code></li>
+</ul></li>
+</ul>
+<h2 id="project-structure">Project Structure</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">.</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>├── <span class="ex">.storybook</span>            (1)</span>
+<span id="cb4-3"><a href="#cb4-3"></a>│   └── <span class="ex">...</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>├── <span class="ex">dist</span>                  (2)</span>
+<span id="cb4-5"><a href="#cb4-5"></a>│   └── <span class="ex">...</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>├── <span class="ex">docs</span>                  (3)</span>
+<span id="cb4-7"><a href="#cb4-7"></a>│   └── <span class="ex">...</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>├── <span class="ex">examples</span>              (4)</span>
+<span id="cb4-9"><a href="#cb4-9"></a>│   └── <span class="ex">...</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a>├── <span class="ex">scripts</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a>│   └── <span class="ex">buildCSS</span>          (5)</span>
+<span id="cb4-12"><a href="#cb4-12"></a>├── <span class="bu">source</span>                (6)</span>
+<span id="cb4-13"><a href="#cb4-13"></a>│   └── <span class="ex">...</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a>├── <span class="ex">.eslintignore</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a>├── <span class="ex">.eslintrc.js</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a>├── <span class="ex">.gitignore</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a>├── <span class="ex">.prettierrc.js</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a>├── <span class="ex">CHANGELOG.md</span>          (7)</span>
+<span id="cb4-19"><a href="#cb4-19"></a>├── <span class="ex">LICENSE</span>               (8)</span>
+<span id="cb4-20"><a href="#cb4-20"></a>├── <span class="ex">README.md</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a>├── <span class="ex">husky.config.js</span></span>
+<span id="cb4-22"><a href="#cb4-22"></a>├── <span class="ex">jest.config.js</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a>├── <span class="ex">lint-staged.config.js</span></span>
+<span id="cb4-24"><a href="#cb4-24"></a>├── <span class="ex">package.json</span></span>
+<span id="cb4-25"><a href="#cb4-25"></a>├── <span class="ex">testSetup.ts</span></span>
+<span id="cb4-26"><a href="#cb4-26"></a>├── <span class="ex">tsconfig.base.json</span>    (9)</span>
+<span id="cb4-27"><a href="#cb4-27"></a>├── <span class="ex">tsconfig.cjs.json</span></span>
+<span id="cb4-28"><a href="#cb4-28"></a>├── <span class="ex">tsconfig.esm.json</span></span>
+<span id="cb4-29"><a href="#cb4-29"></a>├── <span class="ex">tsconfig.json</span></span>
+<span id="cb4-30"><a href="#cb4-30"></a>└── <span class="ex">tsconfig.umd.json</span></span></code></pre></div>
+<ol>
+<li><code>.storybook/</code> – storybook examples configuration</li>
+<li><code>dist/</code> – compiled project output</li>
+<li><code>docs/</code> – compiled storybook examples output</li>
+<li><code>examples/</code> – add <code>create-react-app</code>, <code>gatsby</code>, and other example projects here</li>
+<li><code>scripts/buildCSS</code> – store build scripts here like this CSS-related one</li>
+<li><code>source/</code> – where your project lives; we’ll dive into this in the next section</li>
+<li><code>CHANGELOG.md</code> – be a good teammate and document your library’s changes; very useful for your teams and useful if you decide to open source the project</li>
+<li><code>LICENSE</code> – a good idea if you plan to open source; otherwise, put <code>UNLICENSED</code> in your <code>package.json</code> license field</li>
+<li><code>tsconfig.json</code>, et al – typescript build configs; we’ll dive into this in <a href="#project-setup">the project setup section</a></li>
+</ol>
+<h2 id="component-structure">Component Structure</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="ex">.</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>└── <span class="bu">source</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>    └── <span class="ex">ComponentA</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>        ├── <span class="ex">__snapshots__</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>        │   └── <span class="ex">test.tsx.snap</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a>        ├── <span class="ex">index.tsx</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>        ├── <span class="ex">stories.tsx</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>        ├── <span class="ex">styles.css</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a>        └── <span class="ex">test.tsx</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a>    └── <span class="ex">ComponentB</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a>        └── <span class="ex">...</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a>    └── <span class="ex">ComponentC</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a>        └── <span class="ex">...</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a>    ├── <span class="ex">index.ts</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a>    └── <span class="ex">test.tsx</span></span></code></pre></div>
+<p>The component and everything to do with it are co-located in the <code>source/ComponentA/</code> folder:</p>
+<ul>
+<li><code>index.tsx</code> component file (and any additional component files)</li>
+<li>storybook stories</li>
+<li>CSS</li>
+<li>tests</li>
+</ul>
+<p>This grouping of everything having to do with a component makes it very easy to find everything you need. If you would prefer a different setup, you can adjust the tool configurations however you like.</p>
+<p>Each component is then exported from the main <code>index.ts</code> file.</p>
+<p>It’s now time to start the project from scratch and make this outline a reality!</p>
+<h2 id="creating-the-project">Creating the Project</h2>
+<p>To begin, let’s create the project and a <code>package.json</code> file with some project-related information:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a>$ <span class="fu">mkdir</span> example-component-library <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> <span class="va">$_</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>$ <span class="fu">touch</span> package.json</span></code></pre></div>
+<p>And in <code>package.json</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1"></a>{</span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;@yournpm/example-component-library&quot;</span><span class="op">,</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="st">&quot;version&quot;</span><span class="op">:</span> <span class="st">&quot;0.1.0&quot;</span><span class="op">,</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="st">&quot;description&quot;</span><span class="op">:</span> <span class="st">&quot;Example repository for a shared React components library&quot;</span><span class="op">,</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="st">&quot;main&quot;</span><span class="op">:</span> <span class="st">&quot;dist/cjs/index.js&quot;</span><span class="op">,</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>  <span class="st">&quot;module&quot;</span><span class="op">:</span> <span class="st">&quot;dist/esm/index.js&quot;</span><span class="op">,</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>  <span class="st">&quot;repository&quot;</span><span class="op">:</span> {</span>
+<span id="cb7-8"><a href="#cb7-8"></a>    <span class="st">&quot;type&quot;</span><span class="op">:</span> <span class="st">&quot;git&quot;</span><span class="op">,</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a>    <span class="st">&quot;url&quot;</span><span class="op">:</span> <span class="st">&quot;git@github.com:yourgithub/example-component-library.git&quot;</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a>  }<span class="op">,</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a>  <span class="st">&quot;homepage&quot;</span><span class="op">:</span> <span class="st">&quot;https://github.com/yourgithub/example-component-library&quot;</span><span class="op">,</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a>  <span class="st">&quot;bugs&quot;</span><span class="op">:</span> <span class="st">&quot;https://github.com/yourgithub/example-component-library&quot;</span><span class="op">,</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a>  <span class="st">&quot;author&quot;</span><span class="op">:</span> <span class="st">&quot;Your Name &lt;you@youremail.com&gt;&quot;</span><span class="op">,</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a>  <span class="st">&quot;license&quot;</span><span class="op">:</span> <span class="st">&quot;BSD-3&quot;</span><span class="op">,</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a>  <span class="st">&quot;keywords&quot;</span><span class="op">:</span> []<span class="op">,</span></span>
+<span id="cb7-16"><a href="#cb7-16"></a>  <span class="st">&quot;tags&quot;</span><span class="op">:</span> []<span class="op">,</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a>  <span class="st">&quot;sideEffects&quot;</span><span class="op">:</span> [<span class="st">&quot;dist/**/*.css&quot;</span>]<span class="op">,</span></span>
+<span id="cb7-18"><a href="#cb7-18"></a>  <span class="st">&quot;files&quot;</span><span class="op">:</span> [<span class="st">&quot;LICENSE&quot;</span><span class="op">,</span> <span class="st">&quot;dist/&quot;</span>]<span class="op">,</span></span>
+<span id="cb7-19"><a href="#cb7-19"></a>  <span class="st">&quot;scripts&quot;</span><span class="op">:</span> {}<span class="op">,</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a>  <span class="st">&quot;devDependencies&quot;</span><span class="op">:</span> {}<span class="op">,</span></span>
+<span id="cb7-21"><a href="#cb7-21"></a>  <span class="st">&quot;peerDependencies&quot;</span><span class="op">:</span> {</span>
+<span id="cb7-22"><a href="#cb7-22"></a>    <span class="st">&quot;react&quot;</span><span class="op">:</span> <span class="st">&quot;*&quot;</span><span class="op">,</span></span>
+<span id="cb7-23"><a href="#cb7-23"></a>    <span class="st">&quot;react-dom&quot;</span><span class="op">:</span> <span class="st">&quot;*&quot;</span></span>
+<span id="cb7-24"><a href="#cb7-24"></a>  }<span class="op">,</span></span>
+<span id="cb7-25"><a href="#cb7-25"></a>  <span class="st">&quot;dependencies&quot;</span><span class="op">:</span> {}</span>
+<span id="cb7-26"><a href="#cb7-26"></a>}</span></code></pre></div>
+<p>Once you save that, run your build tool to make sure everything is ok:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a>$ <span class="ex">npm</span> install</span></code></pre></div>
+<p>Notably, we’ve set our <code>main</code> field to <code>dist/cjs/index.js</code>, the CommonJS build, for compatibility with NodeJS environments because they don’t yet work well with ESModules. We’ve set our <code>module</code> field to look at <code>dist/esm/index.js</code>, the ESModule build. If you want to make use of the Universal Module Definition build we’ll create later on, you can use the <code>browser</code> field: <code>"browser": "dist/umd/index.js"</code>. Personally, if I build with webpack, I want webpack to select the <code>module</code> field over the <code>browser</code> one because it will always be of a smaller size, for the UMD builds are meant to be run in any of a few different environments.</p>
+<p>Also of importance is the <code>sideEffects</code> field. If our library code was pure and didn’t have side effects, we would set the value to <code>false</code>, and build tools like webpack would prune away all of the unused code. However, since we also are exporting CSS, we need to make sure that it doesn’t get dropped by the build tool, so we do that with <code>"sideEffects": ["dist/**/*.css"]</code>.</p>
+<p>Lastly, we know we’re going to be using React, so we can go ahead and set that as a <code>peerDependency</code> (it’s up to you to decide what versions of React you’ll support).</p>
+<h2 id="typescript-setup">TypeScript Setup</h2>
+<p>We can now add TypeScript to our project with some compiler and project-related options. We’ll also add some type definition libraries that we’ll use later, as well as a dependency on <a href="https://www.npmjs.com/package/tslib"><code>tslib</code></a> to make compiling our code to ES5 seamless.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a>$ <span class="ex">npm</span> install --save-dev --save-exact \</span>
+<span id="cb9-2"><a href="#cb9-2"></a>  @types/node \</span>
+<span id="cb9-3"><a href="#cb9-3"></a>  @types/react \</span>
+<span id="cb9-4"><a href="#cb9-4"></a>  @types/react-dom \</span>
+<span id="cb9-5"><a href="#cb9-5"></a>  typescript</span>
+<span id="cb9-6"><a href="#cb9-6"></a>$ <span class="ex">npm</span> install --save --save-exact tslib</span>
+<span id="cb9-7"><a href="#cb9-7"></a>$ <span class="fu">touch</span> tsconfig.base.json tsconfig.json</span></code></pre></div>
+<p>We will place our <code>compilerOptions</code> in <code>tsconfig.base.json</code> so that they can be extended in all our different builds in the future:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1"></a>{</span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="st">&quot;compilerOptions&quot;</span><span class="op">:</span> {</span>
+<span id="cb10-3"><a href="#cb10-3"></a>    <span class="st">&quot;allowJs&quot;</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>    <span class="st">&quot;allowSyntheticDefaultImports&quot;</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a>    <span class="st">&quot;declaration&quot;</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>    <span class="st">&quot;esModuleInterop&quot;</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a>    <span class="st">&quot;importHelpers&quot;</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a>    <span class="st">&quot;jsx&quot;</span><span class="op">:</span> <span class="st">&quot;react&quot;</span><span class="op">,</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a>    <span class="st">&quot;lib&quot;</span><span class="op">:</span> [<span class="st">&quot;es2020&quot;</span><span class="op">,</span> <span class="st">&quot;dom&quot;</span>]<span class="op">,</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a>    <span class="st">&quot;moduleResolution&quot;</span><span class="op">:</span> <span class="st">&quot;node&quot;</span><span class="op">,</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a>    <span class="st">&quot;noImplicitAny&quot;</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a>    <span class="st">&quot;outDir&quot;</span><span class="op">:</span> <span class="st">&quot;dist/&quot;</span><span class="op">,</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a>    <span class="st">&quot;sourceMap&quot;</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span></span>
+<span id="cb10-14"><a href="#cb10-14"></a>    <span class="st">&quot;strict&quot;</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a>    <span class="st">&quot;target&quot;</span><span class="op">:</span> <span class="st">&quot;es5&quot;</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a>  }</span>
+<span id="cb10-17"><a href="#cb10-17"></a>}</span></code></pre></div>
+<p>Note that the <code>importHelpers</code> flag tells <code>tslib</code> whether it should be enabled or not.</p>
+<p>The <code>tsconfig.json</code> will be used as a default to include our future <code>source</code> directory:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1"></a>{</span>
+<span id="cb11-2"><a href="#cb11-2"></a>  <span class="st">&quot;extends&quot;</span><span class="op">:</span> <span class="st">&quot;./tsconfig.base.json&quot;</span><span class="op">,</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>  <span class="st">&quot;include&quot;</span><span class="op">:</span> [<span class="st">&quot;source/**/*&quot;</span>]</span>
+<span id="cb11-4"><a href="#cb11-4"></a>}</span></code></pre></div>
+<p>We’ll add some more TypeScript-related packages when we get to the tools that need them, and we’ll add more TypeScript build configurations in the section on <a href="#building-our-typescript">building our typescript</a>.</p>
+<h2 id="linting-setup">Linting Setup</h2>
+<p>Linting is a great way to have everyone adhere to the same set of rules for code style. For our project, we’re going to install a few tools to help us out.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a>$ <span class="ex">npm</span> install --save-dev --save-exact \</span>
+<span id="cb12-2"><a href="#cb12-2"></a>  @typescript-eslint/eslint-plugin \</span>
+<span id="cb12-3"><a href="#cb12-3"></a>  @typescript-eslint/parser \</span>
+<span id="cb12-4"><a href="#cb12-4"></a>  eslint \</span>
+<span id="cb12-5"><a href="#cb12-5"></a>  eslint-config-prettier \</span>
+<span id="cb12-6"><a href="#cb12-6"></a>  eslint-plugin-jest \</span>
+<span id="cb12-7"><a href="#cb12-7"></a>  eslint-plugin-jsx-a11y \</span>
+<span id="cb12-8"><a href="#cb12-8"></a>  eslint-plugin-prettier \</span>
+<span id="cb12-9"><a href="#cb12-9"></a>  eslint-plugin-react \</span>
+<span id="cb12-10"><a href="#cb12-10"></a>  eslint-plugin-react-hooks \</span>
+<span id="cb12-11"><a href="#cb12-11"></a>  husky \</span>
+<span id="cb12-12"><a href="#cb12-12"></a>  lint-staged \</span>
+<span id="cb12-13"><a href="#cb12-13"></a>  prettier</span>
+<span id="cb12-14"><a href="#cb12-14"></a>$ <span class="fu">touch</span> \</span>
+<span id="cb12-15"><a href="#cb12-15"></a>  .eslintignore \</span>
+<span id="cb12-16"><a href="#cb12-16"></a>  .eslintrc.js \</span>
+<span id="cb12-17"><a href="#cb12-17"></a>  .prettierrc.js \</span>
+<span id="cb12-18"><a href="#cb12-18"></a>  husky.config.js \</span>
+<span id="cb12-19"><a href="#cb12-19"></a>  lint-staged.config.js</span></code></pre></div>
+<p>The <code>.eslintignore</code> file will make sure we include files and folders that are ignored by default (using the <code>!</code>) and exclude files and folders that we don’t care about linting.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a>!<span class="ex">.eslintrc.js</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>!<span class="ex">.prettierrc.js</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>!<span class="ex">.storybook/</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="ex">dist/</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="ex">docs/</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="ex">examples/</span></span></code></pre></div>
+<p>The <code>.eslintrc.js</code> file is something you and your team will need to figure out for yourselves, but here’s where I stand on the issues:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> {</span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="dt">env</span><span class="op">:</span> {</span>
+<span id="cb14-3"><a href="#cb14-3"></a>    <span class="dt">browser</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a>    <span class="dt">es6</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>    <span class="dt">jest</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a>    <span class="dt">node</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a>  }<span class="op">,</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a>  <span class="dt">extends</span><span class="op">:</span> [</span>
+<span id="cb14-9"><a href="#cb14-9"></a>    <span class="st">&#39;plugin:react/recommended&#39;</span><span class="op">,</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a>    <span class="st">&#39;plugin:@typescript-eslint/recommended&#39;</span><span class="op">,</span></span>
+<span id="cb14-11"><a href="#cb14-11"></a>    <span class="st">&#39;prettier/@typescript-eslint&#39;</span><span class="op">,</span></span>
+<span id="cb14-12"><a href="#cb14-12"></a>    <span class="st">&#39;plugin:prettier/recommended&#39;</span><span class="op">,</span></span>
+<span id="cb14-13"><a href="#cb14-13"></a>    <span class="st">&#39;plugin:jsx-a11y/recommended&#39;</span><span class="op">,</span></span>
+<span id="cb14-14"><a href="#cb14-14"></a>  ]<span class="op">,</span></span>
+<span id="cb14-15"><a href="#cb14-15"></a>  <span class="dt">parserOptions</span><span class="op">:</span> {</span>
+<span id="cb14-16"><a href="#cb14-16"></a>    <span class="dt">ecmaVersion</span><span class="op">:</span> <span class="dv">2020</span><span class="op">,</span></span>
+<span id="cb14-17"><a href="#cb14-17"></a>    <span class="dt">sourceType</span><span class="op">:</span> <span class="st">&#39;module&#39;</span><span class="op">,</span></span>
+<span id="cb14-18"><a href="#cb14-18"></a>  }<span class="op">,</span></span>
+<span id="cb14-19"><a href="#cb14-19"></a>  <span class="dt">parser</span><span class="op">:</span> <span class="st">&#39;@typescript-eslint/parser&#39;</span><span class="op">,</span></span>
+<span id="cb14-20"><a href="#cb14-20"></a>  <span class="dt">plugins</span><span class="op">:</span> [<span class="st">&#39;jsx-a11y&#39;</span><span class="op">,</span> <span class="st">&#39;react&#39;</span><span class="op">,</span> <span class="st">&#39;react-hooks&#39;</span><span class="op">,</span> <span class="st">&#39;@typescript-eslint&#39;</span>]<span class="op">,</span></span>
+<span id="cb14-21"><a href="#cb14-21"></a>  <span class="dt">rules</span><span class="op">:</span> {</span>
+<span id="cb14-22"><a href="#cb14-22"></a>    <span class="st">&#39;@typescript-eslint/no-unused-vars&#39;</span><span class="op">:</span> <span class="st">&#39;error&#39;</span><span class="op">,</span></span>
+<span id="cb14-23"><a href="#cb14-23"></a>    <span class="st">&#39;jsx-quotes&#39;</span><span class="op">:</span> [<span class="st">&#39;error&#39;</span><span class="op">,</span> <span class="st">&#39;prefer-double&#39;</span>]<span class="op">,</span></span>
+<span id="cb14-24"><a href="#cb14-24"></a>    <span class="st">&#39;jsx-a11y/no-onchange&#39;</span><span class="op">:</span> <span class="st">&#39;off&#39;</span><span class="op">,</span> <span class="co">// https://github.com/evcohen/eslint-plugin-jsx-a11y/issues/398</span></span>
+<span id="cb14-25"><a href="#cb14-25"></a>    <span class="st">&#39;no-trailing-spaces&#39;</span><span class="op">:</span> <span class="st">&#39;error&#39;</span><span class="op">,</span></span>
+<span id="cb14-26"><a href="#cb14-26"></a>    <span class="st">&#39;object-curly-spacing&#39;</span><span class="op">:</span> [<span class="st">&#39;error&#39;</span><span class="op">,</span> <span class="st">&#39;always&#39;</span>]<span class="op">,</span></span>
+<span id="cb14-27"><a href="#cb14-27"></a>    <span class="dt">quotes</span><span class="op">:</span> [<span class="st">&#39;error&#39;</span><span class="op">,</span> <span class="st">&#39;single&#39;</span><span class="op">,</span> { <span class="dt">allowTemplateLiterals</span><span class="op">:</span> <span class="kw">true</span> }]<span class="op">,</span></span>
+<span id="cb14-28"><a href="#cb14-28"></a>    <span class="st">&#39;react-hooks/exhaustive-deps&#39;</span><span class="op">:</span> <span class="st">&#39;error&#39;</span><span class="op">,</span></span>
+<span id="cb14-29"><a href="#cb14-29"></a>    <span class="st">&#39;react-hooks/rules-of-hooks&#39;</span><span class="op">:</span> <span class="st">&#39;error&#39;</span><span class="op">,</span></span>
+<span id="cb14-30"><a href="#cb14-30"></a>    <span class="st">&#39;react/prop-types&#39;</span><span class="op">:</span> <span class="st">&#39;off&#39;</span><span class="op">,</span></span>
+<span id="cb14-31"><a href="#cb14-31"></a>    <span class="dt">semi</span><span class="op">:</span> [<span class="st">&#39;error&#39;</span><span class="op">,</span> <span class="st">&#39;never&#39;</span>]<span class="op">,</span></span>
+<span id="cb14-32"><a href="#cb14-32"></a>  }<span class="op">,</span></span>
+<span id="cb14-33"><a href="#cb14-33"></a>  <span class="dt">settings</span><span class="op">:</span> {</span>
+<span id="cb14-34"><a href="#cb14-34"></a>    <span class="dt">react</span><span class="op">:</span> {</span>
+<span id="cb14-35"><a href="#cb14-35"></a>      <span class="dt">version</span><span class="op">:</span> <span class="st">&#39;detect&#39;</span><span class="op">,</span></span>
+<span id="cb14-36"><a href="#cb14-36"></a>    }<span class="op">,</span></span>
+<span id="cb14-37"><a href="#cb14-37"></a>  }<span class="op">,</span></span>
+<span id="cb14-38"><a href="#cb14-38"></a>  <span class="dt">overrides</span><span class="op">:</span> [</span>
+<span id="cb14-39"><a href="#cb14-39"></a>    {</span>
+<span id="cb14-40"><a href="#cb14-40"></a>      <span class="dt">files</span><span class="op">:</span> [<span class="st">&#39;*.js&#39;</span><span class="op">,</span> <span class="st">&#39;*.jsx&#39;</span>]<span class="op">,</span></span>
+<span id="cb14-41"><a href="#cb14-41"></a>      <span class="dt">rules</span><span class="op">:</span> {</span>
+<span id="cb14-42"><a href="#cb14-42"></a>        <span class="st">&#39;@typescript-eslint/explicit-function-return-type&#39;</span><span class="op">:</span> <span class="st">&#39;off&#39;</span><span class="op">,</span></span>
+<span id="cb14-43"><a href="#cb14-43"></a>        <span class="st">&#39;@typescript-eslint/no-var-requires&#39;</span><span class="op">:</span> <span class="st">&#39;off&#39;</span><span class="op">,</span></span>
+<span id="cb14-44"><a href="#cb14-44"></a>      }<span class="op">,</span></span>
+<span id="cb14-45"><a href="#cb14-45"></a>    }<span class="op">,</span></span>
+<span id="cb14-46"><a href="#cb14-46"></a>  ]<span class="op">,</span></span>
+<span id="cb14-47"><a href="#cb14-47"></a>}</span></code></pre></div>
+<p>The <code>.prettierrc.js</code> file defines your <a href="https://github.com/prettier/prettier">prettier</a> configuration:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> {</span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="dt">semi</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="dt">singleQuote</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a>}</span></code></pre></div>
+<p>We’re almost done with the linting! There are two files left.</p>
+<p>For our <code>husky.config.js</code> file, we’ll set it up to run <code>lint-staged</code> before we push our code to our repository:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> {</span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="dt">hooks</span><span class="op">:</span> {</span>
+<span id="cb16-3"><a href="#cb16-3"></a>    <span class="st">&#39;pre-push&#39;</span><span class="op">:</span> <span class="st">&#39;lint-staged&#39;</span><span class="op">,</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a>  }<span class="op">,</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a>}</span></code></pre></div>
+<p>And for <code>lint-staged.config.js</code>, we’ll specify that we want to run <code>eslint --fix</code> on our staged files:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> {</span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="st">&#39;*&#39;</span><span class="op">:</span> [<span class="st">&#39;eslint --fix&#39;</span>]<span class="op">,</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a>}</span></code></pre></div>
+<p>Now that we’ve got this all in place, we can update our <code>package.json</code>’s <code>script</code> object to include a <code>lint</code> command:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1"></a><span class="st">&quot;scripts&quot;</span><span class="op">:</span> {</span>
+<span id="cb18-2"><a href="#cb18-2"></a>  <span class="st">&quot;lint&quot;</span><span class="op">:</span> <span class="st">&quot;eslint .&quot;</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a>}<span class="op">,</span></span></code></pre></div>
+<p>You can test this by running:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1"></a>$ <span class="ex">npm</span> run lint</span></code></pre></div>
+<h2 id="testing-setup">Testing Setup</h2>
+<p>We’re going to use Jest and <a href="https://testing-library.com/react"><code>@testing-library/react</code></a> to handle running our tests and testing our component code, so let’s install those tools and their companion TypeScript libraries. We’ll also install axe-core to handle some automated accessibility testing.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1"></a>$ <span class="ex">npm</span> install --save-dev --save-exact \</span>
+<span id="cb20-2"><a href="#cb20-2"></a>  @testing-library/jest-dom \</span>
+<span id="cb20-3"><a href="#cb20-3"></a>  @testing-library/react \</span>
+<span id="cb20-4"><a href="#cb20-4"></a>  @types/jest \</span>
+<span id="cb20-5"><a href="#cb20-5"></a>  axe-core \</span>
+<span id="cb20-6"><a href="#cb20-6"></a>  jest \</span>
+<span id="cb20-7"><a href="#cb20-7"></a>  ts-jest</span>
+<span id="cb20-8"><a href="#cb20-8"></a>$ <span class="fu">touch</span> jest.config.js testSetup.ts</span></code></pre></div>
+<p>Our <code>jest.config.js</code> collects coverage from the right places, ignores distribution and example directories, requires the <code>testSetup.ts</code> file, and sets us up to use TypeScript in our tests.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> {</span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="dt">clearMocks</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a>  <span class="dt">collectCoverage</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a>  <span class="dt">collectCoverageFrom</span><span class="op">:</span> [<span class="st">&#39;&lt;rootDir&gt;/source/**/*.{ts,tsx}&#39;</span>]<span class="op">,</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a>  <span class="dt">coveragePathIgnorePatterns</span><span class="op">:</span> [</span>
+<span id="cb21-6"><a href="#cb21-6"></a>    <span class="st">&#39;/node_modules/&#39;</span><span class="op">,</span></span>
+<span id="cb21-7"><a href="#cb21-7"></a>    <span class="st">&#39;&lt;rootDir&gt;/source/@types&#39;</span><span class="op">,</span></span>
+<span id="cb21-8"><a href="#cb21-8"></a>    <span class="st">&#39;stories&#39;</span><span class="op">,</span></span>
+<span id="cb21-9"><a href="#cb21-9"></a>  ]<span class="op">,</span></span>
+<span id="cb21-10"><a href="#cb21-10"></a>  <span class="dt">moduleNameMapper</span><span class="op">:</span> {}<span class="op">,</span></span>
+<span id="cb21-11"><a href="#cb21-11"></a>  <span class="dt">preset</span><span class="op">:</span> <span class="st">&#39;ts-jest&#39;</span><span class="op">,</span></span>
+<span id="cb21-12"><a href="#cb21-12"></a>  <span class="dt">setupFilesAfterEnv</span><span class="op">:</span> [<span class="st">&#39;&lt;rootDir&gt;/testSetup.ts&#39;</span>]<span class="op">,</span></span>
+<span id="cb21-13"><a href="#cb21-13"></a>  <span class="dt">testPathIgnorePatterns</span><span class="op">:</span> [<span class="st">&#39;dist/&#39;</span><span class="op">,</span> <span class="st">&#39;examples/&#39;</span>]<span class="op">,</span></span>
+<span id="cb21-14"><a href="#cb21-14"></a>  <span class="dt">verbose</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb21-15"><a href="#cb21-15"></a>}</span></code></pre></div>
+<p>And here is our <code>testSetup.ts</code> file that you can use to provide global testing tools, patch JSDOM, and more:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1"></a><span class="im">import</span> <span class="st">&#39;@testing-library/jest-dom/extend-expect&#39;</span></span></code></pre></div>
+<p>All we do in <code>testSetup.ts</code> is add a lot of custom matchers to the <code>expect</code> function from jest via <a href="https://github.com/testing-library/jest-dom"><code>@testing-library/jest-dom</code></a>.</p>
+<p>While we’re on the testing subject, we should also update our <code>package.json</code>’s <code>scripts</code> object to include a <code>test</code> command:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1"></a><span class="st">&quot;scripts&quot;</span><span class="op">:</span> {</span>
+<span id="cb23-2"><a href="#cb23-2"></a>  <span class="co">// ...</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="st">&quot;test&quot;</span><span class="op">:</span> <span class="st">&quot;jest&quot;</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a>}<span class="op">,</span></span></code></pre></div>
+<p>We don’t have any test files yet, but you can confirm everything is set up correctly by running</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1"></a>$ <span class="ex">npm</span> run test</span></code></pre></div>
+<h2 id="storybook-setup">Storybook Setup</h2>
+<p>Storybook is a great way to not only share examples of your components but also get instant feedback while developing them, as well. It also comes with <a href="https://storybook.js.org/addons/">a great set of official addons</a>.</p>
+<p>Let’s install Storybook for React with TypeScript, and let’s also add the addons for accessibility and knobs:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1"></a>$ <span class="ex">npm</span> install --save-dev --save-exact \</span>
+<span id="cb25-2"><a href="#cb25-2"></a>  @storybook/addon-a11y \</span>
+<span id="cb25-3"><a href="#cb25-3"></a>  @storybook/addon-knobs \</span>
+<span id="cb25-4"><a href="#cb25-4"></a>  @storybook/preset-typescript \</span>
+<span id="cb25-5"><a href="#cb25-5"></a>  @storybook/react \</span>
+<span id="cb25-6"><a href="#cb25-6"></a>  babel-loader \</span>
+<span id="cb25-7"><a href="#cb25-7"></a>  ts-loader</span>
+<span id="cb25-8"><a href="#cb25-8"></a>$ <span class="fu">mkdir</span> .storybook</span>
+<span id="cb25-9"><a href="#cb25-9"></a>$ <span class="fu">touch</span> .storybook/main.js</span></code></pre></div>
+<p>The <code>.storybook/main.js</code> file is where we can specify our Storybook options:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> {</span>
+<span id="cb26-2"><a href="#cb26-2"></a>  <span class="dt">addons</span><span class="op">:</span> [</span>
+<span id="cb26-3"><a href="#cb26-3"></a>    <span class="st">&#39;@storybook/addon-a11y&#39;</span><span class="op">,</span></span>
+<span id="cb26-4"><a href="#cb26-4"></a>    <span class="st">&#39;@storybook/addon-knobs&#39;</span><span class="op">,</span></span>
+<span id="cb26-5"><a href="#cb26-5"></a>    <span class="st">&#39;@storybook/preset-typescript&#39;</span><span class="op">,</span></span>
+<span id="cb26-6"><a href="#cb26-6"></a>  ]<span class="op">,</span></span>
+<span id="cb26-7"><a href="#cb26-7"></a>  <span class="dt">stories</span><span class="op">:</span> [<span class="st">&#39;../source/**/*/stories.tsx&#39;</span>]<span class="op">,</span></span>
+<span id="cb26-8"><a href="#cb26-8"></a>}</span></code></pre></div>
+<h2 id="an-example-component">An Example Component</h2>
+<p>For our example component, we are going to make a circle with SVG. With only this simple component, we will cover the following aspects of component development:</p>
+<ul>
+<li>TypeScript interfaces for required and optional React props</li>
+<li>Component CSS</li>
+<li>Testing (regular, snapshot, and accessibility)</li>
+<li>Storybook examples</li>
+</ul>
+<p>Let’s create the files we know we’re going to need:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1"></a>$ <span class="fu">mkdir</span> source/Circle</span>
+<span id="cb27-2"><a href="#cb27-2"></a>$ <span class="fu">touch</span> source/Circle/index.tsx \</span>
+<span id="cb27-3"><a href="#cb27-3"></a>  source/Circle/stories.tsx \</span>
+<span id="cb27-4"><a href="#cb27-4"></a>  source/Circle/styles.css \</span>
+<span id="cb27-5"><a href="#cb27-5"></a>  source/Circle/test.tsx</span></code></pre></div>
+<h3 id="component-file">Component File</h3>
+<div class="sourceCode" id="cb28"><pre class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb28-1"><a href="#cb28-1"></a><span class="im">import</span> React<span class="op">,</span> { FC } from <span class="st">&#39;react&#39;</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a></span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="co">// className, desc, and fill are optional,</span></span>
+<span id="cb28-4"><a href="#cb28-4"></a><span class="co">// whereas title and size are required</span></span>
+<span id="cb28-5"><a href="#cb28-5"></a>interface Props {</span>
+<span id="cb28-6"><a href="#cb28-6"></a>  className<span class="op">?:</span> <span class="dt">string</span></span>
+<span id="cb28-7"><a href="#cb28-7"></a>  desc<span class="op">?:</span> <span class="dt">string</span></span>
+<span id="cb28-8"><a href="#cb28-8"></a>  fill<span class="op">?:</span> <span class="dt">string</span></span>
+<span id="cb28-9"><a href="#cb28-9"></a>  size<span class="op">:</span> <span class="dt">number</span></span>
+<span id="cb28-10"><a href="#cb28-10"></a>  title<span class="op">:</span> <span class="dt">string</span></span>
+<span id="cb28-11"><a href="#cb28-11"></a>}</span>
+<span id="cb28-12"><a href="#cb28-12"></a></span>
+<span id="cb28-13"><a href="#cb28-13"></a><span class="co">// we provide our Props interface to the</span></span>
+<span id="cb28-14"><a href="#cb28-14"></a><span class="co">// function component type</span></span>
+<span id="cb28-15"><a href="#cb28-15"></a>const Circle<span class="op">:</span> FC<span class="op">&lt;</span>Props<span class="op">&gt;</span> <span class="op">=</span> ({</span>
+<span id="cb28-16"><a href="#cb28-16"></a>  className <span class="op">=</span> <span class="st">&#39;rl-circle&#39;</span><span class="op">,</span></span>
+<span id="cb28-17"><a href="#cb28-17"></a>  desc<span class="op">,</span></span>
+<span id="cb28-18"><a href="#cb28-18"></a>  fill<span class="op">,</span></span>
+<span id="cb28-19"><a href="#cb28-19"></a>  size<span class="op">,</span></span>
+<span id="cb28-20"><a href="#cb28-20"></a>  title<span class="op">,</span></span>
+<span id="cb28-21"><a href="#cb28-21"></a>}) <span class="kw">=&gt;</span> (</span>
+<span id="cb28-22"><a href="#cb28-22"></a>  <span class="op">&lt;</span>svg</span>
+<span id="cb28-23"><a href="#cb28-23"></a>    className<span class="op">=</span>{className}</span>
+<span id="cb28-24"><a href="#cb28-24"></a>    height<span class="op">=</span>{size}</span>
+<span id="cb28-25"><a href="#cb28-25"></a>    fill<span class="op">=</span>{fill}</span>
+<span id="cb28-26"><a href="#cb28-26"></a>    role<span class="op">=</span><span class="st">&quot;img&quot;</span></span>
+<span id="cb28-27"><a href="#cb28-27"></a>    viewBox<span class="op">=</span><span class="st">&quot;0 0 100 100&quot;</span></span>
+<span id="cb28-28"><a href="#cb28-28"></a>    width<span class="op">=</span>{size}</span>
+<span id="cb28-29"><a href="#cb28-29"></a>    xmlns<span class="op">=</span><span class="st">&quot;http://www.w3.org/2000/svg&quot;</span></span>
+<span id="cb28-30"><a href="#cb28-30"></a>  <span class="op">&gt;</span></span>
+<span id="cb28-31"><a href="#cb28-31"></a>    <span class="op">&lt;</span>title<span class="op">&gt;</span>{title}<span class="op">&lt;/</span>title<span class="op">&gt;</span></span>
+<span id="cb28-32"><a href="#cb28-32"></a>    {desc <span class="op">&amp;&amp;</span> <span class="op">&lt;</span>desc<span class="op">&gt;</span>{desc}<span class="op">&lt;/</span>desc<span class="op">&gt;</span>}</span>
+<span id="cb28-33"><a href="#cb28-33"></a>    <span class="op">&lt;</span>circle cx<span class="op">=</span><span class="st">&quot;50&quot;</span> cy<span class="op">=</span><span class="st">&quot;50&quot;</span> r<span class="op">=</span><span class="st">&quot;50&quot;</span> <span class="op">/&gt;</span></span>
+<span id="cb28-34"><a href="#cb28-34"></a>  <span class="op">&lt;/</span>svg<span class="op">&gt;</span></span>
+<span id="cb28-35"><a href="#cb28-35"></a>)</span>
+<span id="cb28-36"><a href="#cb28-36"></a></span>
+<span id="cb28-37"><a href="#cb28-37"></a>export default Circle</span></code></pre></div>
+<p>In this component file, we define the parameters that we’re willing to work with, provide a fallback in the case of <code>className</code>, and make a regular old component.</p>
+<p>This file should be pretty straightforward, so let’s move on to the CSS!</p>
+<h3 id="component-css">Component CSS</h3>
+<p>This is a real easy one.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">.rl-circle</span> { <span class="kw">margin</span>: <span class="dv">1</span><span class="dt">em</span><span class="op">;</span> }</span></code></pre></div>
+<p>The <code>rl</code> is short for “react library”, and I made it up. The CSS that we are creating needs to be made unique, and prefixing your classes is the simplest way of doing that.</p>
+<h3 id="component-tests">Component Tests</h3>
+<p>It’s time to write some tests! We’re going to make explicit expectations and do some snapshot tests so that everybody is happy.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb30-1"><a href="#cb30-1"></a><span class="im">import</span> React from <span class="st">&#39;react&#39;</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="im">import</span> { render } from <span class="st">&#39;@testing-library/react&#39;</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a><span class="im">import</span> Circle from <span class="st">&#39;./index&#39;</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a></span>
+<span id="cb30-5"><a href="#cb30-5"></a>test(<span class="st">&#39;with all props&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb30-6"><a href="#cb30-6"></a>  const { asFragment<span class="op">,</span> container<span class="op">,</span> getByText } <span class="op">=</span> render(</span>
+<span id="cb30-7"><a href="#cb30-7"></a>    <span class="op">&lt;</span>Circle</span>
+<span id="cb30-8"><a href="#cb30-8"></a>      className<span class="op">=</span><span class="st">&quot;class-override&quot;</span></span>
+<span id="cb30-9"><a href="#cb30-9"></a>      desc<span class="op">=</span><span class="st">&quot;A blue circle&quot;</span></span>
+<span id="cb30-10"><a href="#cb30-10"></a>      fill<span class="op">=</span><span class="st">&quot;#30336b&quot;</span></span>
+<span id="cb30-11"><a href="#cb30-11"></a>      size<span class="op">=</span>{<span class="dv">200</span>}</span>
+<span id="cb30-12"><a href="#cb30-12"></a>      title<span class="op">=</span><span class="st">&quot;Water planet&quot;</span></span>
+<span id="cb30-13"><a href="#cb30-13"></a>    <span class="op">/&gt;</span></span>
+<span id="cb30-14"><a href="#cb30-14"></a>  )</span>
+<span id="cb30-15"><a href="#cb30-15"></a>  const svgEl <span class="op">=</span> container<span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&#39;svg&#39;</span>)</span>
+<span id="cb30-16"><a href="#cb30-16"></a>  const titleEl <span class="op">=</span> getByText(<span class="st">&#39;Water planet&#39;</span>)</span>
+<span id="cb30-17"><a href="#cb30-17"></a>  const descEl <span class="op">=</span> getByText(<span class="st">&#39;A blue circle&#39;</span>)</span>
+<span id="cb30-18"><a href="#cb30-18"></a></span>
+<span id="cb30-19"><a href="#cb30-19"></a>  expect(svgEl)<span class="op">.</span><span class="fu">toHaveAttribute</span>(<span class="st">&#39;height&#39;</span><span class="op">,</span> <span class="st">&#39;200&#39;</span>)</span>
+<span id="cb30-20"><a href="#cb30-20"></a>  expect(svgEl)<span class="op">.</span><span class="fu">toHaveAttribute</span>(<span class="st">&#39;width&#39;</span><span class="op">,</span> <span class="st">&#39;200&#39;</span>)</span>
+<span id="cb30-21"><a href="#cb30-21"></a>  expect(titleEl)<span class="op">.</span><span class="fu">toBeInTheDocument</span>()</span>
+<span id="cb30-22"><a href="#cb30-22"></a>  expect(descEl)<span class="op">.</span><span class="fu">toBeInTheDocument</span>()</span>
+<span id="cb30-23"><a href="#cb30-23"></a>  expect(asFragment())<span class="op">.</span><span class="fu">toMatchSnapshot</span>()</span>
+<span id="cb30-24"><a href="#cb30-24"></a>})</span>
+<span id="cb30-25"><a href="#cb30-25"></a></span>
+<span id="cb30-26"><a href="#cb30-26"></a>test(<span class="st">&#39;with only title &amp; size&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb30-27"><a href="#cb30-27"></a>  const { asFragment<span class="op">,</span> container<span class="op">,</span> getByText } <span class="op">=</span> render(</span>
+<span id="cb30-28"><a href="#cb30-28"></a>    <span class="op">&lt;</span>Circle title<span class="op">=</span><span class="st">&quot;Water planet&quot;</span> size<span class="op">=</span>{<span class="dv">200</span>} <span class="op">/&gt;</span></span>
+<span id="cb30-29"><a href="#cb30-29"></a>  )</span>
+<span id="cb30-30"><a href="#cb30-30"></a>  const svgEl <span class="op">=</span> container<span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&#39;svg&#39;</span>)</span>
+<span id="cb30-31"><a href="#cb30-31"></a>  const titleEl <span class="op">=</span> getByText(<span class="st">&#39;Water planet&#39;</span>)</span>
+<span id="cb30-32"><a href="#cb30-32"></a>  const descEl <span class="op">=</span> container<span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&#39;desc&#39;</span>)</span>
+<span id="cb30-33"><a href="#cb30-33"></a></span>
+<span id="cb30-34"><a href="#cb30-34"></a>  expect(svgEl)<span class="op">.</span><span class="fu">toHaveAttribute</span>(<span class="st">&#39;height&#39;</span><span class="op">,</span> <span class="st">&#39;200&#39;</span>)</span>
+<span id="cb30-35"><a href="#cb30-35"></a>  expect(svgEl)<span class="op">.</span><span class="fu">toHaveAttribute</span>(<span class="st">&#39;width&#39;</span><span class="op">,</span> <span class="st">&#39;200&#39;</span>)</span>
+<span id="cb30-36"><a href="#cb30-36"></a>  expect(titleEl)<span class="op">.</span><span class="fu">toBeInTheDocument</span>()</span>
+<span id="cb30-37"><a href="#cb30-37"></a>  expect(descEl)<span class="op">.</span><span class="at">not</span><span class="op">.</span><span class="fu">toBeInTheDocument</span>()</span>
+<span id="cb30-38"><a href="#cb30-38"></a>  expect(asFragment())<span class="op">.</span><span class="fu">toMatchSnapshot</span>()</span>
+<span id="cb30-39"><a href="#cb30-39"></a>})</span></code></pre></div>
+<p>These first tests provide different sets of props and test various aspects of our component based on given props’ inclusion.</p>
+<p>Next, we can use the <code>axe-core</code> tool to try our hand at accessibility testing:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb31-1"><a href="#cb31-1"></a><span class="im">import</span> axe from <span class="st">&#39;axe-core&#39;</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a></span>
+<span id="cb31-3"><a href="#cb31-3"></a><span class="co">// ...</span></span>
+<span id="cb31-4"><a href="#cb31-4"></a></span>
+<span id="cb31-5"><a href="#cb31-5"></a>test(<span class="st">&#39;is accessible with title, desc, size&#39;</span><span class="op">,</span> (done) <span class="kw">=&gt;</span> {</span>
+<span id="cb31-6"><a href="#cb31-6"></a>  const { container } <span class="op">=</span> render(</span>
+<span id="cb31-7"><a href="#cb31-7"></a>    <span class="op">&lt;</span>Circle desc<span class="op">=</span><span class="st">&quot;A blue circle&quot;</span> size<span class="op">=</span>{<span class="dv">200</span>} title<span class="op">=</span><span class="st">&quot;Water planet&quot;</span> <span class="op">/&gt;</span></span>
+<span id="cb31-8"><a href="#cb31-8"></a>  )</span>
+<span id="cb31-9"><a href="#cb31-9"></a></span>
+<span id="cb31-10"><a href="#cb31-10"></a>  axe<span class="op">.</span><span class="fu">run</span>(container<span class="op">,</span> {}<span class="op">,</span> (err<span class="op">,</span> result) <span class="kw">=&gt;</span> {</span>
+<span id="cb31-11"><a href="#cb31-11"></a>    expect(err)<span class="op">.</span><span class="fu">toEqual</span>(null)</span>
+<span id="cb31-12"><a href="#cb31-12"></a>    expect(result<span class="op">.</span><span class="at">violations</span><span class="op">.</span><span class="at">length</span>)<span class="op">.</span><span class="fu">toEqual</span>(<span class="dv">0</span>)</span>
+<span id="cb31-13"><a href="#cb31-13"></a>    done()</span>
+<span id="cb31-14"><a href="#cb31-14"></a>  })</span>
+<span id="cb31-15"><a href="#cb31-15"></a>})</span>
+<span id="cb31-16"><a href="#cb31-16"></a></span>
+<span id="cb31-17"><a href="#cb31-17"></a>test(<span class="st">&#39;is inaccessible without title&#39;</span><span class="op">,</span> (done) <span class="kw">=&gt;</span> {</span>
+<span id="cb31-18"><a href="#cb31-18"></a>  const { container } <span class="op">=</span> render(</span>
+<span id="cb31-19"><a href="#cb31-19"></a>    <span class="op">&lt;</span>Circle desc<span class="op">=</span><span class="st">&quot;A blue circle&quot;</span> title<span class="op">=</span><span class="st">&quot;Water circle&quot;</span> size<span class="op">=</span>{<span class="dv">200</span>} <span class="op">/&gt;</span></span>
+<span id="cb31-20"><a href="#cb31-20"></a>  )</span>
+<span id="cb31-21"><a href="#cb31-21"></a></span>
+<span id="cb31-22"><a href="#cb31-22"></a>  <span class="co">// do something very wrong to prove a11y testing works</span></span>
+<span id="cb31-23"><a href="#cb31-23"></a>  container<span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&#39;title&#39;</span>)<span class="op">?.</span><span class="fu">remove</span>()</span>
+<span id="cb31-24"><a href="#cb31-24"></a></span>
+<span id="cb31-25"><a href="#cb31-25"></a>  axe<span class="op">.</span><span class="fu">run</span>(container<span class="op">,</span> {}<span class="op">,</span> (err<span class="op">,</span> result) <span class="kw">=&gt;</span> {</span>
+<span id="cb31-26"><a href="#cb31-26"></a>    expect(err)<span class="op">.</span><span class="fu">toEqual</span>(null)</span>
+<span id="cb31-27"><a href="#cb31-27"></a>    expect(result<span class="op">.</span><span class="at">violations</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">id</span>)<span class="op">.</span><span class="fu">toEqual</span>(<span class="st">&#39;svg-img-alt&#39;</span>)</span>
+<span id="cb31-28"><a href="#cb31-28"></a>    done()</span>
+<span id="cb31-29"><a href="#cb31-29"></a>  })</span>
+<span id="cb31-30"><a href="#cb31-30"></a>})</span></code></pre></div>
+<p>While the first test should be clear, the second test almost seems pointless (hint: it is). I am including it here to demonstrate what a failing accessibility scenario might look like. In reality, the first test in this group pointed out the error in the second test, for I was originally <em>not</em> requiring <code>title</code>, but I was giving the SVG <code>role="img"</code>. This is a no-no if there is no <code>aria-label</code>, <code>aria-labelledby</code>, nor <code>&lt;title&gt;</code> to supply the SVG with any textual meaning.</p>
+<p>Testing is easy if you keep things simple, and automated accessibility testing is even easier than that, for all you need to do is provide DOM elements.</p>
+<h3 id="component-stories">Component Stories</h3>
+<p>I find it very difficult to do test driven development when developing components, for it is an exploratory, creative experience for me. Instant feedback makes it easy to run through all my bad ideas (there are many!) and eventually land on some good ones. Storybook stories can help us do that, so let’s make our first story in <code>source/Circle/stories.tsx</code>.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb32-1"><a href="#cb32-1"></a><span class="im">import</span> React from <span class="st">&#39;react&#39;</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a><span class="im">import</span> { storiesOf } from <span class="st">&#39;@storybook/react&#39;</span></span>
+<span id="cb32-3"><a href="#cb32-3"></a><span class="im">import</span> { withA11y } from <span class="st">&#39;@storybook/addon-a11y&#39;</span></span>
+<span id="cb32-4"><a href="#cb32-4"></a><span class="im">import</span> { color<span class="op">,</span> number<span class="op">,</span> text<span class="op">,</span> withKnobs } from <span class="st">&#39;@storybook/addon-knobs&#39;</span></span>
+<span id="cb32-5"><a href="#cb32-5"></a></span>
+<span id="cb32-6"><a href="#cb32-6"></a><span class="co">// import our component and styles from</span></span>
+<span id="cb32-7"><a href="#cb32-7"></a><span class="co">// the distribution (build) output</span></span>
+<span id="cb32-8"><a href="#cb32-8"></a><span class="im">import</span> { Circle } from <span class="st">&#39;../../dist/esm&#39;</span></span>
+<span id="cb32-9"><a href="#cb32-9"></a><span class="im">import</span> <span class="st">&#39;../../dist/css/Circle/styles.css&#39;</span></span>
+<span id="cb32-10"><a href="#cb32-10"></a></span>
+<span id="cb32-11"><a href="#cb32-11"></a><span class="co">// group our stories under &quot;Circle&quot;</span></span>
+<span id="cb32-12"><a href="#cb32-12"></a>const stories <span class="op">=</span> storiesOf(<span class="st">&#39;Circle&#39;</span><span class="op">,</span> <span class="im">module</span>)</span>
+<span id="cb32-13"><a href="#cb32-13"></a></span>
+<span id="cb32-14"><a href="#cb32-14"></a><span class="co">// enable the accessibility &amp; knobs addons</span></span>
+<span id="cb32-15"><a href="#cb32-15"></a>stories<span class="op">.</span><span class="fu">addDecorator</span>(withA11y)</span>
+<span id="cb32-16"><a href="#cb32-16"></a>stories<span class="op">.</span><span class="fu">addDecorator</span>(withKnobs)</span>
+<span id="cb32-17"><a href="#cb32-17"></a></span>
+<span id="cb32-18"><a href="#cb32-18"></a><span class="co">// add a new story and use the</span></span>
+<span id="cb32-19"><a href="#cb32-19"></a><span class="co">// knobs tools to provide named</span></span>
+<span id="cb32-20"><a href="#cb32-20"></a><span class="co">// defaults that you can alter</span></span>
+<span id="cb32-21"><a href="#cb32-21"></a><span class="co">// in the Storybook interface</span></span>
+<span id="cb32-22"><a href="#cb32-22"></a>stories<span class="op">.</span><span class="fu">add</span>(<span class="st">&#39;default&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> (</span>
+<span id="cb32-23"><a href="#cb32-23"></a>  <span class="op">&lt;</span>Circle</span>
+<span id="cb32-24"><a href="#cb32-24"></a>    desc<span class="op">=</span>{text(<span class="st">&#39;desc&#39;</span><span class="op">,</span> <span class="st">&#39;A blue circle&#39;</span>)}</span>
+<span id="cb32-25"><a href="#cb32-25"></a>    fill<span class="op">=</span>{color(<span class="st">&#39;fill&#39;</span><span class="op">,</span> <span class="st">&#39;#7ed6df&#39;</span>)}</span>
+<span id="cb32-26"><a href="#cb32-26"></a>    size<span class="op">=</span>{number(<span class="st">&#39;size&#39;</span><span class="op">,</span> <span class="dv">200</span>)}</span>
+<span id="cb32-27"><a href="#cb32-27"></a>    title<span class="op">=</span>{text(<span class="st">&#39;title&#39;</span><span class="op">,</span> <span class="st">&#39;Abstract water planet&#39;</span>)}</span>
+<span id="cb32-28"><a href="#cb32-28"></a>  <span class="op">/&gt;</span></span>
+<span id="cb32-29"><a href="#cb32-29"></a>))</span>
+<span id="cb32-30"><a href="#cb32-30"></a></span>
+<span id="cb32-31"><a href="#cb32-31"></a>stories<span class="op">.</span><span class="fu">add</span>(<span class="st">&#39;another scenario...&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> (</span>
+<span id="cb32-32"><a href="#cb32-32"></a>  <span class="op">&lt;</span>Circle {<span class="co">/* other example props here */</span>} <span class="op">/&gt;</span></span>
+<span id="cb32-33"><a href="#cb32-33"></a>))</span></code></pre></div>
+<p>Each component gets its own <code>stories.tsx</code> file, so there’s no need to worry about them getting out of hand with all the different components in your library. Add as many different stories for your components as you like! Our Storybook config will collect them all for you into a single place.</p>
+<h2 id="building-our-typescript">Building Our TypeScript</h2>
+<p>We’ve already created a <code>tsconfig.base.json</code> and <code>tsconfig.json</code> file, and now it’s time to add ones for CommonJS (CJS), ESModules (ESM), and Universal Module Definitions (UMD). We will then add some NPM scripts to build out TypeScript for us.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1"></a>$ <span class="fu">touch</span> tsconfig.cjs.json tsconfig.esm.json tsconfig.umd.json</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb34-1"><a href="#cb34-1"></a><span class="co">// tsconfig.cjs.json</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a>{</span>
+<span id="cb34-3"><a href="#cb34-3"></a>  <span class="st">&quot;extends&quot;</span><span class="op">:</span> <span class="st">&quot;./tsconfig.base.json&quot;</span><span class="op">,</span></span>
+<span id="cb34-4"><a href="#cb34-4"></a>  <span class="st">&quot;compilerOptions&quot;</span><span class="op">:</span> {</span>
+<span id="cb34-5"><a href="#cb34-5"></a>    <span class="st">&quot;module&quot;</span><span class="op">:</span> <span class="st">&quot;commonjs&quot;</span><span class="op">,</span></span>
+<span id="cb34-6"><a href="#cb34-6"></a>    <span class="st">&quot;outDir&quot;</span><span class="op">:</span> <span class="st">&quot;dist/cjs/&quot;</span></span>
+<span id="cb34-7"><a href="#cb34-7"></a>  }<span class="op">,</span></span>
+<span id="cb34-8"><a href="#cb34-8"></a>  <span class="st">&quot;include&quot;</span><span class="op">:</span> [<span class="st">&quot;source/index.ts&quot;</span>]</span>
+<span id="cb34-9"><a href="#cb34-9"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb35-1"><a href="#cb35-1"></a><span class="co">// tsconfig.esm.json</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a>{</span>
+<span id="cb35-3"><a href="#cb35-3"></a>  <span class="st">&quot;extends&quot;</span><span class="op">:</span> <span class="st">&quot;./tsconfig.base.json&quot;</span><span class="op">,</span></span>
+<span id="cb35-4"><a href="#cb35-4"></a>  <span class="st">&quot;compilerOptions&quot;</span><span class="op">:</span> {</span>
+<span id="cb35-5"><a href="#cb35-5"></a>    <span class="st">&quot;module&quot;</span><span class="op">:</span> <span class="st">&quot;esNext&quot;</span><span class="op">,</span></span>
+<span id="cb35-6"><a href="#cb35-6"></a>    <span class="st">&quot;outDir&quot;</span><span class="op">:</span> <span class="st">&quot;dist/esm/&quot;</span></span>
+<span id="cb35-7"><a href="#cb35-7"></a>  }<span class="op">,</span></span>
+<span id="cb35-8"><a href="#cb35-8"></a>  <span class="st">&quot;include&quot;</span><span class="op">:</span> [<span class="st">&quot;source/index.ts&quot;</span>]</span>
+<span id="cb35-9"><a href="#cb35-9"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb36-1"><a href="#cb36-1"></a><span class="co">// tsconfig.umd.json</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a>{</span>
+<span id="cb36-3"><a href="#cb36-3"></a>  <span class="st">&quot;extends&quot;</span><span class="op">:</span> <span class="st">&quot;./tsconfig.base.json&quot;</span><span class="op">,</span></span>
+<span id="cb36-4"><a href="#cb36-4"></a>  <span class="st">&quot;compilerOptions&quot;</span><span class="op">:</span> {</span>
+<span id="cb36-5"><a href="#cb36-5"></a>    <span class="st">&quot;module&quot;</span><span class="op">:</span> <span class="st">&quot;umd&quot;</span><span class="op">,</span></span>
+<span id="cb36-6"><a href="#cb36-6"></a>    <span class="st">&quot;outDir&quot;</span><span class="op">:</span> <span class="st">&quot;dist/umd/&quot;</span></span>
+<span id="cb36-7"><a href="#cb36-7"></a>  }<span class="op">,</span></span>
+<span id="cb36-8"><a href="#cb36-8"></a>  <span class="st">&quot;include&quot;</span><span class="op">:</span> [<span class="st">&quot;source/index.ts&quot;</span>]</span>
+<span id="cb36-9"><a href="#cb36-9"></a>}</span></code></pre></div>
+<p>Each of these specify where to find the source, what type of module to output, and where to put the resulting compiled code. If you want your code to be compiled to the output, make sure it is either included in the <code>include</code> field or is <code>require</code>d by something that is.</p>
+<p>In our <code>package.json</code>, let’s add some scripts that make use of these configs:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb37-1"><a href="#cb37-1"></a><span class="st">&quot;scripts&quot;</span><span class="op">:</span> {</span>
+<span id="cb37-2"><a href="#cb37-2"></a>  <span class="st">&quot;build:js:cjs&quot;</span><span class="op">:</span> <span class="st">&quot;tsc -p tsconfig.cjs.json&quot;</span><span class="op">,</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a>  <span class="st">&quot;build:js:esm&quot;</span><span class="op">:</span> <span class="st">&quot;tsc -p tsconfig.esm.json&quot;</span><span class="op">,</span></span>
+<span id="cb37-4"><a href="#cb37-4"></a>  <span class="st">&quot;build:js:umd&quot;</span><span class="op">:</span> <span class="st">&quot;tsc -p tsconfig.umd.json&quot;</span><span class="op">,</span></span>
+<span id="cb37-5"><a href="#cb37-5"></a>  <span class="co">// ...</span></span>
+<span id="cb37-6"><a href="#cb37-6"></a>}<span class="op">,</span></span></code></pre></div>
+<p>Easy! If you are guessing that we might want to run these all together in a <code>build:js</code> command, there are two ways to do that (one verbose and one less so).</p>
+<p>Our first attempt:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb38-1"><a href="#cb38-1"></a><span class="st">&quot;scripts&quot;</span><span class="op">:</span> {</span>
+<span id="cb38-2"><a href="#cb38-2"></a>  <span class="st">&quot;build:js&quot;</span><span class="op">:</span> <span class="st">&quot;npm run build:js:cjs &amp;&amp; npm run build:js:esm &amp;&amp; npm run build:js:umd&quot;</span><span class="op">,</span></span>
+<span id="cb38-3"><a href="#cb38-3"></a>  <span class="co">// ...</span></span>
+<span id="cb38-4"><a href="#cb38-4"></a>}<span class="op">,</span></span></code></pre></div>
+<p>Not bad, but we can use the <a href="https://www.npmjs.com/package/npm-run-all"><code>npm-run-all</code></a> tool to not only write a more succinct script but also run these in parallel!</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1"></a>$ <span class="ex">npm</span> install --save-dev --save-exact npm-run-all</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb40-1"><a href="#cb40-1"></a><span class="st">&quot;scripts&quot;</span><span class="op">:</span> {</span>
+<span id="cb40-2"><a href="#cb40-2"></a>  <span class="st">&quot;build:js&quot;</span><span class="op">:</span> <span class="st">&quot;run-p build:js:cjs build:js:esm build:js:umd&quot;</span><span class="op">,</span></span>
+<span id="cb40-3"><a href="#cb40-3"></a>  <span class="co">// ...</span></span>
+<span id="cb40-4"><a href="#cb40-4"></a>}<span class="op">,</span></span></code></pre></div>
+<p>The <code>npm-run-all</code> tool gives us <code>run-p</code> for running scripts in parallel and <code>run-s</code> for running them synchronously.</p>
+<p>Watching for changes is also very simple:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb41-1"><a href="#cb41-1"></a><span class="st">&quot;scripts&quot;</span><span class="op">:</span> {</span>
+<span id="cb41-2"><a href="#cb41-2"></a>  <span class="co">// ...</span></span>
+<span id="cb41-3"><a href="#cb41-3"></a>  <span class="st">&quot;build:js:esm:watch&quot;</span><span class="op">:</span> <span class="st">&quot;tsc -p tsconfig.esm.json -w&quot;</span><span class="op">,</span></span>
+<span id="cb41-4"><a href="#cb41-4"></a>  <span class="co">// ...</span></span>
+<span id="cb41-5"><a href="#cb41-5"></a>}<span class="op">,</span></span></code></pre></div>
+<p>While we’re here, let’s go ahead and add a <code>clean</code>ing script for our <code>dist/</code> directory:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb42-1"><a href="#cb42-1"></a><span class="st">&quot;scripts&quot;</span><span class="op">:</span> {</span>
+<span id="cb42-2"><a href="#cb42-2"></a>  <span class="co">// ...</span></span>
+<span id="cb42-3"><a href="#cb42-3"></a>  <span class="st">&quot;clean&quot;</span><span class="op">:</span> <span class="st">&quot;clean:dist&quot;</span><span class="op">,</span> <span class="co">// we&#39;ll add more here shortly</span></span>
+<span id="cb42-4"><a href="#cb42-4"></a>  <span class="st">&quot;clean:dist&quot;</span><span class="op">:</span> <span class="st">&quot;rm -rf dist&quot;</span><span class="op">,</span></span>
+<span id="cb42-5"><a href="#cb42-5"></a>  <span class="co">// ...</span></span>
+<span id="cb42-6"><a href="#cb42-6"></a>}<span class="op">,</span></span></code></pre></div>
+<p>Now that we can do some <code>clean</code>ing and <code>build</code>ing, let’s create a single <code>build</code> script that we can continue adding build steps to as we go:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb43-1"><a href="#cb43-1"></a><span class="st">&quot;scripts&quot;</span><span class="op">:</span> {</span>
+<span id="cb43-2"><a href="#cb43-2"></a>  <span class="st">&quot;build&quot;</span><span class="op">:</span> <span class="st">&quot;run-s clean build:js&quot;</span><span class="op">,</span> <span class="co">// we&#39;ll add more here shortly</span></span>
+<span id="cb43-3"><a href="#cb43-3"></a>  <span class="co">// ...</span></span>
+<span id="cb43-4"><a href="#cb43-4"></a>}</span></code></pre></div>
+<p>Give it all whirl, if you like:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1"></a>$ <span class="ex">npm</span> run build</span></code></pre></div>
+<p>You should see the following tree structure for your <code>dist/</code> folder:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1"></a><span class="ex">.</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a>└── <span class="ex">dist</span></span>
+<span id="cb45-3"><a href="#cb45-3"></a>    └── <span class="ex">cjs</span></span>
+<span id="cb45-4"><a href="#cb45-4"></a>        └── <span class="ex">Circle</span></span>
+<span id="cb45-5"><a href="#cb45-5"></a>            ├── <span class="ex">index.d.js</span></span>
+<span id="cb45-6"><a href="#cb45-6"></a>            └── <span class="ex">index.js</span></span>
+<span id="cb45-7"><a href="#cb45-7"></a>        ├── <span class="ex">index.d.js</span></span>
+<span id="cb45-8"><a href="#cb45-8"></a>        └── <span class="ex">index.js</span></span>
+<span id="cb45-9"><a href="#cb45-9"></a>    └── <span class="ex">esm</span></span>
+<span id="cb45-10"><a href="#cb45-10"></a>        └── <span class="ex">Circle</span></span>
+<span id="cb45-11"><a href="#cb45-11"></a>            ├── <span class="ex">index.d.js</span></span>
+<span id="cb45-12"><a href="#cb45-12"></a>            └── <span class="ex">index.js</span></span>
+<span id="cb45-13"><a href="#cb45-13"></a>        ├── <span class="ex">index.d.js</span></span>
+<span id="cb45-14"><a href="#cb45-14"></a>        └── <span class="ex">index.js</span></span>
+<span id="cb45-15"><a href="#cb45-15"></a>    └── <span class="ex">umd</span></span>
+<span id="cb45-16"><a href="#cb45-16"></a>        └── <span class="ex">Circle</span></span>
+<span id="cb45-17"><a href="#cb45-17"></a>            ├── <span class="ex">index.d.js</span></span>
+<span id="cb45-18"><a href="#cb45-18"></a>            └── <span class="ex">index.js</span></span>
+<span id="cb45-19"><a href="#cb45-19"></a>        ├── <span class="ex">index.d.js</span></span>
+<span id="cb45-20"><a href="#cb45-20"></a>        └── <span class="ex">index.js</span></span></code></pre></div>
+<p>We’re getting places! We have JS, and now we need our CSS.</p>
+<h2 id="building-our-css">Building Our CSS</h2>
+<p>For our styles, we have two goals:</p>
+<ol>
+<li>output each component’s styles in a component CSS folder like <code>dist/css/Circle/styles.css</code></li>
+<li>output a combination of each component’s styles in a single file in <code>dist/css/styles.css</code></li>
+</ol>
+<p>To achieve this, we’re going to write a short bash script, and we’re going to place it in <code>scripts/buildCSS</code>.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1"></a>$ <span class="fu">mkdir</span> scripts</span>
+<span id="cb46-2"><a href="#cb46-2"></a>$ <span class="fu">touch</span> scripts/buildCSS</span>
+<span id="cb46-3"><a href="#cb46-3"></a>$ <span class="fu">chmod</span> +x scripts/buildCSS</span></code></pre></div>
+<p>And in <code>scripts/buildCSS</code>:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb47-2"><a href="#cb47-2"></a><span class="kw">set</span> <span class="ex">-euo</span> pipefail</span>
+<span id="cb47-3"><a href="#cb47-3"></a></span>
+<span id="cb47-4"><a href="#cb47-4"></a><span class="kw">function</span><span class="fu"> copy_css</span> <span class="kw">{</span></span>
+<span id="cb47-5"><a href="#cb47-5"></a>  <span class="bu">local</span> <span class="va">dir=$(</span><span class="fu">dirname</span> <span class="va">$0)</span></span>
+<span id="cb47-6"><a href="#cb47-6"></a>  <span class="bu">local</span> <span class="va">component=$(</span><span class="fu">basename</span> <span class="va">$dir)</span></span>
+<span id="cb47-7"><a href="#cb47-7"></a>  <span class="bu">local</span> <span class="va">dist_css=$PWD</span>/dist/css</span>
+<span id="cb47-8"><a href="#cb47-8"></a></span>
+<span id="cb47-9"><a href="#cb47-9"></a>  <span class="co"># concatenate component CSS to main CSS file</span></span>
+<span id="cb47-10"><a href="#cb47-10"></a>  <span class="fu">mkdir</span> -p <span class="va">$dist_css</span></span>
+<span id="cb47-11"><a href="#cb47-11"></a>  <span class="fu">cat</span> <span class="va">$0</span> <span class="op">&gt;&gt;</span> <span class="va">$dist_css</span>/styles.css</span>
+<span id="cb47-12"><a href="#cb47-12"></a></span>
+<span id="cb47-13"><a href="#cb47-13"></a>  <span class="co"># copy component CSS to component folder</span></span>
+<span id="cb47-14"><a href="#cb47-14"></a>  <span class="fu">mkdir</span> -p <span class="va">$dist_css</span>/<span class="va">$component</span>/</span>
+<span id="cb47-15"><a href="#cb47-15"></a>  <span class="fu">cp</span> <span class="va">$0</span> <span class="va">$dist_css</span>/<span class="va">$component</span>/</span>
+<span id="cb47-16"><a href="#cb47-16"></a><span class="kw">}</span></span>
+<span id="cb47-17"><a href="#cb47-17"></a></span>
+<span id="cb47-18"><a href="#cb47-18"></a><span class="bu">export</span> -f <span class="va">copy_css</span></span>
+<span id="cb47-19"><a href="#cb47-19"></a></span>
+<span id="cb47-20"><a href="#cb47-20"></a><span class="kw">function</span><span class="fu"> build</span> <span class="kw">{</span></span>
+<span id="cb47-21"><a href="#cb47-21"></a>  <span class="fu">find</span> <span class="va">$PWD</span>/source \</span>
+<span id="cb47-22"><a href="#cb47-22"></a>    -name <span class="st">&#39;*.css&#39;</span> \</span>
+<span id="cb47-23"><a href="#cb47-23"></a>    -exec /bin/bash -c <span class="st">&#39;copy_css $0&#39;</span> {<span class="kw">}</span> <span class="dt">\;</span></span>
+<span id="cb47-24"><a href="#cb47-24"></a>}</span>
+<span id="cb47-25"><a href="#cb47-25"></a></span>
+<span id="cb47-26"><a href="#cb47-26"></a><span class="ex">build</span></span></code></pre></div>
+<p>We lean on some <code>coreutils</code> here to solve our problems for us. The last line of our script, <code>build</code>, calls the function of the same name that looks inside the <code>source</code> directory for all CSS files and tells the <code>bash</code> program to run <code>copy_css</code> with the path to the CSS file. There’s a catch, though: <code>bash</code> is going to run in a subshell, so we need to make sure our <code>copy_css</code> function is exported and available by <code>export -f copy_css</code>.</p>
+<p>For the <code>copy_css</code> function, it’s much simpler than it looks! Here are the steps:</p>
+<ol>
+<li><code>mkdir -p $dist_css</code> creates our output directory, <code>dist/css</code>.</li>
+<li><code>cat $0 &gt;&gt; $dist_css/styles.css</code> concatenates all the lines of our source CSS file and appends them to <code>dist/css/styles.css</code>.</li>
+<li><code>mkdir -p $dist_css/$component/</code> creates a component CSS folder like <code>dist/css/Circle/</code>. We derive the <code>$component</code> variable by getting the <code>basename</code> of the <code>dirname</code> of our full CSS file path. For example, <code>/Users/myuser/projects/example-component-library/source/Circle/styles.css</code> has a <code>dirname</code> of <code>/Users/rpearce/projects/example-component-library/source/Circle</code>, and that has a <code>basename</code> of <code>Circle</code>! Using that deduction, we can derive what component we’re working with and create that output directory simply by finding a CSS file.</li>
+<li><code>cp $0 $dist_css/$component/</code> copies the source component CSS file to the output component directory; that’s it!</li>
+</ol>
+<p>If you have a different CSS setup, you’ll need to adjust this build script accordingly.</p>
+<p>Now that we have our <code>buildCSS</code> script, we can add an NPM <code>script</code> to handle building this for us and add that to our <code>build</code> script:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb48-1"><a href="#cb48-1"></a><span class="st">&quot;scripts&quot;</span><span class="op">:</span> {</span>
+<span id="cb48-2"><a href="#cb48-2"></a>  <span class="st">&quot;build&quot;</span><span class="op">:</span> <span class="st">&quot;run-s clean build:js build:css&quot;</span><span class="op">,</span></span>
+<span id="cb48-3"><a href="#cb48-3"></a>  <span class="st">&quot;build:css&quot;</span><span class="op">:</span> <span class="st">&quot;./scripts/buildCSS&quot;</span><span class="op">,</span></span>
+<span id="cb48-4"><a href="#cb48-4"></a>  <span class="co">// ...</span></span>
+<span id="cb48-5"><a href="#cb48-5"></a>}<span class="op">,</span></span></code></pre></div>
+<p>Similarly to our <code>build:js:esm:watch</code> command, how might we watch for CSS changes and run our script in a <code>build:css:watch</code> command? Luckily, there’s a tool that can help us with that: <a href="https://www.npmjs.com/package/chokidar"><code>chokidar</code></a>.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1"></a>$ <span class="ex">npm</span> install --save-dev --save-exact chokidar</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb50-1"><a href="#cb50-1"></a><span class="st">&quot;scripts&quot;</span><span class="op">:</span> {</span>
+<span id="cb50-2"><a href="#cb50-2"></a>  <span class="co">// ...</span></span>
+<span id="cb50-3"><a href="#cb50-3"></a>  <span class="st">&quot;build:css:watch&quot;</span><span class="op">:</span> <span class="st">&quot;chokidar </span><span class="sc">\&quot;</span><span class="st">source/**/*.css</span><span class="sc">\&quot;</span><span class="st"> -c </span><span class="sc">\&quot;</span><span class="st">./scripts/buildCSS</span><span class="sc">\&quot;</span><span class="st">&quot;</span><span class="op">,</span></span>
+<span id="cb50-4"><a href="#cb50-4"></a>  <span class="co">// ...</span></span>
+<span id="cb50-5"><a href="#cb50-5"></a>}<span class="op">,</span></span></code></pre></div>
+<h2 id="building-our-stories">Building Our Stories</h2>
+<p>To develop our components and get instant feedback in our Storybook examples, we’re going to need to run a few things at once to get it all to work together.</p>
+<p>First, let’s add a line to our <code>package.json</code>’s <code>scripts</code> object called <code>storybook</code>:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb51-1"><a href="#cb51-1"></a><span class="st">&quot;scripts&quot;</span><span class="op">:</span> {</span>
+<span id="cb51-2"><a href="#cb51-2"></a>  <span class="co">// ...</span></span>
+<span id="cb51-3"><a href="#cb51-3"></a>  <span class="st">&quot;storybook&quot;</span><span class="op">:</span> <span class="st">&quot;start-storybook -p 6006&quot;</span></span>
+<span id="cb51-4"><a href="#cb51-4"></a>}<span class="op">,</span></span></code></pre></div>
+<p>Next, let’s add a <code>start</code> command that, in this sequence,</p>
+<ol>
+<li>cleans the <code>dist/</code> directory</li>
+<li>builds only the ESModule JS output</li>
+<li>builds the CSS</li>
+</ol>
+<p>and then, in parallel,</p>
+<ol>
+<li>watches the JS for changes and rebuilds the ESModule output</li>
+<li>watches the CSS for changes and rebuilds the CSS</li>
+<li>runs storybook, which watches for changes to the prior two items, for it will detect changes to its <code>import</code>s from the <code>dist/</code> folder</li>
+</ol>
+<div class="sourceCode" id="cb52"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb52-1"><a href="#cb52-1"></a><span class="st">&quot;scripts&quot;</span><span class="op">:</span> {</span>
+<span id="cb52-2"><a href="#cb52-2"></a>  <span class="co">// ...</span></span>
+<span id="cb52-3"><a href="#cb52-3"></a>  <span class="st">&quot;start&quot;</span><span class="op">:</span> <span class="st">&quot;run-s clean:dist build:js:esm build:css &amp;&amp; run-p build:js:esm:watch build:css:watch storybook&quot;</span><span class="op">,</span></span>
+<span id="cb52-4"><a href="#cb52-4"></a>  <span class="co">// ...</span></span>
+<span id="cb52-5"><a href="#cb52-5"></a>}<span class="op">,</span></span></code></pre></div>
+<p>If you want to break those up into different scripts to make it more legible, here’s a way to do that:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb53-1"><a href="#cb53-1"></a><span class="st">&quot;scripts&quot;</span><span class="op">:</span> {</span>
+<span id="cb53-2"><a href="#cb53-2"></a>  <span class="co">// ...</span></span>
+<span id="cb53-3"><a href="#cb53-3"></a>  <span class="st">&quot;start&quot;</span><span class="op">:</span> <span class="st">&quot;run-s start:init start:run&quot;</span><span class="op">,</span></span>
+<span id="cb53-4"><a href="#cb53-4"></a>  <span class="st">&quot;start:init&quot;</span><span class="op">:</span> <span class="st">&quot;run-s clean:dist build:js:esm build:css&quot;</span><span class="op">,</span></span>
+<span id="cb53-5"><a href="#cb53-5"></a>  <span class="st">&quot;start:run&quot;</span><span class="op">:</span> <span class="st">&quot;run-p build:js:esm:watch build:css:watch storybook&quot;</span><span class="op">,</span></span>
+<span id="cb53-6"><a href="#cb53-6"></a>  <span class="co">// ...</span></span>
+<span id="cb53-7"><a href="#cb53-7"></a>}<span class="op">,</span></span></code></pre></div>
+<p>You can then run this from the command line, and it should automatically open your web browser and take you to <a href="http://localhost:6006" class="uri">http://localhost:6006</a>.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1"></a>$ <span class="ex">npm</span> run start</span></code></pre></div>
+<p>Your Storybook library should have your component, and you can adjust the component knobs in one of the sidebars, and you can also see the accessibility audit located in the tab next to the knobs. <em>Note: no amount of automated testing can guarantee accessibility, but it can help you catch silly mistakes.</em></p>
+<p>With all these pieces in place, you can now develop your components and get instante feedback in the browser using the same code that you would provide to a consumer of your package!</p>
+<p>Did you know that you can also build static HTML, CSS, and JavaScript files and serve that up through something like GitHub Pages? We can update our <code>package.json</code> <code>scripts</code> to include scripts for building our Storybook output to the <code>docs/</code> folder and for cleaning the <code>docs/</code> folder, as well.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb55-1"><a href="#cb55-1"></a><span class="st">&quot;scripts&quot;</span><span class="op">:</span> {</span>
+<span id="cb55-2"><a href="#cb55-2"></a>  <span class="co">// ...</span></span>
+<span id="cb55-3"><a href="#cb55-3"></a>  <span class="st">&quot;build:docs&quot;</span><span class="op">:</span> <span class="st">&quot;build-storybook -o docs&quot;</span><span class="op">,</span></span>
+<span id="cb55-4"><a href="#cb55-4"></a>  <span class="st">&quot;clean:docs&quot;</span><span class="op">:</span> <span class="st">&quot;rm -rf docs&quot;</span></span>
+<span id="cb55-5"><a href="#cb55-5"></a>  <span class="st">&quot;storybook&quot;</span><span class="op">:</span> <span class="st">&quot;start-storybook -p 6006&quot;</span></span>
+<span id="cb55-6"><a href="#cb55-6"></a>}<span class="op">,</span></span></code></pre></div>
+<p>The <code>clean:docs</code> script, if ran first, will guarantee that we have fresh output in our <code>docs/</code> folder. Let’s give it a go:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1"></a>$ <span class="ex">npm</span> run clean:docs <span class="kw">&amp;&amp;</span> <span class="ex">npm</span> run build:docs</span></code></pre></div>
+<p>Since we can now clean and build our Storybook folder, we can update our <code>build</code> and <code>clean</code> scripts accordingly:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb57-1"><a href="#cb57-1"></a><span class="st">&quot;scripts&quot;</span><span class="op">:</span> {</span>
+<span id="cb57-2"><a href="#cb57-2"></a>  <span class="st">&quot;build&quot;</span><span class="op">:</span> <span class="st">&quot;run-s clean build:js build:css build:docs&quot;</span><span class="op">,</span></span>
+<span id="cb57-3"><a href="#cb57-3"></a>  <span class="co">// ...</span></span>
+<span id="cb57-4"><a href="#cb57-4"></a>  <span class="st">&quot;clean&quot;</span><span class="op">:</span> <span class="st">&quot;run-p clean:dist clean:docs&quot;</span><span class="op">,</span></span>
+<span id="cb57-5"><a href="#cb57-5"></a>  <span class="co">// ...</span></span>
+<span id="cb57-6"><a href="#cb57-6"></a>}<span class="op">,</span></span></code></pre></div>
+<h2 id="continuous-integration-notes">Continuous Integration Notes</h2>
+<p>When you set up a continuous integration (CI) tool for this project, it will be tempting to tell it to simply run <code>$ npm run build</code>; however, this will not include your linting and testing scripts, and you could potentially have a green light from CI when really you have problems!</p>
+<p>While you could always run your linting and testing scripts inside of <code>build</code> ( this can get tedious) or multiple scripts from your CI configuration, let’s instead add another script named <code>ci</code> to handle this for us:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb58-1"><a href="#cb58-1"></a><span class="st">&quot;scripts&quot;</span><span class="op">:</span> {</span>
+<span id="cb58-2"><a href="#cb58-2"></a>  <span class="co">// ...</span></span>
+<span id="cb58-3"><a href="#cb58-3"></a>  <span class="st">&quot;ci&quot;</span><span class="op">:</span> <span class="st">&quot;run-p lint build test&quot;</span><span class="op">,</span></span>
+<span id="cb58-4"><a href="#cb58-4"></a>  <span class="co">// ...</span></span>
+<span id="cb58-5"><a href="#cb58-5"></a>}<span class="op">,</span></span></code></pre></div>
+<p>No worries! Now we can use <code>$ npm run ci</code> in our CI configuration.</p>
+<h2 id="publishing-notes">Publishing Notes</h2>
+<p>I recommend adding a <code>prepublishOnly</code> script that ensures your linter and tests pass before trying to build your component output:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb59-1"><a href="#cb59-1"></a><span class="st">&quot;scripts&quot;</span><span class="op">:</span> {</span>
+<span id="cb59-2"><a href="#cb59-2"></a>  <span class="co">// ...</span></span>
+<span id="cb59-3"><a href="#cb59-3"></a>  <span class="st">&quot;prepublishOnly&quot;</span><span class="op">:</span> <span class="st">&quot;run-p lint test &amp;&amp; run-p build:js build:css&quot;</span><span class="op">,</span></span>
+<span id="cb59-4"><a href="#cb59-4"></a>  <span class="co">// ...</span></span>
+<span id="cb59-5"><a href="#cb59-5"></a>}<span class="op">,</span></span></code></pre></div>
+<p>Also, if you want this to be a private repository, make sure you add <code>"private": true</code> to your <code>package.json</code> before publishing.</p>
+<h2 id="wrapping-up">Wrapping Up</h2>
+<p>Thank you for reading this, and I hope this helps you create an awesome, accessible component library.</p>
+<p><br /> Robert</p>
+    </section>
+  </article>
+</main>
+
+<footer>
+  <section class="subscribe section--padded">
+  <div class="layout--constrained">
+    <h2 class="subscribe__header">Get notified of new posts</h2>
+
+    <form action="//robertwpearce.us13.list-manage.com/subscribe/post?u=2df44e8960266388bff165fa6&amp;id=ee2f2a3737" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate class="subscribe__form">
+      <div style="position: absolute; left: -5000px;" aria-hidden="true">
+        <input type="text" name="b_2df44e8960266388bff165fa6_ee2f2a3737" tabindex="-1" value="">
+      </div>
+      <div class="subscribe__section">
+        <input type="email" value="" id="mce-EMAIL" class="subscribe__input" name="EMAIL" placeholder="you@greatemail.com" aria-label="Email Address">
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe__submit">
+      </div>
+      <small>Note: I will <em>never</em> give out your email nor spam you. Unsubscribe at any time.</small>
+    </form>
+    <p>
+      <small>(or subscribe to the <a href="/atom.xml" class="subscribe__link">atom</a> or <a class="subscribe__link" href="/rss.xml">rss</a> feeds)</small>
+    </p>
+  </div>
+</section>
+
+</footer>
+
+    <script async src="/js/dist/index.js"></script>
+  </body>
+</html>
