@@ -1,4 +1,4 @@
-{ compiler ? "ghc883"
+{ compiler ? "ghc8101"
 , sources ? import ./nix/sources.nix
 }:
 
@@ -14,6 +14,7 @@ let
               patches = [ ./hakyll.patch ];
             });
             project = hpNew.callPackage ./project.nix { };
+            #project = hpNew.callCabal2nix "robertwpearce-com" ./. { };
           };
         };
       };
@@ -34,10 +35,10 @@ in
         ghcid
         hlint
         niv
-        ormolu
+        #ormolu
         pkgs.cacert
         pkgs.nix
       ];
-      #withHoogle = true;
+      withHoogle = true;
     };
   }

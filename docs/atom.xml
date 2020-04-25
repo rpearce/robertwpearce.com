@@ -8,8 +8,16 @@
         <name>Robert Pearce</name>
         <email>me@robertwpearce.com</email>
     </author>
-    <updated>2020-02-24T00:00:00Z</updated>
+    <updated>2020-04-27T00:00:00Z</updated>
     <entry>
+    <title>Build Your Team an Accessible, Shareable Component Library</title>
+    <link href="https://robertwpearce.com/build-your-team-an-accessible-shareable-component-library.html" />
+    <id>https://robertwpearce.com/build-your-team-an-accessible-shareable-component-library.html</id>
+    <published>2020-04-27T00:00:00Z</published>
+    <updated>2020-04-27T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Use React and TypeScript to build your team an accessible, shareable component library that can be included in as many projects as you can manage.]]></summary>
+</entry>
+<entry>
     <title>Catch Low-Hanging Accessibility Fruit with axe-core</title>
     <link href="https://robertwpearce.com/catch-low-hanging-accessibility-fruit-with-axe-core.html" />
     <id>https://robertwpearce.com/catch-low-hanging-accessibility-fruit-with-axe-core.html</id>

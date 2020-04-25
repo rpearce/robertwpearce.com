@@ -15,7 +15,7 @@ extra-source-files:  README.md
 executable site
   main-is:           site.hs
   build-depends:     base == 4.*
-                   , hakyll ^>= 4.13.2.0
+                   , hakyll ^>= 4.13.3.0
                    , pandoc >= 2.0.5 && < 2.10
                    , text ^>= 1.2.4
                    , time >= 1.8 && < 1.10
