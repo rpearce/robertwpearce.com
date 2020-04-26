@@ -10,29 +10,34 @@ let
   pkgs = import sources.nixpkgs {
     config = {
       packageOverrides = pkgz: rec {
-        haskellPackages = pkgz.haskellPackages.override {
-          overrides = hpNew: hpOld: rec {
-            hakyll = hpOld.hakyll.overrideAttrs(oldAttrs: {
-              configureFlags = "-f watchServer -f previewServer";
-              patches = [ ./hakyll.patch ];
-            });
-            project = hpNew.callPackage ./project.nix { };
-            #project = hpNew.callCabal2nix "robertwpearce-com" ./. { };
+        haskell = pkgz.haskell // {
+          packages = pkgz.haskell.packages // {
+            ${compiler} = pkgz.haskell.packages.${compiler}.override {
+              overrides = hpNew: hpOld: rec {
+                hakyll = hpOld.hakyll.overrideAttrs(oldAttrs: {
+                  configureFlags = "-f watchServer -f previewServer";
+                  patches = [ ./hakyll.patch ];
+                });
+
+                project = hpNew.callCabal2nix "robertwpearce-com" ./. { };
+              };
+            };
           };
         };
       };
     };
+
     overlays = [ overlay ];
   };
 
   haskellPackages = pkgs.haskell.packages.${compiler};
 in
   {
-    project = pkgs.haskellPackages.project;
+    project = haskellPackages.project;
 
     shell = haskellPackages.shellFor {
       packages = p: with p; [
-        pkgs.haskellPackages.project
+        haskellPackages.project
       ];
       buildInputs = with haskellPackages; [
         ghcid

@@ -6,63 +6,58 @@ My personal website: [https://robertwpearce.com](https://robertwpearce.com).
 1. install [nix](https://nixos.org/nix/)
 1. list the available commands
    ```
-   λ ./make.sh help
+   λ ./make help
    ```
 
 ### CLI
 Print usage:
 ```
-λ ./make.sh help
+λ ./make help
 ```
 
 Build the project & output:
 ```
-λ ./make.sh build
+λ ./make build
 ```
 
 Run hakyll commands (see next section):
 ```
-λ ./make.sh site <COMMAND>
-```
-
-Update project.nix from .cabal contents:
-```
-λ ./make.sh build-cabal
+λ ./make site <COMMAND>
 ```
 
 Use nix to build the project:
 ```
-λ ./make.sh build-project
+λ ./make build-project
 ```
 
 Start interactive REPL for project:
 ```
-λ ./make.sh repl
+λ ./make repl
 ```
 
 Update pinned version of nixpkgs:
 ```
-λ ./make.sh nixpkgs-update
+λ ./make nixpkgs-update
 ```
 
 ### Helpful hakyll commands
 Build the site:
 ```
-λ ./make.sh site build
+λ ./make site build
 ```
 
 Rebuild the site:
 ```
-λ ./make.sh site rebuild
+λ ./make site rebuild
 ```
 
 Start a dev server and watch for changes:
 ```
-λ ./make.sh site watch
+λ ./make site watch
 λ open http://localhost:8000
 ```
 
 Clean up site and remove cache:
 ```
-λ ./make.sh site clean
+λ ./make site clean
 ```
