@@ -7,6 +7,13 @@
   </url>
 
   <url>
+    <loc>https://robertwpearce.com/hakyll-pt-6-pure-builds-with-nix.html</loc>
+    <lastmod>2020-04-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://robertwpearce.com/build-your-team-an-accessible-shareable-component-library.html</loc>
     <lastmod>2020-04-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -43,35 +50,35 @@
 
   <url>
     <loc>https://robertwpearce.com/hakyll-pt-5-generating-custom-post-filenames-from-a-title-slug.html</loc>
-    <lastmod>2020-01-04T00:00:00Z</lastmod>
+    <lastmod>2020-04-26T00:00:00Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/hakyll-pt-4-copying-static-files-for-your-build.html</loc>
-    <lastmod>2020-01-04T00:00:00Z</lastmod>
+    <lastmod>2020-04-26T00:00:00Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/hakyll-pt-3-generating-rss-and-atom-xml-feeds.html</loc>
-    <lastmod>2019-01-24T00:00:00Z</lastmod>
+    <lastmod>2020-04-26T00:00:00Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/hakyll-pt-2-generating-a-sitemap-xml-file.html</loc>
-    <lastmod>2020-01-04T00:00:00Z</lastmod>
+    <lastmod>2020-04-26T00:00:00Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://robertwpearce.com/hakyll-pt-1-setup-and-initial-customization.html</loc>
-    <lastmod>2018-11-04</lastmod>
+    <lastmod>2020-04-26T00:00:00Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

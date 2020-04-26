@@ -139,6 +139,7 @@ pre,
 samp {
   font-family: monospace, monospace;
   font-size: 1em;
+  font-feature-settings: normal;
 }
 pre {
   margin-left: 0;
