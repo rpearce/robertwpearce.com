@@ -31,22 +31,21 @@ let
   };
 
   haskellPackages = pkgs.haskell.packages.${compiler};
-in
-  {
-    project = haskellPackages.project;
 
-    shell = haskellPackages.shellFor {
-      packages = p: with p; [
-        haskellPackages.project
-      ];
-      buildInputs = with haskellPackages; [
-        ghcid
-        hlint
-        niv
-        #ormolu
-        pkgs.cacert
-        pkgs.nix
-      ];
-      withHoogle = true;
-    };
-  }
+in {
+  project = haskellPackages.project;
+
+  shell = haskellPackages.shellFor {
+    packages = p: with p; [
+      haskellPackages.project
+    ];
+    buildInputs = with haskellPackages; [
+      ghcid
+      hlint # or ormolu
+      niv
+      pkgs.cacert
+      pkgs.nix
+    ];
+    withHoogle = true;
+  };
+}
