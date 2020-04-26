@@ -3,13 +3,16 @@
 }:
 
 let
-  overlay = _: pkgs: { niv = import sources.niv { }; };
+  overlay = _: pkgz: {
+    niv = import sources.niv { };
+  };
+
   pkgs = import sources.nixpkgs {
     config = {
       packageOverrides = pkgz: rec {
         haskellPackages = pkgz.haskellPackages.override {
           overrides = hpNew: hpOld: rec {
-            hakyll = hpOld.hakyll.overrideAttrs(old: {
+            hakyll = hpOld.hakyll.overrideAttrs(oldAttrs: {
               configureFlags = "-f watchServer -f previewServer";
               patches = [ ./hakyll.patch ];
             });
