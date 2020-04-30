@@ -57,6 +57,8 @@
             <div class="article__bgSubHeader">
               <small class="italic">2020-04-30</small>
               
+              <small class="italic">(updated: 2020-04-30T08:00:00Z)</small>
+              
               
               <small class="article__bgPhotoCred italic">
                 [ photo credit <a href="https://www.instagram.com/emilycouldmakethat">emilycouldmakethat</a> ]
@@ -73,6 +75,8 @@
           <a href="/hakyll-pt-6-pure-builds-with-nix.html">Hakyll Pt. 6 – Pure Builds With Nix</a>
         </h1>
         <small class="italic">2020-04-30</small>
+        
+        <small class="italic">(updated: 2020-04-30T08:00:00Z)</small>
         
       </header>
       <p><em>Special thanks to <a href="https://github.com/utdemir/">Utku Demir</a> for review and constant inspiration.</em></p>
@@ -108,57 +112,51 @@
 <span id="cb2-2"><a href="#cb2-2"></a>[<span class="ex">nix-shell</span>:~/projects/hakyll-nix-example]$ niv update nixpkgs -o NixOS -r nixpkgs-channels -b nixpkgs-unstable</span>
 <span id="cb2-3"><a href="#cb2-3"></a>[<span class="ex">nix-shell</span>:~/projects/hakyll-nix-example]$ exit</span></code></pre></div>
 <p>Update your <code>release.nix</code> file with the following:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode nix"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">{</span> <span class="ex">compiler</span> ? <span class="st">&quot;ghc883&quot;</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>, <span class="ex">sources</span> ? import ./nix/sources.nix</span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="kw">}</span>:</span>
-<span id="cb3-4"><a href="#cb3-4"></a></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="bu">let</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a>  <span class="ex">overlay</span> = _: pkgz: {</span>
-<span id="cb3-7"><a href="#cb3-7"></a>    <span class="ex">niv</span> = import sources.niv { };</span>
-<span id="cb3-8"><a href="#cb3-8"></a>  };</span>
-<span id="cb3-9"><a href="#cb3-9"></a></span>
-<span id="cb3-10"><a href="#cb3-10"></a>  <span class="ex">pkgs</span> = import sources.nixpkgs {</span>
-<span id="cb3-11"><a href="#cb3-11"></a>    <span class="ex">config</span> = {</span>
-<span id="cb3-12"><a href="#cb3-12"></a>      <span class="ex">packageOverrides</span> = pkgz: rec {</span>
-<span id="cb3-13"><a href="#cb3-13"></a>        <span class="ex">haskell</span> = pkgz.haskell // {</span>
-<span id="cb3-14"><a href="#cb3-14"></a>          <span class="ex">packages</span> = pkgz.haskell.packages // {</span>
-<span id="cb3-15"><a href="#cb3-15"></a>            <span class="va">${compiler}</span> = <span class="ex">pkgz.haskell.packages.</span><span class="va">${compiler}</span>.override {</span>
-<span id="cb3-16"><a href="#cb3-16"></a>              <span class="ex">overrides</span> = hpNew: hpOld: rec {</span>
-<span id="cb3-17"><a href="#cb3-17"></a>                <span class="ex">hakyll</span> = hpOld.hakyll.overrideAttrs(oldAttrs: {</span>
-<span id="cb3-18"><a href="#cb3-18"></a>                  <span class="ex">configureFlags</span> = <span class="st">&quot;-f watchServer -f previewServer&quot;</span><span class="kw">;</span></span>
-<span id="cb3-19"><a href="#cb3-19"></a>                  <span class="ex">patches</span> = [ ./hakyll.patch ]<span class="kw">;</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a>                });</span>
-<span id="cb3-21"><a href="#cb3-21"></a></span>
-<span id="cb3-22"><a href="#cb3-22"></a>                <span class="ex">project</span> = hpNew.callCabal2nix <span class="st">&quot;hakyll-nix-example&quot;</span> ./. { };</span>
-<span id="cb3-23"><a href="#cb3-23"></a>              };</span>
-<span id="cb3-24"><a href="#cb3-24"></a>            };</span>
-<span id="cb3-25"><a href="#cb3-25"></a>          };</span>
-<span id="cb3-26"><a href="#cb3-26"></a>        };</span>
-<span id="cb3-27"><a href="#cb3-27"></a>      };</span>
-<span id="cb3-28"><a href="#cb3-28"></a>    };</span>
-<span id="cb3-29"><a href="#cb3-29"></a></span>
-<span id="cb3-30"><a href="#cb3-30"></a>    <span class="ex">overlays</span> = [ overlay ]<span class="kw">;</span></span>
-<span id="cb3-31"><a href="#cb3-31"></a>  };</span>
-<span id="cb3-32"><a href="#cb3-32"></a></span>
-<span id="cb3-33"><a href="#cb3-33"></a>  <span class="ex">haskellPackages</span> = pkgs.haskell.packages.<span class="va">${compiler}</span><span class="kw">;</span></span>
-<span id="cb3-34"><a href="#cb3-34"></a></span>
-<span id="cb3-35"><a href="#cb3-35"></a><span class="kw">in</span> <span class="kw">{</span></span>
-<span id="cb3-36"><a href="#cb3-36"></a>  <span class="ex">project</span> = haskellPackages.project<span class="kw">;</span></span>
-<span id="cb3-37"><a href="#cb3-37"></a></span>
-<span id="cb3-38"><a href="#cb3-38"></a>  <span class="ex">shell</span> = haskellPackages.shellFor {</span>
-<span id="cb3-39"><a href="#cb3-39"></a>    <span class="ex">packages</span> = p: with p<span class="kw">;</span><span class="bu"> [</span></span>
-<span id="cb3-40"><a href="#cb3-40"></a>      haskellPackages.project</span>
-<span id="cb3-41"><a href="#cb3-41"></a>    ];</span>
-<span id="cb3-42"><a href="#cb3-42"></a>    buildInputs <span class="ot">=</span> with haskellPackages; [</span>
-<span id="cb3-43"><a href="#cb3-43"></a>      ghcid</span>
-<span id="cb3-44"><a href="#cb3-44"></a>      hlint       <span class="co"># or ormolu</span></span>
-<span id="cb3-45"><a href="#cb3-45"></a>      niv</span>
-<span id="cb3-46"><a href="#cb3-46"></a>      pkgs.cacert <span class="co"># needed for niv</span></span>
-<span id="cb3-47"><a href="#cb3-47"></a>      pkgs.nix    <span class="co"># needed for niv</span></span>
-<span id="cb3-48"><a href="#cb3-48"></a>    ];</span>
-<span id="cb3-49"><a href="#cb3-49"></a>    withHoogle <span class="ot">=</span> true;</span>
-<span id="cb3-50"><a href="#cb3-50"></a>  };</span>
-<span id="cb3-51"><a href="#cb3-51"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode nix"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="bu">let</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="ex">sources</span> = import ./nix/sources.nix<span class="kw">;</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="kw">in</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="kw">{</span> <span class="ex">compiler</span> ? <span class="st">&quot;ghc883&quot;</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>, <span class="ex">pkgs</span> ? import sources.nixpkgs { <span class="kw">}</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>}:</span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="bu">let</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>  <span class="ex">inherit</span> (pkgs.lib.trivial) <span class="ex">flip</span> pipe<span class="kw">;</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a>  <span class="ex">inherit</span> (pkgs.haskell.lib) <span class="ex">appendPatch</span> appendConfigureFlags<span class="kw">;</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a></span>
+<span id="cb3-12"><a href="#cb3-12"></a>  <span class="ex">haskellPackages</span> = pkgs.haskell.packages.<span class="va">${compiler}</span>.override {</span>
+<span id="cb3-13"><a href="#cb3-13"></a>    <span class="ex">overrides</span> = hpNew: hpOld: {</span>
+<span id="cb3-14"><a href="#cb3-14"></a>      <span class="ex">hakyll</span> =</span>
+<span id="cb3-15"><a href="#cb3-15"></a>        <span class="ex">pipe</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a>           <span class="ex">hpOld.hakyll</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a>           [ <span class="kw">(</span><span class="ex">flip</span> appendPatch ./hakyll.patch<span class="kw">)</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a>             <span class="kw">(</span><span class="ex">flip</span> appendConfigureFlags [ <span class="st">&quot;-f&quot;</span> <span class="st">&quot;watchServer&quot;</span> <span class="st">&quot;-f&quot;</span> <span class="st">&quot;previewServer&quot;</span> ]<span class="kw">)</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a>           ];</span>
+<span id="cb3-20"><a href="#cb3-20"></a></span>
+<span id="cb3-21"><a href="#cb3-21"></a>      <span class="ex">hakyll-nix-example</span> = hpNew.callCabal2nix <span class="st">&quot;hakyll-nix-example&quot;</span> ./. { };</span>
+<span id="cb3-22"><a href="#cb3-22"></a></span>
+<span id="cb3-23"><a href="#cb3-23"></a>      <span class="ex">niv</span> = import sources.niv { };</span>
+<span id="cb3-24"><a href="#cb3-24"></a>    };</span>
+<span id="cb3-25"><a href="#cb3-25"></a>  };</span>
+<span id="cb3-26"><a href="#cb3-26"></a></span>
+<span id="cb3-27"><a href="#cb3-27"></a>  <span class="ex">project</span> = haskellPackages.hakyll-nix-example<span class="kw">;</span></span>
+<span id="cb3-28"><a href="#cb3-28"></a><span class="kw">in</span></span>
+<span id="cb3-29"><a href="#cb3-29"></a><span class="kw">{</span></span>
+<span id="cb3-30"><a href="#cb3-30"></a>  <span class="ex">project</span> = project<span class="kw">;</span></span>
+<span id="cb3-31"><a href="#cb3-31"></a></span>
+<span id="cb3-32"><a href="#cb3-32"></a>  <span class="ex">shell</span> = haskellPackages.shellFor {</span>
+<span id="cb3-33"><a href="#cb3-33"></a>    <span class="ex">packages</span> = p: with p<span class="kw">;</span><span class="bu"> [</span></span>
+<span id="cb3-34"><a href="#cb3-34"></a>      project</span>
+<span id="cb3-35"><a href="#cb3-35"></a>    ];</span>
+<span id="cb3-36"><a href="#cb3-36"></a>    buildInputs <span class="ot">=</span> with haskellPackages; [</span>
+<span id="cb3-37"><a href="#cb3-37"></a>      ghcid</span>
+<span id="cb3-38"><a href="#cb3-38"></a>      hlint       <span class="co"># or ormolu</span></span>
+<span id="cb3-39"><a href="#cb3-39"></a>      niv</span>
+<span id="cb3-40"><a href="#cb3-40"></a>      pkgs.cacert <span class="co"># needed for niv</span></span>
+<span id="cb3-41"><a href="#cb3-41"></a>      pkgs.nix    <span class="co"># needed for niv</span></span>
+<span id="cb3-42"><a href="#cb3-42"></a>    ];</span>
+<span id="cb3-43"><a href="#cb3-43"></a>    withHoogle <span class="ot">=</span> true;</span>
+<span id="cb3-44"><a href="#cb3-44"></a>  };</span>
+<span id="cb3-45"><a href="#cb3-45"></a>}</span></code></pre></div>
 <p>Don’t worry, we’ll circle back to what we just did.</p>
 <p>Create a <code>hakyll.patch</code> diff file:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a>λ <span class="fu">touch</span> hakyll.patch</span></code></pre></div>
@@ -171,43 +169,48 @@
 <p>Navigate to <a href="http://localhost:8000" class="uri">http://localhost:8000</a> and see your local dev site up and running!</p>
 <h2 id="understanding-the-releasenix-file">Understanding the <code>release.nix</code> File</h2>
 <p>Let’s break down what we copied and pasted into <code>release.nix</code>.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode nix"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">{</span> <span class="ex">compiler</span> ? <span class="st">&quot;ghc883&quot;</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a>, <span class="ex">sources</span> ? import ./nix/sources.nix</span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="kw">}</span>:</span></code></pre></div>
-<p>This is a function parameter with two attributes, <code>compiler</code> and <code>sources</code>, that each have defaults. For the <code>compiler</code>, we will use this version to compile all of the Haskell packages that we interact with. For the <code>sources</code>, this file is generated by <code>niv</code> and contains our pinned <code>niv</code> and <code>nixpkgs</code> information.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode nix"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="bu">let</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a>  <span class="ex">overlay</span> = _: pkgz: {</span>
-<span id="cb9-3"><a href="#cb9-3"></a>    <span class="ex">niv</span> = import sources.niv { };</span>
-<span id="cb9-4"><a href="#cb9-4"></a>  };</span>
-<span id="cb9-5"><a href="#cb9-5"></a>  <span class="co"># ...</span></span></code></pre></div>
-<p>This <a href="https://nixos.org/nixpkgs/manual/#chap-overlays">nix overlay</a> specifies that when using <code>niv</code> it should use our pinned <code>niv</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode nix"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="bu">let</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="ex">sources</span> = import ./nix/sources.nix<span class="kw">;</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="kw">in</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="kw">{</span> <span class="ex">compiler</span> ? <span class="st">&quot;ghc883&quot;</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>, <span class="ex">pkgs</span> ? import sources.nixpkgs { <span class="kw">}</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a>}:</span>
+<span id="cb8-7"><a href="#cb8-7"></a></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co"># ...</span></span></code></pre></div>
+<p>The <code>let</code> gives us the space to define an attribute (variable), and it is here that we import our <code>sources.nix</code> file that was generated by <code>niv</code>. The <code>in</code> block defines a function parameter with two attributes, <code>compiler</code> and <code>sources</code>, that each have defaults (when there’s a <code>:</code>, that means what comes next is a function body or another function argument). For the <code>compiler</code>, we will use this version to compile all of the Haskell packages that we interact with. For the <code>pkgs</code>, we default to using our pinned version of <code>nixpkgs</code>, but this is overridable.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode nix"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># ...</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="bu">let</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>  <span class="ex">inherit</span> (pkgs.lib.trivial) <span class="ex">flip</span> pipe<span class="kw">;</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a>  <span class="ex">inherit</span> (pkgs.haskell.lib) <span class="ex">appendPatch</span> appendConfigureFlags<span class="kw">;</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a></span>
+<span id="cb9-7"><a href="#cb9-7"></a>  <span class="co"># ...</span></span></code></pre></div>
+<p>Our new <code>let</code> falls within the function we created above, and we then state that we would like to inherit some nice functions from <a href="https://github.com/NixOS/nixpkgs/blob/master/lib/trivial.nix"><code>pkgs.lib.trivial</code></a> and <a href="https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/haskell-modules/lib.nix"><code>pkgs.haskell.lib</code></a>. The <code>flip</code> and <code>pipe</code> functions are standards in functional programming, but I’ll share a short recap:</p>
+<ul>
+<li><a href="https://github.com/NixOS/nixpkgs/blob/3a1e8bdcd9a9e13ccd3f298bf598acc8b35caa4d/lib/trivial.nix#L130-L138"><code>flip</code></a> takes a function <code>a -&gt; b -&gt; c</code> and flips the accepted arguments to act like <code>b -&gt; a -&gt; c</code>. Its definition is <code>flip = f: a: b: f b a;</code> – it takes a function, then <code>a</code>, then <code>b</code>, and then it applies <code>a</code> and <code>b</code> in reversed (flipped) order.</li>
+<li><a href="https://github.com/NixOS/nixpkgs/blob/3a1e8bdcd9a9e13ccd3f298bf598acc8b35caa4d/lib/trivial.nix#L32-L63"><code>pipe</code></a> establishes a set of functions that you can apply data to, one after the other. Think of bash pipes: <code>cat blog_post.txt | grep nix</code>.</li>
+</ul>
 <div class="sourceCode" id="cb10"><pre class="sourceCode nix"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a><span class="bu">let</span></span>
 <span id="cb10-2"><a href="#cb10-2"></a>  <span class="co"># ...</span></span>
-<span id="cb10-3"><a href="#cb10-3"></a>  <span class="ex">pkgs</span> = import sources.nixpkgs {</span>
-<span id="cb10-4"><a href="#cb10-4"></a>    <span class="ex">config</span> = {</span>
-<span id="cb10-5"><a href="#cb10-5"></a>      <span class="ex">packageOverrides</span> = pkgz: rec {</span>
-<span id="cb10-6"><a href="#cb10-6"></a>        <span class="ex">haskell</span> = pkgz.haskell // {</span>
-<span id="cb10-7"><a href="#cb10-7"></a>          <span class="ex">packages</span> = pkgz.haskell.packages // {</span>
-<span id="cb10-8"><a href="#cb10-8"></a>            <span class="va">${compiler}</span> = <span class="ex">pkgz.haskell.packages.</span><span class="va">${compiler}</span>.override {</span>
-<span id="cb10-9"><a href="#cb10-9"></a>              <span class="ex">overrides</span> = hpNew: hpOld: rec {</span>
-<span id="cb10-10"><a href="#cb10-10"></a>                <span class="ex">hakyll</span> = hpOld.hakyll.overrideAttrs(oldAttrs: {</span>
-<span id="cb10-11"><a href="#cb10-11"></a>                  <span class="ex">configureFlags</span> = <span class="st">&quot;-f watchServer -f previewServer&quot;</span><span class="kw">;</span></span>
-<span id="cb10-12"><a href="#cb10-12"></a>                  <span class="ex">patches</span> = [ ./hakyll.patch ]<span class="kw">;</span></span>
-<span id="cb10-13"><a href="#cb10-13"></a>                });</span>
+<span id="cb10-3"><a href="#cb10-3"></a></span>
+<span id="cb10-4"><a href="#cb10-4"></a>  <span class="ex">haskellPackages</span> = pkgs.haskell.packages.<span class="va">${compiler}</span>.override {</span>
+<span id="cb10-5"><a href="#cb10-5"></a>    <span class="ex">overrides</span> = hpNew: hpOld: {</span>
+<span id="cb10-6"><a href="#cb10-6"></a>      <span class="ex">hakyll</span> =</span>
+<span id="cb10-7"><a href="#cb10-7"></a>        <span class="ex">pipe</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a>           <span class="ex">hpOld.hakyll</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a>           [ <span class="kw">(</span><span class="ex">flip</span> appendPatch ./hakyll.patch<span class="kw">)</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a>             <span class="kw">(</span><span class="ex">flip</span> appendConfigureFlags [ <span class="st">&quot;-f&quot;</span> <span class="st">&quot;watchServer&quot;</span> <span class="st">&quot;-f&quot;</span> <span class="st">&quot;previewServer&quot;</span> ]<span class="kw">)</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a>           ];</span>
+<span id="cb10-12"><a href="#cb10-12"></a></span>
+<span id="cb10-13"><a href="#cb10-13"></a>      <span class="ex">hakyll-nix-example</span> = hpNew.callCabal2nix <span class="st">&quot;hakyll-nix-example&quot;</span> ./. { };</span>
 <span id="cb10-14"><a href="#cb10-14"></a></span>
-<span id="cb10-15"><a href="#cb10-15"></a>                <span class="ex">project</span> = hpNew.callCabal2nix <span class="st">&quot;hakyll-nix-example&quot;</span> ./. { };</span>
-<span id="cb10-16"><a href="#cb10-16"></a>              };</span>
-<span id="cb10-17"><a href="#cb10-17"></a>            };</span>
-<span id="cb10-18"><a href="#cb10-18"></a>          };</span>
-<span id="cb10-19"><a href="#cb10-19"></a>        };</span>
-<span id="cb10-20"><a href="#cb10-20"></a>      };</span>
-<span id="cb10-21"><a href="#cb10-21"></a>    };</span>
-<span id="cb10-22"><a href="#cb10-22"></a></span>
-<span id="cb10-23"><a href="#cb10-23"></a>    <span class="ex">overlays</span> = [ overlay ]<span class="kw">;</span></span>
-<span id="cb10-24"><a href="#cb10-24"></a>  };</span>
-<span id="cb10-25"><a href="#cb10-25"></a>  <span class="co"># ...</span></span></code></pre></div>
-<p>This configures our pinned <code>nixpkgs</code> to have some <code>overrides</code> for a specific Haskell <code>compiler</code> version.</p>
-<p>For <code>hakyll</code>, we need to make sure it gets compiled with the <code>watchServer</code> and <code>previewServer</code> flags, or we won’t be able to use its local dev server. We also provide an optional list of <code>patches</code> (<code>git diff</code> files) that we can build <code>hakyll</code> with if there are any changes to the project that we need to make. These patch files can be empty when no patches are required, but if you do need to patch something, here is an example <code>hakyll.patch</code> file:</p>
+<span id="cb10-15"><a href="#cb10-15"></a>      <span class="ex">niv</span> = import sources.niv { };</span>
+<span id="cb10-16"><a href="#cb10-16"></a>    };</span>
+<span id="cb10-17"><a href="#cb10-17"></a>  };</span>
+<span id="cb10-18"><a href="#cb10-18"></a></span>
+<span id="cb10-19"><a href="#cb10-19"></a>  <span class="co"># ...</span></span></code></pre></div>
+<p>This uses our pinned (or overridden) <code>nixpkgs</code> to create our own <code>haskellPackages</code> for a specific Haskell <code>compiler</code> version.</p>
+<p>For <code>hakyll</code>, we need to make sure it gets compiled with the <code>watchServer</code> and <code>previewServer</code> flags, or we won’t be able to use its local dev server. We also provide an optional patch file (<code>git diff &gt; hakyll.patch</code> file) that we can build <code>hakyll</code> with if there are any changes to the project that we need to make. Patch files can be empty when no patches are required, but if you do need to patch something, here is an example <code>hakyll.patch</code> file:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode diff"><code class="sourceCode diff"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">diff --git a/hakyll.cabal b/hakyll.cabal</span></span>
 <span id="cb11-2"><a href="#cb11-2"></a>index fcded8d..9746f20 100644</span>
 <span id="cb11-3"><a href="#cb11-3"></a><span class="dt">--- a/hakyll.cabal</span></span>
@@ -221,36 +224,37 @@
 <span id="cb11-11"><a href="#cb11-11"></a>       wai-app-static  &gt;= 3.1   &amp;&amp; &lt; 3.2,</span>
 <span id="cb11-12"><a href="#cb11-12"></a>       http-types      &gt;= 0.9   &amp;&amp; &lt; 0.13,</span>
 <span id="cb11-13"><a href="#cb11-13"></a>       fsnotify        &gt;= 0.2   &amp;&amp; &lt; 0.4</span></code></pre></div>
-<p>The <code>project</code> attribute is specifically for our Haskell project in order for us to be sure our project is compiled with our desired compiler version. We leverage the <code>callCabal2nix</code> tool to handle converting our <code>hakyll-nix-example.cabal</code> file into a <code>nix</code> derivation.</p>
+<p>The <code>hakyll-nix-example</code> attribute is specifically for our Haskell project in order for us to be sure our project is compiled with our desired compiler version. We leverage the <code>callCabal2nix</code> tool to handle automatically converting our <code>hakyll-nix-example.cabal</code> file into a <code>nix</code> derivation for our build.</p>
+<p>Lastly, we ensure that the <code>niv</code> we are using in the <code>nix-shell</code> is our pinned <code>niv</code> that <code>niv</code> itself generated.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode nix"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="bu">let</span></span>
 <span id="cb12-2"><a href="#cb12-2"></a>  <span class="co"># ...</span></span>
-<span id="cb12-3"><a href="#cb12-3"></a>  <span class="ex">haskellPackages</span> = pkgs.haskell.packages.<span class="va">${compiler}</span><span class="kw">;</span></span>
-<span id="cb12-4"><a href="#cb12-4"></a>  <span class="co"># ...</span></span></code></pre></div>
-<p>This gives us a variable to use instead of writing <code>pkgs.haskell.packages.${compiler}</code> over and over again.</p>
+<span id="cb12-3"><a href="#cb12-3"></a></span>
+<span id="cb12-4"><a href="#cb12-4"></a>  <span class="ex">project</span> = haskellPackages.hakyll-nix-example<span class="kw">;</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="kw">in</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="kw">{</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a>  <span class="ex">project</span> = project<span class="kw">;</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a></span>
+<span id="cb12-9"><a href="#cb12-9"></a>  <span class="co"># ...</span></span></code></pre></div>
+<p>The <code>project</code> attribute is what our <code>default.nix</code> will use when being called with tools like <code>nix-build</code>. All we do is access our <code>hakyll-nix-example</code> attribute from our customized <code>haskellPackages</code>.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode nix"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="bu">let</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a>  <span class="co"># ...</span></span>
 <span id="cb13-3"><a href="#cb13-3"></a><span class="kw">in</span> <span class="kw">{</span></span>
-<span id="cb13-4"><a href="#cb13-4"></a>  <span class="ex">project</span> = haskellPackages.project<span class="kw">;</span></span>
-<span id="cb13-5"><a href="#cb13-5"></a>  <span class="co"># ...</span></span></code></pre></div>
-<p>The <code>project</code> attribute is what our <code>default.nix</code> will use when being called with tools like <code>nix-build</code>. All we do is pull our <code>project</code> attribute off of the overridden <code>nixpkgs</code> config.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode nix"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="bu">let</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a>  <span class="co"># ...</span></span>
-<span id="cb14-3"><a href="#cb14-3"></a><span class="kw">in</span> <span class="kw">{</span></span>
-<span id="cb14-4"><a href="#cb14-4"></a>  <span class="co"># ...</span></span>
-<span id="cb14-5"><a href="#cb14-5"></a>  <span class="ex">shell</span> = haskellPackages.shellFor {</span>
-<span id="cb14-6"><a href="#cb14-6"></a>    <span class="ex">packages</span> = p: with p<span class="kw">;</span><span class="bu"> [</span></span>
-<span id="cb14-7"><a href="#cb14-7"></a>      haskellPackages.project</span>
-<span id="cb14-8"><a href="#cb14-8"></a>    ];</span>
-<span id="cb14-9"><a href="#cb14-9"></a>    buildInputs <span class="ot">=</span> with haskellPackages; [</span>
-<span id="cb14-10"><a href="#cb14-10"></a>      ghcid</span>
-<span id="cb14-11"><a href="#cb14-11"></a>      hlint <span class="co"># or ormolu</span></span>
-<span id="cb14-12"><a href="#cb14-12"></a>      pkgs.niv</span>
-<span id="cb14-13"><a href="#cb14-13"></a>      pkgs.cacert</span>
-<span id="cb14-14"><a href="#cb14-14"></a>      pkgs.nix</span>
-<span id="cb14-15"><a href="#cb14-15"></a>    ];</span>
-<span id="cb14-16"><a href="#cb14-16"></a>    withHoogle <span class="ot">=</span> true;</span>
-<span id="cb14-17"><a href="#cb14-17"></a>  };</span>
-<span id="cb14-18"><a href="#cb14-18"></a>}</span></code></pre></div>
+<span id="cb13-4"><a href="#cb13-4"></a>  <span class="co"># ...</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a></span>
+<span id="cb13-6"><a href="#cb13-6"></a>  <span class="ex">shell</span> = haskellPackages.shellFor {</span>
+<span id="cb13-7"><a href="#cb13-7"></a>    <span class="ex">packages</span> = p: with p<span class="kw">;</span><span class="bu"> [</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a>      project</span>
+<span id="cb13-9"><a href="#cb13-9"></a>    ];</span>
+<span id="cb13-10"><a href="#cb13-10"></a>    buildInputs <span class="ot">=</span> with haskellPackages; [</span>
+<span id="cb13-11"><a href="#cb13-11"></a>      ghcid</span>
+<span id="cb13-12"><a href="#cb13-12"></a>      hlint       <span class="co"># or ormolu</span></span>
+<span id="cb13-13"><a href="#cb13-13"></a>      niv</span>
+<span id="cb13-14"><a href="#cb13-14"></a>      pkgs.cacert <span class="co"># needed for niv</span></span>
+<span id="cb13-15"><a href="#cb13-15"></a>      pkgs.nix    <span class="co"># needed for niv</span></span>
+<span id="cb13-16"><a href="#cb13-16"></a>    ];</span>
+<span id="cb13-17"><a href="#cb13-17"></a>    withHoogle <span class="ot">=</span> true;</span>
+<span id="cb13-18"><a href="#cb13-18"></a>  };</span>
+<span id="cb13-19"><a href="#cb13-19"></a>}</span></code></pre></div>
 <p>Exactly like <code>default.nix</code> uses the <code>project</code> attribute, <code>shell.nix</code> is looking for a <code>shell</code> attribute to define everything it needs when running <code>nix-shell --pure</code>. We use <code>shellFor</code>, which comes with the <code>nixpkgs</code> Haskell tools, and we provide it a few attributes:</p>
 <ul>
 <li>the <code>packages</code> attribute holds our <code>project</code> package and any other <code>nixpkgs</code> that you would like to have built when entering the shell</li>
@@ -260,6 +264,7 @@
 <h2 id="wrapping-up">Wrapping Up</h2>
 <p>Using nix to build our project helps make development consistent and predictable; however, learning nix is not necessarily a breeze. The following articles directly contributed to my understanding that led to this post:</p>
 <ul>
+<li><a href="https://nixos.org/nixos/nix-pills/index.html" class="uri">https://nixos.org/nixos/nix-pills/index.html</a></li>
 <li><a href="https://github.com/Gabriel439/haskell-nix/tree/master/project4" class="uri">https://github.com/Gabriel439/haskell-nix/tree/master/project4</a></li>
 <li><a href="https://turbomack.github.io/posts/2020-02-17-cabal-flags-and-nix.html" class="uri">https://turbomack.github.io/posts/2020-02-17-cabal-flags-and-nix.html</a> (this article is what led me to learn how to patch hakyll)</li>
 <li><code>overrideAttrs</code>: <a href="https://nixos.org/nixpkgs/manual/#sec-pkg-overrideAttrs" class="uri">https://nixos.org/nixpkgs/manual/#sec-pkg-overrideAttrs</a></li>

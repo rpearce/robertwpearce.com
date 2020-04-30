@@ -1,50 +1,44 @@
+let
+  sources = import ./nix/sources.nix;
+in
 { compiler ? "ghc883"
-, sources ? import ./nix/sources.nix
+, pkgs ? import sources.nixpkgs { }
 }:
 
 let
-  overlay = _: pkgz: {
-    niv = import sources.niv { };
-  };
+  inherit (pkgs.lib.trivial) flip pipe;
+  inherit (pkgs.haskell.lib) appendPatch appendConfigureFlags;
 
-  pkgs = import sources.nixpkgs {
-    config = {
-      packageOverrides = pkgz: rec {
-        haskell = pkgz.haskell // {
-          packages = pkgz.haskell.packages // {
-            ${compiler} = pkgz.haskell.packages.${compiler}.override {
-              overrides = hpNew: hpOld: rec {
-                hakyll = hpOld.hakyll.overrideAttrs(oldAttrs: {
-                  configureFlags = "-f watchServer -f previewServer";
-                  patches = [ ./hakyll.patch ];
-                });
+  haskellPackages = pkgs.haskell.packages.${compiler}.override {
+    overrides = hpNew: hpOld: {
+      hakyll =
+        pipe
+           hpOld.hakyll
+           [ (flip appendPatch ./hakyll.patch)
+             (flip appendConfigureFlags [ "-f" "watchServer" "-f" "previewServer" ])
+           ];
 
-                project = hpNew.callCabal2nix "robertwpearce-com" ./. { };
-              };
-            };
-          };
-        };
-      };
+      hakyll-nix-example = hpNew.callCabal2nix "robertwpearce-com" ./. { };
+
+      niv = import sources.niv { };
     };
-
-    overlays = [ overlay ];
   };
 
-  haskellPackages = pkgs.haskell.packages.${compiler};
-
-in {
-  project = haskellPackages.project;
+  project = haskellPackages.hakyll-nix-example;
+in
+{
+  project = project;
 
   shell = haskellPackages.shellFor {
     packages = p: with p; [
-      haskellPackages.project
+      project
     ];
     buildInputs = with haskellPackages; [
       ghcid
-      hlint # or ormolu
+      hlint       # or ormolu
       niv
-      pkgs.cacert
-      pkgs.nix
+      pkgs.cacert # needed for niv
+      pkgs.nix    # needed for niv
     ];
     withHoogle = true;
   };
