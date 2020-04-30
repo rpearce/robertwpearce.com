@@ -8,8 +8,16 @@
         <name>Robert Pearce</name>
         <email>me@robertwpearce.com</email>
     </author>
-    <updated>2020-04-27T00:00:00Z</updated>
+    <updated>2020-04-30T00:00:00Z</updated>
     <entry>
+    <title>Hakyll Pt. 6 – Pure Builds With Nix</title>
+    <link href="https://robertwpearce.com/hakyll-pt-6-pure-builds-with-nix.html" />
+    <id>https://robertwpearce.com/hakyll-pt-6-pure-builds-with-nix.html</id>
+    <published>2020-04-30T00:00:00Z</published>
+    <updated>2020-04-30T00:00:00Z</updated>
+    <summary type="html"><![CDATA[Learn how to make your hakyll project build pure and how to patch hakyll if you need to]]></summary>
+</entry>
+<entry>
     <title>Build Your Team an Accessible, Shareable Component Library</title>
     <link href="https://robertwpearce.com/build-your-team-an-accessible-shareable-component-library.html" />
     <id>https://robertwpearce.com/build-your-team-an-accessible-shareable-component-library.html</id>
@@ -54,7 +62,7 @@
     <link href="https://robertwpearce.com/hakyll-pt-5-generating-custom-post-filenames-from-a-title-slug.html" />
     <id>https://robertwpearce.com/hakyll-pt-5-generating-custom-post-filenames-from-a-title-slug.html</id>
     <published>2019-03-16T00:00:00Z</published>
-    <updated>2020-01-04T00:00:00Z</updated>
+    <updated>2020-04-26T00:00:00Z</updated>
     <summary type="html"><![CDATA[Leverage hakyll's own internals to output custom webpage URI routes using any metdata field – in this case, our post title.]]></summary>
 </entry>
 <entry>
@@ -62,7 +70,7 @@
     <link href="https://robertwpearce.com/hakyll-pt-4-copying-static-files-for-your-build.html" />
     <id>https://robertwpearce.com/hakyll-pt-4-copying-static-files-for-your-build.html</id>
     <published>2019-01-27T00:00:00Z</published>
-    <updated>2020-01-04T00:00:00Z</updated>
+    <updated>2020-04-26T00:00:00Z</updated>
     <summary type="html"><![CDATA[This short hakyll tutorial will show you a simple way to copy static files over to your build folder.]]></summary>
 </entry>
 <entry>
@@ -70,7 +78,7 @@
     <link href="https://robertwpearce.com/hakyll-pt-3-generating-rss-and-atom-xml-feeds.html" />
     <id>https://robertwpearce.com/hakyll-pt-3-generating-rss-and-atom-xml-feeds.html</id>
     <published>2019-01-23T00:00:00Z</published>
-    <updated>2019-01-24T00:00:00Z</updated>
+    <updated>2020-04-26T00:00:00Z</updated>
     <summary type="html"><![CDATA[Generate rss.xml and atom.xml feeds for your hakyll site.]]></summary>
 </entry>
 <entry>
@@ -78,7 +86,7 @@
     <link href="https://robertwpearce.com/hakyll-pt-2-generating-a-sitemap-xml-file.html" />
     <id>https://robertwpearce.com/hakyll-pt-2-generating-a-sitemap-xml-file.html</id>
     <published>2018-11-17T00:00:00Z</published>
-    <updated>2020-01-04T00:00:00Z</updated>
+    <updated>2020-04-26T00:00:00Z</updated>
     <summary type="html"><![CDATA[Generate a sitemap.xml file for your hakyll site.]]></summary>
 </entry>
 <entry>
@@ -86,7 +94,7 @@
     <link href="https://robertwpearce.com/hakyll-pt-1-setup-and-initial-customization.html" />
     <id>https://robertwpearce.com/hakyll-pt-1-setup-and-initial-customization.html</id>
     <published>2018-11-04T00:00:00Z</published>
-    <updated>2018-11-04T00:00:00Z</updated>
+    <updated>2020-04-26T00:00:00Z</updated>
     <summary type="html"><![CDATA[Use the hakyll static site generator to set up a website or blog.]]></summary>
 </entry>
 <entry>
