@@ -11,7 +11,7 @@
         <item>
     <title>Hakyll Pt. 6 – Pure Builds With Nix</title>
     <link>https://robertwpearce.com/hakyll-pt-6-pure-builds-with-nix.html</link>
-    <description><![CDATA[Learn how to make your hakyll project build pure and how to patch hakyll if you need to]]></description>
+    <description><![CDATA[Learn how to make your hakyll project build pure and how to patch hakyll if you need to.]]></description>
     <pubDate>Thu, 30 Apr 2020 00:00:00 UT</pubDate>
     <guid>https://robertwpearce.com/hakyll-pt-6-pure-builds-with-nix.html</guid>
     <dc:creator>Robert Pearce</dc:creator>

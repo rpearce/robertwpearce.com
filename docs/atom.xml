@@ -15,7 +15,7 @@
     <id>https://robertwpearce.com/hakyll-pt-6-pure-builds-with-nix.html</id>
     <published>2020-04-30T00:00:00Z</published>
     <updated>2020-04-30T08:00:00Z</updated>
-    <summary type="html"><![CDATA[Learn how to make your hakyll project build pure and how to patch hakyll if you need to]]></summary>
+    <summary type="html"><![CDATA[Learn how to make your hakyll project build pure and how to patch hakyll if you need to.]]></summary>
 </entry>
 <entry>
     <title>Build Your Team an Accessible, Shareable Component Library</title>
