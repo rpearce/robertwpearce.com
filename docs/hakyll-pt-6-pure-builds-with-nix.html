@@ -57,7 +57,7 @@
             <div class="article__bgSubHeader">
               <small class="italic">2020-04-30</small>
               
-              <small class="italic">(updated: 2020-04-30T08:00:00Z)</small>
+              <small class="italic">(updated: 2020-05-03T12:00:00Z)</small>
               
               
               <small class="article__bgPhotoCred italic">
@@ -76,7 +76,7 @@
         </h1>
         <small class="italic">2020-04-30</small>
         
-        <small class="italic">(updated: 2020-04-30T08:00:00Z)</small>
+        <small class="italic">(updated: 2020-05-03T12:00:00Z)</small>
         
       </header>
       <p><em>Special thanks to <a href="https://github.com/utdemir/">Utku Demir</a> for review and constant inspiration.</em></p>
@@ -106,7 +106,7 @@
 <span id="cb1-4"><a href="#cb1-4"></a>λ <span class="bu">echo</span> <span class="st">&quot;(import ./release.nix { }).shell&quot;</span> <span class="op">&gt;</span> shell.nix</span>
 <span id="cb1-5"><a href="#cb1-5"></a>λ <span class="ex">nix-shell</span> --pure -p niv nix cacert</span></code></pre></div>
 <p>We won’t have to touch <code>default.nix</code> nor <code>shell.nix</code> again, for we are delegating their responsibilities to the <code>release.nix</code> file that we’ll add more to in a moment.</p>
-<p>_Note: we require <code>nix</code> and <code>cacert</code> when running a pure <code>nix-shell</code> with <code>niv</code> because of this issue: <a href="https://github.com/nmattia/niv/issues/222._" class="uri">https://github.com/nmattia/niv/issues/222._</a></p>
+<p><em>Note: we require <code>nix</code> and <code>cacert</code> when running a pure <code>nix-shell</code> with <code>niv</code> because of an issue (<a href="https://github.com/nmattia/niv/issues/222" class="uri">https://github.com/nmattia/niv/issues/222</a>).</em></p>
 <p>Now that we’re in the nix shell, initialize <a href="https://github.com/nmattia/niv"><code>niv</code></a> and specify your nixpkgs owner, repository, and branch to be whatever you want:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>[<span class="ex">nix-shell</span>:~/projects/hakyll-nix-example]$ niv init</span>
 <span id="cb2-2"><a href="#cb2-2"></a>[<span class="ex">nix-shell</span>:~/projects/hakyll-nix-example]$ niv update nixpkgs -o NixOS -r nixpkgs-channels -b nixpkgs-unstable</span>

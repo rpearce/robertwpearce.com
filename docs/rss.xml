@@ -7,7 +7,7 @@
         <description><![CDATA[Posts on JavaScript, Node.js, Haskell, Elm, Ruby and more.]]></description>
         <atom:link href="https://robertwpearce.com/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>2020-04-30T08:00:00Z</lastBuildDate>
+        <lastBuildDate>2020-05-03T12:00:00Z</lastBuildDate>
         <item>
     <title>Hakyll Pt. 6 – Pure Builds With Nix</title>
     <link>https://robertwpearce.com/hakyll-pt-6-pure-builds-with-nix.html</link>
