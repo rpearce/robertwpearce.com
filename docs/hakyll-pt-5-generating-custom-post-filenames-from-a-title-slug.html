@@ -124,73 +124,73 @@
 </ul>
 <p>Therefore, our task is to write a function with the signature <code>Metadata -&gt; Routes</code> that finds the <code>title</code> field in the metadata, converts it to a URI slug, and transforms that <code>FilePath</code> into a <code>Routes</code>. Perhaps we could call it <code>titleRoute</code> and then extract the conversion from <code>Metadata</code> to <code>FilePath</code> to something like <code>fileNameFromTitle</code>? Good enough.</p>
 <p>Also, what did we see earlier that can take a <code>FilePath</code> and return <code>Routes</code>? <code>constRoute</code> to the rescue! With these initial bits figured out, let’s sketch this out :</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
-<span id="cb1-2"><a href="#cb1-2"></a>main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a>    match <span class="st">&quot;posts/*&quot;</span> <span class="op">$</span> <span class="kw">do</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a>        <span class="kw">let</span> ctx <span class="ot">=</span> constField <span class="st">&quot;type&quot;</span> <span class="st">&quot;article&quot;</span> <span class="op">&lt;&gt;</span> postCtx</span>
-<span id="cb1-5"><a href="#cb1-5"></a></span>
-<span id="cb1-6"><a href="#cb1-6"></a>        route <span class="op">$</span> metadataRoute titleRoute <span class="co">-- THIS LINE</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>        compile <span class="op">$</span> pandocCompilerCustom</span>
-<span id="cb1-8"><a href="#cb1-8"></a>            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/post.html&quot;</span>    ctx</span>
-<span id="cb1-9"><a href="#cb1-9"></a>            <span class="op">&gt;&gt;=</span> saveSnapshot <span class="st">&quot;content&quot;</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a>            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/default.html&quot;</span> ctx</span>
-<span id="cb1-11"><a href="#cb1-11"></a></span>
-<span id="cb1-12"><a href="#cb1-12"></a>    <span class="co">-- ...other rules</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a></span>
-<span id="cb1-14"><a href="#cb1-14"></a></span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="ot">titleRoute ::</span> <span class="dt">Metadata</span> <span class="ot">-&gt;</span> <span class="dt">Routes</span></span>
-<span id="cb1-16"><a href="#cb1-16"></a>titleRoute <span class="ot">=</span> constRoute <span class="op">.</span> fileNameFromTitle</span>
-<span id="cb1-17"><a href="#cb1-17"></a></span>
-<span id="cb1-18"><a href="#cb1-18"></a></span>
-<span id="cb1-19"><a href="#cb1-19"></a><span class="ot">fileNameFromTitle ::</span> <span class="dt">Metadata</span> <span class="ot">-&gt;</span> <span class="dt">FilePath</span></span>
-<span id="cb1-20"><a href="#cb1-20"></a>fileNameFromTitle <span class="ot">=</span> <span class="fu">undefined</span> <span class="co">-- ???</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>    match <span class="st">&quot;posts/*&quot;</span> <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>        <span class="kw">let</span> ctx <span class="ot">=</span> constField <span class="st">&quot;type&quot;</span> <span class="st">&quot;article&quot;</span> <span class="op">&lt;&gt;</span> postCtx</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>        route <span class="op">$</span> metadataRoute titleRoute <span class="co">-- THIS LINE</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>        compile <span class="op">$</span> pandocCompilerCustom</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/post.html&quot;</span>    ctx</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>            <span class="op">&gt;&gt;=</span> saveSnapshot <span class="st">&quot;content&quot;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/default.html&quot;</span> ctx</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>    <span class="co">-- ...other rules</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a><span class="ot">titleRoute ::</span> <span class="dt">Metadata</span> <span class="ot">-&gt;</span> <span class="dt">Routes</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a>titleRoute <span class="ot">=</span> constRoute <span class="op">.</span> fileNameFromTitle</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a><span class="ot">fileNameFromTitle ::</span> <span class="dt">Metadata</span> <span class="ot">-&gt;</span> <span class="dt">FilePath</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a>fileNameFromTitle <span class="ot">=</span> <span class="fu">undefined</span> <span class="co">-- ???</span></span></code></pre></div>
 <p>Great! This is progress! We have the outline of what we need to accomplish. The next task is to find the <code>title</code>, convert it to a slug and return a <code>FilePath</code>. But first, we need to take a detour and write a <code>toSlug</code> function that we can work with.</p>
 <h2 id="writing-our-own-uri-slug-function">Writing Our Own URI Slug Function</h2>
 <p>Taking inspiration from the archived project <a href="https://github.com/mrkkrp/slug" class="uri">https://github.com/mrkkrp/slug</a>, we can write a module, <code>Slug.hs</code>, with a main function, <code>toSlug</code> that takes in <code>Text</code> from <code>Data.Text</code> and transforms it from normal text to a slug. For example, <code>"This example isn't good"</code> would be transformed into <code>"this-example-isnt-good"</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1"></a><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a></span>
-<span id="cb2-3"><a href="#cb2-3"></a></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="kw">module</span> <span class="dt">Slug</span> (toSlug) <span class="kw">where</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a></span>
-<span id="cb2-6"><a href="#cb2-6"></a></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="kw">import</span>           <span class="dt">Data.Char</span> (isAlphaNum)</span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.Text</span> <span class="kw">as</span> <span class="dt">T</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a></span>
-<span id="cb2-10"><a href="#cb2-10"></a></span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="ot">keepAlphaNum ::</span> <span class="dt">Char</span> <span class="ot">-&gt;</span> <span class="dt">Char</span></span>
-<span id="cb2-12"><a href="#cb2-12"></a>keepAlphaNum x</span>
-<span id="cb2-13"><a href="#cb2-13"></a>    <span class="op">|</span> <span class="fu">isAlphaNum</span> x <span class="ot">=</span> x</span>
-<span id="cb2-14"><a href="#cb2-14"></a>    <span class="op">|</span> <span class="fu">otherwise</span>    <span class="ot">=</span> <span class="ch">&#39; &#39;</span></span>
-<span id="cb2-15"><a href="#cb2-15"></a></span>
-<span id="cb2-16"><a href="#cb2-16"></a></span>
-<span id="cb2-17"><a href="#cb2-17"></a><span class="ot">clean ::</span> <span class="dt">T.Text</span> <span class="ot">-&gt;</span> <span class="dt">T.Text</span></span>
-<span id="cb2-18"><a href="#cb2-18"></a>clean <span class="ot">=</span></span>
-<span id="cb2-19"><a href="#cb2-19"></a>    T.map keepAlphaNum <span class="op">.</span> T.replace <span class="st">&quot;&#39;&quot;</span> <span class="st">&quot;&quot;</span> <span class="op">.</span> T.replace <span class="st">&quot;&amp;&quot;</span> <span class="st">&quot;and&quot;</span></span>
-<span id="cb2-20"><a href="#cb2-20"></a></span>
-<span id="cb2-21"><a href="#cb2-21"></a></span>
-<span id="cb2-22"><a href="#cb2-22"></a><span class="ot">toSlug ::</span> <span class="dt">T.Text</span> <span class="ot">-&gt;</span> <span class="dt">T.Text</span></span>
-<span id="cb2-23"><a href="#cb2-23"></a>toSlug <span class="ot">=</span></span>
-<span id="cb2-24"><a href="#cb2-24"></a>    T.intercalate (T.singleton <span class="ch">&#39;-&#39;</span>) <span class="op">.</span> T.words <span class="op">.</span> T.toLower <span class="op">.</span> clean</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="kw">module</span> <span class="dt">Slug</span> (toSlug) <span class="kw">where</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a><span class="kw">import</span>           <span class="dt">Data.Char</span> (isAlphaNum)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.Text</span> <span class="kw">as</span> <span class="dt">T</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a><span class="ot">keepAlphaNum ::</span> <span class="dt">Char</span> <span class="ot">-&gt;</span> <span class="dt">Char</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a>keepAlphaNum x</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a>    <span class="op">|</span> <span class="fu">isAlphaNum</span> x <span class="ot">=</span> x</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a>    <span class="op">|</span> <span class="fu">otherwise</span>    <span class="ot">=</span> <span class="ch">&#39; &#39;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a><span class="ot">clean ::</span> <span class="dt">T.Text</span> <span class="ot">-&gt;</span> <span class="dt">T.Text</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a>clean <span class="ot">=</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a>    T.map keepAlphaNum <span class="op">.</span> T.replace <span class="st">&quot;&#39;&quot;</span> <span class="st">&quot;&quot;</span> <span class="op">.</span> T.replace <span class="st">&quot;&amp;&quot;</span> <span class="st">&quot;and&quot;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true"></a><span class="ot">toSlug ::</span> <span class="dt">T.Text</span> <span class="ot">-&gt;</span> <span class="dt">T.Text</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true"></a>toSlug <span class="ot">=</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true"></a>    T.intercalate (T.singleton <span class="ch">&#39;-&#39;</span>) <span class="op">.</span> T.words <span class="op">.</span> T.toLower <span class="op">.</span> clean</span></code></pre></div>
 <p>Once you do this, don’t forget to open up your project’s <code>.cabal</code> file, add in this line and run <code>stack build</code> eventually:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1"></a>executable site</span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="co">-- ...</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a>  other<span class="op">-</span>modules<span class="op">:</span>    <span class="dt">Slug</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>executable site</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>  <span class="co">-- ...</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>  other<span class="op">-</span>modules<span class="op">:</span>    <span class="dt">Slug</span></span></code></pre></div>
 <p>Now that this is taken care of, let’s return to the remaining task!</p>
 <h2 id="retrieving-and-slugifying-our-titles">Retrieving and Slugifying our Titles</h2>
 <p>The last step in our journey is to look up the <code>title</code> in the <code>Metadata</code>, convert it to a slug and return a <code>FilePath</code>. Let’s look at the implementation and then talk about it:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1"></a><span class="ot">titleRoute ::</span> <span class="dt">Metadata</span> <span class="ot">-&gt;</span> <span class="dt">Routes</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>titleRoute <span class="ot">=</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a>    constRoute <span class="op">.</span> fileNameFromTitle</span>
-<span id="cb4-4"><a href="#cb4-4"></a></span>
-<span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="ot">fileNameFromTitle ::</span> <span class="dt">Metadata</span> <span class="ot">-&gt;</span> <span class="dt">FilePath</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a>fileNameFromTitle <span class="ot">=</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a>    T.unpack <span class="op">.</span> (<span class="ot">`T.append`</span> <span class="st">&quot;.html&quot;</span>) <span class="op">.</span> toSlug <span class="op">.</span> T.pack <span class="op">.</span> getTitleFromMeta</span>
-<span id="cb4-9"><a href="#cb4-9"></a></span>
-<span id="cb4-10"><a href="#cb4-10"></a></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="ot">getTitleFromMeta ::</span> <span class="dt">Metadata</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a>getTitleFromMeta <span class="ot">=</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a>    fromMaybe <span class="st">&quot;no title&quot;</span> <span class="op">.</span> lookupString <span class="st">&quot;title&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="ot">titleRoute ::</span> <span class="dt">Metadata</span> <span class="ot">-&gt;</span> <span class="dt">Routes</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>titleRoute <span class="ot">=</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>    constRoute <span class="op">.</span> fileNameFromTitle</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="ot">fileNameFromTitle ::</span> <span class="dt">Metadata</span> <span class="ot">-&gt;</span> <span class="dt">FilePath</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>fileNameFromTitle <span class="ot">=</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>    T.unpack <span class="op">.</span> (<span class="ot">`T.append`</span> <span class="st">&quot;.html&quot;</span>) <span class="op">.</span> toSlug <span class="op">.</span> T.pack <span class="op">.</span> getTitleFromMeta</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a><span class="ot">getTitleFromMeta ::</span> <span class="dt">Metadata</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a>getTitleFromMeta <span class="ot">=</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a>    fromMaybe <span class="st">&quot;no title&quot;</span> <span class="op">.</span> lookupString <span class="st">&quot;title&quot;</span></span></code></pre></div>
 <ol>
 <li><code>getTitleFromMeta</code>: use <code>Metadata</code>’s <a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Metadata.hs#L36-L37"><code>lookupString</code></a> function to search for <code>title</code> and handle the <code>Maybe String</code> return value by providing a fallback of <code>"no title"</code></li>
 <li><code>fileNameFromTitle</code>: once we get the <code>title</code> <code>String</code>, convert it to type <code>Text</code>, pass that to the slugify function, append <code>.html</code> to the slugified <code>title</code>, then convert it back to a <code>String</code> (<code>FilePath</code> is a type alias of <code>String</code>, so no worries here)</li>

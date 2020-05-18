@@ -89,20 +89,20 @@
 <h2 id="initial-example-use-map-to-convert-film-data-to-html-strings">Initial Example: Use <code>map</code> to Convert Film Data to HTML Strings</h2>
 <p>First, we will start with some code that will demonstrate <em>one</em> way to take an array of films and output certain HTML strings.</p>
 <p>Here is the <code>films</code> array:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">// films :: [Film]</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">const</span> films <span class="op">=</span> [</span>
-<span id="cb1-3"><a href="#cb1-3"></a>  { <span class="dt">title</span><span class="op">:</span> <span class="vs">`Pulp Fiction`</span><span class="op">,</span> <span class="dt">score</span><span class="op">:</span> <span class="fl">8.9</span> }<span class="op">,</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a>  { <span class="dt">title</span><span class="op">:</span> <span class="vs">`Forrest Gump`</span><span class="op">,</span> <span class="dt">score</span><span class="op">:</span> <span class="fl">8.8</span> }<span class="op">,</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>  { <span class="dt">title</span><span class="op">:</span> <span class="vs">`Interstellar`</span><span class="op">,</span> <span class="dt">score</span><span class="op">:</span> <span class="fl">8.6</span> }<span class="op">,</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a>  { <span class="dt">title</span><span class="op">:</span> <span class="vs">`The Prestige`</span><span class="op">,</span> <span class="dt">score</span><span class="op">:</span> <span class="fl">8.5</span> }</span>
-<span id="cb1-7"><a href="#cb1-7"></a>]</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co">// films :: [Film]</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="kw">const</span> films <span class="op">=</span> [</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>  { <span class="dt">title</span><span class="op">:</span> <span class="vs">`Pulp Fiction`</span><span class="op">,</span> <span class="dt">score</span><span class="op">:</span> <span class="fl">8.9</span> }<span class="op">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>  { <span class="dt">title</span><span class="op">:</span> <span class="vs">`Forrest Gump`</span><span class="op">,</span> <span class="dt">score</span><span class="op">:</span> <span class="fl">8.8</span> }<span class="op">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>  { <span class="dt">title</span><span class="op">:</span> <span class="vs">`Interstellar`</span><span class="op">,</span> <span class="dt">score</span><span class="op">:</span> <span class="fl">8.6</span> }<span class="op">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>  { <span class="dt">title</span><span class="op">:</span> <span class="vs">`The Prestige`</span><span class="op">,</span> <span class="dt">score</span><span class="op">:</span> <span class="fl">8.5</span> }</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>]</span></code></pre></div>
 <p>and here is the output we are going for:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1"></a>[</span>
-<span id="cb2-2"><a href="#cb2-2"></a>  <span class="st">&#39;&lt;li class=&quot;film&quot;&gt;#1 Pulp Fiction: &lt;b&gt;8.9&lt;/b&gt;&lt;/li&gt;&#39;</span><span class="op">,</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a>  <span class="st">&#39;&lt;li class=&quot;film&quot;&gt;#2 Forrest Gump: &lt;b&gt;8.8&lt;/b&gt;&lt;/li&gt;&#39;</span><span class="op">,</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a>  <span class="st">&#39;&lt;li class=&quot;film&quot;&gt;#3 Interstellar: &lt;b&gt;8.6&lt;/b&gt;&lt;/li&gt;&#39;</span><span class="op">,</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a>  <span class="st">&#39;&lt;li class=&quot;film film--last&quot;&gt;#4 The Prestige: &lt;b&gt;8.5&lt;/b&gt;&lt;/li&gt;&#39;</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a>]</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>[</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  <span class="st">&#39;&lt;li class=&quot;film&quot;&gt;#1 Pulp Fiction: &lt;b&gt;8.9&lt;/b&gt;&lt;/li&gt;&#39;</span><span class="op">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>  <span class="st">&#39;&lt;li class=&quot;film&quot;&gt;#2 Forrest Gump: &lt;b&gt;8.8&lt;/b&gt;&lt;/li&gt;&#39;</span><span class="op">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>  <span class="st">&#39;&lt;li class=&quot;film&quot;&gt;#3 Interstellar: &lt;b&gt;8.6&lt;/b&gt;&lt;/li&gt;&#39;</span><span class="op">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>  <span class="st">&#39;&lt;li class=&quot;film film--last&quot;&gt;#4 The Prestige: &lt;b&gt;8.5&lt;/b&gt;&lt;/li&gt;&#39;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>]</span></code></pre></div>
 <p>Let’s take a closer look at that output. We can see that the following data needs to be included for each item:</p>
 <ul>
 <li>position in the list (<code>#3</code>)</li>
@@ -111,30 +111,30 @@
 <li>CSS class of <code>film</code>, unless it is the last item, in which case it gets <code>film</code> and <code>film--last</code></li>
 </ul>
 <p>Here is the (somewhat unusual) implementation we will use today in order to later test that we successfully reimplemented <code>Array.prototype.map</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">// filmToHtml :: (Film, Index, Films) -&gt; HtmlString</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">function</span> <span class="fu">filmToHtml</span>(film<span class="op">,</span> i<span class="op">,</span> films) {</span>
-<span id="cb3-3"><a href="#cb3-3"></a>  <span class="cf">return</span> <span class="kw">this</span><span class="op">.</span><span class="fu">format</span>({</span>
-<span id="cb3-4"><a href="#cb3-4"></a>    <span class="dt">index</span><span class="op">:</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">,</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a>    <span class="dt">isLast</span><span class="op">:</span> i <span class="op">===</span> films<span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span><span class="op">,</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a>    <span class="dt">score</span><span class="op">:</span> film<span class="op">.</span><span class="at">score</span><span class="op">,</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a>    <span class="dt">title</span><span class="op">:</span> film<span class="op">.</span><span class="at">title</span><span class="op">,</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a>  })</span>
-<span id="cb3-9"><a href="#cb3-9"></a>}</span>
-<span id="cb3-10"><a href="#cb3-10"></a></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="kw">function</span> <span class="fu">format</span>({ index<span class="op">,</span> isLast<span class="op">,</span> score<span class="op">,</span> title }) {</span>
-<span id="cb3-12"><a href="#cb3-12"></a>  <span class="kw">const</span> cn <span class="op">=</span> isLast <span class="op">?</span> <span class="vs">`film film--last`</span> <span class="op">:</span> <span class="vs">`film`</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a>  <span class="cf">return</span> <span class="vs">`&lt;li class=&quot;</span><span class="sc">${</span>cn<span class="sc">}</span><span class="vs">&quot;&gt;#</span><span class="sc">${</span>index<span class="sc">}</span><span class="vs"> </span><span class="sc">${</span>title<span class="sc">}</span><span class="vs">: &lt;b&gt;</span><span class="sc">${</span>score<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/li&gt;`</span></span>
-<span id="cb3-14"><a href="#cb3-14"></a>}</span>
-<span id="cb3-15"><a href="#cb3-15"></a></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(</span>
-<span id="cb3-17"><a href="#cb3-17"></a>  films<span class="op">.</span><span class="fu">map</span>(filmToHtml<span class="op">,</span> { format })</span>
-<span id="cb3-18"><a href="#cb3-18"></a>)</span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="co">// [</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a><span class="co">//   &#39;&lt;li class=&quot;film&quot;&gt;#1 Pulp Fiction: &lt;b&gt;8.9&lt;/b&gt;&lt;/li&gt;&#39;,</span></span>
-<span id="cb3-21"><a href="#cb3-21"></a><span class="co">//   &#39;&lt;li class=&quot;film&quot;&gt;#2 Forrest Gump: &lt;b&gt;8.8&lt;/b&gt;&lt;/li&gt;&#39;,</span></span>
-<span id="cb3-22"><a href="#cb3-22"></a><span class="co">//   &#39;&lt;li class=&quot;film&quot;&gt;#3 Interstellar: &lt;b&gt;8.6&lt;/b&gt;&lt;/li&gt;&#39;,</span></span>
-<span id="cb3-23"><a href="#cb3-23"></a><span class="co">//   &#39;&lt;li class=&quot;film film--last&quot;&gt;#4 The Prestige: &lt;b&gt;8.5&lt;/b&gt;&lt;/li&gt;&#39;</span></span>
-<span id="cb3-24"><a href="#cb3-24"></a><span class="co">// ]</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="co">// filmToHtml :: (Film, Index, Films) -&gt; HtmlString</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="kw">function</span> <span class="fu">filmToHtml</span>(film<span class="op">,</span> i<span class="op">,</span> films) {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>  <span class="cf">return</span> <span class="kw">this</span><span class="op">.</span><span class="fu">format</span>({</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>    <span class="dt">index</span><span class="op">:</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>    <span class="dt">isLast</span><span class="op">:</span> i <span class="op">===</span> films<span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>    <span class="dt">score</span><span class="op">:</span> film<span class="op">.</span><span class="at">score</span><span class="op">,</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>    <span class="dt">title</span><span class="op">:</span> film<span class="op">.</span><span class="at">title</span><span class="op">,</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>  })</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>}</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a><span class="kw">function</span> <span class="fu">format</span>({ index<span class="op">,</span> isLast<span class="op">,</span> score<span class="op">,</span> title }) {</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a>  <span class="kw">const</span> cn <span class="op">=</span> isLast <span class="op">?</span> <span class="vs">`film film--last`</span> <span class="op">:</span> <span class="vs">`film`</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a>  <span class="cf">return</span> <span class="vs">`&lt;li class=&quot;</span><span class="sc">${</span>cn<span class="sc">}</span><span class="vs">&quot;&gt;#</span><span class="sc">${</span>index<span class="sc">}</span><span class="vs"> </span><span class="sc">${</span>title<span class="sc">}</span><span class="vs">: &lt;b&gt;</span><span class="sc">${</span>score<span class="sc">}</span><span class="vs">&lt;/b&gt;&lt;/li&gt;`</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a>}</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a>  films<span class="op">.</span><span class="fu">map</span>(filmToHtml<span class="op">,</span> { format })</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a><span class="co">// [</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true"></a><span class="co">//   &#39;&lt;li class=&quot;film&quot;&gt;#1 Pulp Fiction: &lt;b&gt;8.9&lt;/b&gt;&lt;/li&gt;&#39;,</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true"></a><span class="co">//   &#39;&lt;li class=&quot;film&quot;&gt;#2 Forrest Gump: &lt;b&gt;8.8&lt;/b&gt;&lt;/li&gt;&#39;,</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true"></a><span class="co">//   &#39;&lt;li class=&quot;film&quot;&gt;#3 Interstellar: &lt;b&gt;8.6&lt;/b&gt;&lt;/li&gt;&#39;,</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true"></a><span class="co">//   &#39;&lt;li class=&quot;film film--last&quot;&gt;#4 The Prestige: &lt;b&gt;8.5&lt;/b&gt;&lt;/li&gt;&#39;</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true"></a><span class="co">// ]</span></span></code></pre></div>
 <p>This is probably two-to-three times more complicated than it needs to be, but it is a sufficient example for today, for we make use of <em>all</em> of <code>Array.prototype.map</code>’s features.</p>
 <p><em>Note: it’s rare to use the second argument to <code>map</code>, but we are doing so today in order to test our implementation.</em></p>
 <p>So what is going on here?</p>
@@ -147,9 +147,9 @@
 <p>It also calls the <code>filmToHtml</code> function with an optional <code>this</code> scope. To demonstrate how this works, we pass an object with the method <code>format</code> that <code>filmToHtml</code> then accesses via <code>this.format</code>. The <code>format</code> function then receives some data points and ultimately returns to us the <code>&lt;li&gt;...&lt;/li&gt;</code> HTML for each film.</p>
 <h2 id="defining-our-own-map-method-mappy">Defining Our Own <code>map</code> Method, <code>mappy</code></h2>
 <p>If we want to write a new method that can be called on our <code>films</code> <code>Array</code> instance, we add it to the <code>Array.prototype</code> like this:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1"></a><span class="bu">Array</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">mappy</span> <span class="op">=</span> <span class="kw">function</span> <span class="fu">mappy</span>(<span class="co">/* ??? */</span>) {</span>
-<span id="cb4-2"><a href="#cb4-2"></a>  <span class="co">// our implementation will go here</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="bu">Array</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">mappy</span> <span class="op">=</span> <span class="kw">function</span> <span class="fu">mappy</span>(<span class="co">/* ??? */</span>) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>  <span class="co">// our implementation will go here</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>}</span></code></pre></div>
 <p>Since a <em>method</em> is a <em>function</em> defined on an object, we know we are working with a function, but what arguments does our function accept?</p>
 <h2 id="what-is-maps-syntax">What Is <code>map</code>’s Syntax?</h2>
 <p>As hinted at in a prior section, if we look at <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map#Syntax">MDN’s <code>Array.prototype.map</code> syntax documentation</a>, we can see that we need:</p>
@@ -164,107 +164,107 @@
 </ol>
 <h2 id="filling-in-the-argument-blanks">Filling In The Argument Blanks</h2>
 <p>Let’s give our <code>mappy</code> method a <code>callback</code> parameter, as well as an optional <code>thisArg</code>, which we’ll simply name <code>_this</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1"></a><span class="bu">Array</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">mappy</span> <span class="op">=</span> <span class="kw">function</span> <span class="fu">mappy</span>(callback<span class="op">,</span> _this) {</span>
-<span id="cb5-2"><a href="#cb5-2"></a></span>
-<span id="cb5-3"><a href="#cb5-3"></a>  <span class="co">// Let&#39;s then have it return our array instance</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a>  <span class="co">// by returning the special `this` keyword.</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a>  <span class="cf">return</span> <span class="kw">this</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a>}</span>
-<span id="cb5-7"><a href="#cb5-7"></a></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(</span>
-<span id="cb5-9"><a href="#cb5-9"></a>  films<span class="op">.</span><span class="fu">map</span>(filmToHtml<span class="op">,</span> { format })</span>
-<span id="cb5-10"><a href="#cb5-10"></a>)</span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="co">// [</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="co">//  { title: `Pulp Fiction`, score: 8.9 },</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="co">//  { title: `Forrest Gump`, score: 8.8 },</span></span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="co">//  { title: `Interstellar`, score: 8.6 },</span></span>
-<span id="cb5-15"><a href="#cb5-15"></a><span class="co">//  { title: `The Prestige`, score: 8.5 }</span></span>
-<span id="cb5-16"><a href="#cb5-16"></a><span class="co">// ]</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="bu">Array</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">mappy</span> <span class="op">=</span> <span class="kw">function</span> <span class="fu">mappy</span>(callback<span class="op">,</span> _this) {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>  <span class="co">// Let&#39;s then have it return our array instance</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>  <span class="co">// by returning the special `this` keyword.</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>  <span class="cf">return</span> <span class="kw">this</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>}</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a>  films<span class="op">.</span><span class="fu">map</span>(filmToHtml<span class="op">,</span> { format })</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true"></a>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true"></a><span class="co">// [</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true"></a><span class="co">//  { title: `Pulp Fiction`, score: 8.9 },</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true"></a><span class="co">//  { title: `Forrest Gump`, score: 8.8 },</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true"></a><span class="co">//  { title: `Interstellar`, score: 8.6 },</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true"></a><span class="co">//  { title: `The Prestige`, score: 8.5 }</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true"></a><span class="co">// ]</span></span></code></pre></div>
 <p>Since our <code>mappy</code> method, like <code>map</code>, will not alter the original array, we know we’ll need to return a new array, so let’s do that and return the empty array:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1"></a><span class="bu">Array</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">mappy</span> <span class="op">=</span> <span class="kw">function</span> <span class="fu">mappy</span>(callback<span class="op">,</span> _this) {</span>
-<span id="cb6-2"><a href="#cb6-2"></a>  <span class="kw">const</span> newArray <span class="op">=</span> []</span>
-<span id="cb6-3"><a href="#cb6-3"></a>  <span class="cf">return</span> newArray</span>
-<span id="cb6-4"><a href="#cb6-4"></a>}</span>
-<span id="cb6-5"><a href="#cb6-5"></a></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(</span>
-<span id="cb6-7"><a href="#cb6-7"></a>  films<span class="op">.</span><span class="fu">map</span>(filmToHtml<span class="op">,</span> { format })</span>
-<span id="cb6-8"><a href="#cb6-8"></a>)</span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="co">// []</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="bu">Array</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">mappy</span> <span class="op">=</span> <span class="kw">function</span> <span class="fu">mappy</span>(callback<span class="op">,</span> _this) {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>  <span class="kw">const</span> newArray <span class="op">=</span> []</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>  <span class="cf">return</span> newArray</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>}</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a>  films<span class="op">.</span><span class="fu">map</span>(filmToHtml<span class="op">,</span> { format })</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a><span class="co">// []</span></span></code></pre></div>
 <h2 id="the-implementation">The Implementation</h2>
 <p>Now that we have a <code>newArray</code>, know we can work with <code>this</code>, have a <code>callback</code> to call and a <code>_this</code> scope to call the <code>callback</code> with, we can populate the <code>newArray</code> with the result of calling the <code>callback</code> function with each item in our array (and with the appropriate arguments, of course):</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1"></a><span class="bu">Array</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">mappy</span> <span class="op">=</span> <span class="kw">function</span> <span class="fu">mappy</span>(callback<span class="op">,</span> _this) {</span>
-<span id="cb7-2"><a href="#cb7-2"></a>  <span class="kw">const</span> newArray <span class="op">=</span> []</span>
-<span id="cb7-3"><a href="#cb7-3"></a></span>
-<span id="cb7-4"><a href="#cb7-4"></a>  <span class="co">// We&#39;ll use a for loop to iterate over</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a>  <span class="co">// each item in our list,</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="kw">this</span><span class="op">.</span><span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) {</span>
-<span id="cb7-7"><a href="#cb7-7"></a>    <span class="co">// and then at the end of our `newArray`</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a>    <span class="co">// we&#39;ll append the result of calling</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a>    <span class="co">// the callback function with the optional</span></span>
-<span id="cb7-10"><a href="#cb7-10"></a>    <span class="co">// scope and its 3 arguments:</span></span>
-<span id="cb7-11"><a href="#cb7-11"></a>    <span class="co">//   1. the item,</span></span>
-<span id="cb7-12"><a href="#cb7-12"></a>    <span class="co">//   2. the current item&#39;s index in the array,</span></span>
-<span id="cb7-13"><a href="#cb7-13"></a>    <span class="co">//   3. and lastly the original list, itself.</span></span>
-<span id="cb7-14"><a href="#cb7-14"></a>    newArray<span class="op">.</span><span class="fu">push</span>(</span>
-<span id="cb7-15"><a href="#cb7-15"></a>      callback<span class="op">.</span><span class="fu">call</span>(_this<span class="op">,</span> <span class="kw">this</span>[i]<span class="op">,</span> i<span class="op">,</span> <span class="kw">this</span>)</span>
-<span id="cb7-16"><a href="#cb7-16"></a>    )</span>
-<span id="cb7-17"><a href="#cb7-17"></a>  }</span>
-<span id="cb7-18"><a href="#cb7-18"></a></span>
-<span id="cb7-19"><a href="#cb7-19"></a>  <span class="co">// Ultimately, we return the `newArray`</span></span>
-<span id="cb7-20"><a href="#cb7-20"></a>  <span class="co">// containing our transformed items.</span></span>
-<span id="cb7-21"><a href="#cb7-21"></a>  <span class="cf">return</span> newArray</span>
-<span id="cb7-22"><a href="#cb7-22"></a>}</span>
-<span id="cb7-23"><a href="#cb7-23"></a></span>
-<span id="cb7-24"><a href="#cb7-24"></a><span class="co">// And when we log out the result,</span></span>
-<span id="cb7-25"><a href="#cb7-25"></a><span class="co">// we can see our `filmToHtml` function</span></span>
-<span id="cb7-26"><a href="#cb7-26"></a><span class="co">// works as expected.</span></span>
-<span id="cb7-27"><a href="#cb7-27"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(</span>
-<span id="cb7-28"><a href="#cb7-28"></a>  films<span class="op">.</span><span class="fu">map</span>(filmToHtml<span class="op">,</span> { format })</span>
-<span id="cb7-29"><a href="#cb7-29"></a>)</span>
-<span id="cb7-30"><a href="#cb7-30"></a><span class="co">// [</span></span>
-<span id="cb7-31"><a href="#cb7-31"></a><span class="co">//   &#39;&lt;li class=&quot;film&quot;&gt;#1 Pulp Fiction: &lt;b&gt;8.9&lt;/b&gt;&lt;/li&gt;&#39;,</span></span>
-<span id="cb7-32"><a href="#cb7-32"></a><span class="co">//   &#39;&lt;li class=&quot;film&quot;&gt;#2 Forrest Gump: &lt;b&gt;8.8&lt;/b&gt;&lt;/li&gt;&#39;,</span></span>
-<span id="cb7-33"><a href="#cb7-33"></a><span class="co">//   &#39;&lt;li class=&quot;film&quot;&gt;#3 Interstellar: &lt;b&gt;8.6&lt;/b&gt;&lt;/li&gt;&#39;,</span></span>
-<span id="cb7-34"><a href="#cb7-34"></a><span class="co">//   &#39;&lt;li class=&quot;film film--last&quot;&gt;#4 The Prestige: &lt;b&gt;8.5&lt;/b&gt;&lt;/li&gt;&#39;</span></span>
-<span id="cb7-35"><a href="#cb7-35"></a><span class="co">// ]</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="bu">Array</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">mappy</span> <span class="op">=</span> <span class="kw">function</span> <span class="fu">mappy</span>(callback<span class="op">,</span> _this) {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>  <span class="kw">const</span> newArray <span class="op">=</span> []</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>  <span class="co">// We&#39;ll use a for loop to iterate over</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>  <span class="co">// each item in our list,</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="kw">this</span><span class="op">.</span><span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>    <span class="co">// and then at the end of our `newArray`</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a>    <span class="co">// we&#39;ll append the result of calling</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a>    <span class="co">// the callback function with the optional</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a>    <span class="co">// scope and its 3 arguments:</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a>    <span class="co">//   1. the item,</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a>    <span class="co">//   2. the current item&#39;s index in the array,</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true"></a>    <span class="co">//   3. and lastly the original list, itself.</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true"></a>    newArray<span class="op">.</span><span class="fu">push</span>(</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true"></a>      callback<span class="op">.</span><span class="fu">call</span>(_this<span class="op">,</span> <span class="kw">this</span>[i]<span class="op">,</span> i<span class="op">,</span> <span class="kw">this</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true"></a>    )</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true"></a>  }</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true"></a>  <span class="co">// Ultimately, we return the `newArray`</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true"></a>  <span class="co">// containing our transformed items.</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true"></a>  <span class="cf">return</span> newArray</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true"></a>}</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true"></a><span class="co">// And when we log out the result,</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true"></a><span class="co">// we can see our `filmToHtml` function</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true"></a><span class="co">// works as expected.</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true"></a>  films<span class="op">.</span><span class="fu">map</span>(filmToHtml<span class="op">,</span> { format })</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true"></a>)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true"></a><span class="co">// [</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true"></a><span class="co">//   &#39;&lt;li class=&quot;film&quot;&gt;#1 Pulp Fiction: &lt;b&gt;8.9&lt;/b&gt;&lt;/li&gt;&#39;,</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true"></a><span class="co">//   &#39;&lt;li class=&quot;film&quot;&gt;#2 Forrest Gump: &lt;b&gt;8.8&lt;/b&gt;&lt;/li&gt;&#39;,</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true"></a><span class="co">//   &#39;&lt;li class=&quot;film&quot;&gt;#3 Interstellar: &lt;b&gt;8.6&lt;/b&gt;&lt;/li&gt;&#39;,</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true"></a><span class="co">//   &#39;&lt;li class=&quot;film film--last&quot;&gt;#4 The Prestige: &lt;b&gt;8.5&lt;/b&gt;&lt;/li&gt;&#39;</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true"></a><span class="co">// ]</span></span></code></pre></div>
 <h2 id="providing-useful-error-messaging">Providing Useful Error Messaging</h2>
 <p>What happens if someone tries to use our <code>mappy</code> method but doesn’t provide a callback function? For example:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1"></a>films<span class="op">.</span><span class="fu">mappy</span>(<span class="dv">123</span>)</span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="co">// TypeError: callback.call is not a function</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a></span>
-<span id="cb8-4"><a href="#cb8-4"></a>films<span class="op">.</span><span class="fu">map</span>(<span class="dv">123</span>)</span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="co">// TypeError: 123 is not a function</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>films<span class="op">.</span><span class="fu">mappy</span>(<span class="dv">123</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="co">// TypeError: callback.call is not a function</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>films<span class="op">.</span><span class="fu">map</span>(<span class="dv">123</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="co">// TypeError: 123 is not a function</span></span></code></pre></div>
 <p>Unfortunately, our <code>mappy</code> method doesn’t take this scenario into account! But the <code>map</code> method’s error messaging isn’t totally clear at a glance, either, so let’s try a different approach:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1"></a><span class="bu">Array</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">mappy</span> <span class="op">=</span> <span class="kw">function</span> <span class="fu">mappy</span>(callback<span class="op">,</span> _this) {</span>
-<span id="cb9-2"><a href="#cb9-2"></a>  <span class="cf">if</span> (<span class="kw">typeof</span> callback <span class="op">!==</span> <span class="st">&#39;function&#39;</span>) {</span>
-<span id="cb9-3"><a href="#cb9-3"></a>    <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">TypeError</span>(</span>
-<span id="cb9-4"><a href="#cb9-4"></a>      <span class="st">&#39;Array.prototype.mappy: &#39;</span> <span class="op">+</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a>      <span class="st">&#39;A callback function was expected &#39;</span> <span class="op">+</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a>      <span class="st">&#39;as the first argument, but we received &#39;</span> <span class="op">+</span></span>
-<span id="cb9-7"><a href="#cb9-7"></a>      <span class="st">&#39;`&#39;</span> <span class="op">+</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>(callback) <span class="op">+</span> <span class="st">&#39;`&#39;</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a>    )</span>
-<span id="cb9-9"><a href="#cb9-9"></a>  }</span>
-<span id="cb9-10"><a href="#cb9-10"></a></span>
-<span id="cb9-11"><a href="#cb9-11"></a>  <span class="kw">const</span> newArray <span class="op">=</span> []</span>
-<span id="cb9-12"><a href="#cb9-12"></a></span>
-<span id="cb9-13"><a href="#cb9-13"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="kw">this</span><span class="op">.</span><span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) {</span>
-<span id="cb9-14"><a href="#cb9-14"></a>    newArray<span class="op">.</span><span class="fu">push</span>(</span>
-<span id="cb9-15"><a href="#cb9-15"></a>      callback<span class="op">.</span><span class="fu">call</span>(_this<span class="op">,</span> <span class="kw">this</span>[i]<span class="op">,</span> i<span class="op">,</span> <span class="kw">this</span>)</span>
-<span id="cb9-16"><a href="#cb9-16"></a>    )</span>
-<span id="cb9-17"><a href="#cb9-17"></a>  }</span>
-<span id="cb9-18"><a href="#cb9-18"></a></span>
-<span id="cb9-19"><a href="#cb9-19"></a>  <span class="cf">return</span> newArray</span>
-<span id="cb9-20"><a href="#cb9-20"></a>}</span>
-<span id="cb9-21"><a href="#cb9-21"></a></span>
-<span id="cb9-22"><a href="#cb9-22"></a>films<span class="op">.</span><span class="fu">mappy</span>(<span class="dv">123</span>)</span>
-<span id="cb9-23"><a href="#cb9-23"></a><span class="co">// TypeError:</span></span>
-<span id="cb9-24"><a href="#cb9-24"></a><span class="co">//   Array.prototype.mappy: A callback function was</span></span>
-<span id="cb9-25"><a href="#cb9-25"></a><span class="co">//   expected as the first argument, but we received `123`</span></span>
-<span id="cb9-26"><a href="#cb9-26"></a></span>
-<span id="cb9-27"><a href="#cb9-27"></a>films<span class="op">.</span><span class="fu">mappy</span>({ <span class="dt">foo</span><span class="op">:</span> <span class="st">&#39;bar&#39;</span> })</span>
-<span id="cb9-28"><a href="#cb9-28"></a><span class="co">// TypeError:</span></span>
-<span id="cb9-29"><a href="#cb9-29"></a><span class="co">//   Array.prototype.mappy: A callback function was</span></span>
-<span id="cb9-30"><a href="#cb9-30"></a><span class="co">//   expected as the first argument, but we received `{&quot;foo&quot;:&quot;bar&quot;}`</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="bu">Array</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">mappy</span> <span class="op">=</span> <span class="kw">function</span> <span class="fu">mappy</span>(callback<span class="op">,</span> _this) {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>  <span class="cf">if</span> (<span class="kw">typeof</span> callback <span class="op">!==</span> <span class="st">&#39;function&#39;</span>) {</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a>    <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">TypeError</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a>      <span class="st">&#39;Array.prototype.mappy: &#39;</span> <span class="op">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a>      <span class="st">&#39;A callback function was expected &#39;</span> <span class="op">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a>      <span class="st">&#39;as the first argument, but we received &#39;</span> <span class="op">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a>      <span class="st">&#39;`&#39;</span> <span class="op">+</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">stringify</span>(callback) <span class="op">+</span> <span class="st">&#39;`&#39;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a>    )</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a>  }</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a>  <span class="kw">const</span> newArray <span class="op">=</span> []</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="kw">this</span><span class="op">.</span><span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true"></a>    newArray<span class="op">.</span><span class="fu">push</span>(</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true"></a>      callback<span class="op">.</span><span class="fu">call</span>(_this<span class="op">,</span> <span class="kw">this</span>[i]<span class="op">,</span> i<span class="op">,</span> <span class="kw">this</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true"></a>    )</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true"></a>  }</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true"></a>  <span class="cf">return</span> newArray</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true"></a>}</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true"></a>films<span class="op">.</span><span class="fu">mappy</span>(<span class="dv">123</span>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true"></a><span class="co">// TypeError:</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true"></a><span class="co">//   Array.prototype.mappy: A callback function was</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true"></a><span class="co">//   expected as the first argument, but we received `123`</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true"></a></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true"></a>films<span class="op">.</span><span class="fu">mappy</span>({ <span class="dt">foo</span><span class="op">:</span> <span class="st">&#39;bar&#39;</span> })</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true"></a><span class="co">// TypeError:</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true"></a><span class="co">//   Array.prototype.mappy: A callback function was</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true"></a><span class="co">//   expected as the first argument, but we received `{&quot;foo&quot;:&quot;bar&quot;}`</span></span></code></pre></div>
 <h2 id="wrapping-up">Wrapping Up</h2>
 <p>I hope this post has helped de-mystify how <code>Array.prototype.map</code> conceptually works under the hood! Next time, we’ll look at how to implement <code>map</code> without polluting the <code>Array.prototype</code>, and we might even be able to use <code>map</code> on more data structures than just <code>Array</code>! Stay tuned.</p>
 <hr />

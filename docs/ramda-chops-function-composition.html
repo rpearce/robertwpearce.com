@@ -83,14 +83,14 @@
 <li>returns the top 3 scorers’ names from highest to lowest</li>
 </ol>
 <p>Here are the unordered results that we have to work with:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">const</span> results <span class="op">=</span> [</span>
-<span id="cb1-2"><a href="#cb1-2"></a>  { <span class="dt">score</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Aragorn&#39;</span> }<span class="op">,</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a>  { <span class="dt">score</span><span class="op">:</span> <span class="dv">99</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Bilbo&#39;</span> }<span class="op">,</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a>  { <span class="dt">score</span><span class="op">:</span> <span class="dv">63</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Celeborn&#39;</span> }<span class="op">,</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>  { <span class="dt">score</span><span class="op">:</span> <span class="dv">77</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Denethor&#39;</span> }<span class="op">,</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a>  { <span class="dt">score</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Eowin&#39;</span> }<span class="op">,</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>  { <span class="dt">score</span><span class="op">:</span> <span class="dv">94</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Frodo&#39;</span> }</span>
-<span id="cb1-8"><a href="#cb1-8"></a>]</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">const</span> results <span class="op">=</span> [</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>  { <span class="dt">score</span><span class="op">:</span> <span class="dv">40</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Aragorn&#39;</span> }<span class="op">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>  { <span class="dt">score</span><span class="op">:</span> <span class="dv">99</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Bilbo&#39;</span> }<span class="op">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>  { <span class="dt">score</span><span class="op">:</span> <span class="dv">63</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Celeborn&#39;</span> }<span class="op">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>  { <span class="dt">score</span><span class="op">:</span> <span class="dv">77</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Denethor&#39;</span> }<span class="op">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>  { <span class="dt">score</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Eowin&#39;</span> }<span class="op">,</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>  { <span class="dt">score</span><span class="op">:</span> <span class="dv">94</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Frodo&#39;</span> }</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>]</span></code></pre></div>
 <hr />
 <p><em>Other ramda posts:</em></p>
 <ul>
@@ -99,14 +99,14 @@
 <li><a href="/ramda-chops-map-filter-and-reduce.html">Ramda Chops: Map, Filter &amp; Reduce</a></li>
 </ul>
 <h2 id="first-approach">First Approach</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">// getHighScorers :: [Object] -&gt; [String]</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">const</span> getHighScorers <span class="op">=</span> xs <span class="kw">=&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a>  [<span class="op">...</span><span class="at">xs</span>]</span>
-<span id="cb2-4"><a href="#cb2-4"></a>    <span class="op">.</span><span class="fu">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> b<span class="op">.</span><span class="at">score</span> <span class="op">-</span> a<span class="op">.</span><span class="at">score</span>)</span>
-<span id="cb2-5"><a href="#cb2-5"></a>    <span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">3</span>)</span>
-<span id="cb2-6"><a href="#cb2-6"></a>    <span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> x<span class="op">.</span><span class="at">name</span>)</span>
-<span id="cb2-7"><a href="#cb2-7"></a></span>
-<span id="cb2-8"><a href="#cb2-8"></a>getHighScorers(results) <span class="co">// =&gt; [ &#39;Eowin&#39;, &#39;Bilbo&#39;, &#39;Frodo&#39; ]</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="co">// getHighScorers :: [Object] -&gt; [String]</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="kw">const</span> getHighScorers <span class="op">=</span> xs <span class="kw">=&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>  [<span class="op">...</span><span class="at">xs</span>]</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>    <span class="op">.</span><span class="fu">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> b<span class="op">.</span><span class="at">score</span> <span class="op">-</span> a<span class="op">.</span><span class="at">score</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>    <span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">3</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>    <span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> x<span class="op">.</span><span class="at">name</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>getHighScorers(results) <span class="co">// =&gt; [ &#39;Eowin&#39;, &#39;Bilbo&#39;, &#39;Frodo&#39; ]</span></span></code></pre></div>
 <p>As cautious JavaScript developers, we know to reach for our functions and methods that don’t mutate the objects we’re receiving. We use a <em>copy</em> of the original list and chain together operations that <code>sort</code>, <code>slice</code> and <code>map</code> the return values of each operation until we arrive at <code>[ 'Eowin', 'Bilbo', 'Frodo' ]</code>. Many folks would stop here, write a few unit tests and be done with it. We, on the other hand, will take this to the next level.</p>
 <h2 id="extracting-reusable-functions">Extracting Reusable Functions</h2>
 <p>Our <code>getHighScorers</code> function has some functionality that we may want to use elsewhere in the future. Let’s break down what we might be able to extract:</p>
@@ -115,86 +115,86 @@
 <li>a <em>take n items</em> function (from <code>slice</code>)</li>
 <li>a <em>map prop</em> function (from <code>map</code>)</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">// Altered slightly to allows us to compare</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="co">// things like strings and numbers.</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="co">//</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="co">// descBy :: (String, [a]) -&gt; [a]</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="kw">const</span> descBy <span class="op">=</span> (prop<span class="op">,</span> xs) <span class="kw">=&gt;</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a>  [<span class="op">...</span><span class="at">xs</span>]<span class="op">.</span><span class="fu">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a>    a[prop] <span class="op">&lt;</span> b[prop] <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> (a[prop] <span class="op">===</span> b[prop] <span class="op">?</span> <span class="dv">0</span> <span class="op">:</span> <span class="dv">-1</span>)</span>
-<span id="cb3-8"><a href="#cb3-8"></a>  )</span>
-<span id="cb3-9"><a href="#cb3-9"></a></span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="co">// takeN :: (Number, [a]) -&gt; [a]</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="kw">const</span> takeN <span class="op">=</span> (n<span class="op">,</span> xs) <span class="kw">=&gt;</span></span>
-<span id="cb3-12"><a href="#cb3-12"></a>  xs<span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> n)</span>
-<span id="cb3-13"><a href="#cb3-13"></a></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="co">// mapProp :: (String, [a]) -&gt; [b]</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="kw">const</span> mapProp <span class="op">=</span> (prop<span class="op">,</span> xs) <span class="kw">=&gt;</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a>  xs<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> x[prop])</span>
-<span id="cb3-17"><a href="#cb3-17"></a></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="co">// 1. pass `score` and `xs` to `descBy`</span></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="co">// 2. pass the return value of `descBy`</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a><span class="co">//    to `takeN(3, __)`</span></span>
-<span id="cb3-21"><a href="#cb3-21"></a><span class="co">// 3. pass the return value of `takeN`</span></span>
-<span id="cb3-22"><a href="#cb3-22"></a><span class="co">//    to `mapProp(&#39;name&#39;, __)` where we map over</span></span>
-<span id="cb3-23"><a href="#cb3-23"></a><span class="co">//    the list and pull out each one&#39;s `name`</span></span>
-<span id="cb3-24"><a href="#cb3-24"></a><span class="co">//</span></span>
-<span id="cb3-25"><a href="#cb3-25"></a><span class="co">// getHighScorers :: [Object] -&gt; [String]</span></span>
-<span id="cb3-26"><a href="#cb3-26"></a><span class="kw">const</span> getHighScorers <span class="op">=</span> xs <span class="kw">=&gt;</span></span>
-<span id="cb3-27"><a href="#cb3-27"></a>  mapProp(<span class="st">&#39;name&#39;</span><span class="op">,</span> takeN(<span class="dv">3</span><span class="op">,</span> descBy(<span class="st">&#39;score&#39;</span><span class="op">,</span> xs)))</span>
-<span id="cb3-28"><a href="#cb3-28"></a></span>
-<span id="cb3-29"><a href="#cb3-29"></a><span class="co">// results object here...</span></span>
-<span id="cb3-30"><a href="#cb3-30"></a></span>
-<span id="cb3-31"><a href="#cb3-31"></a>getHighScorers(results) <span class="co">// =&gt; [ &#39;Eowin&#39;, &#39;Bilbo&#39;, &#39;Frodo&#39; ]</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="co">// Altered slightly to allows us to compare</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="co">// things like strings and numbers.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="co">//</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a><span class="co">// descBy :: (String, [a]) -&gt; [a]</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="kw">const</span> descBy <span class="op">=</span> (prop<span class="op">,</span> xs) <span class="kw">=&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>  [<span class="op">...</span><span class="at">xs</span>]<span class="op">.</span><span class="fu">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>    a[prop] <span class="op">&lt;</span> b[prop] <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> (a[prop] <span class="op">===</span> b[prop] <span class="op">?</span> <span class="dv">0</span> <span class="op">:</span> <span class="dv">-1</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>  )</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a><span class="co">// takeN :: (Number, [a]) -&gt; [a]</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a><span class="kw">const</span> takeN <span class="op">=</span> (n<span class="op">,</span> xs) <span class="kw">=&gt;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a>  xs<span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> n)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a><span class="co">// mapProp :: (String, [a]) -&gt; [b]</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a><span class="kw">const</span> mapProp <span class="op">=</span> (prop<span class="op">,</span> xs) <span class="kw">=&gt;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a>  xs<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> x[prop])</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a><span class="co">// 1. pass `score` and `xs` to `descBy`</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a><span class="co">// 2. pass the return value of `descBy`</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true"></a><span class="co">//    to `takeN(3, __)`</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true"></a><span class="co">// 3. pass the return value of `takeN`</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true"></a><span class="co">//    to `mapProp(&#39;name&#39;, __)` where we map over</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true"></a><span class="co">//    the list and pull out each one&#39;s `name`</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true"></a><span class="co">//</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true"></a><span class="co">// getHighScorers :: [Object] -&gt; [String]</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true"></a><span class="kw">const</span> getHighScorers <span class="op">=</span> xs <span class="kw">=&gt;</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true"></a>  mapProp(<span class="st">&#39;name&#39;</span><span class="op">,</span> takeN(<span class="dv">3</span><span class="op">,</span> descBy(<span class="st">&#39;score&#39;</span><span class="op">,</span> xs)))</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true"></a><span class="co">// results object here...</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true"></a>getHighScorers(results) <span class="co">// =&gt; [ &#39;Eowin&#39;, &#39;Bilbo&#39;, &#39;Frodo&#39; ]</span></span></code></pre></div>
 <p><em><a href="https://goo.gl/9XsTQx">Try this code in the ramda REPL.</a></em></p>
 <p>This is starting to look good, but that <code>getHighScorers</code> function is looking a bit dense. Since we have a seeming pipeline of transformations that we’re applying to a list, wouldn’t it be great if we could simply list these transformations in a “flat” way (instead of a “nested” way like we do above) and then pass the data to this list of transformations?</p>
 <h2 id="enter-compose">Enter <code>compose</code></h2>
 <p>Let’s take our <code>getHighScorers</code> function and rewrite it using <a href="http://ramdajs.com/docs/#compose">ramda’s compose function</a>:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">import</span> compose <span class="im">from</span> <span class="st">&#39;ramda/src/compose&#39;</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="co">// const getHighScorers = xs =&gt;</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="co">//   mapProp(&#39;name&#39;, takeN(3, descBy(&#39;score&#39;, xs)))</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="co">// getHighScorers :: [Object] -&gt; [String]</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="kw">const</span> getHighScorers <span class="op">=</span> xs <span class="kw">=&gt;</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a>  compose(mapProp(<span class="st">&#39;name&#39;</span>)<span class="op">,</span> takeN(<span class="dv">3</span>)<span class="op">,</span> descBy(<span class="st">&#39;score&#39;</span>))(xs)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="im">import</span> compose <span class="im">from</span> <span class="st">&#39;ramda/src/compose&#39;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="co">// const getHighScorers = xs =&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="co">//   mapProp(&#39;name&#39;, takeN(3, descBy(&#39;score&#39;, xs)))</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="co">// getHighScorers :: [Object] -&gt; [String]</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="kw">const</span> getHighScorers <span class="op">=</span> xs <span class="kw">=&gt;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>  compose(mapProp(<span class="st">&#39;name&#39;</span>)<span class="op">,</span> takeN(<span class="dv">3</span>)<span class="op">,</span> descBy(<span class="st">&#39;score&#39;</span>))(xs)</span></code></pre></div>
 <p>Let’s first clarify what <code>compose</code> is doing:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1"></a>compose(f<span class="op">,</span> g)(x) <span class="op">===</span> f(g(x))</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>compose(f<span class="op">,</span> g)(x) <span class="op">===</span> f(g(x))</span></code></pre></div>
 <p>Say it aloud: “f after g.” With <code>compose</code>, the function furthest to the <em>right</em> is applied first with the value (<code>x</code>), and the return value of that function is passed to the next function to its <em>left</em>, and repeat this until all functions have been applied.</p>
 <p>Cool – but wait! How can <code>descBy</code>, <code>takeN</code> and <code>mapProp</code> only accept one argument at a time when they all accept two?! In order to make these a reality, we can make use of <a href="http://ramdajs.com/docs/#curry">ramda’s curry function</a> which we dove into in my <a href="/ramda-chops-function-currying.html%5D">previous post on function currying</a>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1"></a><span class="im">import</span> compose <span class="im">from</span> <span class="st">&#39;ramda/src/compose&#39;</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="im">import</span> curry <span class="im">from</span> <span class="st">&#39;ramda/src/curry&#39;</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="co">// descBy :: String -&gt; [a] -&gt; [a]</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="kw">const</span> descBy <span class="op">=</span> curry((prop<span class="op">,</span> xs) <span class="kw">=&gt;</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a>  [<span class="op">...</span><span class="at">xs</span>]<span class="op">.</span><span class="fu">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a>    a[prop] <span class="op">&lt;</span> b[prop] <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> (a[prop] <span class="op">===</span> b[prop] <span class="op">?</span> <span class="dv">0</span> <span class="op">:</span> <span class="dv">-1</span>)</span>
-<span id="cb6-8"><a href="#cb6-8"></a>  )</span>
-<span id="cb6-9"><a href="#cb6-9"></a>)</span>
-<span id="cb6-10"><a href="#cb6-10"></a></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="co">// takeN :: Number -&gt; [a] -&gt; [a]</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="kw">const</span> takeN <span class="op">=</span> curry((n<span class="op">,</span> xs) <span class="kw">=&gt;</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a>  xs<span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> n)</span>
-<span id="cb6-14"><a href="#cb6-14"></a>)</span>
-<span id="cb6-15"><a href="#cb6-15"></a></span>
-<span id="cb6-16"><a href="#cb6-16"></a><span class="co">// mapProp :: String -&gt; [a] -&gt; [b]</span></span>
-<span id="cb6-17"><a href="#cb6-17"></a><span class="kw">const</span> mapProp <span class="op">=</span> curry((prop<span class="op">,</span> xs) <span class="kw">=&gt;</span></span>
-<span id="cb6-18"><a href="#cb6-18"></a>  xs<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> x[prop])</span>
-<span id="cb6-19"><a href="#cb6-19"></a>)</span>
-<span id="cb6-20"><a href="#cb6-20"></a></span>
-<span id="cb6-21"><a href="#cb6-21"></a><span class="co">// getHighScorers :: [Object] -&gt; [String]</span></span>
-<span id="cb6-22"><a href="#cb6-22"></a><span class="kw">const</span> getHighScorers <span class="op">=</span></span>
-<span id="cb6-23"><a href="#cb6-23"></a>  compose(mapProp(<span class="st">&#39;name&#39;</span>)<span class="op">,</span> takeN(<span class="dv">3</span>)<span class="op">,</span> descBy(<span class="st">&#39;score&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="im">import</span> compose <span class="im">from</span> <span class="st">&#39;ramda/src/compose&#39;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="im">import</span> curry <span class="im">from</span> <span class="st">&#39;ramda/src/curry&#39;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="co">// descBy :: String -&gt; [a] -&gt; [a]</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="kw">const</span> descBy <span class="op">=</span> curry((prop<span class="op">,</span> xs) <span class="kw">=&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>  [<span class="op">...</span><span class="at">xs</span>]<span class="op">.</span><span class="fu">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a>    a[prop] <span class="op">&lt;</span> b[prop] <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> (a[prop] <span class="op">===</span> b[prop] <span class="op">?</span> <span class="dv">0</span> <span class="op">:</span> <span class="dv">-1</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a>  )</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a><span class="co">// takeN :: Number -&gt; [a] -&gt; [a]</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a><span class="kw">const</span> takeN <span class="op">=</span> curry((n<span class="op">,</span> xs) <span class="kw">=&gt;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a>  xs<span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> n)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true"></a><span class="co">// mapProp :: String -&gt; [a] -&gt; [b]</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a><span class="kw">const</span> mapProp <span class="op">=</span> curry((prop<span class="op">,</span> xs) <span class="kw">=&gt;</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true"></a>  xs<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> x[prop])</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true"></a>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true"></a><span class="co">// getHighScorers :: [Object] -&gt; [String]</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true"></a><span class="kw">const</span> getHighScorers <span class="op">=</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true"></a>  compose(mapProp(<span class="st">&#39;name&#39;</span>)<span class="op">,</span> takeN(<span class="dv">3</span>)<span class="op">,</span> descBy(<span class="st">&#39;score&#39;</span>))</span></code></pre></div>
 <p><em><a href="https://goo.gl/NxEFhi">Try this code in the ramda REPL.</a></em></p>
 <p>You may also notice that we removed <code>xs =&gt;</code> from <code>getHighScorers</code> because when we use compose and pass the final argument in at the end, it in fact becomes redundant. Our composition sits and waits for either the data to be applied or for it to be used another way: more compositions! This leads us down a powerful path whereby we can now compose different functions together and combine them into a final composition.</p>
 <h2 id="composing-a-composition">Composing a Composition</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">// getTop3 :: [a] -&gt; [a]</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="kw">const</span> getTop3 <span class="op">=</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a>  compose(takeN(<span class="dv">3</span>)<span class="op">,</span> descBy(<span class="st">&#39;score&#39;</span>))</span>
-<span id="cb7-4"><a href="#cb7-4"></a></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="co">// getHighScorers :: [Object] -&gt; [String]</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="kw">const</span> getHighScorers <span class="op">=</span></span>
-<span id="cb7-7"><a href="#cb7-7"></a>  compose(mapProp(<span class="st">&#39;name&#39;</span>)<span class="op">,</span> getTop3)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="co">// getTop3 :: [a] -&gt; [a]</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="kw">const</span> getTop3 <span class="op">=</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>  compose(takeN(<span class="dv">3</span>)<span class="op">,</span> descBy(<span class="st">&#39;score&#39;</span>))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="co">// getHighScorers :: [Object] -&gt; [String]</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="kw">const</span> getHighScorers <span class="op">=</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>  compose(mapProp(<span class="st">&#39;name&#39;</span>)<span class="op">,</span> getTop3)</span></code></pre></div>
 <p><em><a href="https://goo.gl/jRoCWZ">Try this code in the ramda REPL.</a></em></p>
 <p>This is where we truly begin to see the power of <code>compose</code>, for we are able to break our functions or function compositions out into tiny little pieces that we chain together like water pipes or guitar pedals.</p>
 <figure>
@@ -207,34 +207,34 @@
 <p>Composing compositions also allows us to use our type signatures to tell a story about what behavior is expected with each little part on our path to the ultimate goal.</p>
 <h2 id="pipe-vs-compose"><code>pipe</code> vs <code>compose</code></h2>
 <p>For various reasons that are usally a matter of opinion, many people prefer function application to flow from <em>left to right</em> instead of <em>right to left</em> (the latter being what you get with <code>compose</code>). So if you find yourself thinking the same thing, <a href="http://ramdajs.com/docs/#pipe">pipe</a> is for you:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">//      &lt;-------------   &lt;------   &lt;-------------</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a>compose(mapProp(<span class="st">&#39;name&#39;</span>)<span class="op">,</span> takeN(<span class="dv">3</span>)<span class="op">,</span> descBy(<span class="st">&#39;score&#39;</span>))(xs)</span>
-<span id="cb8-3"><a href="#cb8-3"></a></span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="co">// versus</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a></span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="co">//   --------------&gt;  -------&gt;  --------------&gt;</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a>pipe(descBy(<span class="st">&#39;score&#39;</span>)<span class="op">,</span> takeN(<span class="dv">3</span>)<span class="op">,</span> mapProp(<span class="st">&#39;name&#39;</span>))(xs)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="co">//      &lt;-------------   &lt;------   &lt;-------------</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>compose(mapProp(<span class="st">&#39;name&#39;</span>)<span class="op">,</span> takeN(<span class="dv">3</span>)<span class="op">,</span> descBy(<span class="st">&#39;score&#39;</span>))(xs)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="co">// versus</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a><span class="co">//   --------------&gt;  -------&gt;  --------------&gt;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>pipe(descBy(<span class="st">&#39;score&#39;</span>)<span class="op">,</span> takeN(<span class="dv">3</span>)<span class="op">,</span> mapProp(<span class="st">&#39;name&#39;</span>))(xs)</span></code></pre></div>
 <h2 id="composing-promises">Composing Promises</h2>
 <p>There’s really nothing to it! Instead of <code>compose</code> or <code>pipe</code>, use <a href="http://ramdajs.com/docs/#composeP">composeP</a> or <a href="http://ramdajs.com/docs/#pipeP">pipeP</a>.</p>
 <h2 id="debugging">Debugging</h2>
 <p>Once you adopt this pattern, you may find it initially difficult to inspect your data at a given point in the pipeline; however, here’s a tip that will solve most of your problems:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1"></a>compose(</span>
-<span id="cb9-2"><a href="#cb9-2"></a>  mapProp(<span class="st">&#39;name&#39;</span>)<span class="op">,</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a>  x <span class="kw">=&gt;</span> (<span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(x)<span class="op">,</span> x)<span class="op">,</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a>  takeN(<span class="dv">3</span>)<span class="op">,</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a>  descBy(<span class="st">&#39;score&#39;</span>)</span>
-<span id="cb9-6"><a href="#cb9-6"></a>)</span>
-<span id="cb9-7"><a href="#cb9-7"></a></span>
-<span id="cb9-8"><a href="#cb9-8"></a><span class="co">// or</span></span>
-<span id="cb9-9"><a href="#cb9-9"></a></span>
-<span id="cb9-10"><a href="#cb9-10"></a><span class="kw">const</span> logIt <span class="op">=</span> x <span class="kw">=&gt;</span> (<span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(x)<span class="op">,</span> x)</span>
-<span id="cb9-11"><a href="#cb9-11"></a></span>
-<span id="cb9-12"><a href="#cb9-12"></a>compose(</span>
-<span id="cb9-13"><a href="#cb9-13"></a>  mapProp(<span class="st">&#39;name&#39;</span>)<span class="op">,</span></span>
-<span id="cb9-14"><a href="#cb9-14"></a>  logIt<span class="op">,</span></span>
-<span id="cb9-15"><a href="#cb9-15"></a>  takeN(<span class="dv">3</span>)<span class="op">,</span></span>
-<span id="cb9-16"><a href="#cb9-16"></a>  descBy(<span class="st">&#39;score&#39;</span>)</span>
-<span id="cb9-17"><a href="#cb9-17"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>compose(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>  mapProp(<span class="st">&#39;name&#39;</span>)<span class="op">,</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a>  x <span class="kw">=&gt;</span> (<span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(x)<span class="op">,</span> x)<span class="op">,</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a>  takeN(<span class="dv">3</span>)<span class="op">,</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a>  descBy(<span class="st">&#39;score&#39;</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a><span class="co">// or</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a><span class="kw">const</span> logIt <span class="op">=</span> x <span class="kw">=&gt;</span> (<span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(x)<span class="op">,</span> x)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true"></a>compose(</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true"></a>  mapProp(<span class="st">&#39;name&#39;</span>)<span class="op">,</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true"></a>  logIt<span class="op">,</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true"></a>  takeN(<span class="dv">3</span>)<span class="op">,</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true"></a>  descBy(<span class="st">&#39;score&#39;</span>)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true"></a>)</span></code></pre></div>
 <p>This logs whatever the value in the pipeline is at that time and returns that value to pass it on just as it would have.</p>
 <hr />
 <p>Thanks for reading! Until next time, <br> Robert</p>

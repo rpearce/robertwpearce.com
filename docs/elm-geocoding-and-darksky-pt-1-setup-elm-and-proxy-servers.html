@@ -93,8 +93,8 @@
 <p>Once you’ve got Node installed, we can begin.</p>
 <h2 id="project-setup">Project Setup</h2>
 <p>From your favorite project folder, let’s create a new project folder named <code>elm-geocoding-darksky</code> and change the current working directory to be the new folder:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a>λ <span class="fu">mkdir</span> elm-geocoding-darksky</span>
-<span id="cb1-2"><a href="#cb1-2"></a>λ <span class="bu">cd</span> elm-geocoding-darksky</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>λ <span class="fu">mkdir</span> elm-geocoding-darksky</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>λ <span class="bu">cd</span> elm-geocoding-darksky</span></code></pre></div>
 <h2 id="elm">Elm</h2>
 <h3 id="installing-elm">Installing Elm</h3>
 <p>You can install elm via any of the methods on the <a href="https://guide.elm-lang.org/install.html">elm install page</a> or by one of these methods:</p>
@@ -111,71 +111,71 @@
 <h3 id="adding-elm-to-a-webpage">Adding Elm to a Webpage</h3>
 <p>Our goal here is to compile our elm project to an <code>elm.js</code> file and include that on a webpage (which we’ll make in a minute).</p>
 <p>First, let’s create a <code>src/</code> directory to house our source code and a <code>Main.elm</code> file within it:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>λ <span class="fu">mkdir</span> src</span>
-<span id="cb2-2"><a href="#cb2-2"></a>λ <span class="fu">touch</span> src/Main.elm</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>λ <span class="fu">mkdir</span> src</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>λ <span class="fu">touch</span> src/Main.elm</span></code></pre></div>
 <p>Next, we want to install Elm’s HTML package so that so that we can access its HTML-related functions:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a>λ <span class="ex">elm</span> package install elm-lang/html</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>λ <span class="ex">elm</span> package install elm-lang/html</span></code></pre></div>
 <p>Within the <code>Main.elm</code> file, add the following:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode elm"><code class="sourceCode elm"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">module</span> <span class="dt">Main</span> <span class="kw">exposing</span> (<span class="op">..</span>)</span>
-<span id="cb4-2"><a href="#cb4-2"></a></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="kw">import</span> <span class="dt">Html</span> <span class="kw">exposing</span> (<span class="fu">text</span>)</span>
-<span id="cb4-4"><a href="#cb4-4"></a></span>
-<span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="fu">main</span> <span class="op">=</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a>    <span class="fu">text</span> <span class="st">&quot;Hello, world!&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode elm"><code class="sourceCode elm"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">module</span> <span class="dt">Main</span> <span class="kw">exposing</span> (<span class="op">..</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="kw">import</span> <span class="dt">Html</span> <span class="kw">exposing</span> (<span class="fu">text</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="fu">main</span> <span class="op">=</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>    <span class="fu">text</span> <span class="st">&quot;Hello, world!&quot;</span></span></code></pre></div>
 <p>Here, we import the <code>Html</code> package that we installed, specifically expose the <code>text</code> function from it and then use that function to tell Elm that we want some HTML-friendly text.</p>
 <p><em>Note: to learn more about the Elm language and syntax, check out the <a href="https://www.elm-tutorial.org/en/">Elm Tutorial</a>, the <a href="https://egghead.io/courses/start-using-elm-to-build-web-applications">EggHead.io Elm course</a>, subscribe to <a href="https://www.dailydrip.com/topics/elm">DailyDrip’s Elm Topic</a>, <a href="http://courses.knowthen.com">James Moore’s Elm Courses</a> or check out <a href="http://exercism.io/languages/elm/about">Elm on exercism.io</a>.</em></p>
 <p>We can then compile this and output it to <code>elm.js</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a>λ <span class="ex">elm</span> make src/Main.elm --output=elm.js</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>λ <span class="ex">elm</span> make src/Main.elm --output=elm.js</span></code></pre></div>
 <p>You should now have a (quite large) file, <code>elm.js</code>, in your project’s root. We’re almost done!</p>
 <p>Finally, create a new file, <code>index.html</code>, and add the following to it:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1"></a><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">&lt;html</span><span class="ot"> lang=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a>  <span class="kw">&lt;head&gt;</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a>    <span class="kw">&lt;title&gt;</span>Weather<span class="kw">&lt;/title&gt;</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a>    <span class="kw">&lt;meta</span><span class="ot"> charset=</span><span class="st">&quot;utf-8&quot;</span><span class="kw">&gt;</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a>    <span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;viewport&quot;</span><span class="ot"> content=</span><span class="st">&quot;width=device-width, initial-scale=1&quot;</span><span class="kw">&gt;</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a>  <span class="kw">&lt;/head&gt;</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a>  <span class="kw">&lt;body&gt;</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a>    <span class="kw">&lt;script</span><span class="ot"> type=</span><span class="st">&quot;text/javascript&quot;</span><span class="ot"> src=</span><span class="st">&quot;elm.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a>    <span class="kw">&lt;script&gt;</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a>      (<span class="kw">function</span>(<span class="bu">global</span>) {</span>
-<span id="cb6-12"><a href="#cb6-12"></a>        <span class="kw">var</span> node <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&#39;div&#39;</span>)</span>
-<span id="cb6-13"><a href="#cb6-13"></a>        <span class="bu">document</span><span class="op">.</span><span class="at">body</span><span class="op">.</span><span class="fu">appendChild</span>(node)</span>
-<span id="cb6-14"><a href="#cb6-14"></a>        <span class="kw">var</span> app <span class="op">=</span> Elm<span class="op">.</span><span class="at">Main</span><span class="op">.</span><span class="fu">embed</span>(node)</span>
-<span id="cb6-15"><a href="#cb6-15"></a>        <span class="bu">global</span><span class="op">.</span><span class="at">app</span> <span class="op">=</span> app</span>
-<span id="cb6-16"><a href="#cb6-16"></a>      })(<span class="bu">window</span>)</span>
-<span id="cb6-17"><a href="#cb6-17"></a>    <span class="kw">&lt;/script&gt;</span></span>
-<span id="cb6-18"><a href="#cb6-18"></a>  <span class="kw">&lt;/body&gt;</span></span>
-<span id="cb6-19"><a href="#cb6-19"></a><span class="kw">&lt;/html&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="kw">&lt;html</span><span class="ot"> lang=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>  <span class="kw">&lt;head&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>    <span class="kw">&lt;title&gt;</span>Weather<span class="kw">&lt;/title&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>    <span class="kw">&lt;meta</span><span class="ot"> charset=</span><span class="st">&quot;utf-8&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>    <span class="kw">&lt;meta</span><span class="ot"> name=</span><span class="st">&quot;viewport&quot;</span><span class="ot"> content=</span><span class="st">&quot;width=device-width, initial-scale=1&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a>  <span class="kw">&lt;/head&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a>  <span class="kw">&lt;body&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a>    <span class="kw">&lt;script</span><span class="ot"> type=</span><span class="st">&quot;text/javascript&quot;</span><span class="ot"> src=</span><span class="st">&quot;elm.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a>    <span class="kw">&lt;script&gt;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a>      (<span class="kw">function</span>(<span class="bu">global</span>) {</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a>        <span class="kw">var</span> node <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&#39;div&#39;</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a>        <span class="bu">document</span><span class="op">.</span><span class="at">body</span><span class="op">.</span><span class="fu">appendChild</span>(node)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a>        <span class="kw">var</span> app <span class="op">=</span> Elm<span class="op">.</span><span class="at">Main</span><span class="op">.</span><span class="fu">embed</span>(node)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a>        <span class="bu">global</span><span class="op">.</span><span class="at">app</span> <span class="op">=</span> app</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true"></a>      })(<span class="bu">window</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a>    <span class="kw">&lt;/script&gt;</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true"></a>  <span class="kw">&lt;/body&gt;</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true"></a><span class="kw">&lt;/html&gt;</span></span></code></pre></div>
 <p>If you run <code>λ open index.html</code>, you should be able to view the file in the browser and see <code>Hello, world!</code>. Congrats! You’re primed and ready to start building.</p>
 <h3 id="creating-a-build-file">Creating a Build File</h3>
 <p>If you’re lazy like me, you can create an executable file, <code>build</code>, that will perform our <code>elm make ...</code> command for us:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a>λ <span class="fu">touch</span> build</span>
-<span id="cb7-2"><a href="#cb7-2"></a>λ <span class="fu">chmod</span> +x build</span>
-<span id="cb7-3"><a href="#cb7-3"></a>λ <span class="fu">cat</span> <span class="op">&lt;&lt;EOF</span> <span class="op">&gt;</span> <span class="ex">./build</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a>#!/bin/bash</span>
-<span id="cb7-5"><a href="#cb7-5"></a></span>
-<span id="cb7-6"><a href="#cb7-6"></a>elm-make src/Main.elm --output ./elm.js</span>
-<span id="cb7-7"><a href="#cb7-7"></a>EOF</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>λ <span class="fu">touch</span> build</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>λ <span class="fu">chmod</span> +x build</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>λ <span class="fu">cat</span> <span class="op">&lt;&lt;EOF</span> <span class="op">&gt;</span> <span class="ex">./build</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>#!/bin/bash</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a>elm-make src/Main.elm --output ./elm.js</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>EOF</span></code></pre></div>
 <p>This executable can now handle whatever build options and processes we’ll add for the future (such as JavaScript minification &amp; uglifying):</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a>λ <span class="ex">./build</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="ex">Success</span>! Compiled 1 module.</span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="ex">Successfully</span> generated ./elm.js</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>λ <span class="ex">./build</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="ex">Success</span>! Compiled 1 module.</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="ex">Successfully</span> generated ./elm.js</span></code></pre></div>
 <h2 id="proxies">Proxies</h2>
 <p>In order to not expose our API keys for geocoding and weather forecasts, we’ll be using a separate proxy server for each service. I wrote recently wrote a post entitled <a href="/node-js-geocoding-proxy-with-paperplane.html">Node.js Geocoding Proxy with Paperplane</a> where you can see a full explanation of what we’re doing and how to do it. If you don’t care about the how and why about setting up these little servers, then just continue on!</p>
 <h3 id="setting-up-your-geocoding-proxy">Setting Up Your Geocoding Proxy</h3>
 <p>First, you’ll need to get a Google Maps API Key from here: <a href="https://developers.google.com/maps/documentation/geocoding/start#get-a-key">https://developers.google.com/maps/documentation/geocoding/start#get-a-key</a>.</p>
 <p>Once you’ve done that, go ahead and clone or download <a href="https://github.com/rpearce/geocoding-proxy">the geocoding-proxy project on GitHub</a> and follow the directions to get set up. Given you’ve got Node installed, you’ve copied over the <code>.env</code> file and set your API key in there, then running <code>λ node index.js</code> should start the server. From another command-line tab, run this and see if you get a similar result:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a>λ <span class="ex">curl</span> localhost:5050/geocode/Auckland</span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="dt">{&quot;results&quot;:[...]}</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>λ <span class="ex">curl</span> localhost:5050/geocode/Auckland</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="dt">{&quot;results&quot;:[...]}</span></span></code></pre></div>
 <p>If so, congrats! If you get stuck, create an issue on the <a href="https://github.com/rpearce/geocoding-proxy/issues">geocoding-proxy issues page</a>, and I’ll see if I can help.</p>
 <h3 id="setting-up-your-darksky-proxy">Setting Up Your DarkSky Proxy</h3>
 <p>(This is almost exactly like the geocoding proxy setup.)</p>
 <p>First, you’ll need to get a DarkSky API Key from here: <a href="https://darksky.net/dev/">https://darksky.net/dev/</a>.</p>
 <p>Once you’ve done that, go ahead and clone or download <a href="https://github.com/rpearce/DarkSky-proxy">the DarkSky-proxy project on GitHub</a> and follow the directions to get set up. Given you’ve got Node installed, you’ve copied over the <code>.env</code> file and set your API key in there, then running <code>λ node index.js</code> should start the server. From another command-line tab, run this and see if you get a similar result:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a>λ <span class="ex">curl</span> http://localhost:5051/forecast/37.8267,-122.4233</span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="dt">{&quot;latitude&quot;:37.8267,&quot;longitude&quot;:-122.4233,...}</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a>λ <span class="ex">curl</span> http://localhost:5051/forecast/37.8267,-122.4233</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="dt">{&quot;latitude&quot;:37.8267,&quot;longitude&quot;:-122.4233,...}</span></span></code></pre></div>
 <p>If so, congrats! If you get stuck, create an issue on the <a href="https://github.com/rpearce/DarkSky-proxy/issues">DarkSky-proxy issues page</a>, and I’ll see if I can help.</p>
 <h2 id="wrapping-up">Wrapping Up</h2>
 <p>Thank you for reading this far! Now that we’ve got our Elm app build process set up and your proxy servers ready to work, we can start constructing our application piece-by-piece in the next article in the series.</p>

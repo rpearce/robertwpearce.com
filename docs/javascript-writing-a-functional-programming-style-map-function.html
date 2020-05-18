@@ -120,37 +120,37 @@
 <li>it returns the datum as transformed by said function</li>
 </ul>
 <p>Let’s sketch it out:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">const</span> map <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> {</span>
-<span id="cb1-2"><a href="#cb1-2"></a>  <span class="co">// ???</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">const</span> map <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>  <span class="co">// ???</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>}</span></code></pre></div>
 <p>Okay, it’s a start. This could conceivably be used like this:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1"></a>map(x <span class="kw">=&gt;</span> x<span class="op">.</span><span class="at">id</span><span class="op">,</span> [{ <span class="dt">id</span><span class="op">:</span> <span class="dv">1</span> }<span class="op">,</span> { <span class="dt">id</span><span class="op">:</span> <span class="dv">2</span> }])     <span class="co">// [1, 2]</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a>map(x <span class="kw">=&gt;</span> x<span class="op">.</span><span class="at">id</span><span class="op">,</span> [{ <span class="dt">id</span><span class="op">:</span> <span class="st">&#39;a&#39;</span> }<span class="op">,</span> { <span class="dt">id</span><span class="op">:</span> <span class="st">&#39;b&#39;</span> }]) <span class="co">// [&#39;a&#39;, &#39;b&#39;]</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>map(x <span class="kw">=&gt;</span> x<span class="op">.</span><span class="at">id</span><span class="op">,</span> [{ <span class="dt">id</span><span class="op">:</span> <span class="dv">1</span> }<span class="op">,</span> { <span class="dt">id</span><span class="op">:</span> <span class="dv">2</span> }])     <span class="co">// [1, 2]</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>map(x <span class="kw">=&gt;</span> x<span class="op">.</span><span class="at">id</span><span class="op">,</span> [{ <span class="dt">id</span><span class="op">:</span> <span class="st">&#39;a&#39;</span> }<span class="op">,</span> { <span class="dt">id</span><span class="op">:</span> <span class="st">&#39;b&#39;</span> }]) <span class="co">// [&#39;a&#39;, &#39;b&#39;]</span></span></code></pre></div>
 <p>Note the repetition of the <code>x =&gt; x.id</code>. Let’s try pulling it out into a variable:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">const</span> propId <span class="op">=</span> x <span class="kw">=&gt;</span> x<span class="op">.</span><span class="at">id</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>map(propId<span class="op">,</span> [{ <span class="dt">id</span><span class="op">:</span> <span class="dv">1</span> }<span class="op">,</span> { <span class="dt">id</span><span class="op">:</span> <span class="dv">2</span> }])     <span class="co">// [1, 2]</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a>map(propId<span class="op">,</span> [{ <span class="dt">id</span><span class="op">:</span> <span class="st">&#39;a&#39;</span> }<span class="op">,</span> { <span class="dt">id</span><span class="op">:</span> <span class="st">&#39;b&#39;</span> }]) <span class="co">// [&#39;a&#39;, &#39;b&#39;]</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">const</span> propId <span class="op">=</span> x <span class="kw">=&gt;</span> x<span class="op">.</span><span class="at">id</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>map(propId<span class="op">,</span> [{ <span class="dt">id</span><span class="op">:</span> <span class="dv">1</span> }<span class="op">,</span> { <span class="dt">id</span><span class="op">:</span> <span class="dv">2</span> }])     <span class="co">// [1, 2]</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>map(propId<span class="op">,</span> [{ <span class="dt">id</span><span class="op">:</span> <span class="st">&#39;a&#39;</span> }<span class="op">,</span> { <span class="dt">id</span><span class="op">:</span> <span class="st">&#39;b&#39;</span> }]) <span class="co">// [&#39;a&#39;, &#39;b&#39;]</span></span></code></pre></div>
 <p>Alas, that’s not much better – now we’re just repeating the variable!</p>
 <p>Instead, what if we could store our combination of function and <code>map</code> in a variable and then use that to call with our different data? By <a href="https://github.com/hemanth/functional-programming-jargon#partial-application"><em>partially applying</em></a> the function to <code>map</code>, we can!</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">const</span> mapId <span class="op">=</span> map<span class="op">.</span><span class="fu">bind</span>(<span class="kw">null</span><span class="op">,</span> x <span class="kw">=&gt;</span> x<span class="op">.</span><span class="at">id</span>)</span>
-<span id="cb4-2"><a href="#cb4-2"></a>mapId([{ <span class="dt">id</span><span class="op">:</span> <span class="dv">1</span> }<span class="op">,</span> { <span class="dt">id</span><span class="op">:</span> <span class="dv">2</span> }])     <span class="co">// [1, 2]</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a>mapId([{ <span class="dt">id</span><span class="op">:</span> <span class="st">&#39;a&#39;</span> }<span class="op">,</span> { <span class="dt">id</span><span class="op">:</span> <span class="st">&#39;b&#39;</span> }]) <span class="co">// [&#39;a&#39;, &#39;b&#39;]</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">const</span> mapId <span class="op">=</span> map<span class="op">.</span><span class="fu">bind</span>(<span class="kw">null</span><span class="op">,</span> x <span class="kw">=&gt;</span> x<span class="op">.</span><span class="at">id</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>mapId([{ <span class="dt">id</span><span class="op">:</span> <span class="dv">1</span> }<span class="op">,</span> { <span class="dt">id</span><span class="op">:</span> <span class="dv">2</span> }])     <span class="co">// [1, 2]</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>mapId([{ <span class="dt">id</span><span class="op">:</span> <span class="st">&#39;a&#39;</span> }<span class="op">,</span> { <span class="dt">id</span><span class="op">:</span> <span class="st">&#39;b&#39;</span> }]) <span class="co">// [&#39;a&#39;, &#39;b&#39;]</span></span></code></pre></div>
 <p>Nice! Now, let’s go back to our sketch. Let’s turn our <em>binary</em> function (which takes <em>two</em> parameters) to instead be a series of <em>unary</em> functions (which take <em>one</em> parameter<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>).</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">const</span> map <span class="op">=</span> fn <span class="kw">=&gt;</span> m <span class="kw">=&gt;</span> {</span>
-<span id="cb5-2"><a href="#cb5-2"></a>  <span class="co">// ???</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="kw">const</span> map <span class="op">=</span> fn <span class="kw">=&gt;</span> m <span class="kw">=&gt;</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>  <span class="co">// ???</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>}</span></code></pre></div>
 <p>Wow, that was easy. By default, languages like <a href="http://learnyouahaskell.com/higher-order-functions">Haskell</a> and <a href="https://guide.elm-lang.org">Elm</a> automatically <a href="https://robertwpearce.com/ramda-chops-function-currying.html">curry</a> all of their function parameters. There are <a href="https://robertwpearce.com/ramda-chops-function-currying.html">ways to automate that in JavaScript</a>, but for today, we will <em>manually</em> curry functions by using arrow functions to simulate it: <code>const sum = a =&gt; b =&gt; a + b</code>, for example.</p>
 <p>Lastly, on the function definition side, it would be helpful for readers of our code to understand more about the intended types. In lieu of JavaScript not having a static type checker and me not knowing <a href="https://www.typescriptlang.org/">TypeScript</a> yet, we’ll do this using a Haskell-style pseudo-type signature:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">map</span><span class="ot"> ::</span> <span class="dt">Functor</span> f <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> f b</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="fu">map</span><span class="ot"> ::</span> <span class="dt">Functor</span> f <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> f b</span></code></pre></div>
 <p>And we can place that as a comment above our function:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">// map :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="kw">const</span> map <span class="op">=</span> fn <span class="kw">=&gt;</span> m <span class="kw">=&gt;</span> {</span>
-<span id="cb7-3"><a href="#cb7-3"></a>  <span class="co">// ???</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="co">// map :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="kw">const</span> map <span class="op">=</span> fn <span class="kw">=&gt;</span> m <span class="kw">=&gt;</span> {</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>  <span class="co">// ???</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>}</span></code></pre></div>
 <p>Woah, woah, woah! What’s all this? Let’s break it down.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">map</span><span class="ot"> ::</span> <span class="dt">Functor</span> f <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> f b</span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="co">--  |     |            |     |   |      |</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="co">--  1     2            3     4   5      6</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="fu">map</span><span class="ot"> ::</span> <span class="dt">Functor</span> f <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> f b</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="co">--  |     |            |     |   |      |</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="co">--  1     2            3     4   5      6</span></span></code></pre></div>
 <ol>
 <li>Can be read, “has the type of”</li>
 <li>Anything after <code>::</code> and before <code>=&gt;</code> in a signature is a <a href="http://www.learnyouahaskell.com/types-and-typeclasses">class constraint</a>. This says we’re going to use something in the type signature that obeys the Functor Laws<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>, <em>identity</em> and <a href="https://robertwpearce.com/ramda-chops-function-composition.html"><em>composition</em></a>. The lowercase <code>f</code> represents what the <code>Functor</code> will be in the signature.</li>
@@ -163,374 +163,374 @@
 <h2 id="map-an-array"><code>map</code> an <code>Array</code></h2>
 <p>Let’s <code>map</code> an <code>Array</code>!</p>
 <p>Remember our <code>Functor</code> class constraint?</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">map</span><span class="ot"> ::</span> <span class="dt">Functor</span> f <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> f b</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="fu">map</span><span class="ot"> ::</span> <span class="dt">Functor</span> f <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> f b</span></code></pre></div>
 <p>Guess what? <code>Array</code> is a <code>Functor</code>s! How? It adheres to the laws of <em>identity</em> and <em>composition</em>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">// identity</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a>[<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>]<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> x) <span class="co">// [1,2,3]</span></span>
-<span id="cb10-3"><a href="#cb10-3"></a></span>
-<span id="cb10-4"><a href="#cb10-4"></a><span class="co">// composition</span></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="kw">const</span> add10 <span class="op">=</span> x <span class="kw">=&gt;</span> x <span class="op">+</span> <span class="dv">10</span></span>
-<span id="cb10-6"><a href="#cb10-6"></a><span class="kw">const</span> mult2 <span class="op">=</span> x <span class="kw">=&gt;</span> x <span class="op">*</span> <span class="dv">2</span></span>
-<span id="cb10-7"><a href="#cb10-7"></a>[<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>]<span class="op">.</span><span class="fu">map</span>(add10)<span class="op">.</span><span class="fu">map</span>(mult2)     <span class="co">// [ 22, 24, 26 ]</span></span>
-<span id="cb10-8"><a href="#cb10-8"></a><span class="co">// is equivalent to...</span></span>
-<span id="cb10-9"><a href="#cb10-9"></a>[<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>]<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> mult2(add10(x))) <span class="co">// [ 22, 24, 26 ]</span></span>
-<span id="cb10-10"><a href="#cb10-10"></a></span>
-<span id="cb10-11"><a href="#cb10-11"></a><span class="co">// another example of the composition law</span></span>
-<span id="cb10-12"><a href="#cb10-12"></a><span class="kw">const</span> compose <span class="op">=</span> (f<span class="op">,</span> g) <span class="kw">=&gt;</span> x <span class="kw">=&gt;</span> f(g(x))</span>
-<span id="cb10-13"><a href="#cb10-13"></a>mult2(add10(<span class="dv">2</span>)) <span class="op">===</span> compose(mult2<span class="op">,</span> add10)(<span class="dv">2</span>) <span class="co">// true</span></span>
-<span id="cb10-14"><a href="#cb10-14"></a></span>
-<span id="cb10-15"><a href="#cb10-15"></a><span class="co">// and applied back to our prior example</span></span>
-<span id="cb10-16"><a href="#cb10-16"></a>[<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>]<span class="op">.</span><span class="fu">map</span>(add10)<span class="op">.</span><span class="fu">map</span>(mult2)      <span class="co">// [ 22, 24, 26 ]</span></span>
-<span id="cb10-17"><a href="#cb10-17"></a>[<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>]<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> mult2(add10(x)))  <span class="co">// [ 22, 24, 26 ]</span></span>
-<span id="cb10-18"><a href="#cb10-18"></a>[<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>]<span class="op">.</span><span class="fu">map</span>(compose(mult2<span class="op">,</span> add10)) <span class="co">// [ 22, 24, 26 ]</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="co">// identity</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>[<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>]<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> x) <span class="co">// [1,2,3]</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a><span class="co">// composition</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a><span class="kw">const</span> add10 <span class="op">=</span> x <span class="kw">=&gt;</span> x <span class="op">+</span> <span class="dv">10</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a><span class="kw">const</span> mult2 <span class="op">=</span> x <span class="kw">=&gt;</span> x <span class="op">*</span> <span class="dv">2</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a>[<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>]<span class="op">.</span><span class="fu">map</span>(add10)<span class="op">.</span><span class="fu">map</span>(mult2)     <span class="co">// [ 22, 24, 26 ]</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a><span class="co">// is equivalent to...</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a>[<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>]<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> mult2(add10(x))) <span class="co">// [ 22, 24, 26 ]</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true"></a><span class="co">// another example of the composition law</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true"></a><span class="kw">const</span> compose <span class="op">=</span> (f<span class="op">,</span> g) <span class="kw">=&gt;</span> x <span class="kw">=&gt;</span> f(g(x))</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true"></a>mult2(add10(<span class="dv">2</span>)) <span class="op">===</span> compose(mult2<span class="op">,</span> add10)(<span class="dv">2</span>) <span class="co">// true</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true"></a><span class="co">// and applied back to our prior example</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true"></a>[<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>]<span class="op">.</span><span class="fu">map</span>(add10)<span class="op">.</span><span class="fu">map</span>(mult2)      <span class="co">// [ 22, 24, 26 ]</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true"></a>[<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>]<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> mult2(add10(x)))  <span class="co">// [ 22, 24, 26 ]</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true"></a>[<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>]<span class="op">.</span><span class="fu">map</span>(compose(mult2<span class="op">,</span> add10)) <span class="co">// [ 22, 24, 26 ]</span></span></code></pre></div>
 <p>Through <code>map</code>, <code>Array</code> is a <code>Functor</code>. A way to quickly determine if something is a <code>Functor</code> is to ask, “Does it implement <code>map</code> / is it <code>map</code>pable?”</p>
 <p>Since we know that <code>Array</code> is <code>map</code>pable, we can use our <code>map</code> function to check if the <code>f a</code> parameter is an <code>Array</code> and then use the build in <code>Array.prototype.map</code> function to get from <code>a</code> to <code>b</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1"></a><span class="co">// map :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">const</span> map <span class="op">=</span> fn <span class="kw">=&gt;</span> m <span class="kw">=&gt;</span> {</span>
-<span id="cb11-3"><a href="#cb11-3"></a>  <span class="cf">if</span> (isArray(m)) {</span>
-<span id="cb11-4"><a href="#cb11-4"></a>    <span class="cf">return</span> mapArray(fn<span class="op">,</span> m)</span>
-<span id="cb11-5"><a href="#cb11-5"></a>  }</span>
-<span id="cb11-6"><a href="#cb11-6"></a>}</span>
-<span id="cb11-7"><a href="#cb11-7"></a></span>
-<span id="cb11-8"><a href="#cb11-8"></a><span class="co">// isArray :: a -&gt; Bool</span></span>
-<span id="cb11-9"><a href="#cb11-9"></a><span class="kw">const</span> isArray <span class="op">=</span> x <span class="kw">=&gt;</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">isArray</span>(x)</span>
-<span id="cb11-10"><a href="#cb11-10"></a></span>
-<span id="cb11-11"><a href="#cb11-11"></a><span class="co">// mapArray :: ((a -&gt; b), Array a) -&gt; Array b</span></span>
-<span id="cb11-12"><a href="#cb11-12"></a><span class="kw">const</span> mapArray <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> m<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> fn(x))</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="co">// map :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="kw">const</span> map <span class="op">=</span> fn <span class="kw">=&gt;</span> m <span class="kw">=&gt;</span> {</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a>  <span class="cf">if</span> (isArray(m)) {</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a>    <span class="cf">return</span> mapArray(fn<span class="op">,</span> m)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a>  }</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a>}</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true"></a><span class="co">// isArray :: a -&gt; Bool</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true"></a><span class="kw">const</span> isArray <span class="op">=</span> x <span class="kw">=&gt;</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">isArray</span>(x)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true"></a><span class="co">// mapArray :: ((a -&gt; b), Array a) -&gt; Array b</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true"></a><span class="kw">const</span> mapArray <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> m<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> fn(x))</span></code></pre></div>
 <p>Here, we use <code>Array.isArray()</code><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> to see if the argument, <code>m</code>, is an <code>Array</code>, then we call a function, <code>mapArray</code>, that handles the <code>map</code>ping of the <code>Array</code>.</p>
 <p><em>You might be thinking: why <code>m.map(x =&gt; fn(x))</code> and not <code>m.map(fn)</code>? As you might remember from <a href="https://robertwpearce.com/javascript-understand-array-prototype-map-by-reimplementing-it.html">my article on re-implementing <code>Array.prototype.map</code></a>, there are a few other arguments that the native implementation of <code>map</code> provide, as well as some potential changes to the <code>this</code> keyword in your callback function scope. Instead of allowing those to pass through, we simply take the first argument, the currently iterated value, and send that to the callback function<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>.</em></p>
 <p>Now that we’ve seen the easy way to do <code>map</code> with <code>Array</code>, let’s see what this would look like if we felt like implementing <code>mapArray</code> ourselves:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">// mapArray :: ((a -&gt; b), Array a) -&gt; Array b</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="kw">const</span> mapArray <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> {</span>
-<span id="cb12-3"><a href="#cb12-3"></a>  <span class="kw">const</span> newArray <span class="op">=</span> []</span>
-<span id="cb12-4"><a href="#cb12-4"></a></span>
-<span id="cb12-5"><a href="#cb12-5"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> m<span class="op">.</span><span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) {</span>
-<span id="cb12-6"><a href="#cb12-6"></a>    newArray[i] <span class="op">=</span> fn(m[i])</span>
-<span id="cb12-7"><a href="#cb12-7"></a>  }</span>
-<span id="cb12-8"><a href="#cb12-8"></a></span>
-<span id="cb12-9"><a href="#cb12-9"></a>  <span class="cf">return</span> newArray</span>
-<span id="cb12-10"><a href="#cb12-10"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="co">// mapArray :: ((a -&gt; b), Array a) -&gt; Array b</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="kw">const</span> mapArray <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> {</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a>  <span class="kw">const</span> newArray <span class="op">=</span> []</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> m<span class="op">.</span><span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a>    newArray[i] <span class="op">=</span> fn(m[i])</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a>  }</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a>  <span class="cf">return</span> newArray</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a>}</span></code></pre></div>
 <p>Not too shabby! All we do is create a new <code>Array</code> and set the results of calling the callback function with each item to its index in the new <code>Array</code> and then return that <code>Array</code>.</p>
 <p>Do you think our <code>map</code> function can handle an <code>Array</code> of <code>Array</code>s?</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1"></a>map(x <span class="kw">=&gt;</span> x <span class="op">*</span> <span class="dv">2</span>)([ [<span class="dv">1</span><span class="op">,</span><span class="dv">2</span>]<span class="op">,</span> [<span class="dv">3</span><span class="op">,</span><span class="dv">4</span>]<span class="op">,</span> [<span class="dv">5</span><span class="op">,</span><span class="dv">6</span>] ])</span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="co">// Array(3) [ NaN, NaN, NaN ]</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a>map(x <span class="kw">=&gt;</span> x <span class="op">*</span> <span class="dv">2</span>)([ [<span class="dv">1</span><span class="op">,</span><span class="dv">2</span>]<span class="op">,</span> [<span class="dv">3</span><span class="op">,</span><span class="dv">4</span>]<span class="op">,</span> [<span class="dv">5</span><span class="op">,</span><span class="dv">6</span>] ])</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="co">// Array(3) [ NaN, NaN, NaN ]</span></span></code></pre></div>
 <p>While we can successfully iterate over the 3 items in the top-level <code>Array</code>, our callback function can’t perform operations like <code>[1,2] * 2</code>! We need to do another <code>map</code> on the nested <code>Array</code>s:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1"></a>map(map(x <span class="kw">=&gt;</span> x <span class="op">*</span> <span class="dv">2</span>))([ [<span class="dv">1</span><span class="op">,</span><span class="dv">2</span>]<span class="op">,</span> [<span class="dv">3</span><span class="op">,</span><span class="dv">4</span>]<span class="op">,</span> [<span class="dv">5</span><span class="op">,</span><span class="dv">6</span>] ])</span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="co">// [ [2,4], [6,8], [10,12] ]</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a>map(map(x <span class="kw">=&gt;</span> x <span class="op">*</span> <span class="dv">2</span>))([ [<span class="dv">1</span><span class="op">,</span><span class="dv">2</span>]<span class="op">,</span> [<span class="dv">3</span><span class="op">,</span><span class="dv">4</span>]<span class="op">,</span> [<span class="dv">5</span><span class="op">,</span><span class="dv">6</span>] ])</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a><span class="co">// [ [2,4], [6,8], [10,12] ]</span></span></code></pre></div>
 <p>Well done! What else can you <code>map</code>? We’re now going to leave charted waters and venture into the unknown.</p>
 <h2 id="map-an-object"><code>map</code> an <code>Object</code></h2>
 <p>Let’s say we have an <code>i18n</code> (short for “internationalization”) object that we’ve been given that has a terribly annoying issue: every translation is prefixed and suffixed with an underscore (<code>_</code>)!</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">const</span> i18n <span class="op">=</span> {</span>
-<span id="cb15-2"><a href="#cb15-2"></a>  <span class="st">&#39;en-US&#39;</span><span class="op">:</span> {</span>
-<span id="cb15-3"><a href="#cb15-3"></a>    <span class="dt">dayMode</span><span class="op">:</span> <span class="st">&#39;_Day mode_&#39;</span><span class="op">,</span></span>
-<span id="cb15-4"><a href="#cb15-4"></a>    <span class="dt">greeting</span><span class="op">:</span> <span class="st">&#39;_Hello!_&#39;</span><span class="op">,</span></span>
-<span id="cb15-5"><a href="#cb15-5"></a>    <span class="dt">nightMode</span><span class="op">:</span> <span class="st">&#39;_Night Mode_&#39;</span></span>
-<span id="cb15-6"><a href="#cb15-6"></a>  }<span class="op">,</span></span>
-<span id="cb15-7"><a href="#cb15-7"></a>  <span class="st">&#39;es-ES&#39;</span><span class="op">:</span> {</span>
-<span id="cb15-8"><a href="#cb15-8"></a>    <span class="dt">dayMode</span><span class="op">:</span> <span class="st">&#39;_Modo día_&#39;</span><span class="op">,</span></span>
-<span id="cb15-9"><a href="#cb15-9"></a>    <span class="dt">greeting</span><span class="op">:</span> <span class="st">&#39;_¡Hola!_&#39;</span></span>
-<span id="cb15-10"><a href="#cb15-10"></a>    <span class="dt">nightMode</span><span class="op">:</span> <span class="st">&#39;_Modo nocturno_&#39;</span></span>
-<span id="cb15-11"><a href="#cb15-11"></a>  }</span>
-<span id="cb15-12"><a href="#cb15-12"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a><span class="kw">const</span> i18n <span class="op">=</span> {</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a>  <span class="st">&#39;en-US&#39;</span><span class="op">:</span> {</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true"></a>    <span class="dt">dayMode</span><span class="op">:</span> <span class="st">&#39;_Day mode_&#39;</span><span class="op">,</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true"></a>    <span class="dt">greeting</span><span class="op">:</span> <span class="st">&#39;_Hello!_&#39;</span><span class="op">,</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true"></a>    <span class="dt">nightMode</span><span class="op">:</span> <span class="st">&#39;_Night Mode_&#39;</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true"></a>  }<span class="op">,</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true"></a>  <span class="st">&#39;es-ES&#39;</span><span class="op">:</span> {</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true"></a>    <span class="dt">dayMode</span><span class="op">:</span> <span class="st">&#39;_Modo día_&#39;</span><span class="op">,</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true"></a>    <span class="dt">greeting</span><span class="op">:</span> <span class="st">&#39;_¡Hola!_&#39;</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true"></a>    <span class="dt">nightMode</span><span class="op">:</span> <span class="st">&#39;_Modo nocturno_&#39;</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true"></a>  }</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true"></a>}</span></code></pre></div>
 <p>We could manually delete each one, or we could find and replace with our text editor, or we could write a <code>for</code> loop to do this, but because we’re super awesome functional programmers, we’ll try to <code>map</code> over the <code>Object</code> and write a function that removes the prefixed &amp; suffixed underscores (…then we copy and paste that? work with me here!).</p>
 <p>Before we can do this, we need to see what happens when we call <code>.map()</code> on an <code>Object</code>:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1"></a>i18n[<span class="st">&#39;en-US&#39;</span>]<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> x<span class="op">.</span><span class="fu">slice</span>(<span class="dv">1</span>))</span>
-<span id="cb16-2"><a href="#cb16-2"></a><span class="co">// TypeError: i18n[&#39;en-US&#39;].map is not a function</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a>i18n[<span class="st">&#39;en-US&#39;</span>]<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> x<span class="op">.</span><span class="fu">slice</span>(<span class="dv">1</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a><span class="co">// TypeError: i18n[&#39;en-US&#39;].map is not a function</span></span></code></pre></div>
 <p>Oh no! If we can’t even fix the <code>en-US</code> <code>Object</code>, how are we supposed to fix <em>all</em> of them? Let’s update our <code>map</code> function to handle <code>Object</code>s.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1"></a><span class="co">// map :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a><span class="kw">const</span> map <span class="op">=</span> fn <span class="kw">=&gt;</span> m <span class="kw">=&gt;</span> {</span>
-<span id="cb17-3"><a href="#cb17-3"></a>  <span class="cf">if</span> (isArray(m)) {</span>
-<span id="cb17-4"><a href="#cb17-4"></a>    <span class="cf">return</span> mapArray(fn<span class="op">,</span> m)</span>
-<span id="cb17-5"><a href="#cb17-5"></a>  }</span>
-<span id="cb17-6"><a href="#cb17-6"></a></span>
-<span id="cb17-7"><a href="#cb17-7"></a>  <span class="cf">if</span> (isObject(m)) {</span>
-<span id="cb17-8"><a href="#cb17-8"></a>    <span class="cf">return</span> mapObject(fn<span class="op">,</span> m)</span>
-<span id="cb17-9"><a href="#cb17-9"></a>  }</span>
-<span id="cb17-10"><a href="#cb17-10"></a>}</span>
-<span id="cb17-11"><a href="#cb17-11"></a></span>
-<span id="cb17-12"><a href="#cb17-12"></a><span class="co">// isObject :: a -&gt; Bool</span></span>
-<span id="cb17-13"><a href="#cb17-13"></a><span class="kw">const</span> isObject <span class="op">=</span> x <span class="kw">=&gt;</span></span>
-<span id="cb17-14"><a href="#cb17-14"></a>  <span class="op">!!</span>x <span class="op">&amp;&amp;</span> <span class="bu">Object</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">toString</span><span class="op">.</span><span class="fu">call</span>(x) <span class="op">===</span> <span class="st">&#39;[object Object]&#39;</span></span>
-<span id="cb17-15"><a href="#cb17-15"></a></span>
-<span id="cb17-16"><a href="#cb17-16"></a><span class="co">// mapObject :: ((a -&gt; b), { k: a }) -&gt; { k: b }</span></span>
-<span id="cb17-17"><a href="#cb17-17"></a><span class="kw">const</span> mapObject <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> {</span>
-<span id="cb17-18"><a href="#cb17-18"></a>  <span class="kw">const</span> obj <span class="op">=</span> {}</span>
-<span id="cb17-19"><a href="#cb17-19"></a></span>
-<span id="cb17-20"><a href="#cb17-20"></a>  <span class="cf">for</span> (<span class="kw">const</span> [k<span class="op">,</span> v] <span class="kw">of</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">entries</span>(m)) {</span>
-<span id="cb17-21"><a href="#cb17-21"></a>    obj[k] <span class="op">=</span> fn(v)</span>
-<span id="cb17-22"><a href="#cb17-22"></a>  }</span>
-<span id="cb17-23"><a href="#cb17-23"></a></span>
-<span id="cb17-24"><a href="#cb17-24"></a>  <span class="cf">return</span> obj</span>
-<span id="cb17-25"><a href="#cb17-25"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a><span class="co">// map :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a><span class="kw">const</span> map <span class="op">=</span> fn <span class="kw">=&gt;</span> m <span class="kw">=&gt;</span> {</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a>  <span class="cf">if</span> (isArray(m)) {</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true"></a>    <span class="cf">return</span> mapArray(fn<span class="op">,</span> m)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true"></a>  }</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true"></a>  <span class="cf">if</span> (isObject(m)) {</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true"></a>    <span class="cf">return</span> mapObject(fn<span class="op">,</span> m)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true"></a>  }</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true"></a>}</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true"></a><span class="co">// isObject :: a -&gt; Bool</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true"></a><span class="kw">const</span> isObject <span class="op">=</span> x <span class="kw">=&gt;</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true"></a>  <span class="op">!!</span>x <span class="op">&amp;&amp;</span> <span class="bu">Object</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">toString</span><span class="op">.</span><span class="fu">call</span>(x) <span class="op">===</span> <span class="st">&#39;[object Object]&#39;</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true"></a></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true"></a><span class="co">// mapObject :: ((a -&gt; b), { k: a }) -&gt; { k: b }</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true"></a><span class="kw">const</span> mapObject <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> {</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true"></a>  <span class="kw">const</span> obj <span class="op">=</span> {}</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true"></a></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true"></a>  <span class="cf">for</span> (<span class="kw">const</span> [k<span class="op">,</span> v] <span class="kw">of</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">entries</span>(m)) {</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true"></a>    obj[k] <span class="op">=</span> fn(v)</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true"></a>  }</span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true"></a></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true"></a>  <span class="cf">return</span> obj</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true"></a>}</span></code></pre></div>
 <p>Here, we test if something is an object by using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toString"><code>Object.prototype.toString</code></a> and make sure to <code>.call(x)</code> instead of just <code>.toString(x)</code>, for this reason:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1"></a><span class="bu">Object</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="fu">toString</span>(<span class="kw">null</span>)</span>
-<span id="cb18-2"><a href="#cb18-2"></a><span class="co">// &quot;[object Object]&quot;</span></span>
-<span id="cb18-3"><a href="#cb18-3"></a></span>
-<span id="cb18-4"><a href="#cb18-4"></a><span class="bu">Object</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">toString</span><span class="op">.</span><span class="fu">call</span>(<span class="kw">null</span>)</span>
-<span id="cb18-5"><a href="#cb18-5"></a><span class="co">// &quot;[object Null]&quot;</span></span>
-<span id="cb18-6"><a href="#cb18-6"></a></span>
-<span id="cb18-7"><a href="#cb18-7"></a><span class="bu">Object</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="fu">toString</span>([])</span>
-<span id="cb18-8"><a href="#cb18-8"></a><span class="co">// &quot;[object Object]&quot;</span></span>
-<span id="cb18-9"><a href="#cb18-9"></a></span>
-<span id="cb18-10"><a href="#cb18-10"></a><span class="bu">Object</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">toString</span><span class="op">.</span><span class="fu">call</span>([])</span>
-<span id="cb18-11"><a href="#cb18-11"></a><span class="co">// &quot;[object Array]&quot;</span></span>
-<span id="cb18-12"><a href="#cb18-12"></a></span>
-<span id="cb18-13"><a href="#cb18-13"></a><span class="bu">Object</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">toString</span><span class="op">.</span><span class="fu">call</span>({})</span>
-<span id="cb18-14"><a href="#cb18-14"></a><span class="co">// &quot;[object Object]&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a><span class="bu">Object</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="fu">toString</span>(<span class="kw">null</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true"></a><span class="co">// &quot;[object Object]&quot;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true"></a><span class="bu">Object</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">toString</span><span class="op">.</span><span class="fu">call</span>(<span class="kw">null</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true"></a><span class="co">// &quot;[object Null]&quot;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true"></a><span class="bu">Object</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="fu">toString</span>([])</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true"></a><span class="co">// &quot;[object Object]&quot;</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true"></a><span class="bu">Object</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">toString</span><span class="op">.</span><span class="fu">call</span>([])</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true"></a><span class="co">// &quot;[object Array]&quot;</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true"></a><span class="bu">Object</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">toString</span><span class="op">.</span><span class="fu">call</span>({})</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true"></a><span class="co">// &quot;[object Object]&quot;</span></span></code></pre></div>
 <p>We then use our new <code>mapObject</code> function, whose signature is</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb19-1"><a href="#cb19-1"></a><span class="ot">mapObject ::</span> ((a <span class="ot">-&gt;</span> b), { k<span class="op">:</span> a }) <span class="ot">-&gt;</span> { k<span class="op">:</span> b }</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a><span class="ot">mapObject ::</span> ((a <span class="ot">-&gt;</span> b), { k<span class="op">:</span> a }) <span class="ot">-&gt;</span> { k<span class="op">:</span> b }</span></code></pre></div>
 <p><code>mapObject</code> takes a function from <code>a</code> to <code>b</code> and an <code>Object</code> with a key(s) and some value(s), <code>a</code>, and returns an <code>Object</code> with a key(s) and some value(s) <code>b</code>. In short, it maps the <em>values</em> of an <code>Object</code>. Our <code>mapObject</code> function is nothing more than a <code>for</code> loop over each value returned from <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries"><code>Object.entries()</code></a>! It calls the callback function with each value and returns a new object with the same key and a new, updated value.</p>
 <p>Let’s try it out:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw">const</span> i18n <span class="op">=</span> {</span>
-<span id="cb20-2"><a href="#cb20-2"></a>  <span class="st">&#39;en-US&#39;</span><span class="op">:</span> {</span>
-<span id="cb20-3"><a href="#cb20-3"></a>    <span class="dt">dayMode</span><span class="op">:</span> <span class="st">&#39;_Day mode_&#39;</span><span class="op">,</span></span>
-<span id="cb20-4"><a href="#cb20-4"></a>    <span class="dt">greeting</span><span class="op">:</span> <span class="st">&#39;_Hello!_&#39;</span><span class="op">,</span></span>
-<span id="cb20-5"><a href="#cb20-5"></a>    <span class="dt">nightMode</span><span class="op">:</span> <span class="st">&#39;_Night Mode_&#39;</span></span>
-<span id="cb20-6"><a href="#cb20-6"></a>  }<span class="op">,</span></span>
-<span id="cb20-7"><a href="#cb20-7"></a>  <span class="st">&#39;es-ES&#39;</span><span class="op">:</span> {</span>
-<span id="cb20-8"><a href="#cb20-8"></a>    <span class="dt">dayMode</span><span class="op">:</span> <span class="st">&#39;_Modo día_&#39;</span><span class="op">,</span></span>
-<span id="cb20-9"><a href="#cb20-9"></a>    <span class="dt">greeting</span><span class="op">:</span> <span class="st">&#39;_¡Hola!_&#39;</span></span>
-<span id="cb20-10"><a href="#cb20-10"></a>    <span class="dt">nightMode</span><span class="op">:</span> <span class="st">&#39;_Modo nocturno_&#39;</span></span>
-<span id="cb20-11"><a href="#cb20-11"></a>  }</span>
-<span id="cb20-12"><a href="#cb20-12"></a>}</span>
-<span id="cb20-13"><a href="#cb20-13"></a>map(x <span class="kw">=&gt;</span> x<span class="op">.</span><span class="fu">slice</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">-1</span>))(i18n[<span class="st">&#39;en-US&#39;</span>])</span>
-<span id="cb20-14"><a href="#cb20-14"></a><span class="co">// {</span></span>
-<span id="cb20-15"><a href="#cb20-15"></a><span class="co">//   dayMode: &#39;Day mode&#39;,</span></span>
-<span id="cb20-16"><a href="#cb20-16"></a><span class="co">//   greeting: &#39;Hello!&#39;,</span></span>
-<span id="cb20-17"><a href="#cb20-17"></a><span class="co">//   nightMode: &#39;Night Mode&#39;</span></span>
-<span id="cb20-18"><a href="#cb20-18"></a><span class="co">// }</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true"></a><span class="kw">const</span> i18n <span class="op">=</span> {</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true"></a>  <span class="st">&#39;en-US&#39;</span><span class="op">:</span> {</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true"></a>    <span class="dt">dayMode</span><span class="op">:</span> <span class="st">&#39;_Day mode_&#39;</span><span class="op">,</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true"></a>    <span class="dt">greeting</span><span class="op">:</span> <span class="st">&#39;_Hello!_&#39;</span><span class="op">,</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true"></a>    <span class="dt">nightMode</span><span class="op">:</span> <span class="st">&#39;_Night Mode_&#39;</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true"></a>  }<span class="op">,</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true"></a>  <span class="st">&#39;es-ES&#39;</span><span class="op">:</span> {</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true"></a>    <span class="dt">dayMode</span><span class="op">:</span> <span class="st">&#39;_Modo día_&#39;</span><span class="op">,</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true"></a>    <span class="dt">greeting</span><span class="op">:</span> <span class="st">&#39;_¡Hola!_&#39;</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true"></a>    <span class="dt">nightMode</span><span class="op">:</span> <span class="st">&#39;_Modo nocturno_&#39;</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true"></a>  }</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true"></a>}</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true"></a>map(x <span class="kw">=&gt;</span> x<span class="op">.</span><span class="fu">slice</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">-1</span>))(i18n[<span class="st">&#39;en-US&#39;</span>])</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true"></a><span class="co">// {</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true"></a><span class="co">//   dayMode: &#39;Day mode&#39;,</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true"></a><span class="co">//   greeting: &#39;Hello!&#39;,</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true"></a><span class="co">//   nightMode: &#39;Night Mode&#39;</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true"></a><span class="co">// }</span></span></code></pre></div>
 <p>Okay – what about our entire <code>i18n</code> object?</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1"></a>map(map(x <span class="kw">=&gt;</span> x<span class="op">.</span><span class="fu">slice</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">-1</span>)))(i18n)</span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="co">// {</span></span>
-<span id="cb21-3"><a href="#cb21-3"></a><span class="co">//  &#39;en-US&#39;: {</span></span>
-<span id="cb21-4"><a href="#cb21-4"></a><span class="co">//    dayMode: &#39;Day mode&#39;,</span></span>
-<span id="cb21-5"><a href="#cb21-5"></a><span class="co">//    greeting: &#39;Hello!&#39;,</span></span>
-<span id="cb21-6"><a href="#cb21-6"></a><span class="co">//    nightMode: &#39;Night Mode&#39;</span></span>
-<span id="cb21-7"><a href="#cb21-7"></a><span class="co">//  },</span></span>
-<span id="cb21-8"><a href="#cb21-8"></a><span class="co">//  &#39;es-ES&#39;: {</span></span>
-<span id="cb21-9"><a href="#cb21-9"></a><span class="co">//    dayMode: &#39;Modo día&#39;,</span></span>
-<span id="cb21-10"><a href="#cb21-10"></a><span class="co">//    greeting: &#39;¡Hola!&#39;,</span></span>
-<span id="cb21-11"><a href="#cb21-11"></a><span class="co">//    nightMode: &#39;Modo nocturno&#39;</span></span>
-<span id="cb21-12"><a href="#cb21-12"></a><span class="co">//  }</span></span>
-<span id="cb21-13"><a href="#cb21-13"></a><span class="co">// }</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a>map(map(x <span class="kw">=&gt;</span> x<span class="op">.</span><span class="fu">slice</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">-1</span>)))(i18n)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true"></a><span class="co">// {</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true"></a><span class="co">//  &#39;en-US&#39;: {</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true"></a><span class="co">//    dayMode: &#39;Day mode&#39;,</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true"></a><span class="co">//    greeting: &#39;Hello!&#39;,</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true"></a><span class="co">//    nightMode: &#39;Night Mode&#39;</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true"></a><span class="co">//  },</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true"></a><span class="co">//  &#39;es-ES&#39;: {</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true"></a><span class="co">//    dayMode: &#39;Modo día&#39;,</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true"></a><span class="co">//    greeting: &#39;¡Hola!&#39;,</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true"></a><span class="co">//    nightMode: &#39;Modo nocturno&#39;</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true"></a><span class="co">//  }</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true"></a><span class="co">// }</span></span></code></pre></div>
 <p>Since we’re dealing with nested objects, we need to use <code>map</code> on an <code>Object</code> inside an <code>Object</code>. We pass a nested <code>map</code>ping function, and our little underscore problem is gone!</p>
 <h2 id="map-a-function"><code>map</code> a <code>Function</code></h2>
 <p>Remember our functions <code>mult2</code> and <code>add10</code> from before?</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1"></a><span class="kw">const</span> add10 <span class="op">=</span> x <span class="kw">=&gt;</span> x <span class="op">+</span> <span class="dv">10</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="kw">const</span> mult2 <span class="op">=</span> x <span class="kw">=&gt;</span> x <span class="op">*</span> <span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true"></a><span class="kw">const</span> add10 <span class="op">=</span> x <span class="kw">=&gt;</span> x <span class="op">+</span> <span class="dv">10</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true"></a><span class="kw">const</span> mult2 <span class="op">=</span> x <span class="kw">=&gt;</span> x <span class="op">*</span> <span class="dv">2</span></span></code></pre></div>
 <p>What would happen if we used those as the arguments to our <code>map</code> function and wanted them to be automatically composed together so that we can then provide a value later?</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1"></a>map(add10)(mult2)     <span class="co">// undefined</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a>map(add10)(mult2)(<span class="dv">12</span>) <span class="co">// TypeError: map(...)(...) is not a function</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a>map(add10)(mult2)     <span class="co">// undefined</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a>map(add10)(mult2)(<span class="dv">12</span>) <span class="co">// TypeError: map(...)(...) is not a function</span></span></code></pre></div>
 <p>Time for our <code>map</code> function to handle a <code>Function</code> as the second argument and <code>compose</code> the two functions together:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb24-1"><a href="#cb24-1"></a><span class="co">// map :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="kw">const</span> map <span class="op">=</span> fn <span class="kw">=&gt;</span> m <span class="kw">=&gt;</span> {</span>
-<span id="cb24-3"><a href="#cb24-3"></a>  <span class="cf">if</span> (isArray(m)) {</span>
-<span id="cb24-4"><a href="#cb24-4"></a>    <span class="cf">return</span> mapArray(fn<span class="op">,</span> m)</span>
-<span id="cb24-5"><a href="#cb24-5"></a>  }</span>
-<span id="cb24-6"><a href="#cb24-6"></a></span>
-<span id="cb24-7"><a href="#cb24-7"></a>  <span class="cf">if</span> (isObject(m)) {</span>
-<span id="cb24-8"><a href="#cb24-8"></a>    <span class="cf">return</span> mapObj(fn<span class="op">,</span> m)</span>
-<span id="cb24-9"><a href="#cb24-9"></a>  }</span>
-<span id="cb24-10"><a href="#cb24-10"></a></span>
-<span id="cb24-11"><a href="#cb24-11"></a>  <span class="cf">if</span> (isFunction(m)) {</span>
-<span id="cb24-12"><a href="#cb24-12"></a>    <span class="cf">return</span> compose(fn<span class="op">,</span> m)</span>
-<span id="cb24-13"><a href="#cb24-13"></a>  }</span>
-<span id="cb24-14"><a href="#cb24-14"></a>}</span>
-<span id="cb24-15"><a href="#cb24-15"></a></span>
-<span id="cb24-16"><a href="#cb24-16"></a><span class="co">// isFunction :: a -&gt; Bool</span></span>
-<span id="cb24-17"><a href="#cb24-17"></a><span class="kw">const</span> isFunction <span class="op">=</span> x <span class="kw">=&gt;</span> <span class="kw">typeof</span> x <span class="op">===</span> <span class="st">&#39;function&#39;</span></span>
-<span id="cb24-18"><a href="#cb24-18"></a></span>
-<span id="cb24-19"><a href="#cb24-19"></a><span class="co">// compose :: ((b -&gt; c), (a -&gt; b)) -&gt; a -&gt; c</span></span>
-<span id="cb24-20"><a href="#cb24-20"></a><span class="kw">const</span> compose <span class="op">=</span> (f<span class="op">,</span> g) <span class="kw">=&gt;</span> x <span class="kw">=&gt;</span> f(g(x))</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true"></a><span class="co">// map :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true"></a><span class="kw">const</span> map <span class="op">=</span> fn <span class="kw">=&gt;</span> m <span class="kw">=&gt;</span> {</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true"></a>  <span class="cf">if</span> (isArray(m)) {</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true"></a>    <span class="cf">return</span> mapArray(fn<span class="op">,</span> m)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true"></a>  }</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true"></a>  <span class="cf">if</span> (isObject(m)) {</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true"></a>    <span class="cf">return</span> mapObj(fn<span class="op">,</span> m)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true"></a>  }</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true"></a></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true"></a>  <span class="cf">if</span> (isFunction(m)) {</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true"></a>    <span class="cf">return</span> compose(fn<span class="op">,</span> m)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true"></a>  }</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true"></a>}</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true"></a></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true"></a><span class="co">// isFunction :: a -&gt; Bool</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true"></a><span class="kw">const</span> isFunction <span class="op">=</span> x <span class="kw">=&gt;</span> <span class="kw">typeof</span> x <span class="op">===</span> <span class="st">&#39;function&#39;</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true"></a></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true"></a><span class="co">// compose :: ((b -&gt; c), (a -&gt; b)) -&gt; a -&gt; c</span></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true"></a><span class="kw">const</span> compose <span class="op">=</span> (f<span class="op">,</span> g) <span class="kw">=&gt;</span> x <span class="kw">=&gt;</span> f(g(x))</span></code></pre></div>
 <p>And when we run our previously failed code again,</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb25-1"><a href="#cb25-1"></a>map(add10)(mult2)     <span class="co">// function compose(x)</span></span>
-<span id="cb25-2"><a href="#cb25-2"></a>map(add10)(mult2)(<span class="dv">12</span>) <span class="co">// 44</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true"></a>map(add10)(mult2)     <span class="co">// function compose(x)</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true"></a>map(add10)(mult2)(<span class="dv">12</span>) <span class="co">// 44</span></span></code></pre></div>
 <p>we can see that calling <code>map</code> with two functions returns a composition of those two functions, and calling that result with a primitive value (<code>12</code>) gives us back our result, <code>44</code>.</p>
 <h2 id="map-a-functor"><code>map</code> a <code>Functor</code></h2>
 <p>When we learned about <code>map</code>ping <code>Array</code>s before, we learned that <code>Array</code>s are <code>Functor</code>s because they adhere to the laws of <em>identity</em> and <em>composition</em>; i.e., they are <code>map</code>pable.</p>
 <p>There are all sorts of other data structures that implement a <code>map</code> method, just like <code>Array.prototype</code> does, and we want to be able to handle those, too!</p>
 <p>We currently have all the tools required to implement <code>map</code> for <code>Functor</code>s without even knowing how they might work! All we need to know is, “Does it implement <code>map</code> as a <code>Function</code>?” Let’s see what we can come up with!</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1"></a><span class="co">// map :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a><span class="kw">const</span> map <span class="op">=</span> fn <span class="kw">=&gt;</span> m <span class="kw">=&gt;</span> {</span>
-<span id="cb26-3"><a href="#cb26-3"></a>  <span class="cf">if</span> (isFunction(m)) {</span>
-<span id="cb26-4"><a href="#cb26-4"></a>    <span class="cf">return</span> compose(fn<span class="op">,</span> m)</span>
-<span id="cb26-5"><a href="#cb26-5"></a>  }</span>
-<span id="cb26-6"><a href="#cb26-6"></a></span>
-<span id="cb26-7"><a href="#cb26-7"></a>  <span class="cf">if</span> (isArray(m)) {</span>
-<span id="cb26-8"><a href="#cb26-8"></a>    <span class="cf">return</span> mapArray(fn<span class="op">,</span> m)</span>
-<span id="cb26-9"><a href="#cb26-9"></a>  }</span>
-<span id="cb26-10"><a href="#cb26-10"></a></span>
-<span id="cb26-11"><a href="#cb26-11"></a>  <span class="cf">if</span> (isFunctor(m)) {</span>
-<span id="cb26-12"><a href="#cb26-12"></a>    <span class="cf">return</span> mapFunctor(fn<span class="op">,</span> m)</span>
-<span id="cb26-13"><a href="#cb26-13"></a>  }</span>
-<span id="cb26-14"><a href="#cb26-14"></a></span>
-<span id="cb26-15"><a href="#cb26-15"></a>  <span class="cf">if</span> (isObject(m)) {</span>
-<span id="cb26-16"><a href="#cb26-16"></a>    <span class="cf">return</span> mapObj(fn<span class="op">,</span> m)</span>
-<span id="cb26-17"><a href="#cb26-17"></a>  }</span>
-<span id="cb26-18"><a href="#cb26-18"></a>}</span>
-<span id="cb26-19"><a href="#cb26-19"></a></span>
-<span id="cb26-20"><a href="#cb26-20"></a><span class="co">// isFunction :: a -&gt; Bool</span></span>
-<span id="cb26-21"><a href="#cb26-21"></a><span class="kw">const</span> isFunction <span class="op">=</span> x <span class="kw">=&gt;</span> <span class="kw">typeof</span> x <span class="op">===</span> <span class="st">&#39;function&#39;</span></span>
-<span id="cb26-22"><a href="#cb26-22"></a></span>
-<span id="cb26-23"><a href="#cb26-23"></a><span class="co">// isFunctor :: a -&gt; Bool</span></span>
-<span id="cb26-24"><a href="#cb26-24"></a><span class="kw">const</span> isFunctor  <span class="op">=</span> x <span class="kw">=&gt;</span> <span class="op">!!</span>x <span class="op">&amp;&amp;</span> isFunction(x[<span class="st">&#39;map&#39;</span>])</span>
-<span id="cb26-25"><a href="#cb26-25"></a></span>
-<span id="cb26-26"><a href="#cb26-26"></a><span class="co">// mapFunctor :: Functor f =&gt; ((a -&gt; b), f a) -&gt; f b</span></span>
-<span id="cb26-27"><a href="#cb26-27"></a><span class="kw">const</span> mapFunctor <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> m<span class="op">.</span><span class="fu">map</span>(fn)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true"></a><span class="co">// map :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true"></a><span class="kw">const</span> map <span class="op">=</span> fn <span class="kw">=&gt;</span> m <span class="kw">=&gt;</span> {</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true"></a>  <span class="cf">if</span> (isFunction(m)) {</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true"></a>    <span class="cf">return</span> compose(fn<span class="op">,</span> m)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true"></a>  }</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true"></a>  <span class="cf">if</span> (isArray(m)) {</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true"></a>    <span class="cf">return</span> mapArray(fn<span class="op">,</span> m)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true"></a>  }</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true"></a></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true"></a>  <span class="cf">if</span> (isFunctor(m)) {</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true"></a>    <span class="cf">return</span> mapFunctor(fn<span class="op">,</span> m)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true"></a>  }</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true"></a></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true"></a>  <span class="cf">if</span> (isObject(m)) {</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true"></a>    <span class="cf">return</span> mapObj(fn<span class="op">,</span> m)</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true"></a>  }</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true"></a>}</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true"></a></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true"></a><span class="co">// isFunction :: a -&gt; Bool</span></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true"></a><span class="kw">const</span> isFunction <span class="op">=</span> x <span class="kw">=&gt;</span> <span class="kw">typeof</span> x <span class="op">===</span> <span class="st">&#39;function&#39;</span></span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true"></a></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true"></a><span class="co">// isFunctor :: a -&gt; Bool</span></span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true"></a><span class="kw">const</span> isFunctor  <span class="op">=</span> x <span class="kw">=&gt;</span> <span class="op">!!</span>x <span class="op">&amp;&amp;</span> isFunction(x[<span class="st">&#39;map&#39;</span>])</span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true"></a></span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true"></a><span class="co">// mapFunctor :: Functor f =&gt; ((a -&gt; b), f a) -&gt; f b</span></span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true"></a><span class="kw">const</span> mapFunctor <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> m<span class="op">.</span><span class="fu">map</span>(fn)</span></code></pre></div>
 <p>That is surprisingly simple, isn’t it? We use our <code>isFunction</code> check from before to test if <code>m</code> has a <code>map</code> property that is a <code>Function</code>, then we call <code>map</code> on <code>m</code> and pass it the callback <code>Function</code> in <code>mapFunctor</code>.</p>
 <p>You might be thinking that <code>mapArray</code> and <code>mapFunctor</code> could use the same handler because <code>Array</code>s are <code>Functors</code>, and you are correct; however, because of the extra implementation bits that come back from <code>Array.prototype.map</code>, we’ll keep them separate and only call the callback to <code>Array.prototype.map</code> with the currently iterated item. Here’s the difference:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb27-1"><a href="#cb27-1"></a><span class="co">// mapArray :: ((a -&gt; b), Array a) -&gt; Array b</span></span>
-<span id="cb27-2"><a href="#cb27-2"></a><span class="kw">const</span> mapArray <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> m<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> (fn(x))</span>
-<span id="cb27-3"><a href="#cb27-3"></a></span>
-<span id="cb27-4"><a href="#cb27-4"></a><span class="co">// mapFunctor :: Functor f =&gt; ((a -&gt; b), f a) -&gt; f b</span></span>
-<span id="cb27-5"><a href="#cb27-5"></a><span class="kw">const</span> mapFunctor <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> m<span class="op">.</span><span class="fu">map</span>(fn)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true"></a><span class="co">// mapArray :: ((a -&gt; b), Array a) -&gt; Array b</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true"></a><span class="kw">const</span> mapArray <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> m<span class="op">.</span><span class="fu">map</span>(x <span class="kw">=&gt;</span> (fn(x))</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true"></a><span class="co">// mapFunctor :: Functor f =&gt; ((a -&gt; b), f a) -&gt; f b</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true"></a><span class="kw">const</span> mapFunctor <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> m<span class="op">.</span><span class="fu">map</span>(fn)</span></code></pre></div>
 <p>If you don’t care about this, it’s totally acceptable to not include the <code>Array</code> bits at all and use the <code>Functor</code> <code>map</code><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> to handle the <code>map</code>ping of <code>Array</code>s, since they’re <code>Functor</code>s.</p>
 <p>To test our <code>Functor</code> <code>map</code>ping, we’ll use <a href="https://crocks.dev">crocks</a> to provide us access to an algebraic data type called <a href="https://crocks.dev/docs/crocks/Maybe.html"><code>Maybe</code></a>.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb28-1"><a href="#cb28-1"></a><span class="im">import</span> { compose<span class="op">,</span> option<span class="op">,</span> prop } <span class="im">from</span> <span class="st">&#39;crocks&#39;</span></span>
-<span id="cb28-2"><a href="#cb28-2"></a></span>
-<span id="cb28-3"><a href="#cb28-3"></a><span class="kw">const</span> company <span class="op">=</span> {</span>
-<span id="cb28-4"><a href="#cb28-4"></a>  <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Pearce Software, LLC&#39;</span><span class="op">,</span></span>
-<span id="cb28-5"><a href="#cb28-5"></a>  <span class="dt">locations</span><span class="op">:</span> [</span>
-<span id="cb28-6"><a href="#cb28-6"></a>    <span class="st">&#39;Charleston, SC, USA&#39;</span><span class="op">,</span></span>
-<span id="cb28-7"><a href="#cb28-7"></a>    <span class="st">&#39;Auckland, NZ&#39;</span><span class="op">,</span></span>
-<span id="cb28-8"><a href="#cb28-8"></a>    <span class="st">&#39;London, England, UK&#39;</span></span>
-<span id="cb28-9"><a href="#cb28-9"></a>  ]</span>
-<span id="cb28-10"><a href="#cb28-10"></a>}</span>
-<span id="cb28-11"><a href="#cb28-11"></a></span>
-<span id="cb28-12"><a href="#cb28-12"></a>prop(<span class="st">&#39;foo&#39;</span><span class="op">,</span> company)       <span class="co">// Nothing</span></span>
-<span id="cb28-13"><a href="#cb28-13"></a>prop(<span class="st">&#39;locations&#39;</span><span class="op">,</span> company) <span class="co">// Just [String]</span></span>
-<span id="cb28-14"><a href="#cb28-14"></a></span>
-<span id="cb28-15"><a href="#cb28-15"></a>option([]<span class="op">,</span> prop(<span class="st">&#39;foo&#39;</span><span class="op">,</span> company))</span>
-<span id="cb28-16"><a href="#cb28-16"></a><span class="co">// []</span></span>
-<span id="cb28-17"><a href="#cb28-17"></a></span>
-<span id="cb28-18"><a href="#cb28-18"></a>option([]<span class="op">,</span> prop(<span class="st">&#39;locations&#39;</span><span class="op">,</span> company))</span>
-<span id="cb28-19"><a href="#cb28-19"></a><span class="co">// [</span></span>
-<span id="cb28-20"><a href="#cb28-20"></a><span class="co">//   &#39;Charleston, SC, USA&#39;,</span></span>
-<span id="cb28-21"><a href="#cb28-21"></a><span class="co">//   &#39;Auckland, NZ&#39;,</span></span>
-<span id="cb28-22"><a href="#cb28-22"></a><span class="co">//   &#39;London, England, UK&#39;</span></span>
-<span id="cb28-23"><a href="#cb28-23"></a><span class="co">// ]</span></span>
-<span id="cb28-24"><a href="#cb28-24"></a></span>
-<span id="cb28-25"><a href="#cb28-25"></a><span class="kw">const</span> getLocations <span class="op">=</span> compose(option([])<span class="op">,</span> prop(<span class="st">&#39;locations&#39;</span>))</span>
-<span id="cb28-26"><a href="#cb28-26"></a>getLocations(company)</span>
-<span id="cb28-27"><a href="#cb28-27"></a><span class="co">// [</span></span>
-<span id="cb28-28"><a href="#cb28-28"></a><span class="co">//   &#39;Charleston, SC, USA&#39;,</span></span>
-<span id="cb28-29"><a href="#cb28-29"></a><span class="co">//   &#39;Auckland, NZ&#39;,</span></span>
-<span id="cb28-30"><a href="#cb28-30"></a><span class="co">//   &#39;London, England, UK&#39;</span></span>
-<span id="cb28-31"><a href="#cb28-31"></a><span class="co">// ]</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true"></a><span class="im">import</span> { compose<span class="op">,</span> option<span class="op">,</span> prop } <span class="im">from</span> <span class="st">&#39;crocks&#39;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true"></a><span class="kw">const</span> company <span class="op">=</span> {</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true"></a>  <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Pearce Software, LLC&#39;</span><span class="op">,</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true"></a>  <span class="dt">locations</span><span class="op">:</span> [</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true"></a>    <span class="st">&#39;Charleston, SC, USA&#39;</span><span class="op">,</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true"></a>    <span class="st">&#39;Auckland, NZ&#39;</span><span class="op">,</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true"></a>    <span class="st">&#39;London, England, UK&#39;</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true"></a>  ]</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true"></a>}</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true"></a></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true"></a>prop(<span class="st">&#39;foo&#39;</span><span class="op">,</span> company)       <span class="co">// Nothing</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true"></a>prop(<span class="st">&#39;locations&#39;</span><span class="op">,</span> company) <span class="co">// Just [String]</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true"></a></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true"></a>option([]<span class="op">,</span> prop(<span class="st">&#39;foo&#39;</span><span class="op">,</span> company))</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true"></a><span class="co">// []</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true"></a></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true"></a>option([]<span class="op">,</span> prop(<span class="st">&#39;locations&#39;</span><span class="op">,</span> company))</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true"></a><span class="co">// [</span></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true"></a><span class="co">//   &#39;Charleston, SC, USA&#39;,</span></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true"></a><span class="co">//   &#39;Auckland, NZ&#39;,</span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true"></a><span class="co">//   &#39;London, England, UK&#39;</span></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true"></a><span class="co">// ]</span></span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true"></a></span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true"></a><span class="kw">const</span> getLocations <span class="op">=</span> compose(option([])<span class="op">,</span> prop(<span class="st">&#39;locations&#39;</span>))</span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true"></a>getLocations(company)</span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true"></a><span class="co">// [</span></span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true"></a><span class="co">//   &#39;Charleston, SC, USA&#39;,</span></span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true"></a><span class="co">//   &#39;Auckland, NZ&#39;,</span></span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true"></a><span class="co">//   &#39;London, England, UK&#39;</span></span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true"></a><span class="co">// ]</span></span></code></pre></div>
 <p>Pump the breaks! What’s all this <code>Just</code> and <code>Nothing</code> stuff? We’re not going to focus on <code>Maybe</code>s today<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>, but the short version is that the <code>locations</code> property <em>may</em> or <em>may not</em> be present in the object, so we encapsulate that uncertainty inside of a <code>Maybe</code> algebraic data type via the <code>prop</code> function, and we provide a default value via the <code>option</code> function that the <code>Maybe</code> can fall back to in the event of not being able to find <code>locations</code>.</p>
 <p>Why does this matter? We want to <code>map</code> a <code>Maybe</code>, and the <code>prop</code> function will give us access to one. Let’s see what it looks like:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb29-1"><a href="#cb29-1"></a><span class="im">import</span> { compose<span class="op">,</span> option<span class="op">,</span> prop } <span class="im">from</span> <span class="st">&#39;crocks&#39;</span></span>
-<span id="cb29-2"><a href="#cb29-2"></a></span>
-<span id="cb29-3"><a href="#cb29-3"></a><span class="kw">const</span> upcase <span class="op">=</span> x <span class="kw">=&gt;</span> x<span class="op">.</span><span class="fu">toUpperCase</span>()</span>
-<span id="cb29-4"><a href="#cb29-4"></a></span>
-<span id="cb29-5"><a href="#cb29-5"></a><span class="kw">const</span> getLocations <span class="op">=</span></span>
-<span id="cb29-6"><a href="#cb29-6"></a>  compose(option([])<span class="op">,</span> map(map(upcase))<span class="op">,</span> prop(<span class="st">&#39;locations&#39;</span>))</span>
-<span id="cb29-7"><a href="#cb29-7"></a></span>
-<span id="cb29-8"><a href="#cb29-8"></a>getLocations({}) <span class="co">// []</span></span>
-<span id="cb29-9"><a href="#cb29-9"></a></span>
-<span id="cb29-10"><a href="#cb29-10"></a>getLocations(company)</span>
-<span id="cb29-11"><a href="#cb29-11"></a><span class="co">// [</span></span>
-<span id="cb29-12"><a href="#cb29-12"></a><span class="co">//   &#39;CHARLESTON, SC, USA&#39;,</span></span>
-<span id="cb29-13"><a href="#cb29-13"></a><span class="co">//   &#39;AUCKLAND, NZ&#39;,</span></span>
-<span id="cb29-14"><a href="#cb29-14"></a><span class="co">//   &#39;LONDON, ENGLAND, UK&#39;</span></span>
-<span id="cb29-15"><a href="#cb29-15"></a><span class="co">// ]</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true"></a><span class="im">import</span> { compose<span class="op">,</span> option<span class="op">,</span> prop } <span class="im">from</span> <span class="st">&#39;crocks&#39;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true"></a><span class="kw">const</span> upcase <span class="op">=</span> x <span class="kw">=&gt;</span> x<span class="op">.</span><span class="fu">toUpperCase</span>()</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true"></a><span class="kw">const</span> getLocations <span class="op">=</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true"></a>  compose(option([])<span class="op">,</span> map(map(upcase))<span class="op">,</span> prop(<span class="st">&#39;locations&#39;</span>))</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true"></a>getLocations({}) <span class="co">// []</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true"></a></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true"></a>getLocations(company)</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true"></a><span class="co">// [</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true"></a><span class="co">//   &#39;CHARLESTON, SC, USA&#39;,</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true"></a><span class="co">//   &#39;AUCKLAND, NZ&#39;,</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true"></a><span class="co">//   &#39;LONDON, ENGLAND, UK&#39;</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true"></a><span class="co">// ]</span></span></code></pre></div>
 <p>Okay, cool! But why are we <code>map</code>ping twice?</p>
 <p>When we work with algebraic data types like <code>Maybe</code>, instead of writing <code>if (dataIsValid) doSomething</code>, the <code>map</code> method on a <code>Maybe</code> gives us access to the value inside the <code>Maybe</code> (our <code>locations</code>), but it does so <em>only if the data is available</em>.</p>
 <p>Once we have access to the <code>locations</code>, we then use <code>map</code> again to uppercase each location.</p>
 <h2 id="throwing-out-bad-data"><code>throw</code>ing Out Bad Data</h2>
 <p>What happens if the arguments passed to <code>map</code> aren’t a <code>Function</code> and a <code>Functor</code>?</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb30-1"><a href="#cb30-1"></a>map(<span class="kw">null</span>)([<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>])    <span class="co">// TypeError: fn is not a function</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a>map(x <span class="kw">=&gt;</span> x <span class="op">*</span> <span class="dv">2</span>)(<span class="kw">null</span>) <span class="co">// undefined</span></span>
-<span id="cb30-3"><a href="#cb30-3"></a>map(<span class="kw">null</span>)(<span class="kw">null</span>)       <span class="co">// undefined</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true"></a>map(<span class="kw">null</span>)([<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>])    <span class="co">// TypeError: fn is not a function</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true"></a>map(x <span class="kw">=&gt;</span> x <span class="op">*</span> <span class="dv">2</span>)(<span class="kw">null</span>) <span class="co">// undefined</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true"></a>map(<span class="kw">null</span>)(<span class="kw">null</span>)       <span class="co">// undefined</span></span></code></pre></div>
 <p>I think we can provide some more helpful messaging to guide users of our <code>map</code> tool on how to use it correctly.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb31-1"><a href="#cb31-1"></a><span class="co">// map :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</span></span>
-<span id="cb31-2"><a href="#cb31-2"></a><span class="kw">const</span> map <span class="op">=</span> fn <span class="kw">=&gt;</span> m <span class="kw">=&gt;</span> {</span>
-<span id="cb31-3"><a href="#cb31-3"></a>  <span class="cf">if</span> (<span class="op">!</span>isFunction(fn)) {</span>
-<span id="cb31-4"><a href="#cb31-4"></a>    <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">TypeError</span>(<span class="vs">`map: Please provide a Function for the first argument`</span>)</span>
-<span id="cb31-5"><a href="#cb31-5"></a>  }</span>
-<span id="cb31-6"><a href="#cb31-6"></a></span>
-<span id="cb31-7"><a href="#cb31-7"></a>  <span class="co">// ...our other handlers...</span></span>
-<span id="cb31-8"><a href="#cb31-8"></a></span>
-<span id="cb31-9"><a href="#cb31-9"></a>  <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">TypeError</span>(<span class="vs">`map: Please provide a Functor or Object for the second argument`</span>)</span>
-<span id="cb31-10"><a href="#cb31-10"></a>}</span>
-<span id="cb31-11"><a href="#cb31-11"></a></span>
-<span id="cb31-12"><a href="#cb31-12"></a>map(<span class="kw">null</span>)([<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>])    <span class="co">// TypeError: map: Please provide a Function for the first argument</span></span>
-<span id="cb31-13"><a href="#cb31-13"></a>map(x <span class="kw">=&gt;</span> x <span class="op">*</span> <span class="dv">2</span>)(<span class="kw">null</span>) <span class="co">// TypeError: map: Please provide a Functor or Object for the second argument</span></span>
-<span id="cb31-14"><a href="#cb31-14"></a>map(<span class="kw">null</span>)(<span class="kw">null</span>)       <span class="co">// TypeError: map: Please provide a Function for the first argument</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true"></a><span class="co">// map :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true"></a><span class="kw">const</span> map <span class="op">=</span> fn <span class="kw">=&gt;</span> m <span class="kw">=&gt;</span> {</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true"></a>  <span class="cf">if</span> (<span class="op">!</span>isFunction(fn)) {</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true"></a>    <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">TypeError</span>(<span class="vs">`map: Please provide a Function for the first argument`</span>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true"></a>  }</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true"></a>  <span class="co">// ...our other handlers...</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true"></a>  <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">TypeError</span>(<span class="vs">`map: Please provide a Functor or Object for the second argument`</span>)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true"></a>}</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true"></a></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true"></a>map(<span class="kw">null</span>)([<span class="dv">1</span><span class="op">,</span><span class="dv">2</span><span class="op">,</span><span class="dv">3</span>])    <span class="co">// TypeError: map: Please provide a Function for the first argument</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true"></a>map(x <span class="kw">=&gt;</span> x <span class="op">*</span> <span class="dv">2</span>)(<span class="kw">null</span>) <span class="co">// TypeError: map: Please provide a Functor or Object for the second argument</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true"></a>map(<span class="kw">null</span>)(<span class="kw">null</span>)       <span class="co">// TypeError: map: Please provide a Function for the first argument</span></span></code></pre></div>
 <p>Now, when we provide bad arguments, we’re told exactly what we need to do.</p>
 <h2 id="wrapping-up">Wrapping Up</h2>
 <p>Congratulations and thank you for making it to the end! If you want to play around with what we created, check out this CodeSandbox: <a href="https://codesandbox.io/s/bitter-grass-tknwb" class="uri">https://codesandbox.io/s/bitter-grass-tknwb</a>.</p>
 <p>Here is our code from today in its entirety:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb32-1"><a href="#cb32-1"></a><span class="kw">const</span> { compose<span class="op">,</span> option<span class="op">,</span> prop } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;crocks&#39;</span>)</span>
-<span id="cb32-2"><a href="#cb32-2"></a></span>
-<span id="cb32-3"><a href="#cb32-3"></a><span class="co">// map :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</span></span>
-<span id="cb32-4"><a href="#cb32-4"></a><span class="kw">const</span> map <span class="op">=</span> fn <span class="kw">=&gt;</span> m <span class="kw">=&gt;</span> {</span>
-<span id="cb32-5"><a href="#cb32-5"></a>  <span class="cf">if</span> (<span class="op">!</span>isFunction(fn)) {</span>
-<span id="cb32-6"><a href="#cb32-6"></a>    <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">TypeError</span>(<span class="vs">`map: Please provide a Function for the first argument`</span>)</span>
-<span id="cb32-7"><a href="#cb32-7"></a>  }</span>
-<span id="cb32-8"><a href="#cb32-8"></a></span>
-<span id="cb32-9"><a href="#cb32-9"></a>  <span class="cf">if</span> (isFunction(m)) {</span>
-<span id="cb32-10"><a href="#cb32-10"></a>    <span class="cf">return</span> compose(fn<span class="op">,</span> m)</span>
-<span id="cb32-11"><a href="#cb32-11"></a>  }</span>
-<span id="cb32-12"><a href="#cb32-12"></a></span>
-<span id="cb32-13"><a href="#cb32-13"></a>  <span class="cf">if</span> (isArray(m)) {</span>
-<span id="cb32-14"><a href="#cb32-14"></a>    <span class="cf">return</span> mapArray(fn<span class="op">,</span> m)</span>
-<span id="cb32-15"><a href="#cb32-15"></a>  }</span>
-<span id="cb32-16"><a href="#cb32-16"></a></span>
-<span id="cb32-17"><a href="#cb32-17"></a>  <span class="cf">if</span> (isFunctor(m)) {</span>
-<span id="cb32-18"><a href="#cb32-18"></a>    <span class="cf">return</span> mapFunctor(fn<span class="op">,</span> m)</span>
-<span id="cb32-19"><a href="#cb32-19"></a>  }</span>
-<span id="cb32-20"><a href="#cb32-20"></a></span>
-<span id="cb32-21"><a href="#cb32-21"></a>  <span class="cf">if</span> (isObject(m)) {</span>
-<span id="cb32-22"><a href="#cb32-22"></a>    <span class="cf">return</span> mapObj(fn<span class="op">,</span> m)</span>
-<span id="cb32-23"><a href="#cb32-23"></a>  }</span>
-<span id="cb32-24"><a href="#cb32-24"></a></span>
-<span id="cb32-25"><a href="#cb32-25"></a>  <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">TypeError</span>(<span class="vs">`map: Please provide a Functor or Object for the second argument`</span>)</span>
-<span id="cb32-26"><a href="#cb32-26"></a>}</span>
-<span id="cb32-27"><a href="#cb32-27"></a></span>
-<span id="cb32-28"><a href="#cb32-28"></a><span class="co">// we&#39;re opting for crocks&#39; compose, instead</span></span>
-<span id="cb32-29"><a href="#cb32-29"></a><span class="co">// compose :: ((b -&gt; c), (a -&gt; b)) -&gt; a -&gt; c</span></span>
-<span id="cb32-30"><a href="#cb32-30"></a><span class="co">// const compose = (f, g) =&gt; x =&gt; f(g(x))</span></span>
-<span id="cb32-31"><a href="#cb32-31"></a></span>
-<span id="cb32-32"><a href="#cb32-32"></a><span class="co">// isArray :: a -&gt; Bool</span></span>
-<span id="cb32-33"><a href="#cb32-33"></a><span class="kw">const</span> isArray <span class="op">=</span> x <span class="kw">=&gt;</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">isArray</span>(x)</span>
-<span id="cb32-34"><a href="#cb32-34"></a></span>
-<span id="cb32-35"><a href="#cb32-35"></a><span class="co">// isFunction :: a -&gt; Bool</span></span>
-<span id="cb32-36"><a href="#cb32-36"></a><span class="kw">const</span> isFunction <span class="op">=</span> x <span class="kw">=&gt;</span> <span class="kw">typeof</span> x <span class="op">===</span> <span class="st">&#39;function&#39;</span></span>
-<span id="cb32-37"><a href="#cb32-37"></a></span>
-<span id="cb32-38"><a href="#cb32-38"></a><span class="co">// isFunctor :: a -&gt; Bool</span></span>
-<span id="cb32-39"><a href="#cb32-39"></a><span class="kw">const</span> isFunctor  <span class="op">=</span> x <span class="kw">=&gt;</span> <span class="op">!!</span>x <span class="op">&amp;&amp;</span> isFunction(x[<span class="st">&#39;map&#39;</span>])</span>
-<span id="cb32-40"><a href="#cb32-40"></a></span>
-<span id="cb32-41"><a href="#cb32-41"></a><span class="co">// isObject :: a -&gt; Bool</span></span>
-<span id="cb32-42"><a href="#cb32-42"></a><span class="kw">const</span> isObject <span class="op">=</span> x <span class="kw">=&gt;</span></span>
-<span id="cb32-43"><a href="#cb32-43"></a>  <span class="op">!!</span>x <span class="op">&amp;&amp;</span> <span class="bu">Object</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">toString</span><span class="op">.</span><span class="fu">call</span>(x) <span class="op">===</span> <span class="st">&#39;[object Object]&#39;</span></span>
-<span id="cb32-44"><a href="#cb32-44"></a></span>
-<span id="cb32-45"><a href="#cb32-45"></a><span class="co">// mapArray :: ((a -&gt; b), Array a) -&gt; Array b</span></span>
-<span id="cb32-46"><a href="#cb32-46"></a><span class="kw">const</span> mapArray <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> {</span>
-<span id="cb32-47"><a href="#cb32-47"></a>  <span class="kw">const</span> newArray <span class="op">=</span> []</span>
-<span id="cb32-48"><a href="#cb32-48"></a></span>
-<span id="cb32-49"><a href="#cb32-49"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> m<span class="op">.</span><span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) {</span>
-<span id="cb32-50"><a href="#cb32-50"></a>    newArray<span class="op">.</span><span class="fu">push</span>(fn(m[i]))</span>
-<span id="cb32-51"><a href="#cb32-51"></a>  }</span>
-<span id="cb32-52"><a href="#cb32-52"></a></span>
-<span id="cb32-53"><a href="#cb32-53"></a>  <span class="cf">return</span> newArray</span>
-<span id="cb32-54"><a href="#cb32-54"></a>}</span>
-<span id="cb32-55"><a href="#cb32-55"></a><span class="co">// realistically, you should use this mapArray:</span></span>
-<span id="cb32-56"><a href="#cb32-56"></a><span class="co">// const mapArray = (fn, m) =&gt; m.map(x =&gt; fn(x))</span></span>
-<span id="cb32-57"><a href="#cb32-57"></a></span>
-<span id="cb32-58"><a href="#cb32-58"></a><span class="co">// mapObj :: (a -&gt; b) -&gt; { k: a } -&gt; { k: b }</span></span>
-<span id="cb32-59"><a href="#cb32-59"></a><span class="kw">const</span> mapObj <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> {</span>
-<span id="cb32-60"><a href="#cb32-60"></a>  <span class="kw">const</span> obj <span class="op">=</span> {}</span>
-<span id="cb32-61"><a href="#cb32-61"></a></span>
-<span id="cb32-62"><a href="#cb32-62"></a>  <span class="cf">for</span> (<span class="kw">const</span> [k<span class="op">,</span> v] <span class="kw">of</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">entries</span>(m)) {</span>
-<span id="cb32-63"><a href="#cb32-63"></a>    obj[k] <span class="op">=</span> fn(v)</span>
-<span id="cb32-64"><a href="#cb32-64"></a>  }</span>
-<span id="cb32-65"><a href="#cb32-65"></a></span>
-<span id="cb32-66"><a href="#cb32-66"></a>  <span class="cf">return</span> obj</span>
-<span id="cb32-67"><a href="#cb32-67"></a>}</span>
-<span id="cb32-68"><a href="#cb32-68"></a></span>
-<span id="cb32-69"><a href="#cb32-69"></a><span class="co">// mapFunctor :: Functor f =&gt; ((a -&gt; b), f a) -&gt; f b</span></span>
-<span id="cb32-70"><a href="#cb32-70"></a><span class="kw">const</span> mapFunctor <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> m<span class="op">.</span><span class="fu">map</span>(fn)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true"></a><span class="kw">const</span> { compose<span class="op">,</span> option<span class="op">,</span> prop } <span class="op">=</span> <span class="pp">require</span>(<span class="st">&#39;crocks&#39;</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true"></a><span class="co">// map :: Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true"></a><span class="kw">const</span> map <span class="op">=</span> fn <span class="kw">=&gt;</span> m <span class="kw">=&gt;</span> {</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true"></a>  <span class="cf">if</span> (<span class="op">!</span>isFunction(fn)) {</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true"></a>    <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">TypeError</span>(<span class="vs">`map: Please provide a Function for the first argument`</span>)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true"></a>  }</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true"></a>  <span class="cf">if</span> (isFunction(m)) {</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true"></a>    <span class="cf">return</span> compose(fn<span class="op">,</span> m)</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true"></a>  }</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true"></a></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true"></a>  <span class="cf">if</span> (isArray(m)) {</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true"></a>    <span class="cf">return</span> mapArray(fn<span class="op">,</span> m)</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true"></a>  }</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true"></a></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true"></a>  <span class="cf">if</span> (isFunctor(m)) {</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true"></a>    <span class="cf">return</span> mapFunctor(fn<span class="op">,</span> m)</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true"></a>  }</span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true"></a></span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true"></a>  <span class="cf">if</span> (isObject(m)) {</span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true"></a>    <span class="cf">return</span> mapObj(fn<span class="op">,</span> m)</span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true"></a>  }</span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true"></a></span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true"></a>  <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">TypeError</span>(<span class="vs">`map: Please provide a Functor or Object for the second argument`</span>)</span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true"></a>}</span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true"></a></span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true"></a><span class="co">// we&#39;re opting for crocks&#39; compose, instead</span></span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true"></a><span class="co">// compose :: ((b -&gt; c), (a -&gt; b)) -&gt; a -&gt; c</span></span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true"></a><span class="co">// const compose = (f, g) =&gt; x =&gt; f(g(x))</span></span>
+<span id="cb32-31"><a href="#cb32-31" aria-hidden="true"></a></span>
+<span id="cb32-32"><a href="#cb32-32" aria-hidden="true"></a><span class="co">// isArray :: a -&gt; Bool</span></span>
+<span id="cb32-33"><a href="#cb32-33" aria-hidden="true"></a><span class="kw">const</span> isArray <span class="op">=</span> x <span class="kw">=&gt;</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">isArray</span>(x)</span>
+<span id="cb32-34"><a href="#cb32-34" aria-hidden="true"></a></span>
+<span id="cb32-35"><a href="#cb32-35" aria-hidden="true"></a><span class="co">// isFunction :: a -&gt; Bool</span></span>
+<span id="cb32-36"><a href="#cb32-36" aria-hidden="true"></a><span class="kw">const</span> isFunction <span class="op">=</span> x <span class="kw">=&gt;</span> <span class="kw">typeof</span> x <span class="op">===</span> <span class="st">&#39;function&#39;</span></span>
+<span id="cb32-37"><a href="#cb32-37" aria-hidden="true"></a></span>
+<span id="cb32-38"><a href="#cb32-38" aria-hidden="true"></a><span class="co">// isFunctor :: a -&gt; Bool</span></span>
+<span id="cb32-39"><a href="#cb32-39" aria-hidden="true"></a><span class="kw">const</span> isFunctor  <span class="op">=</span> x <span class="kw">=&gt;</span> <span class="op">!!</span>x <span class="op">&amp;&amp;</span> isFunction(x[<span class="st">&#39;map&#39;</span>])</span>
+<span id="cb32-40"><a href="#cb32-40" aria-hidden="true"></a></span>
+<span id="cb32-41"><a href="#cb32-41" aria-hidden="true"></a><span class="co">// isObject :: a -&gt; Bool</span></span>
+<span id="cb32-42"><a href="#cb32-42" aria-hidden="true"></a><span class="kw">const</span> isObject <span class="op">=</span> x <span class="kw">=&gt;</span></span>
+<span id="cb32-43"><a href="#cb32-43" aria-hidden="true"></a>  <span class="op">!!</span>x <span class="op">&amp;&amp;</span> <span class="bu">Object</span><span class="op">.</span><span class="at">prototype</span><span class="op">.</span><span class="at">toString</span><span class="op">.</span><span class="fu">call</span>(x) <span class="op">===</span> <span class="st">&#39;[object Object]&#39;</span></span>
+<span id="cb32-44"><a href="#cb32-44" aria-hidden="true"></a></span>
+<span id="cb32-45"><a href="#cb32-45" aria-hidden="true"></a><span class="co">// mapArray :: ((a -&gt; b), Array a) -&gt; Array b</span></span>
+<span id="cb32-46"><a href="#cb32-46" aria-hidden="true"></a><span class="kw">const</span> mapArray <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> {</span>
+<span id="cb32-47"><a href="#cb32-47" aria-hidden="true"></a>  <span class="kw">const</span> newArray <span class="op">=</span> []</span>
+<span id="cb32-48"><a href="#cb32-48" aria-hidden="true"></a></span>
+<span id="cb32-49"><a href="#cb32-49" aria-hidden="true"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> m<span class="op">.</span><span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb32-50"><a href="#cb32-50" aria-hidden="true"></a>    newArray<span class="op">.</span><span class="fu">push</span>(fn(m[i]))</span>
+<span id="cb32-51"><a href="#cb32-51" aria-hidden="true"></a>  }</span>
+<span id="cb32-52"><a href="#cb32-52" aria-hidden="true"></a></span>
+<span id="cb32-53"><a href="#cb32-53" aria-hidden="true"></a>  <span class="cf">return</span> newArray</span>
+<span id="cb32-54"><a href="#cb32-54" aria-hidden="true"></a>}</span>
+<span id="cb32-55"><a href="#cb32-55" aria-hidden="true"></a><span class="co">// realistically, you should use this mapArray:</span></span>
+<span id="cb32-56"><a href="#cb32-56" aria-hidden="true"></a><span class="co">// const mapArray = (fn, m) =&gt; m.map(x =&gt; fn(x))</span></span>
+<span id="cb32-57"><a href="#cb32-57" aria-hidden="true"></a></span>
+<span id="cb32-58"><a href="#cb32-58" aria-hidden="true"></a><span class="co">// mapObj :: (a -&gt; b) -&gt; { k: a } -&gt; { k: b }</span></span>
+<span id="cb32-59"><a href="#cb32-59" aria-hidden="true"></a><span class="kw">const</span> mapObj <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> {</span>
+<span id="cb32-60"><a href="#cb32-60" aria-hidden="true"></a>  <span class="kw">const</span> obj <span class="op">=</span> {}</span>
+<span id="cb32-61"><a href="#cb32-61" aria-hidden="true"></a></span>
+<span id="cb32-62"><a href="#cb32-62" aria-hidden="true"></a>  <span class="cf">for</span> (<span class="kw">const</span> [k<span class="op">,</span> v] <span class="kw">of</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">entries</span>(m)) {</span>
+<span id="cb32-63"><a href="#cb32-63" aria-hidden="true"></a>    obj[k] <span class="op">=</span> fn(v)</span>
+<span id="cb32-64"><a href="#cb32-64" aria-hidden="true"></a>  }</span>
+<span id="cb32-65"><a href="#cb32-65" aria-hidden="true"></a></span>
+<span id="cb32-66"><a href="#cb32-66" aria-hidden="true"></a>  <span class="cf">return</span> obj</span>
+<span id="cb32-67"><a href="#cb32-67" aria-hidden="true"></a>}</span>
+<span id="cb32-68"><a href="#cb32-68" aria-hidden="true"></a></span>
+<span id="cb32-69"><a href="#cb32-69" aria-hidden="true"></a><span class="co">// mapFunctor :: Functor f =&gt; ((a -&gt; b), f a) -&gt; f b</span></span>
+<span id="cb32-70"><a href="#cb32-70" aria-hidden="true"></a><span class="kw">const</span> mapFunctor <span class="op">=</span> (fn<span class="op">,</span> m) <span class="kw">=&gt;</span> m<span class="op">.</span><span class="fu">map</span>(fn)</span></code></pre></div>
 <hr />
 <p>Thank you for reading! <br /> Robert</p>
 <section class="footnotes" role="doc-endnotes">
