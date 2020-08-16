@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 set -o errexit
 set -o nounset
@@ -39,12 +39,12 @@ function shell() {
 }
 
 function site() {
-  result/bin/site $@
+  result/bin/site "$@"
   return 0
 }
 
 function unknown-cmd() {
-  echo "Unknown command: $@"
+  echo "Unknown command: $*"
   echo ""
   usage
   return 1
@@ -115,7 +115,7 @@ case "$cmd" in
     ;;
   site)
     [[ -f ./result/bin/site ]] || err-site
-    site $1
+    site "$1"
     ;;
   update-niv)
     update-niv

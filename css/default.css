@@ -86,6 +86,7 @@ body,
 input,
 button {
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 input,
 button {

@@ -18,13 +18,11 @@ let
              (flip appendConfigureFlags [ "-f" "watchServer" "-f" "previewServer" ])
            ];
 
-      hakyll-nix-example = hpNew.callCabal2nix "robertwpearce-com" ./. { };
-
-      niv = import sources.niv { };
+      rwp-com = hpNew.callCabal2nix "robertwpearce-com" ./. { };
     };
   };
 
-  project = haskellPackages.hakyll-nix-example;
+  project = haskellPackages.rwp-com;
 in
 {
   project = project;
@@ -33,13 +31,15 @@ in
     packages = p: with p; [
       project
     ];
+
     buildInputs = with haskellPackages; [
-      ghcid
-      hlint       # or ormolu
-      niv
-      pkgs.cacert # needed for niv
-      pkgs.nix    # needed for niv
+      #ghcid
+      #hlint       # or ormolu
+      pkgs.niv
+      #pkgs.cacert # needed for niv
+      #pkgs.nix    # needed for niv
     ];
+
     withHoogle = true;
   };
 }
