@@ -13,7 +13,6 @@ jobs:
 
     - name: Install Nix
       uses: cachix/install-nix-action@v10
-
       with:
         skip_adding_nixpkgs_channel: true
 
@@ -22,10 +21,10 @@ jobs:
       with:
         name: robertwpearce-com
         signingKey: ${{ secrets.CACHIX_SIGNING_KEY }}
-        # Only needed for private caches
-        #authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-      run: nix-build
-      run: nix-shell --run "echo OK"
+        #authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
+    - run: nix-build
+    - run: nix-shell --run "echo OK"
 
     - name: Artifact pages
       uses: actions/upload-artifact@v2
