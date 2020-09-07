@@ -9,6 +9,7 @@ in pkgs.stdenv.mkDerivation {
     pkgs.nodejs-14_x
   ];
   src = ./src;
+  LANG = "en_US.UTF-8";
   buildPhase = ''
     hakyll-site --verbose build
   '';
