@@ -1,4 +1,5 @@
-{ lib
+{ compiler ? "ghc884"
+, lib
 , pkgs
 }:
 
@@ -8,7 +9,7 @@ let
 
   hakyllFlags = [ "-f" "watchServer" "-f" "previewServer" ];
 
-  haskellPackages = pkgs.haskellPackages.override {
+  haskellPackages = pkgs.haskell.packages.${compiler}.override {
     overrides = hpNew: hpOld: {
       hakyll =
         pipe

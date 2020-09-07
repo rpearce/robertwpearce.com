@@ -1,4 +1,6 @@
-{ lib, pkgs }:
+{ lib
+, pkgs
+}:
 
 let
   generator = pkgs.haskellPackages.callPackage ./generator/default.nix { };
@@ -14,7 +16,7 @@ in pkgs.stdenv.mkDerivation {
   '';
   installPhase = ''
     mkdir -p "$out"
-    cp -r "../site-dist/" "$out/"
+    cp -r ../site-dist/* "$out"
   '';
 }
 #npm install --prefix js
