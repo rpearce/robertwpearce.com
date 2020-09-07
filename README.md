@@ -1,63 +1,48 @@
 # robertwpearce.com
+
 My personal website: [https://robertwpearce.com](https://robertwpearce.com).
 
 ## Development
+
 1. clone this repository
 1. install [nix](https://nixos.org/nix/)
 1. list the available commands
-   ```
+   ```sh
    λ ./make help
    ```
 
 ### CLI
+
 Print usage:
-```
+
+```sh
 λ ./make help
 ```
 
 Build the project & output:
-```
+
+```sh
 λ ./make build
 ```
 
-Run hakyll commands (see next section):
-```
-λ ./make site <COMMAND>
+Start `nix-shell` for project:
+
+```sh
+λ ./make shell
 ```
 
-Use nix to build the project:
-```
-λ ./make build-project
-```
+Update pinned versions of niv & nixpkgs:
 
-Start interactive REPL for project:
-```
-λ ./make repl
-```
-
-Update pinned version of nixpkgs:
-```
-λ ./make nixpkgs-update
-```
-
-### Helpful hakyll commands
-Build the site:
-```
-λ ./make site build
-```
-
-Rebuild the site:
-```
-λ ./make site rebuild
+```sh
+λ ./make update-pkgs
 ```
 
 Start a dev server and watch for changes:
-```
-λ ./make site watch
-λ open http://localhost:8000
+
+```sh
+λ ./make shell
+[nix-shell:~/projects/robertwpearce.com]$ cd src
+[nix-shell:~/projects/robertwpearce.com]$ hakyll-site watch
 ```
 
-Clean up site and remove cache:
-```
-λ ./make site clean
-```
+Then go to http://127.0.0.1:8000 in your browser.

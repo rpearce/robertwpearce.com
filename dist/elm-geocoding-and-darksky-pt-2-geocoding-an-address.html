@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Elm, Geocoding & DarkSky: Pt. 2 – Geocoding an Address</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="In Part 2 we will use Elm & the Google Maps API to geocode an address.">
+    <meta name="author" content="Robert Pearce">
+    <meta name="keywords" content="elm, elm tutorial, elmlang, elm geocoding, elm darksky, elm weather, elm functional programming">
+    <meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU">
+
+    <meta property="og:site_name" content="Robert Pearce | Senior Software Developer">
+    <meta property="og:title" content="Elm, Geocoding & DarkSky: Pt. 2 – Geocoding an Address">
+    <meta property="og:url" content="https://robertwpearce.com/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html">
+    <meta property="og:description" content="In Part 2 we will use Elm & the Google Maps API to geocode an address.">
+    <meta property="og:image" content="https://robertwpearce.com/images/rain-window.jpg">
+    
+      <meta property="og:type" content="article">
+    
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="Robert Pearce | Senior Software Developer">
+    <meta property="twitter:title" content="Elm, Geocoding & DarkSky: Pt. 2 – Geocoding an Address">
+    <meta property="twitter:description" content="In Part 2 we will use Elm & the Google Maps API to geocode an address.">
+    <meta property="twitter:image" content="https://robertwpearce.com/images/rain-window.jpg">
+    <meta property="twitter:creator" content="@RobertWPearce">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="canonical" href="https://robertwpearce.com/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html">
+    <link rel="stylesheet" href="/css/default.css" />
+    
+      <link rel="stylesheet" href="/css/article.css" />
+    
+  </head>
+  <body class="light">
+    <nav class="nav">
+  <div class="layout--constrained" data-nav-wrap>
+    <a class="nav__link nav__skip" href="#content">Skip to content</a>
+    <a class="nav__link" href="/">Home</a>
+    <a class="nav__link" href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a>
+    <a class="nav__link" href="/atom.xml">atom</a>
+    <a class="nav__link" href="/rss.xml">rss</a>
+  </div>
+</nav>
+
+
+<main id="content" tabindex="-1">
+  <article class="article">
+    <header class="article__bg" style="background-image: url('/images/rain-window.jpg')">
+      <div class="article__bgHeader">
+        <div class="layout--constrained">
+          <div class="article__bgTitleWrap">
+            <h1 class="article__bgTitle">
+              <a href="/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html">Elm, Geocoding & DarkSky: Pt. 2 – Geocoding an Address</a>
+            </h1>
+            <div class="article__bgSubHeader">
+              <small class="italic">2017-07-30</small>
+              
+              
+              <small class="article__bgPhotoCred italic">
+                [ photo credit <a href="https://unsplash.com/@gabrielediwald">Gabriele Diwald</a> ]
+              </small>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="layout--constrained">
+      <header class="article__header">
+        <h1 class="article__title">
+          <a href="/elm-geocoding-and-darksky-pt-2-geocoding-an-address.html">Elm, Geocoding & DarkSky: Pt. 2 – Geocoding an Address</a>
+        </h1>
+        <small class="italic">2017-07-30</small>
+        
+      </header>
+      <p>This is part 2 of a multipart series where we will be building a small weather forecast app using <a href="http://elm-lang.org/">Elm</a>, <a href="https://developers.google.com/maps/documentation/geocoding/start">Google’s Geocoding API</a> and the <a href="https://darksky.net/dev/">DarkSky API</a>. Instead of doing everything in one massive post, I’ve broken the steps down into parts of a series. Here is the series plan:</p>
+<ul>
+<li><a href="/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html">Pt. 1 – Setup Elm &amp; Proxy Servers</a></li>
+<li>Pt. 2 – Geocoding an Address</li>
+<li><a href="/elm-geocoding-and-darksky-pt-3-fetching-the-current-weather.html">Pt. 3 – Fetching the Current Weather</a></li>
+<li><a href="/elm-geocoding-and-darksky-pt-4-extracting-our-elm-code.html">Pt. 4 – Extracting Our Elm Code</a></li>
+</ul>
+<p>If you’d like to code along with this tutorial, check out <a href="/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html">part 1</a> first to get set up.</p>
+<p><em>Note: to learn more about the Elm language and syntax, check out the <a href="https://www.elm-tutorial.org/en/">Elm Tutorial</a>, the <a href="https://egghead.io/courses/start-using-elm-to-build-web-applications">EggHead.io Elm course</a>, subscribe to <a href="https://www.dailydrip.com/topics/elm">DailyDrip’s Elm Topic</a>, <a href="http://courses.knowthen.com">James Moore’s Elm Courses</a> or check out <a href="http://exercism.io/languages/elm/about">Elm on exercism.io</a>.</em></p>
+<h2 id="overview">Overview</h2>
+<p>Before we can send a weather forecast request to DarkSky, we need to geocode an address to get its latitude and longitutde. In this post, we’re going to use Elm and our geocoding server from <a href="/elm-geocoding-and-darksky-pt-1-setup-elm-and-proxy-servers.html">Part 1</a> to geocode an address based on a user’s input in a text box.</p>
+<p>Warning: this is a hefty post.</p>
+<h2 id="project-source-code">Project Source Code</h2>
+<p>The project we’re making will be broken into parts here (branches will be named for each part): <a href="https://github.com/rpearce/elm-geocoding-darksky/">https://github.com/rpearce/elm-geocoding-darksky/</a>. Be sure to check out the other branches to see the other parts as they become available.</p>
+<p>The code for this part is located in the <code>pt-2</code> branch: <a href="https://github.com/rpearce/elm-geocoding-darksky/tree/pt-2">https://github.com/rpearce/elm-geocoding-darksky/tree/pt-2</a>.</p>
+<h2 id="steps-for-today">Steps for Today</h2>
+<p>What we want to do with our program today is create an HTTP GET request with an address that is input by a user and returns the latitude and longitude. These steps will get us there:</p>
+<ol>
+<li>Defining our primary data model</li>
+<li>Understanding Google’s geocode response data</li>
+<li>Modeling the geocode response data</li>
+<li>Creating JSON decoders</li>
+<li>Building our view and listening for events</li>
+<li>Adding message types</li>
+<li>Writing our update function</li>
+<li>Making our request</li>
+<li>Handling the geocode response</li>
+<li>Final wiring up with the main function &amp; defaults</li>
+</ol>
+<h2 id="1-defining-our-primary-data-model">1: Defining our primary data model</h2>
+<p>At the top level for our app, we only care about an address and latitude and longitude coordinates. While the address’ type will definitely be <a href="http://package.elm-lang.org/packages/elm-lang/core/latest/String">String</a>, we can choose between a <a href="https://guide.elm-lang.org/core_language.html#records">record</a> or <a href="https://guide.elm-lang.org/core_language.html#tuples">tuple</a> to house our coordinates; however, each of these values must be a <code>Float</code> type, as coordinates come in decimal format. For no particular reason, we’re going to use a tuple.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode elm"><code class="sourceCode elm"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">type</span> <span class="kw">alias</span> <span class="dt">Model</span> <span class="op">=</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>    { <span class="fu">address</span> : <span class="dt">String</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>    <span class="op">,</span> <span class="fu">coords</span> : <span class="dt">Coords</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>    }</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="kw">type</span> <span class="kw">alias</span> <span class="dt">Coords</span> <span class="op">=</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>    ( <span class="dt">Float</span><span class="op">,</span> <span class="dt">Float</span> )</span></code></pre></div>
+<p>I like to keep my models/type aliases fairly clean and primed for re-use in type definitions, so I created a separate type alias, <code>Coords</code>, to represent <code>( Float, Float )</code>.</p>
+<h2 id="2-understanding-googles-geocode-response-data">2: Understanding Google’s geocode response data</h2>
+<p>Let’s take a look at what a geocoding request’s response data for <code>Auckland</code> looks like so we can understand what we’re working with.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>{</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  <span class="st">&quot;results&quot;</span><span class="op">:</span> [</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>    {</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>      <span class="st">&quot;geometry&quot;</span><span class="op">:</span> {</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>        <span class="st">&quot;location&quot;</span><span class="op">:</span> {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>          <span class="st">&quot;lat&quot;</span><span class="op">:</span> <span class="fl">-36.8484597</span><span class="op">,</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>          <span class="st">&quot;lng&quot;</span><span class="op">:</span> <span class="fl">174.7633315</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>        }<span class="op">,</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a>        <span class="co">// ...</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>      }<span class="op">,</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>      <span class="co">// ...</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a>    }</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a>  ]<span class="op">,</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a>  <span class="st">&quot;status&quot;</span><span class="op">:</span> <span class="st">&quot;OK&quot;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a>}</span></code></pre></div>
+<p>If you’ve set up your <a href="/node-js-geocoding-proxy-with-paperplane.html">geocoding proxy</a>, you can see these same results by running this command:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>λ <span class="ex">curl</span> localhost:5050/geocode/Auckland</span></code></pre></div>
+<p>We can see here that we get back a <code>status</code> string and a <code>results</code> list where one of the results contains a <code>geometry</code> object, and inside of that, we find <code>location</code> and finally, our quarry: <code>lat</code> and <code>lng</code>. If we were searching for this with JavaScript, we might find this data like so:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>response<span class="op">.</span><span class="at">results</span><span class="op">.</span><span class="fu">find</span>(x <span class="kw">=&gt;</span> x[<span class="st">&#39;geometry&#39;</span>])<span class="op">.</span><span class="at">geometry</span><span class="op">.</span><span class="at">location</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="co">// { lat: -36.8484597, lng: 174.7633315 }</span></span></code></pre></div>
+<p>What would happen in vanilla JavaScript if there were no results, or those object keys didn’t exist? Elm steps up to help us solve for the unexpected.</p>
+<h2 id="3-modeling-the-geocode-response-data">3: Modeling the geocode response data</h2>
+<p>Based on the geocoding response, let’s list out what we’re looking at:</p>
+<ul>
+<li>a string, <code>status</code></li>
+<li>a list of <code>results</code></li>
+<li>each result has a <code>geometry</code> object</li>
+<li>a <code>geometry</code> object has a <code>location</code> object</li>
+<li>a <code>location</code> object has both <code>lat</code> and <code>lng</code> properties, each of which use decimal points</li>
+</ul>
+<p>Since we’re going to need decode these bits of data and reuse the types a few times, let’s create type aliases for each of these concepts (prefixed with <code>Geo</code>):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode elm"><code class="sourceCode elm"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="kw">type</span> <span class="kw">alias</span> <span class="dt">GeoModel</span> <span class="op">=</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>    { <span class="fu">status</span> : <span class="dt">String</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>    <span class="op">,</span> <span class="fu">results</span> : <span class="dt">List</span> <span class="dt">GeoResult</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>    }</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a><span class="kw">type</span> <span class="kw">alias</span> <span class="dt">GeoResult</span> <span class="op">=</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a>    { <span class="fu">geometry</span> : <span class="dt">GeoGeometry</span> }</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true"></a><span class="kw">type</span> <span class="kw">alias</span> <span class="dt">GeoGeometry</span> <span class="op">=</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true"></a>    { <span class="fu">location</span> : <span class="dt">GeoLocation</span> }</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true"></a><span class="kw">type</span> <span class="kw">alias</span> <span class="dt">GeoLocation</span> <span class="op">=</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true"></a>    { <span class="fu">lat</span> : <span class="dt">Float</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true"></a>    <span class="op">,</span> <span class="fu">lng</span> : <span class="dt">Float</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true"></a>    }</span></code></pre></div>
+<p>If you’re not sure what <code>type alias</code> means, read more about <a href="https://guide.elm-lang.org/types/type_aliases.html">type aliases in <em>An Introduction to Elm</em></a>.</p>
+<h2 id="4-creating-json-decoders">4: Creating JSON decoders</h2>
+<p>There are a number of ways to decode JSON in Elm, and <a href="https://www.brianthicks.com">Brian Hicks</a> has <a href="https://www.brianthicks.com/post/2016/08/22/decoding-large-json-objects-a-summary/">written about this</a> (and has a <a href="https://www.brianthicks.com/json-survival-kit/">short book on decoding JSON</a>), and so have many others, such as <a href="https://robots.thoughtbot.com/decoding-json-structures-with-elm">Thoughtbot</a>. Today, we’re going to be working with <a href="https://github.com/NoRedInk/elm-decode-pipeline">NoRedInk’s elm-decode-pipeline</a>.</p>
+<p>First, we install the package into our project:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>λ <span class="ex">elm</span> package install NoRedInk/elm-decode-pipeline</span></code></pre></div>
+<p>In our <code>Main.elm</code> file, we can import what we’ll need from Elm’s <a href="">core Json-Decode module</a> as well as the package we’ve just installed.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode elm"><code class="sourceCode elm"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="co">-- Importing from elm core.</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="co">-- We know from our type aliases that all we&#39;re working</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="co">-- with right now are floats, lists and strings.</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="kw">import</span> <span class="dt">Json</span><span class="op">.</span><span class="dt">Decode</span> <span class="kw">exposing</span> (<span class="fu">float</span><span class="op">,</span> <span class="fu">list</span><span class="op">,</span> <span class="fu">string</span><span class="op">,</span> <span class="dt">Decoder</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="co">-- importing from elm-decode-pipeline</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a><span class="kw">import</span> <span class="dt">Json</span><span class="op">.</span><span class="dt">Decode</span><span class="op">.</span><span class="dt">Pipeline</span> <span class="kw">exposing</span> (<span class="fu">decode</span><span class="op">,</span> <span class="fu">required</span>)</span></code></pre></div>
+<p>Now we can write our decoders!</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode elm"><code class="sourceCode elm"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="fu">decodeGeo</span> : <span class="dt">Decoder</span> <span class="dt">GeoModel</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="fu">decodeGeo</span> <span class="op">=</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>    <span class="fu">decode</span> <span class="dt">GeoModel</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>        <span class="op">|&gt;</span> <span class="fu">required</span> <span class="st">&quot;status&quot;</span> <span class="fu">string</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>        <span class="op">|&gt;</span> <span class="fu">required</span> <span class="st">&quot;results&quot;</span> (<span class="fu">list</span> <span class="fu">decodeGeoResult</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a><span class="fu">decodeGeoResult</span> : <span class="dt">Decoder</span> <span class="dt">GeoResult</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a><span class="fu">decodeGeoResult</span> <span class="op">=</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a>    <span class="fu">decode</span> <span class="dt">GeoResult</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a>        <span class="op">|&gt;</span> <span class="fu">required</span> <span class="st">&quot;geometry&quot;</span> <span class="fu">decodeGeoGeometry</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true"></a><span class="fu">decodeGeoGeometry</span> : <span class="dt">Decoder</span> <span class="dt">GeoGeometry</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true"></a><span class="fu">decodeGeoGeometry</span> <span class="op">=</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true"></a>    <span class="fu">decode</span> <span class="dt">GeoGeometry</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true"></a>        <span class="op">|&gt;</span> <span class="fu">required</span> <span class="st">&quot;location&quot;</span> <span class="fu">decodeGeoLocation</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true"></a><span class="fu">decodeGeoLocation</span> : <span class="dt">Decoder</span> <span class="dt">GeoLocation</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true"></a><span class="fu">decodeGeoLocation</span> <span class="op">=</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true"></a>    <span class="fu">decode</span> <span class="dt">GeoLocation</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true"></a>        <span class="op">|&gt;</span> <span class="fu">required</span> <span class="st">&quot;lat&quot;</span> <span class="fu">float</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true"></a>        <span class="op">|&gt;</span> <span class="fu">required</span> <span class="st">&quot;lng&quot;</span> <span class="fu">float</span></span></code></pre></div>
+<p>Here we declare that we’d like to decode the JSON string according to our type aliases, such as <code>GeoModel</code>, and we expect certain keys to have certain value types. In the case of <code>status</code>, that’s just a string; however, with <code>results</code>, we actually have a list of some other type of data, <code>GeoResult</code>, and so we create another decoder function down the line until we dig deep enough to find what we’re looking for. In short, we’re opting for functions and type-checking over deep nesting.</p>
+<p>Why does this feel so verbose? Personally, I’m not yet comfortable using <a href="http://package.elm-lang.org/packages/elm-lang/core/5.1.1/Json-Decode#at">Json.Decode.at</a>, which might look like</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode elm"><code class="sourceCode elm"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="fu">decodeString</span> (<span class="fu">at</span> [ <span class="st">&quot;results&quot;</span> ] (<span class="fu">list</span> (<span class="fu">at</span> [ <span class="st">&quot;geometry&quot;</span><span class="op">,</span> <span class="st">&quot;location&quot;</span> ] (<span class="fu">keyValuePairs</span> <span class="fu">float</span>)))) <span class="fu">jsonString</span></span></code></pre></div>
+<p>But with the former approach, we get to be <em>very</em> specific with exactly what we are expecting our data to be shaped like while maintaining clarity.</p>
+<h2 id="5-building-our-view-and-listening-for-events">5: Building our view and listening for events</h2>
+<p>It’s time to add our <code>view</code> function. All we’re going for today is</p>
+<ul>
+<li>a text input that will keep track of the <code>address</code> by responding to the <code>onInput</code> event</li>
+<li>a form around the input that listens for the <code>onSubmit</code> event</li>
+<li>a paragraph to display the coordinates; for example, <code>Coords: (123, 456)</code></li>
+</ul>
+<p>As usual, let’s download <a href="https://github.com/elm-lang/html">the official elm-lang/html package</a>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a>λ <span class="ex">elm</span> package install elm-lang/html</span></code></pre></div>
+<p>Then let’s import what we need from it:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode elm"><code class="sourceCode elm"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="kw">import</span> <span class="dt">Html</span> <span class="kw">exposing</span> (<span class="dt">Html</span><span class="op">,</span> <span class="fu">div</span><span class="op">,</span> <span class="fu">form</span><span class="op">,</span> <span class="fu">input</span><span class="op">,</span> <span class="fu">p</span><span class="op">,</span> <span class="fu">text</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="kw">import</span> <span class="dt">Html</span><span class="op">.</span><span class="dt">Attributes</span> <span class="kw">exposing</span> (<span class="fu">placeholder</span><span class="op">,</span> <span class="fu">type_</span><span class="op">,</span> <span class="fu">value</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a><span class="kw">import</span> <span class="dt">Html</span><span class="op">.</span><span class="dt">Events</span> <span class="kw">exposing</span> (<span class="fu">onInput</span><span class="op">,</span> <span class="fu">onSubmit</span>)</span></code></pre></div>
+<p>Each import is a function that we can use to help generate HTML5 elements which Elm then works with behind the scenes.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode elm"><code class="sourceCode elm"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="fu">view</span> : <span class="dt">Model</span> <span class="op">-&gt;</span> <span class="dt">Html</span> <span class="dt">Msg</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="fu">view</span> <span class="fu">model</span> <span class="op">=</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a>    <span class="fu">div</span> []</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a>        [ <span class="fu">form</span> [ <span class="fu">onSubmit</span> <span class="dt">SendAddress</span> ]</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a>            [ <span class="fu">input</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a>                [ <span class="fu">type_</span> <span class="st">&quot;text&quot;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a>                <span class="op">,</span> <span class="fu">placeholder</span> <span class="st">&quot;City&quot;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a>                <span class="op">,</span> <span class="fu">value</span> <span class="fu">model</span><span class="op">.</span><span class="fu">address</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a>                <span class="op">,</span> <span class="fu">onInput</span> <span class="dt">UpdateAddress</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a>                ]</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true"></a>                []</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true"></a>            ]</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true"></a>        <span class="op">,</span> <span class="fu">p</span> [] [ <span class="fu">text</span> (<span class="st">&quot;Coords: &quot;</span> <span class="op">++</span> (<span class="fu">toString</span> <span class="fu">model</span><span class="op">.</span><span class="fu">coords</span>)) ]</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true"></a>        ]</span></code></pre></div>
+<p>Our <code>view</code> function takes in our model and uses Elm functions to then render output. Great! But what are <code>SendAdress</code> and <code>UpdateAddress</code>? If you’re coming from JavaScript, you might think these are callbacks or higher-order functions, but they are not. They are custom message types (that we’ll define momentarily) that will be used in our <code>update</code> function to determine what flow our application should take next.</p>
+<h2 id="6-adding-message-types">6: Adding message types</h2>
+<p>Thus far, we know of two message types, <code>Update</code> and <code>SendAddress</code>, but how do we define them? If you look at our <code>view</code> function again, you’ll see the return type <code>Html Msg</code>. The second part of this will be the <code>type</code> that we create, and our custom message types will be a part of that! This is something called a <a href="https://guide.elm-lang.org/types/union_types.html">union type</a>.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode elm"><code class="sourceCode elm"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="kw">type</span> <span class="dt">Msg</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a>    <span class="op">=</span> <span class="dt">UpdateAddress</span> <span class="dt">String</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a>    <span class="op">|</span> <span class="dt">SendAddress</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a>    <span class="op">|</span> <span class="dt">NoOp</span></span></code></pre></div>
+<p>We will be adding more to this shortly, but this is all we have come across thus far.</p>
+<h2 id="7-writing-our-update-function">7: Writing our update function</h2>
+<p>Staying consistent with <a href="https://guide.elm-lang.org/architecture/">The Elm Architecture</a>, we’ll define our <code>update</code> function in order to update our data and fire off any commands that need happen. If you’re familiar with Redux, this is where the idea for a “reducer” came from.</p>
+<p>This is tough to do in a blog post, so please be patient, and we’ll walk through this:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode elm"><code class="sourceCode elm"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="fu">update</span> : <span class="dt">Msg</span> <span class="op">-&gt;</span> <span class="dt">Model</span> <span class="op">-&gt;</span> ( <span class="dt">Model</span><span class="op">,</span> <span class="dt">Cmd</span> <span class="dt">Msg</span> )</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a><span class="fu">update</span> <span class="fu">msg</span> <span class="fu">model</span> <span class="op">=</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a>    <span class="cf">case</span> <span class="fu">msg</span> <span class="cf">of</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a>        <span class="dt">UpdateAddress</span> <span class="fu">text</span> <span class="op">-&gt;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a>            ( { <span class="fu">model</span> <span class="op">|</span> <span class="fu">address</span> <span class="op">=</span> <span class="fu">text</span> }</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a>            <span class="op">,</span> <span class="dt">Cmd</span><span class="op">.</span><span class="fu">none</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a>            )</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true"></a>        <span class="dt">SendAddress</span> <span class="op">-&gt;</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true"></a>            ( <span class="fu">model</span><span class="op">,</span> <span class="fu">sendAddress</span> <span class="fu">model</span><span class="op">.</span><span class="fu">address</span> )</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true"></a>        <span class="co">-- more code here shortly...</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true"></a>        <span class="fu">_</span> <span class="op">-&gt;</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true"></a>            ( <span class="fu">model</span><span class="op">,</span> <span class="dt">Cmd</span><span class="op">.</span><span class="fu">none</span> )</span></code></pre></div>
+<p>Let’s walk through this step-by-step:</p>
+<ul>
+<li>if the message type is <code>UpdateAddress</code>, then
+<ol>
+<li>we’re expecting a <code>string</code> (defined in our union type)</li>
+<li>we’ll call the argument <code>text</code></li>
+<li>we’ll then return a tuple of our updated model and a <code>Cmd</code> to essentially do nothing else (it’ll pass through the union type and settle on the <code>NoOp</code>)</li>
+</ol></li>
+<li>if the message type is <code>SendAddress</code>, then
+<ol>
+<li>we’ll accept <em>no</em> parameters</li>
+<li>we’ll return a tuple of our model <em>with no changes</em> and a command that we haven’t defined yet. This is where we call the function that will actually go and get our geocode data!</li>
+</ol></li>
+</ul>
+<h2 id="8-making-our-request">8: Making our request</h2>
+<p>In order to build and send HTTP requests, we’ll need to make sure we download the <a href="https://github.com/elm-lang/http">elm-lang/http</a> package:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a>λ <span class="ex">elm</span> package install elm-lang/http</span></code></pre></div>
+<p>and import it:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode elm"><code class="sourceCode elm"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a><span class="kw">import</span> <span class="dt">Http</span></span></code></pre></div>
+<p>In our <code>update</code> function, we referenced a function named <code>sendAddress</code> and passed it our model’s address as a parameter. This function should accept a string, initiate our HTTP request and return a command with a message.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode elm"><code class="sourceCode elm"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a><span class="fu">sendAddress</span> : <span class="dt">String</span> <span class="op">-&gt;</span> <span class="dt">Cmd</span> <span class="dt">Msg</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a><span class="fu">sendAddress</span> <span class="fu">address</span> <span class="op">=</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a>    <span class="dt">Http</span><span class="op">.</span><span class="fu">get</span> (<span class="fu">geocodingUrl</span> <span class="fu">address</span>) <span class="fu">decodeGeo</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true"></a>        <span class="op">|&gt;</span> <span class="dt">Http</span><span class="op">.</span><span class="fu">send</span> <span class="dt">ReceiveGeocoding</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true"></a><span class="fu">geocodingUrl</span> : <span class="dt">String</span> <span class="op">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true"></a><span class="fu">geocodingUrl</span> <span class="fu">address</span> <span class="op">=</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true"></a>    <span class="st">&quot;http://localhost:5050/geocode/&quot;</span> <span class="op">++</span> <span class="fu">address</span></span></code></pre></div>
+<p>Our <code>sendAddress</code> function does this:</p>
+<ol>
+<li>it builds a GET request using two arguments: a URL (derived from <code>geocodingUrl</code>) and our <code>decodeGeo</code> decoder function</li>
+<li>it then pipes the return value from <code>Http.get</code> to be the second argument for <code>Http.send</code></li>
+</ol>
+<p>Note that <code>Http.send</code>’s first argument is a <code>Msg</code> that we haven’t defined yet, so let’s add that to our <code>Msg</code> union type:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode elm"><code class="sourceCode elm"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a><span class="kw">type</span> <span class="dt">Msg</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true"></a>    <span class="op">=</span> <span class="dt">UpdateAddress</span> <span class="dt">String</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true"></a>    <span class="op">|</span> <span class="dt">SendAddress</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true"></a>    <span class="op">|</span> <span class="dt">ReceiveGeocoding</span> (<span class="dt">Result</span> <span class="dt">Http</span><span class="op">.</span><span class="dt">Error</span> <span class="dt">GeoModel</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true"></a>    <span class="op">|</span> <span class="dt">NoOp</span></span></code></pre></div>
+<p>Basically, we’ll either get back an HTTP error or a data structure in the shape of our <code>GeoModel</code>.</p>
+<h2 id="9-handling-the-geocode-response">9: Handling the geocode response</h2>
+<p>Finally, we now need to handle the successful and erroneous responses in our update function:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode elm"><code class="sourceCode elm"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a><span class="fu">update</span> : <span class="dt">Msg</span> <span class="op">-&gt;</span> <span class="dt">Model</span> <span class="op">-&gt;</span> ( <span class="dt">Model</span><span class="op">,</span> <span class="dt">Cmd</span> <span class="dt">Msg</span> )</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a><span class="fu">update</span> <span class="fu">msg</span> <span class="fu">model</span> <span class="op">=</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true"></a>    <span class="cf">case</span> <span class="fu">msg</span> <span class="cf">of</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true"></a>        <span class="dt">UpdateAddress</span> <span class="fu">text</span> <span class="op">-&gt;</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true"></a>            ( { <span class="fu">model</span> <span class="op">|</span> <span class="fu">address</span> <span class="op">=</span> <span class="fu">text</span> }</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true"></a>            <span class="op">,</span> <span class="dt">Cmd</span><span class="op">.</span><span class="fu">none</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true"></a>            )</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true"></a>        <span class="dt">SendAddress</span> <span class="op">-&gt;</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true"></a>            ( <span class="fu">model</span><span class="op">,</span> <span class="fu">sendAddress</span> <span class="fu">model</span><span class="op">.</span><span class="fu">address</span> )</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true"></a>        <span class="dt">ReceiveGeocoding</span> (<span class="dt">Ok</span> { <span class="fu">results</span><span class="op">,</span> <span class="fu">status</span> }) <span class="op">-&gt;</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true"></a>            <span class="kw">let</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true"></a>                <span class="fu">result</span> <span class="op">=</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true"></a>                    <span class="cf">case</span> <span class="fu">status</span> <span class="cf">of</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true"></a>                        <span class="st">&quot;OK&quot;</span> <span class="op">-&gt;</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true"></a>                            <span class="fu">results</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true"></a>                                <span class="op">|&gt;</span> <span class="dt">List</span><span class="op">.</span><span class="fu">head</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true"></a>                                <span class="op">|&gt;</span> <span class="dt">Maybe</span><span class="op">.</span><span class="fu">withDefault</span> <span class="fu">initialGeoResult</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true"></a></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true"></a>                        <span class="fu">_</span> <span class="op">-&gt;</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true"></a>                            <span class="fu">initialGeoResult</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true"></a></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true"></a>                <span class="fu">location</span> <span class="op">=</span></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true"></a>                    <span class="fu">result</span><span class="op">.</span><span class="fu">geometry</span><span class="op">.</span><span class="fu">location</span></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true"></a></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true"></a>                <span class="fu">newModel</span> <span class="op">=</span></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true"></a>                    { <span class="fu">model</span> <span class="op">|</span> <span class="fu">coords</span> <span class="op">=</span> ( <span class="fu">location</span><span class="op">.</span><span class="fu">lat</span><span class="op">,</span> <span class="fu">location</span><span class="op">.</span><span class="fu">lng</span> ) }</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true"></a>            <span class="kw">in</span></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true"></a>                ( <span class="fu">newModel</span><span class="op">,</span> <span class="dt">Cmd</span><span class="op">.</span><span class="fu">none</span> )</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true"></a></span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true"></a>        <span class="dt">ReceiveGeocoding</span> (<span class="dt">Err</span> <span class="fu">_</span>) <span class="op">-&gt;</span></span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true"></a>            ( <span class="fu">model</span><span class="op">,</span> <span class="dt">Cmd</span><span class="op">.</span><span class="fu">none</span> )</span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true"></a></span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true"></a>        <span class="fu">_</span> <span class="op">-&gt;</span></span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true"></a>            ( <span class="fu">model</span><span class="op">,</span> <span class="dt">Cmd</span><span class="op">.</span><span class="fu">none</span> )</span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true"></a></span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true"></a></span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true"></a><span class="co">-- This should go with other `init`s</span></span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true"></a><span class="co">-- but is placed here for relevance</span></span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true"></a><span class="fu">initialGeoResult</span> : <span class="dt">GeoResult</span></span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true"></a><span class="fu">initialGeoResult</span> <span class="op">=</span></span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true"></a>    { <span class="fu">geometry</span> <span class="op">=</span></span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true"></a>        { <span class="fu">location</span> <span class="op">=</span></span>
+<span id="cb19-45"><a href="#cb19-45" aria-hidden="true"></a>            { <span class="fu">lat</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true"></a>            <span class="op">,</span> <span class="fu">lng</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb19-47"><a href="#cb19-47" aria-hidden="true"></a>            }</span>
+<span id="cb19-48"><a href="#cb19-48" aria-hidden="true"></a>        }</span>
+<span id="cb19-49"><a href="#cb19-49" aria-hidden="true"></a>    }</span></code></pre></div>
+<p>Instead of having success/error logic inside one <code>ReceiveGeocoding</code> case match, we use Elm’s pattern matching to allow us to match on the message and <code>Ok</code> or <code>Err</code> <a href="http://package.elm-lang.org/packages/elm-lang/core/latest/Result">results</a>.</p>
+<p>Again, let’s do this step-by-step:</p>
+<ul>
+<li><code>ReceiveGeocoding</code> is <code>OK</code>
+<ol>
+<li>we destructure the response into <code>results</code> and <code>status</code> variables</li>
+<li>we check the value of <code>status</code> from the response to make sure all is well</li>
+<li>if status is <code>"OK"</code>, we try to get the first item in the <code>results</code> list and fallback to <code>initialGeoResult</code> if there are no results (I love Elm for enforcing this)</li>
+<li>if status is <em>not</em> <code>"OK"</code>, we fall back to the <code>initialGeoResult</code></li>
+<li>we then access the <code>location</code> record, build an updated model record, and return it</li>
+</ol></li>
+<li><code>ReceiveGeocoding</code> is <code>Err</code>
+<ol>
+<li>we simply return the model</li>
+</ol></li>
+</ul>
+<h2 id="10-final-wiring-up-with-the-main-function--defaults">10: Final wiring up with the main function &amp; defaults</h2>
+<p>Now that we’re through the core of the application’s contents, we can wire up the remaining bits and get it to compile:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode elm"><code class="sourceCode elm"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true"></a><span class="co">-- Define our HTML program</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true"></a><span class="fu">main</span> : <span class="dt">Program</span> <span class="dt">Never</span> <span class="dt">Model</span> <span class="dt">Msg</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true"></a><span class="fu">main</span> <span class="op">=</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true"></a>    <span class="dt">Html</span><span class="op">.</span><span class="fu">program</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true"></a>        { <span class="fu">init</span> <span class="op">=</span> <span class="fu">init</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true"></a>        <span class="op">,</span> <span class="fu">view</span> <span class="op">=</span> <span class="fu">view</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true"></a>        <span class="op">,</span> <span class="fu">update</span> <span class="op">=</span> <span class="fu">update</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true"></a>        <span class="op">,</span> <span class="fu">subscriptions</span> <span class="op">=</span> <span class="fu">subscriptions</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true"></a>        }</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true"></a><span class="co">-- Here is our initial model</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true"></a><span class="fu">init</span> : ( <span class="dt">Model</span><span class="op">,</span> <span class="dt">Cmd</span> <span class="dt">Msg</span> )</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true"></a><span class="fu">init</span> <span class="op">=</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true"></a>    ( <span class="fu">initialModel</span><span class="op">,</span> <span class="dt">Cmd</span><span class="op">.</span><span class="fu">none</span> )</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true"></a></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true"></a></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true"></a><span class="fu">initialModel</span> : <span class="dt">Model</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true"></a><span class="fu">initialModel</span> <span class="op">=</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true"></a>    { <span class="fu">address</span> <span class="op">=</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true"></a>    <span class="op">,</span> <span class="fu">coords</span> <span class="op">=</span> ( <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span> )</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true"></a>    }</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true"></a></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true"></a></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true"></a><span class="co">-- We&#39;re not using any subscriptions,</span></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true"></a><span class="co">-- so we&#39;ll define none</span></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true"></a><span class="fu">subscriptions</span> : <span class="dt">Model</span> <span class="op">-&gt;</span> <span class="dt">Sub</span> <span class="dt">Msg</span></span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true"></a><span class="fu">subscriptions</span> <span class="fu">model</span> <span class="op">=</span></span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true"></a>    <span class="dt">Sub</span><span class="op">.</span><span class="fu">none</span></span></code></pre></div>
+<p>Remember that you can look at the <a href="https://github.com/rpearce/elm-geocoding-darksky/tree/pt-2">source code for this part</a> as a guide.</p>
+<h2 id="wrapping-up">Wrapping Up</h2>
+<p>This has been a massive post on simply fetching geocode data from an API. I’ve found it’s difficult to write posts on Elm in little bits, for you have to have everything in the right place and defined before it’ll work. Subsequent posts in this series will be shorter, as we’ll have already done the heavy-lifting.</p>
+<p>Until next time, <br> Robert</p>
+    </section>
+  </article>
+</main>
+
+<footer>
+  <section class="subscribe section--padded">
+  <div class="layout--constrained">
+    <h2 class="subscribe__header">Get notified of new posts</h2>
+
+    <form action="//robertwpearce.us13.list-manage.com/subscribe/post?u=2df44e8960266388bff165fa6&amp;id=ee2f2a3737" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate class="subscribe__form">
+      <div style="position: absolute; left: -5000px;" aria-hidden="true">
+        <input type="text" name="b_2df44e8960266388bff165fa6_ee2f2a3737" tabindex="-1" value="">
+      </div>
+      <div class="subscribe__section">
+        <input type="email" value="" id="mce-EMAIL" class="subscribe__input" name="EMAIL" placeholder="you@greatemail.com" aria-label="Email Address">
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe__submit">
+      </div>
+      <small>Note: I will <em>never</em> give out your email nor spam you. Unsubscribe at any time.</small>
+    </form>
+    <p>
+      <small>(or subscribe to the <a href="/atom.xml" class="subscribe__link">atom</a> or <a class="subscribe__link" href="/rss.xml">rss</a> feeds)</small>
+    </p>
+  </div>
+</section>
+
+</footer>
+
+    <script async src="/js/dist/index.js"></script>
+  </body>
+</html>

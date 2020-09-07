@@ -1,6 +1,4 @@
-{ lib
-, pkgs
-}:
+{ lib, pkgs }:
 
 let
   generator = pkgs.haskellPackages.callPackage ./generator/default.nix { };
@@ -10,13 +8,13 @@ in pkgs.stdenv.mkDerivation {
     generator
     pkgs.nodejs-14_x
   ];
-  src = ./site;
+  src = ./src;
   buildPhase = ''
     hakyll-site --verbose build
   '';
   installPhase = ''
     mkdir -p "$out"
-    cp -r ../site-dist/* "$out"
+    cp -r ../dist/* "$out"
   '';
 }
 #npm install --prefix js

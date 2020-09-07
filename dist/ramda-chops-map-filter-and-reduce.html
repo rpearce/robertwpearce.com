@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Ramda Chops: Map, Filter & Reduce</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How to use ramda's map, filter and reduce functions to filter and transform a list of popular films.">
+    <meta name="author" content="Robert Pearce">
+    <meta name="keywords" content="ramda, ramda.js, ramdajs, ramda tutorial, ramda map, ramda filter, ramda reduce, ramda fp">
+    <meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU">
+
+    <meta property="og:site_name" content="Robert Pearce | Senior Software Developer">
+    <meta property="og:title" content="Ramda Chops: Map, Filter & Reduce">
+    <meta property="og:url" content="https://robertwpearce.com/ramda-chops-map-filter-and-reduce.html">
+    <meta property="og:description" content="How to use ramda's map, filter and reduce functions to filter and transform a list of popular films.">
+    <meta property="og:image" content="https://robertwpearce.com/images/sheep-cliffs.jpg">
+    
+      <meta property="og:type" content="article">
+    
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="Robert Pearce | Senior Software Developer">
+    <meta property="twitter:title" content="Ramda Chops: Map, Filter & Reduce">
+    <meta property="twitter:description" content="How to use ramda's map, filter and reduce functions to filter and transform a list of popular films.">
+    <meta property="twitter:image" content="https://robertwpearce.com/images/sheep-cliffs.jpg">
+    <meta property="twitter:creator" content="@RobertWPearce">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="canonical" href="https://robertwpearce.com/ramda-chops-map-filter-and-reduce.html">
+    <link rel="stylesheet" href="/css/default.css" />
+    
+      <link rel="stylesheet" href="/css/article.css" />
+    
+  </head>
+  <body class="light">
+    <nav class="nav">
+  <div class="layout--constrained" data-nav-wrap>
+    <a class="nav__link nav__skip" href="#content">Skip to content</a>
+    <a class="nav__link" href="/">Home</a>
+    <a class="nav__link" href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a>
+    <a class="nav__link" href="/atom.xml">atom</a>
+    <a class="nav__link" href="/rss.xml">rss</a>
+  </div>
+</nav>
+
+
+<main id="content" tabindex="-1">
+  <article class="article">
+    <header class="article__bg" style="background-image: url('/images/sheep-cliffs.jpg')">
+      <div class="article__bgHeader">
+        <div class="layout--constrained">
+          <div class="article__bgTitleWrap">
+            <h1 class="article__bgTitle">
+              <a href="/ramda-chops-map-filter-and-reduce.html">Ramda Chops: Map, Filter & Reduce</a>
+            </h1>
+            <div class="article__bgSubHeader">
+              <small class="italic">2018-02-08</small>
+              
+              
+              <small class="article__bgPhotoCred italic">
+                [ photo credit <a href="https://unsplash.com/@cosmin_13">Mingheras Cosmin</a> ]
+              </small>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="layout--constrained">
+      <header class="article__header">
+        <h1 class="article__title">
+          <a href="/ramda-chops-map-filter-and-reduce.html">Ramda Chops: Map, Filter & Reduce</a>
+        </h1>
+        <small class="italic">2018-02-08</small>
+        
+      </header>
+      <p><em>Thanks to <a href="https://github.com/jsilve">Jillian Silver</a>, <a href="https://patrickweakin.com">Patrick Eakin</a> and <a href="https://twitter.com/zerkms">@zerkms</a> for their review of this post.</em></p>
+<p>The <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map"><code>map</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter"><code>filter</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce"><code>reduce</code></a> methods on <code>Array.prototype</code> are essential to adopting a functional programming style in JavaScript, and in this post we’re going to examine how to use these three concepts with <a href="http://ramdajs.com/">ramda.js</a>.</p>
+<p>If you are unfamiliar with these three concepts, then be sure to first read the MDN documentation on each (linked above).</p>
+<hr />
+<p><em>Pre-requisite ramda posts:</em></p>
+<ul>
+<li><a href="/ramda-chops-function-currying.html">Ramda Chops: Function Currying</a></li>
+<li><a href="/ramda-chops-function-composition.html">Ramda Chops: Function Composition</a></li>
+</ul>
+<p><em>Other ramda posts:</em></p>
+<ul>
+<li><a href="/ramda-chops-safely-accessing-properties.html">Ramda Chops: Safely Accessing Properties</a></li>
+</ul>
+<h2 id="our-data-set-films">Our Data Set: Films!</h2>
+<p>This is the test data set we will reference throughout the post:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">const</span> films <span class="op">=</span> [</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>  { <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;The Empire Strikes Back&#39;</span><span class="op">,</span> <span class="dt">rating</span><span class="op">:</span> <span class="fl">8.8</span> }<span class="op">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>  { <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;Pulp Fiction&#39;</span><span class="op">,</span> <span class="dt">rating</span><span class="op">:</span> <span class="fl">8.9</span> }<span class="op">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>  { <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;The Deer Hunter&#39;</span><span class="op">,</span> <span class="dt">rating</span><span class="op">:</span> <span class="fl">8.2</span> }<span class="op">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>  { <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;The Lion King&#39;</span><span class="op">,</span> <span class="dt">rating</span><span class="op">:</span> <span class="fl">8.5</span> }</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>]</span></code></pre></div>
+<h2 id="our-goal">Our Goal</h2>
+<p>There are a few conditions that are required for us to meet our goal. We must construct a function that:</p>
+<ul>
+<li><p>only selects those with an 8.8 rating or higher</p></li>
+<li><p>returns a list of the selected titles interpolated in an HTML string that has this structure:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">&lt;div&gt;</span>TITLE: <span class="kw">&lt;strong&gt;</span>SCORE<span class="kw">&lt;/strong&gt;&lt;/div&gt;</span></span></code></pre></div></li>
+</ul>
+<p>Given these requirements, a pseudotype signature for this might be:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="co">// `output` takes in a list of films</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="co">// and returns a list of HTML strings</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="co">//</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a><span class="co">// output :: [Film] -&gt; [Html]</span></span></code></pre></div>
+<h2 id="step-1-get-the-html-part-working">Step 1: Get the HTML Part Working</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>films<span class="op">.</span><span class="fu">map</span>(film <span class="kw">=&gt;</span> <span class="vs">`&lt;div&gt;</span><span class="sc">${</span>film<span class="op">.</span><span class="at">title</span><span class="sc">}</span><span class="vs">, &lt;strong&gt;</span><span class="sc">${</span>film<span class="op">.</span><span class="at">rating</span><span class="sc">}</span><span class="vs">&lt;/strong&gt;&lt;/div&gt;`</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="co">// =&gt; [</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="co">//      &quot;&lt;div&gt;The Empire Strikes Back, &lt;strong&gt;8.8&lt;/strong&gt;&lt;/div&gt;&quot;,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="co">//      &quot;&lt;div&gt;Pulp Fiction, &lt;strong&gt;8.9&lt;/strong&gt;&lt;/div&gt;&quot;,</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="co">//      &quot;&lt;div&gt;The Deer Hunter, &lt;strong&gt;8.2&lt;/strong&gt;&lt;/div&gt;&quot;,</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="co">//      &quot;&lt;div&gt;The Lion King, &lt;strong&gt;8.5&lt;/strong&gt;&lt;/div&gt;&quot;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="co">//    ]</span></span></code></pre></div>
+<p><em><a href="https://goo.gl/mQmFBm">Try this code in the ramda REPL</a></em></p>
+<h2 id="step-2-extract-the-map-callback">Step 2: Extract the <code>map</code> Callback</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="co">// filmHtml :: Film -&gt; Html</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="kw">const</span> filmHtml <span class="op">=</span> film <span class="kw">=&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>  <span class="vs">`&lt;div&gt;</span><span class="sc">${</span>film<span class="op">.</span><span class="at">title</span><span class="sc">}</span><span class="vs">, &lt;strong&gt;</span><span class="sc">${</span>film<span class="op">.</span><span class="at">rating</span><span class="sc">}</span><span class="vs">&lt;/strong&gt;&lt;/div&gt;`</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>films<span class="op">.</span><span class="fu">map</span>(filmHtml)</span></code></pre></div>
+<p><em><a href="https://goo.gl/C4a1kZ">Try this code in the ramda REPL</a></em></p>
+<h2 id="step-3-filter-out-lower-scores">Step 3: <code>filter</code> Out Lower Scores</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>films</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>  <span class="op">.</span><span class="fu">filter</span>(x <span class="kw">=&gt;</span> x<span class="op">.</span><span class="at">rating</span> <span class="op">&gt;=</span> <span class="fl">8.8</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>  <span class="op">.</span><span class="fu">map</span>(filmHtml)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="co">// =&gt; [</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a><span class="co">//      &quot;&lt;div&gt;The Empire Strikes Back, &lt;strong&gt;8.8&lt;/strong&gt;&lt;/div&gt;&quot;,</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="co">//      &quot;&lt;div&gt;Pulp Fiction, &lt;strong&gt;8.9&lt;/strong&gt;&lt;/div&gt;&quot;,</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a><span class="co">//    ]</span></span></code></pre></div>
+<p><em><a href="https://goo.gl/yTxfKQ">Try this code in the ramda REPL</a></em></p>
+<p>But wait! We can extract that <code>filter</code> callback, as well:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="co">// hasHighScore :: Film -&gt; Bool</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="kw">const</span> hasHighScore <span class="op">=</span> x <span class="kw">=&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>  x<span class="op">.</span><span class="at">rating</span> <span class="op">&gt;=</span> <span class="fl">8.8</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>films</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a>  <span class="op">.</span><span class="fu">filter</span>(hasHighScore)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>  <span class="op">.</span><span class="fu">map</span>(filmHtml)</span></code></pre></div>
+<p><em><a href="https://goo.gl/qG4kZ7">Try this code in the ramda REPL</a></em></p>
+<h2 id="step-4-composing-filter-and-map">Step 4: Composing <code>filter</code> and <code>map</code></h2>
+<p>We can use ramda’s <a href="/ramda-chops-function-currying.html">function currying capabilities</a> and <a href="/ramda-chops-function-composition.html">function composition</a> to create some very clear and concise <a href="https://wiki.haskell.org/Pointfree">pointfree functions</a>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="im">import</span> { compose<span class="op">,</span> filter<span class="op">,</span> map } <span class="im">from</span> <span class="st">&#39;ramda&#39;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="co">// output :: [Film] -&gt; [Html]</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="kw">const</span> output <span class="op">=</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>  <span class="fu">compose</span>(<span class="fu">map</span>(filmHtml)<span class="op">,</span> <span class="fu">filter</span>(hasHighScore))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a><span class="fu">output</span>(films)</span></code></pre></div>
+<p><em><a href="https://goo.gl/7VMNTV">Try this code in the ramda REPL</a></em></p>
+<p>One thing to remember with ramda functions (like <code>map</code> and <code>filter</code>) is that ramda typically orders arguments from least likely to change to most likely to change. Callback/transformation functions here are passed as the <em>first</em> argument, and the data comes last. To understand this further, check out the following links:</p>
+<ul>
+<li><a href="http://ramdajs.com/docs/#map">ramda’s documentation for <code>map</code></a></li>
+<li><a href="http://ramdajs.com/docs/#filter">ramda’s documentation for <code>filter</code></a></li>
+</ul>
+<h2 id="step-5-extracting-the-composition-further">Step 5: Extracting The Composition Further</h2>
+<p>If we want to not only reuse our filtering and mapping functions but also make them more readable, we can pull out the pieces that make up our <code>output</code> function into smaller bits:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="co">// filmsToHtml :: [Film] -&gt; [Html]</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="kw">const</span> filmsToHtml <span class="op">=</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a>  <span class="fu">map</span>(filmHtml)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="co">// highScores :: [Film] -&gt; [Film]</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a><span class="kw">const</span> highScores <span class="op">=</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a>  <span class="fu">filter</span>(hasHighScore)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a><span class="co">// output :: [Film] -&gt; [Html]</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a><span class="kw">const</span> output <span class="op">=</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a>  <span class="fu">compose</span>(filmsToHtml<span class="op">,</span> highScores)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true"></a><span class="fu">output</span>(films)</span></code></pre></div>
+<p><em><a href="https://goo.gl/dFXCEK">Try this code in the ramda REPL</a></em></p>
+<h2 id="step-6-another-way-with-reduce">Step 6: Another Way With <code>reduce</code></h2>
+<p>We can accomplish the same goals as <code>filter</code> and <code>map</code> by making use of <code>reduce</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a>films<span class="op">.</span><span class="fu">reduce</span>((acc<span class="op">,</span> x) <span class="kw">=&gt;</span> {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>  <span class="cf">return</span> <span class="fu">hasHighScore</span>(x)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>    <span class="op">?</span> acc<span class="op">.</span><span class="fu">concat</span>(<span class="fu">filmHtml</span>(x))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>    <span class="op">:</span> acc</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>}<span class="op">,</span> [])</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a><span class="co">// or, for better performance</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true"></a>films<span class="op">.</span><span class="fu">reduce</span>((acc<span class="op">,</span> x) <span class="kw">=&gt;</span> {</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true"></a>  <span class="cf">if</span> (<span class="fu">hasHighScore</span>(x)) {</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true"></a>    acc<span class="op">.</span><span class="fu">push</span>(<span class="fu">filmHtml</span>(x))</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true"></a>  }</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true"></a>  <span class="cf">return</span> acc</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true"></a>}<span class="op">,</span> [])</span></code></pre></div>
+<p><em><a href="https://goo.gl/b86Kdq">Try this code in the ramda REPL</a></em></p>
+<p>If you’re not familiar with reduce, be sure to play with the live example to better understand how those pieces work before moving on.</p>
+<p>It’s also worth noting that you can do just about <em>anything</em> in JavaScript with the <code>reduce</code> function. I highly recommend going through <a href="https://twitter.com/kylehill">Kyle Hill</a>’s slides on <a href="https://omnifunction.herokuapp.com">reduce Is The Omnifunction</a>.</p>
+<p>But wait! We can extract the <code>reduce</code> callback like we did with <code>map</code> and <code>filter</code> before:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="co">// highScoresHtml :: ([Html], Film) -&gt; [Html]</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="kw">const</span> highScoresHtml <span class="op">=</span> (acc<span class="op">,</span> x) <span class="kw">=&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a>  <span class="fu">hasHighScore</span>(x)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a>    <span class="op">?</span> acc<span class="op">.</span><span class="fu">concat</span>(<span class="fu">filmHtml</span>(x))</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a>    <span class="op">:</span> acc</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a>films<span class="op">.</span><span class="fu">reduce</span>(highScoresHtml<span class="op">,</span> [])</span></code></pre></div>
+<p><em><a href="https://goo.gl/F6NovJ">Try this code in the ramda REPL</a></em></p>
+<h2 id="step-7-making-our-reduce-arguments-reusable">Step 7: Making Our Reduce Arguments Reusable</h2>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="im">import</span> { reduce } <span class="im">from</span> <span class="st">&#39;ramda&#39;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="kw">const</span> output <span class="op">=</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a>  <span class="fu">reduce</span>(highScoresHtml<span class="op">,</span> [])</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a><span class="fu">output</span>(films)</span></code></pre></div>
+<p><em><a href="https://goo.gl/wjbAFY">Try this code in the ramda REPL</a></em></p>
+<p>As before with <code>map</code> &amp; <code>filter</code>, <code>output</code> can be reused over and over again and passed any set of films to generate HTML for. To further understand the parameter order used here, check out the <a href="http://ramdajs.com/docs/#reduce">docs for ramda’s <code>reduce</code></a>.</p>
+<hr />
+<p>This step-by-step process we’ve walked through is as close to real-life refactoring/rethinking as I could do in a post. Thanks for making it this far.</p>
+<p>Until next time, <br /> Robert</p>
+    </section>
+  </article>
+</main>
+
+<footer>
+  <section class="subscribe section--padded">
+  <div class="layout--constrained">
+    <h2 class="subscribe__header">Get notified of new posts</h2>
+
+    <form action="//robertwpearce.us13.list-manage.com/subscribe/post?u=2df44e8960266388bff165fa6&amp;id=ee2f2a3737" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate class="subscribe__form">
+      <div style="position: absolute; left: -5000px;" aria-hidden="true">
+        <input type="text" name="b_2df44e8960266388bff165fa6_ee2f2a3737" tabindex="-1" value="">
+      </div>
+      <div class="subscribe__section">
+        <input type="email" value="" id="mce-EMAIL" class="subscribe__input" name="EMAIL" placeholder="you@greatemail.com" aria-label="Email Address">
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe__submit">
+      </div>
+      <small>Note: I will <em>never</em> give out your email nor spam you. Unsubscribe at any time.</small>
+    </form>
+    <p>
+      <small>(or subscribe to the <a href="/atom.xml" class="subscribe__link">atom</a> or <a class="subscribe__link" href="/rss.xml">rss</a> feeds)</small>
+    </p>
+  </div>
+</section>
+
+</footer>
+
+    <script async src="/js/dist/index.js"></script>
+  </body>
+</html>

@@ -29,11 +29,11 @@ siteName =
 config :: Configuration
 config =
     defaultConfiguration
-        { destinationDirectory = "../site-dist"
+        { destinationDirectory = "../dist"
         , ignoreFile           = const False
         , previewHost          = "127.0.0.1"
         , previewPort          = 8000
-        , providerDirectory    = "../site"
+        , providerDirectory    = "../src"
         , storeDirectory       = "../hakyll-cache"
         , tmpDirectory         = "../hakyll-cache/tmp"
         }

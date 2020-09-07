@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Asynchronously Loading Scripts</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Beginner-friendly introduction to loading scripts on to a web page.">
+    <meta name="author" content="Robert Pearce">
+    <meta name="keywords" content="javascript, javascript tutorial, asynchronous scripts, website basics">
+    <meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU">
+
+    <meta property="og:site_name" content="Robert Pearce | Senior Software Developer">
+    <meta property="og:title" content="Asynchronously Loading Scripts">
+    <meta property="og:url" content="https://robertwpearce.com/asynchronously-loading-scripts.html">
+    <meta property="og:description" content="Beginner-friendly introduction to loading scripts on to a web page.">
+    <meta property="og:image" content="https://robertwpearce.com/images/rock-creek-pk.jpg">
+    
+      <meta property="og:type" content="article">
+    
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="Robert Pearce | Senior Software Developer">
+    <meta property="twitter:title" content="Asynchronously Loading Scripts">
+    <meta property="twitter:description" content="Beginner-friendly introduction to loading scripts on to a web page.">
+    <meta property="twitter:image" content="https://robertwpearce.com/images/rock-creek-pk.jpg">
+    <meta property="twitter:creator" content="@RobertWPearce">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="canonical" href="https://robertwpearce.com/asynchronously-loading-scripts.html">
+    <link rel="stylesheet" href="/css/default.css" />
+    
+      <link rel="stylesheet" href="/css/article.css" />
+    
+  </head>
+  <body class="light">
+    <nav class="nav">
+  <div class="layout--constrained" data-nav-wrap>
+    <a class="nav__link nav__skip" href="#content">Skip to content</a>
+    <a class="nav__link" href="/">Home</a>
+    <a class="nav__link" href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a>
+    <a class="nav__link" href="/atom.xml">atom</a>
+    <a class="nav__link" href="/rss.xml">rss</a>
+  </div>
+</nav>
+
+
+<main id="content" tabindex="-1">
+  <article class="article">
+    <header class="article__bg" style="background-image: url('/images/rock-creek-pk.jpg')">
+      <div class="article__bgHeader">
+        <div class="layout--constrained">
+          <div class="article__bgTitleWrap">
+            <h1 class="article__bgTitle">
+              <a href="/asynchronously-loading-scripts.html">Asynchronously Loading Scripts</a>
+            </h1>
+            <div class="article__bgSubHeader">
+              <small class="italic">2015-10-05</small>
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="layout--constrained">
+      <header class="article__header">
+        <h1 class="article__title">
+          <a href="/asynchronously-loading-scripts.html">Asynchronously Loading Scripts</a>
+        </h1>
+        <small class="italic">2015-10-05</small>
+        
+      </header>
+      <p><em>This article is intended for HTML &amp; JavaScript beginners.</em></p>
+<hr />
+<p>Where do you place your <code>&lt;script&gt;</code> tags to load your JavaScript for your website? If you’re doing this within the <code>&lt;head&gt;</code> element, you might want to consider whether or not this is the best option for you.</p>
+<h2 id="fetching-javascript-synchronously">Fetching JavaScript Synchronously</h2>
+<p>So long as HTTP/1.1 is what your website is accessed via (which it will be a long while), <code>&lt;script&gt;</code> tags will be used to fetch external JavaScript files whose contents will be included on the page. These typically look like <code>&lt;script src="app.js"&gt;&lt;/script&gt;</code>. <code>&lt;script&gt;</code> tags are by default “blocking,” meaning that the web page has to pause its download &amp; render cycle, fetch and load the JavaScript and then continue on. Here is what this looks like:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">&lt;html&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>  <span class="kw">&lt;head&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;app.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>  <span class="kw">&lt;/head&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>  <span class="kw">&lt;body&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>    <span class="kw">&lt;div&gt;</span>My Website<span class="kw">&lt;/div&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>  <span class="kw">&lt;/body&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="kw">&lt;/html&gt;</span></span></code></pre></div>
+<p>The worst thing you can do is load multiple scripts in this blocking fashion:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">&lt;html&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  <span class="kw">&lt;head&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;jquery.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;jquery.lightbox.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;some_file.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;app.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>  <span class="kw">&lt;/head&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>  <span class="kw">&lt;body&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a>    <span class="kw">&lt;div&gt;</span>My Website<span class="kw">&lt;/div&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>  <span class="kw">&lt;/body&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a><span class="kw">&lt;/html&gt;</span></span></code></pre></div>
+<p>so make sure you combine (concatenate) all your JavaScript files in to one file. But this is still not ideal, for you have a blocking script that will have to download before anything else happens.</p>
+<p>When we throw <code>&lt;script&gt;</code> tags at the end of the <code>&lt;body&gt;</code>, we allow for the page to paint and then go and fetch the JS synchronously (this lets the user see and utilize the page, but the scripts still haven’t finished loading).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">&lt;html&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>  <span class="kw">&lt;head&gt;&lt;/head&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>  <span class="kw">&lt;body&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>    <span class="kw">&lt;div&gt;</span>My Website<span class="kw">&lt;/div&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;app.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>  <span class="kw">&lt;/body&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a><span class="kw">&lt;/html&gt;</span></span></code></pre></div>
+<p>However, since the page is still loading, search engines might punish you for a long(er) loading time. What we might need, instead, is the ability to asynchronously fetch the JavaScript <em>after</em> the page is finished loading.</p>
+<h2 id="fetching-javascript-asynchronously">Fetching JavaScript Asynchronously</h2>
+<p>There are two popular methods for fetch JavaScript in an asynchronous manner.</p>
+<p>The first is to simply include the HTML5 <code>async</code> property:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;app.js&quot;</span><span class="ot"> async</span><span class="kw">&gt;&lt;/script&gt;</span></span></code></pre></div>
+<p>Or, if you need to support older browsers, add an event listener to the window’s <code>load</code> function to dynamically build a script tag and append it to the page (note how I do not use <code>window.onload =</code>):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="kw">&lt;script&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>  <span class="bu">window</span><span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">&#39;load&#39;</span><span class="op">,</span> buildScriptTag)<span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>  <span class="kw">function</span> <span class="fu">buildScriptTag</span>() {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>    <span class="kw">var</span> script <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">&#39;script&#39;</span>)<span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>    script<span class="op">.</span><span class="at">src</span> <span class="op">=</span> <span class="st">&#39;app.js&#39;</span><span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>    <span class="bu">document</span><span class="op">.</span><span class="at">body</span><span class="op">.</span><span class="fu">appendChild</span>(script)<span class="op">;</span> <span class="co">// append it wherever you want</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a>  }</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a><span class="kw">&lt;/script&gt;</span></span></code></pre></div>
+<p>Why didn’t I use <code>window.onload =</code> here? When you assign a browser callback trigger a value, it can only have one value! When you add an event listener, you allow the window’s load functionality to have more values in the future.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>If your app/website is architected to rely on JavaScript before it renders anything, then you can utilize this asynchronous technique with a “Loading…” graphic that is removed when the JavaScript loads. Ultimately, you want to decrease the amount of time it takes for a web page to perform an initial load so that the user can get started using your project as quickly as possible. With asynchronous loading of JavaScript, you enable your users to get going ASAP and then allow for them to have a fancier experience once things load in the background.</p>
+    </section>
+  </article>
+</main>
+
+<footer>
+  <section class="subscribe section--padded">
+  <div class="layout--constrained">
+    <h2 class="subscribe__header">Get notified of new posts</h2>
+
+    <form action="//robertwpearce.us13.list-manage.com/subscribe/post?u=2df44e8960266388bff165fa6&amp;id=ee2f2a3737" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate class="subscribe__form">
+      <div style="position: absolute; left: -5000px;" aria-hidden="true">
+        <input type="text" name="b_2df44e8960266388bff165fa6_ee2f2a3737" tabindex="-1" value="">
+      </div>
+      <div class="subscribe__section">
+        <input type="email" value="" id="mce-EMAIL" class="subscribe__input" name="EMAIL" placeholder="you@greatemail.com" aria-label="Email Address">
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe__submit">
+      </div>
+      <small>Note: I will <em>never</em> give out your email nor spam you. Unsubscribe at any time.</small>
+    </form>
+    <p>
+      <small>(or subscribe to the <a href="/atom.xml" class="subscribe__link">atom</a> or <a class="subscribe__link" href="/rss.xml">rss</a> feeds)</small>
+    </p>
+  </div>
+</section>
+
+</footer>
+
+    <script async src="/js/dist/index.js"></script>
+  </body>
+</html>

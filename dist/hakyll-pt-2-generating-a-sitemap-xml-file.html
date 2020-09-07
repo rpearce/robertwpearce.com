@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hakyll Pt. 2 – Generating a Sitemap XML File</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Generate a sitemap.xml file for your hakyll site.">
+    <meta name="author" content="Robert Pearce">
+    <meta name="keywords" content="hakyll, hakyll sitemap, hakyll tutorial, hakyll blog, hakyll blog tutorial, hakyll static site, static site generator">
+    <meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU">
+
+    <meta property="og:site_name" content="Robert Pearce | Senior Software Developer">
+    <meta property="og:title" content="Hakyll Pt. 2 – Generating a Sitemap XML File">
+    <meta property="og:url" content="https://robertwpearce.com/hakyll-pt-2-generating-a-sitemap-xml-file.html">
+    <meta property="og:description" content="Generate a sitemap.xml file for your hakyll site.">
+    <meta property="og:image" content="https://robertwpearce.com/images/lake-wanaka.jpg">
+    
+      <meta property="og:type" content="article">
+    
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="Robert Pearce | Senior Software Developer">
+    <meta property="twitter:title" content="Hakyll Pt. 2 – Generating a Sitemap XML File">
+    <meta property="twitter:description" content="Generate a sitemap.xml file for your hakyll site.">
+    <meta property="twitter:image" content="https://robertwpearce.com/images/lake-wanaka.jpg">
+    <meta property="twitter:creator" content="@RobertWPearce">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="canonical" href="https://robertwpearce.com/hakyll-pt-2-generating-a-sitemap-xml-file.html">
+    <link rel="stylesheet" href="/css/default.css" />
+    
+      <link rel="stylesheet" href="/css/article.css" />
+    
+  </head>
+  <body class="light">
+    <nav class="nav">
+  <div class="layout--constrained" data-nav-wrap>
+    <a class="nav__link nav__skip" href="#content">Skip to content</a>
+    <a class="nav__link" href="/">Home</a>
+    <a class="nav__link" href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a>
+    <a class="nav__link" href="/atom.xml">atom</a>
+    <a class="nav__link" href="/rss.xml">rss</a>
+  </div>
+</nav>
+
+
+<main id="content" tabindex="-1">
+  <article class="article">
+    <header class="article__bg" style="background-image: url('/images/lake-wanaka.jpg')">
+      <div class="article__bgHeader">
+        <div class="layout--constrained">
+          <div class="article__bgTitleWrap">
+            <h1 class="article__bgTitle">
+              <a href="/hakyll-pt-2-generating-a-sitemap-xml-file.html">Hakyll Pt. 2 – Generating a Sitemap XML File</a>
+            </h1>
+            <div class="article__bgSubHeader">
+              <small class="italic">2018-11-17</small>
+              
+              <small class="italic">(updated: 2020-04-26T00:00:00Z)</small>
+              
+              
+              <small class="article__bgPhotoCred italic">
+                [ photo credit <a href="https://www.instagram.com/emilycouldmakethat">emilycouldmakethat</a> ]
+              </small>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="layout--constrained">
+      <header class="article__header">
+        <h1 class="article__title">
+          <a href="/hakyll-pt-2-generating-a-sitemap-xml-file.html">Hakyll Pt. 2 – Generating a Sitemap XML File</a>
+        </h1>
+        <small class="italic">2018-11-17</small>
+        
+        <small class="italic">(updated: 2020-04-26T00:00:00Z)</small>
+        
+      </header>
+      <p>This is part 2 of a multipart series where we will look at getting a website / blog set up with <a href="https://jaspervdj.be/hakyll">hakyll</a> and customized a fair bit.</p>
+<ul>
+<li><a href="/hakyll-pt-1-setup-and-initial-customization.html">Pt. 1 – Setup &amp; Initial Customization</a></li>
+<li>Pt. 2 – Generating a Sitemap XML File</li>
+<li><a href="/hakyll-pt-3-generating-rss-and-atom-xml-feeds.html">Pt. 3 – Generating RSS and Atom XML Feeds</a></li>
+<li><a href="/hakyll-pt-4-copying-static-files-for-your-build.html">Pt. 4 – Copying Static Files For Your Build</a></li>
+<li><a href="/hakyll-pt-5-generating-custom-post-filenames-from-a-title-slug.html">Pt. 5 – Generating Custom Post Filenames From a Title Slug</a></li>
+<li><a href="/hakyll-pt-6-pure-builds-with-nix.html">Pt. 6 – Pure Builds With Nix</a></li>
+<li><em>(wip) Pt. 7 – Customizing Markdown Compiler Options</em></li>
+</ul>
+<h2 id="overview">Overview</h2>
+<ol>
+<li><a href="#adding-a-sitemap-template">Adding a Sitemap Template</a></li>
+<li><a href="#generating-the-sitemap-xml-file">Generating the Sitemap XML File</a></li>
+<li><a href="#adding-other-pages-and-directories">Adding Other Pages and Directories</a></li>
+</ol>
+<h2 id="adding-a-sitemap-template">Adding a Sitemap Template</h2>
+<p>A sitemap.xml template, just like <a href="/hakyll-pt-1-setup-and-initial-customization.html#working-with-templates">the templates in the last post</a>, receives context fields to work with (variables, essentially), and outputs the result of applying said context to the template. Here is what our sitemap template will look like today in our project’s <code>templates/sitemap.xml</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="kw">&lt;urlset</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="ot">  xmlns=</span><span class="st">&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="ot">  xmlns:news=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-news/0.9&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="ot">  xmlns:xhtml=</span><span class="st">&quot;http://www.w3.org/1999/xhtml&quot;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="ot">  xmlns:mobile=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-mobile/1.0&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="ot">  xmlns:image=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-image/1.1&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="ot">  xmlns:video=</span><span class="st">&quot;http://www.google.com/schemas/sitemap-video/1.1&quot;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="kw">&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>  <span class="kw">&lt;url&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>    <span class="kw">&lt;loc&gt;</span>$root$<span class="kw">&lt;/loc&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>    <span class="kw">&lt;changefreq&gt;</span>daily<span class="kw">&lt;/changefreq&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>    <span class="kw">&lt;priority&gt;</span>1.0<span class="kw">&lt;/priority&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>  <span class="kw">&lt;/url&gt;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a>$for(pages)$</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a>  <span class="kw">&lt;url&gt;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>    <span class="kw">&lt;loc&gt;</span>$root$$url$<span class="kw">&lt;/loc&gt;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a>    <span class="kw">&lt;lastmod&gt;</span>$if(updated)$$updated$$else$$if(date)$$date$$endif$$endif$<span class="kw">&lt;/lastmod&gt;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a>    <span class="kw">&lt;changefreq&gt;</span>weekly<span class="kw">&lt;/changefreq&gt;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a>    <span class="kw">&lt;priority&gt;</span>0.8<span class="kw">&lt;/priority&gt;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a>  <span class="kw">&lt;/url&gt;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a>$endfor$</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a><span class="kw">&lt;/urlset&gt;</span></span></code></pre></div>
+<p>Apart from the normal sitemap boilerplate, you can see <code>root</code>, <code>pages</code>, <code>url</code>, <code>date</code> and <code>updated</code> context fields. While <code>date</code> and <code>updated</code> would come from your metadata fields defined for a post, and the <code>url</code> is built from hakyll’s <a href="https://github.com/jaspervdj/hakyll/blob/c85198d8cb6ce055c788e287c7f2470eac0aad36/lib/Hakyll/Web/Template/Context.hs#L192"><code>defaultContext</code></a>, the <code>root</code> and <code>pages</code> fields are custom defined in what will be our very own <code>sitemapCtx</code> context. In the next section, we’ll use this template to generate our sitemap.xml file.</p>
+<h2 id="generating-the-sitemap-xml-file">Generating the Sitemap XML File</h2>
+<p>If you <a href="http://localhost:8000/hakyll-pt-1-setup-and-initial-customization.html#installation-setup">create a hakyll project from scratch</a>, you will start out with a few files that we can add to our sitemap:</p>
+<ul>
+<li><code>index.html</code></li>
+<li><code>about.rst</code></li>
+<li><code>contact.markdown</code></li>
+<li><code>posts/2015-08-12-spqr.html</code></li>
+<li><code>posts/2015-10-07-rosa-rosa-rosam.html</code></li>
+<li><code>posts/2015-11-28-carpe-diem.html</code></li>
+<li><code>posts/2015-12-07-tu-quoque.html</code></li>
+</ul>
+<p>You should note that your <code>site.hs</code> file also has the following:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>    <span class="co">-- ...</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>    match (fromList [<span class="st">&quot;about.rst&quot;</span>, <span class="st">&quot;contact.markdown&quot;</span>]) <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>        route   <span class="op">$</span> setExtension <span class="st">&quot;html&quot;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>        compile <span class="op">$</span> pandocCompiler</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/default.html&quot;</span> defaultContext</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>    match <span class="st">&quot;posts/*&quot;</span> <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a>        route <span class="op">$</span> setExtension <span class="st">&quot;html&quot;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a>        compile <span class="op">$</span> pandocCompiler</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a>            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/post.html&quot;</span>    postCtx</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a>            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/default.html&quot;</span> postCtx</span></code></pre></div>
+<p>It’s important that you understand that any files you want to be loaded and sent to <code>templates/sitemap.xml</code> must first be <code>match</code>ed and <code>compile</code>d <em>before</em> the sitemap can be built. If you don’t do this, you’ll pull your hair out wondering why the file (or folder) you’re trying to include in the sitemap never shows up.</p>
+<p>Now, there is something that we are going to emulate to make this sitemap a reality (this should already be in <code>site.hs</code>):</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>    <span class="co">-- ...</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>    create [<span class="st">&quot;archive.html&quot;</span>] <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>        route idRoute</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>        compile <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>            posts <span class="ot">&lt;-</span> recentFirst <span class="op">=&lt;&lt;</span> loadAll <span class="st">&quot;posts/*&quot;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>            <span class="kw">let</span> archiveCtx <span class="ot">=</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a>                    listField <span class="st">&quot;posts&quot;</span> postCtx (<span class="fu">return</span> posts) <span class="ot">`mappend`</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a>                    constField <span class="st">&quot;title&quot;</span> <span class="st">&quot;Archives&quot;</span>            <span class="ot">`mappend`</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a>                    defaultContext</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a>            makeItem <span class="st">&quot;&quot;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a>                <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/archive.html&quot;</span> archiveCtx</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a>                <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/default.html&quot;</span> archiveCtx</span></code></pre></div>
+<p>Reading the code above, this essentially says</p>
+<ol>
+<li>here’s a file we want to create that <em>does not yet exist</em> (how <code>create</code> differs from <code>match</code>)</li>
+<li>when you create the route, keep the filename (what <code>idRoute</code> does)</li>
+<li>when you compile, load all the posts, specify what the context to send to each template will be, then make the item (the <code>""</code> is an identifier… see <a href="https://github.com/jaspervdj/hakyll/blob/1abdeee743d65d96c6f469213ca6e7ea823340a7/lib/Hakyll/Core/Compiler.hs#L65-L68">the source</a> for more), then pass the context to the archive template and pass that on to the default template, ultimately building up a full webpage from the inside-out</li>
+</ol>
+<p>Let’s change this 3-step rule to suit our needs before we wrangle the code. We want our rules to say:</p>
+<ol>
+<li>here’s a file we want to create that <em>does not yet exist</em> (<code>sitemap.xml</code>)</li>
+<li>when you create the route, keep the filename (what <code>idRoute</code> does)</li>
+<li>when you compile, load all the posts, load all the other pages, specify what the context to send to each template will be, then make the item, then pass the context to the sitemap template, ultimately building up an XML file</li>
+</ol>
+<p>This is almost the same! Let’s write it:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>    <span class="co">-- ...</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>    create [<span class="st">&quot;sitemap.xml&quot;</span>] <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>        route idRoute</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>        compile <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>            <span class="co">-- load and sort the posts</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>            posts <span class="ot">&lt;-</span> recentFirst <span class="op">=&lt;&lt;</span> loadAll <span class="st">&quot;posts/*&quot;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>            <span class="co">-- load individual pages from a list (globs DO NOT work here)</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a>            singlePages <span class="ot">&lt;-</span> loadAll (fromList [<span class="st">&quot;about.rst&quot;</span>, <span class="st">&quot;contact.markdown&quot;</span>])</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a>                           <span class="co">-- mappend the posts and singlePages together</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a>            <span class="kw">let</span> pages <span class="ot">=</span> posts <span class="op">&lt;&gt;</span> singlePages</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a>                           <span class="co">-- create the `pages` field with the postCtx</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a>                           <span class="co">-- and return the `pages` value for it</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a>                sitemapCtx <span class="ot">=</span> listField <span class="st">&quot;pages&quot;</span> postCtx (<span class="fu">return</span> pages)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true"></a>            <span class="co">-- make the item and apply our sitemap template</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true"></a>            makeItem <span class="st">&quot;&quot;</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true"></a>                <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/sitemap.xml&quot;</span> sitemapCtx</span></code></pre></div>
+<p>This is starting to look good! But what’s wrong here? Remember the <code>root</code> context bits? We’re going to need to define what that is, and the best way that I’ve found right now is simply as a <code>String</code>; if you want to do something fancy with configuration or reading it in dynamically, then go nuts.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="ot">root ::</span> <span class="dt">String</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>root <span class="ot">=</span> <span class="st">&quot;https://ourblog.com&quot;</span></span></code></pre></div>
+<p>With that defined, we can add it to our contexts:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>    <span class="co">-- ...</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>    create [<span class="st">&quot;sitemap.xml&quot;</span>] <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>        route idRoute</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a>        compile <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a>            posts <span class="ot">&lt;-</span> recentFirst <span class="op">=&lt;&lt;</span> loadAll <span class="st">&quot;posts/*&quot;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a>            singlePages <span class="ot">&lt;-</span> loadAll (fromList [<span class="st">&quot;about.rst&quot;</span>, <span class="st">&quot;contact.markdown&quot;</span>])</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a>            <span class="kw">let</span> pages <span class="ot">=</span> posts <span class="op">&lt;&gt;</span> singlePages</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a>                sitemapCtx <span class="ot">=</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a>                    constField <span class="st">&quot;root&quot;</span> root <span class="op">&lt;&gt;</span> <span class="co">-- here</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a>                    listField <span class="st">&quot;pages&quot;</span> postCtx (<span class="fu">return</span> pages)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a>            makeItem <span class="st">&quot;&quot;</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a>                <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/sitemap.xml&quot;</span> sitemapCtx</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true"></a><span class="co">-- ...</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true"></a><span class="ot">postCtx ::</span> <span class="dt">Context</span> <span class="dt">String</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true"></a>postCtx <span class="ot">=</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true"></a>    constField <span class="st">&quot;root&quot;</span> root      <span class="op">&lt;&gt;</span> <span class="co">-- here</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true"></a>    dateField <span class="st">&quot;date&quot;</span> <span class="st">&quot;%Y-%m-%d&quot;</span> <span class="op">&lt;&gt;</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true"></a>    defaultContext</span></code></pre></div>
+<p><em>Hint: if the <code>&lt;&gt;</code> is throwing you for a loop, it’s defined as the same as thing as <a href="https://wiki.haskell.org/Monoid"><code>mappend</code></a>.</em></p>
+<p>See how we defined <code>constField "root" root</code> in two places? We’re talking about two different contexts here: the <em>sitemap</em> context and the <em>post</em> context. While you could have the <code>postCtx</code> be combined with the <code>sitemapCtx</code>, thus giving the <code>pages</code> field access to the <code>root</code> field, you probably want to use <code>root</code> (and perhaps other constants) wherever you work with posts, so adding them to <code>postCtx</code> for use everywhere seems like the right thing to do.</p>
+<p>Once you’ve got all this, run the following to build (or rebuild) your <code>docs/sitemap.xml</code> file:</p>
+<ol>
+<li><code>λ stack build</code></li>
+<li><code>λ stack exec site clean</code></li>
+<li><code>λ stack exec site build</code></li>
+</ol>
+<p>Your <code>docs/sitemap.xml</code> should now have all your pages defined in it!</p>
+<h2 id="adding-other-pages-and-directories">Adding Other Pages and Directories</h2>
+<p>We’ve done some epic traveling in New Zealand and now want to include a bunch of pages we’ve written in the sitemap. Those pages are:</p>
+<ul>
+<li><code>new-zealand/index.md</code></li>
+<li><code>new-zealand/otago/index.md</code></li>
+<li><code>new-zealand/otago/dunedin-area.md</code></li>
+<li><code>new-zealand/otago/queenstown-area.md</code></li>
+<li><code>new-zealand/otago/wanaka-area.md</code></li>
+</ul>
+<p>First, we make sure that our pages get compiled (we’ll use <code>postCtx</code> for them):</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>    <span class="co">-- ...</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>    match <span class="st">&quot;new-zealand/**&quot;</span> <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a>        route <span class="op">$</span> setExtension <span class="st">&quot;html&quot;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>        compile <span class="op">$</span> pandocCompiler</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a>            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/post.html&quot;</span>    postCtx</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a>            <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/default.html&quot;</span> postCtx</span></code></pre></div>
+<p>And then we want to make sure we add them to our <code>create</code> function:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>main <span class="ot">=</span> hakyllWith config <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>    <span class="co">-- ... match code up here</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a>    create [<span class="st">&quot;sitemap.xml&quot;</span>] <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a>        route idRoute</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a>        compile <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a>            posts <span class="ot">&lt;-</span> recentFirst <span class="op">=&lt;&lt;</span> loadAll <span class="st">&quot;posts/*&quot;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a>            singlePages <span class="ot">&lt;-</span> loadAll (fromList [<span class="st">&quot;about.rst&quot;</span>, <span class="st">&quot;contact.markdown&quot;</span>])</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a>            nzPages <span class="ot">&lt;-</span> loadAll <span class="st">&quot;new-zealand/**&quot;</span> <span class="co">-- here</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a>            <span class="kw">let</span> pages <span class="ot">=</span> posts <span class="op">&lt;&gt;</span> singlePages <span class="op">&lt;&gt;</span> nzPages <span class="co">-- here</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true"></a>                sitemapCtx <span class="ot">=</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true"></a>                    constField <span class="st">&quot;root&quot;</span> root <span class="op">&lt;&gt;</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true"></a>                    listField <span class="st">&quot;pages&quot;</span> postCtx (<span class="fu">return</span> pages)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true"></a>            makeItem <span class="st">&quot;&quot;</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true"></a>                <span class="op">&gt;&gt;=</span> loadAndApplyTemplate <span class="st">&quot;templates/sitemap.xml&quot;</span> sitemapCtx</span></code></pre></div>
+<p>I could not figure out how to mix globs (<code>new-zealand/**</code>) in with individual file paths (included in <code>fromList</code>), so I had to load them separately; if you figure out how, let me know!</p>
+<p>Once you’ve got all this, run the following to rebuild your <code>docs/sitemap.xml</code> file:</p>
+<ol>
+<li><code>λ stack build</code></li>
+<li><code>λ stack exec site rebuild</code></li>
+</ol>
+<h2 id="wrapping-up">Wrapping Up</h2>
+<p>In this lesson we learned how to dynamically generate a sitemap.xml file using <a href="https://jaspervdj.be/hakyll">hakyll</a>. Next time, we’ll use these same skills to generate our own RSS and Atom XML feeds.</p>
+<p>Next up:</p>
+<ul>
+<li><a href="/hakyll-pt-3-generating-rss-and-atom-xml-feeds.html">Pt. 3 – Generating RSS and Atom XML Feeds</a></li>
+<li><a href="/hakyll-pt-4-copying-static-files-for-your-build.html">Pt. 4 – Copying Static Files For Your Build</a></li>
+<li><a href="/hakyll-pt-5-generating-custom-post-filenames-from-a-title-slug.html">Pt. 5 – Generating Custom Post Filenames From a Title Slug</a></li>
+<li><em>(wip) Pt. 6 – Customizing Markdown Compiler Options</em></li>
+</ul>
+<hr />
+<p>Thank you for reading! <br /> Robert</p>
+    </section>
+  </article>
+</main>
+
+<footer>
+  <section class="subscribe section--padded">
+  <div class="layout--constrained">
+    <h2 class="subscribe__header">Get notified of new posts</h2>
+
+    <form action="//robertwpearce.us13.list-manage.com/subscribe/post?u=2df44e8960266388bff165fa6&amp;id=ee2f2a3737" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate class="subscribe__form">
+      <div style="position: absolute; left: -5000px;" aria-hidden="true">
+        <input type="text" name="b_2df44e8960266388bff165fa6_ee2f2a3737" tabindex="-1" value="">
+      </div>
+      <div class="subscribe__section">
+        <input type="email" value="" id="mce-EMAIL" class="subscribe__input" name="EMAIL" placeholder="you@greatemail.com" aria-label="Email Address">
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe__submit">
+      </div>
+      <small>Note: I will <em>never</em> give out your email nor spam you. Unsubscribe at any time.</small>
+    </form>
+    <p>
+      <small>(or subscribe to the <a href="/atom.xml" class="subscribe__link">atom</a> or <a class="subscribe__link" href="/rss.xml">rss</a> feeds)</small>
+    </p>
+  </div>
+</section>
+
+</footer>
+
+    <script async src="/js/dist/index.js"></script>
+  </body>
+</html>

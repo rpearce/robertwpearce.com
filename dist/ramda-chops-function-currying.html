@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Ramda Chops: Function Currying</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How function currying works under the hood.">
+    <meta name="author" content="Robert Pearce">
+    <meta name="keywords" content="ramda, ramda.js, ramdajs, ramda tutorial, ramda curry, crocks curry, function currying, ramda fp">
+    <meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU">
+
+    <meta property="og:site_name" content="Robert Pearce | Senior Software Developer">
+    <meta property="og:title" content="Ramda Chops: Function Currying">
+    <meta property="og:url" content="https://robertwpearce.com/ramda-chops-function-currying.html">
+    <meta property="og:description" content="How function currying works under the hood.">
+    <meta property="og:image" content="https://robertwpearce.com/images/shepherd-flock.jpg">
+    
+      <meta property="og:type" content="article">
+    
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="Robert Pearce | Senior Software Developer">
+    <meta property="twitter:title" content="Ramda Chops: Function Currying">
+    <meta property="twitter:description" content="How function currying works under the hood.">
+    <meta property="twitter:image" content="https://robertwpearce.com/images/shepherd-flock.jpg">
+    <meta property="twitter:creator" content="@RobertWPearce">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="canonical" href="https://robertwpearce.com/ramda-chops-function-currying.html">
+    <link rel="stylesheet" href="/css/default.css" />
+    
+      <link rel="stylesheet" href="/css/article.css" />
+    
+  </head>
+  <body class="light">
+    <nav class="nav">
+  <div class="layout--constrained" data-nav-wrap>
+    <a class="nav__link nav__skip" href="#content">Skip to content</a>
+    <a class="nav__link" href="/">Home</a>
+    <a class="nav__link" href="mailto:me@robertwpearce.com?subject=Work Inquiry">Hire Me</a>
+    <a class="nav__link" href="/atom.xml">atom</a>
+    <a class="nav__link" href="/rss.xml">rss</a>
+  </div>
+</nav>
+
+
+<main id="content" tabindex="-1">
+  <article class="article">
+    <header class="article__bg" style="background-image: url('/images/shepherd-flock.jpg')">
+      <div class="article__bgHeader">
+        <div class="layout--constrained">
+          <div class="article__bgTitleWrap">
+            <h1 class="article__bgTitle">
+              <a href="/ramda-chops-function-currying.html">Ramda Chops: Function Currying</a>
+            </h1>
+            <div class="article__bgSubHeader">
+              <small class="italic">2018-01-23</small>
+              
+              
+              <small class="article__bgPhotoCred italic">
+                [ photo credit <a href="https://unsplash.com/@biegunwschodni">Biegun Wschodni</a> ]
+              </small>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="layout--constrained">
+      <header class="article__header">
+        <h1 class="article__title">
+          <a href="/ramda-chops-function-currying.html">Ramda Chops: Function Currying</a>
+        </h1>
+        <small class="italic">2018-01-23</small>
+        
+      </header>
+      <p><em>Thanks to <a href="https://github.com/jsilve">Jillian Silver</a> and <a href="https://twitter.com/evilsoft">@evilsoft</a> for their review of this post.</em></p>
+<p>Functional Programming concepts have been pouring into the JavaScript community for a number of years now, and many of us struggle to keep up. I’ve been lucky enough to be able to work with some mentors and functional tools that have helped me along the way. One of these tools is <a href="http://ramdajs.com">ramda.js</a>, and it was my gateway to the larger Functional Programming world. I hope it will be for you, as well.</p>
+<p>To understand ramda, you first have to understand a concept known as “currying.” The ramda website states,</p>
+<blockquote>
+<p>The parameters to Ramda functions are arranged to make it convenient for currying.</p>
+</blockquote>
+<p>There are some function currying articles on the ramda site, such as <a href="http://fr.umio.us/favoring-curry/">Favoring Curry</a> and <a href="https://hughfdjackson.com/javascript/why-curry-helps/">Why Curry Helps</a> by Scott Sauyet, which are great for explaining the benefits and power of currying. Those articles (and many other resources) do great jobs of explaining how to use currying and why, so I’ll briefly touch on those points, but I really want to focus on how it works under the hood and how this funny little concept will completely change the way that you program.</p>
+<hr />
+<p><em>Other ramda posts:</em></p>
+<ul>
+<li><a href="/ramda-chops-function-composition.html">Ramda Chops: Function Composition</a></li>
+<li><a href="/ramda-chops-safely-accessing-properties.html">Ramda Chops: Safely Accessing Properties</a></li>
+<li><a href="/ramda-chops-map-filter-and-reduce.html">Ramda Chops: Map, Filter &amp; Reduce</a></li>
+</ul>
+<h2 id="rudimentary-currying">Rudimentary Currying</h2>
+<p>Many articles already cover this, so I’ll keep it short.</p>
+<p>Let’s start with a function that takes two numbers and adds them together:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co">// add :: (Number, Number) -&gt; Number</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="kw">const</span> add <span class="op">=</span> (a<span class="op">,</span> b) <span class="kw">=&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>  a <span class="op">+</span> b</span></code></pre></div>
+<p>As our fake type signature describes, <code>add</code> takes two arguments (essentially, a <a href="https://en.wikibooks.org/wiki/Haskell/Lists_and_tuples#Tuples%3CPaste%3E">tuple</a>) that are both of type <code>Number</code> and returns a value of type <code>Number</code>.</p>
+<p>But if we wanted to create a function that adds <code>10</code> to anything, we could write the following:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="co">// add :: Number -&gt; Number -&gt; Number</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="kw">const</span> add <span class="op">=</span> a <span class="kw">=&gt;</span> b <span class="kw">=&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>  a <span class="op">+</span> b</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="co">// which is the same as</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a><span class="kw">function</span> <span class="fu">add</span>(a) {</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>  <span class="cf">return</span> <span class="kw">function</span>(b) {</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a>    <span class="cf">return</span> a <span class="op">+</span> b</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a>  }</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a>}</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a><span class="co">// and then</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a><span class="co">// add10 :: Number -&gt; Number</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a><span class="kw">const</span> add10 <span class="op">=</span> <span class="fu">add</span>(<span class="dv">10</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a>add10 <span class="co">// =&gt; Function</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a><span class="fu">add10</span>(<span class="dv">4</span>) <span class="co">// =&gt; 14</span></span></code></pre></div>
+<p>Note the change in type signature: we now have singular arguments that are accepted at a time instead of the tuple style. When we provide the first argument, we are then returned a function that will sit and wait until all the functions are applied before giving us a value. This method can be useful in many situations, but consider the following:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="fu">add</span>(<span class="dv">10</span>)(<span class="dv">4</span>)</span></code></pre></div>
+<p>That feels awkward, right? Fear not! There is a way.</p>
+<h2 id="the-curry-function">The <code>curry</code> Function</h2>
+<p>Ramda provides us a function named <code>curry</code> that will take what might be considered a “normal” JavaScript function definition with multiple parameters and turn it into a function that will keep returning a function until all of its parameters have been supplied. Check it out!</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="im">import</span> curry <span class="im">from</span> <span class="st">&#39;ramda/src/curry&#39;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="kw">const</span> oldAdd <span class="op">=</span> (a<span class="op">,</span> b) <span class="kw">=&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>  a <span class="op">+</span> b</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="kw">const</span> add <span class="op">=</span> <span class="fu">curry</span>(oldAdd)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a><span class="fu">add</span>(<span class="dv">10</span>) <span class="co">// =&gt; Function</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a><span class="fu">add</span>(<span class="dv">10</span>)(<span class="dv">4</span>) <span class="co">// =&gt; 14</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a><span class="fu">add</span>(<span class="dv">10</span><span class="op">,</span> <span class="dv">4</span>) <span class="co">// =&gt; 14</span></span></code></pre></div>
+<p>Or if you want to have <code>curry</code> baked in to your original <code>add</code> function:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="co">// add :: Number -&gt; Number -&gt; Number</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="kw">const</span> add <span class="op">=</span> <span class="fu">curry</span>((a<span class="op">,</span> b) <span class="op">-&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>  a <span class="op">+</span> b</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>)</span></code></pre></div>
+<p>The magical <code>curry</code> function doesn’t care when you provide arguments or how you do so – it will just keep returning you partially applied functions until all arguments have been applied, at which point it will give you back a value.</p>
+<h2 id="cool-now-how-does-curry-work">Cool… Now How Does <code>curry</code> Work?</h2>
+<p>This might seem blasphemous, but to understand how <code>curry</code> works under the hood, we’re going to dive into a different library’s implementation of it: <a href="https://github.com/evilsoft/crocks">crocks</a> by <a href="https://twitter.com/evilsoft">@evilsoft</a>. (Crocks is similar to ramda but dives more into abstract data types (ADTs) and is more towards the deeper end of the Functional Programming pool.) I think crocks’ implementation is excellent, and 99% of it being in one file makes for a great teaching tool.</p>
+<p>If you want to jump ahead, here is a link to crocks’ <code>curry</code> function: <a href="https://github.com/evilsoft/crocks/blob/master/src/core/curry.js">https://github.com/evilsoft/crocks/blob/master/src/core/curry.js</a></p>
+<p>Where do we start with understanding this next-level JavaScript? Always start with the types, as they can tell a story.</p>
+<h3 id="reading-currys-story">Reading <code>curry</code>’s Story</h3>
+<p>What does this tell us?</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="co">// curry :: ((a, b, c) -&gt; d) -&gt; a -&gt; b -&gt; c -&gt; d</span></span></code></pre></div>
+<ol>
+<li><code>((a, b, c) -&gt; d)</code> tells us that it accepts a function that has <em>n</em> parameters of any type and returns a value of any type</li>
+<li><code>-&gt; a -&gt; b -&gt; c</code> tells us that it then accepts each parameter – but only 1 at a time!</li>
+<li><code>-&gt; d</code> tells us that it ultimately returns the value as specified in the function</li>
+</ol>
+<p>Sounds simple, right? Easier said than done!</p>
+<h3 id="what-we-need-to-do">What we need to do</h3>
+<ol>
+<li>we need to first accept a function (the one to be curried)</li>
+<li>we need to then accept <a href="/simple-variadic-behavior.html">any number of arguments (variadic behavior)</a></li>
+<li>when this happens, we need to either</li>
+</ol>
+<ul>
+<li>return a value (when all arguments have been applied)</li>
+<li>return a function that accepts the remaining arguments and repeat this condition</li>
+</ul>
+<h3 id="breaking-down-curry">Breaking Down Curry</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="co">// curry :: ((a, b, c) -&gt; d) -&gt; a -&gt; b -&gt; c -&gt; d</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="co">//</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="co">// 1. we accept a function</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="kw">const</span> curry <span class="op">=</span> (fn) <span class="kw">=&gt;</span> {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>  <span class="co">// 2. we return a function taking any `n` arguments</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a>  <span class="cf">return</span> (<span class="op">...</span>xs) <span class="kw">=&gt;</span> {</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>    <span class="co">// make sure we have a populated list to work with;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a>    <span class="co">// `undefined` is the value for the Unit type in</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a>    <span class="co">// crocks and calling our function must utilize some</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a>    <span class="co">// sort of value.</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a>    <span class="kw">const</span> args <span class="op">=</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a>      xs<span class="op">.</span><span class="at">length</span> <span class="op">?</span> xs <span class="op">:</span> [ <span class="kw">undefined</span> ]</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true"></a>    <span class="co">// if the number of args sent are</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true"></a>    <span class="co">// less than that required, then</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true"></a>    <span class="co">// don&#39;t do more work; go ahead and</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true"></a>    <span class="co">// return a new version of our function</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true"></a>    <span class="co">// that is still waiting for more</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true"></a>    <span class="co">// arguments to be applied.</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true"></a>    <span class="cf">if</span> (args<span class="op">.</span><span class="at">length</span> <span class="op">&lt;</span> fn<span class="op">.</span><span class="at">length</span>) {</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true"></a>      <span class="co">// way of safely creating a new function</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true"></a>      <span class="co">// and binding arguments to it without</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true"></a>      <span class="co">// calling it.</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true"></a>      <span class="cf">return</span> <span class="fu">curry</span>(<span class="bu">Function</span><span class="op">.</span><span class="at">bind</span><span class="op">.</span><span class="fu">apply</span>(fn<span class="op">,</span> [ <span class="kw">null</span> ]<span class="op">.</span><span class="fu">concat</span>(args)))</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true"></a>    }</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true"></a>    <span class="co">// if we&#39;ve provided all arguments,</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true"></a>    <span class="co">// then let&#39;s apply them and give</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true"></a>    <span class="co">// back the result.</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true"></a>    <span class="co">//</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true"></a>    <span class="co">// otherwise, let&#39;s do some work</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true"></a>    <span class="co">// and see if, based on the number</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true"></a>    <span class="co">// of arguments, we return a new</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true"></a>    <span class="co">// function with fewer arguments</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true"></a>    <span class="co">// or go ahead and call the function</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true"></a>    <span class="co">// with the final argument so we can</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true"></a>    <span class="co">// get back a value.</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true"></a>    <span class="co">//</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true"></a>    <span class="co">// </span><span class="al">NOTE</span><span class="co">: `applyCurry` is defined below.</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true"></a>    <span class="kw">const</span> val <span class="op">=</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true"></a>      args<span class="op">.</span><span class="at">length</span> <span class="op">===</span> fn<span class="op">.</span><span class="at">length</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true"></a>        <span class="op">?</span> fn<span class="op">.</span><span class="fu">apply</span>(<span class="kw">null</span><span class="op">,</span> args)</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true"></a>        <span class="op">:</span> args<span class="op">.</span><span class="fu">reduce</span>(applyCurry<span class="op">,</span> fn)</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true"></a></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true"></a>    <span class="co">// 3. if our value is still a function, then</span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true"></a>    <span class="co">// let&#39;s return the curried version of our</span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true"></a>    <span class="co">// function that still needs some arguments</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true"></a>    <span class="co">// to be applied and repeat everything above.</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true"></a>    <span class="co">//</span></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true"></a>    <span class="co">// otherwise, we&#39;re all done here, so</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true"></a>    <span class="co">// let&#39;s return the value.</span></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true"></a>    <span class="cf">return</span> <span class="fu">isFunction</span>(val)</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true"></a>      <span class="op">?</span> <span class="fu">curry</span>(val)</span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true"></a>      <span class="op">:</span> val</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true"></a>  }</span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true"></a>}</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true"></a></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true"></a><span class="kw">const</span> applyCurry <span class="op">=</span> (fn<span class="op">,</span> arg) <span class="kw">=&gt;</span> {</span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true"></a>  <span class="co">// return whatever we received if</span></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true"></a>  <span class="co">// fn is actually NOT a function.</span></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="fu">isFunction</span>(fn)) { <span class="cf">return</span> fn }</span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true"></a></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true"></a>  <span class="co">// if we have more than 1 argument</span></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true"></a>  <span class="co">// remaining to be applied, then let&#39;s</span></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true"></a>  <span class="co">// bind a value to the next argument and</span></span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true"></a>  <span class="co">// keep going.</span></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true"></a>  <span class="co">//</span></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true"></a>  <span class="co">// otherwise, then yay let&#39;s go ahead</span></span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true"></a>  <span class="co">// and call that function with the argument;</span></span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true"></a>  <span class="co">// our `[ undefined ]` default saves us from</span></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true"></a>  <span class="co">// some potential headache here.</span></span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true"></a>  <span class="cf">return</span> fn<span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">1</span></span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true"></a>    <span class="op">?</span> fn<span class="op">.</span><span class="fu">bind</span>(<span class="kw">null</span><span class="op">,</span> arg)</span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true"></a>    <span class="op">:</span> fn<span class="op">.</span><span class="fu">call</span>(<span class="kw">null</span><span class="op">,</span> arg)</span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true"></a>}</span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true"></a></span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true"></a><span class="kw">const</span> isFunction <span class="op">=</span> x <span class="kw">=&gt;</span></span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true"></a>  <span class="kw">typeof</span> x <span class="op">===</span> <span class="st">&#39;function&#39;</span></span></code></pre></div>
+<p>With all of these checks in here, we can now run the following code and have it all work:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="kw">const</span> add <span class="op">=</span> <span class="fu">curry</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> a <span class="op">+</span> b)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a>add <span class="co">// =&gt; Function</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="fu">add</span>(<span class="dv">1</span>) <span class="co">// =&gt; Function</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="fu">add</span>(<span class="dv">1</span>)(<span class="dv">2</span>) <span class="co">// =&gt; 3</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a><span class="fu">add</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span>) <span class="co">// =&gt; 3</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a><span class="fu">add</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">99</span>) <span class="co">// =&gt; 3 (we don&#39;t care about the last one!)</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a><span class="fu">add</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">99</span><span class="op">,</span> <span class="dv">2000</span>) <span class="co">// =&gt; 3 (we don&#39;t care about the last two!)</span></span></code></pre></div>
+<h2 id="curry-in-action"><code>curry</code> In Action</h2>
+<p>If all of your functions are curried, you can start writing code that you never would have been able to before. Here is a small taste that we will cover more fully in a future Ramda Chops:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="co">// addOrRemove :: a -&gt; Array -&gt; Array</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="kw">const</span> addOrRemove <span class="op">=</span> x <span class="kw">=&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a>  <span class="fu">ifElse</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a>    <span class="fu">contains</span>(x)<span class="op">,</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a>    <span class="fu">without</span>(<span class="kw">of</span>(x))<span class="op">,</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a>    <span class="fu">append</span>(x)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a>  )</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a><span class="co">// addOrRemoveTest :: Array -&gt; Array</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a><span class="kw">const</span> addOrRemoveTest <span class="op">=</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a>  <span class="fu">addOrRemove</span>(<span class="st">&#39;test&#39;</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true"></a><span class="fu">addOrRemoveTest</span>([ <span class="st">&#39;thing&#39;</span> ]) <span class="co">// =&gt; [&quot;thing&quot;, &quot;test&quot;]</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true"></a><span class="fu">addOrRemoveTest</span>([ <span class="st">&#39;thing&#39;</span><span class="op">,</span> <span class="st">&#39;test&#39;</span> ]) <span class="co">// =&gt; [&quot;thing&quot;]</span></span></code></pre></div>
+<p>(<a href="https://goo.gl/5uRhS2">View this example in a live REPL</a>)</p>
+<p>The <code>addOrRemove</code> function almost reads like English: “If something contains <code>x</code>, give me back that something without <code>x</code>; otherwise, append <code>x</code> to that something.” What is worth understanding here is that these functions each accept a number of arguments where <em>the most generic/reusable are provided first</em> (this is a tenet of Functional Programming). Here, we are able to create a very reusable function with partially applied values that sits and waits until the final bit – an array – is provided.</p>
+<hr />
+<p>Thanks for reading! Until next time, <br> Robert</p>
+    </section>
+  </article>
+</main>
+
+<footer>
+  <section class="subscribe section--padded">
+  <div class="layout--constrained">
+    <h2 class="subscribe__header">Get notified of new posts</h2>
+
+    <form action="//robertwpearce.us13.list-manage.com/subscribe/post?u=2df44e8960266388bff165fa6&amp;id=ee2f2a3737" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate class="subscribe__form">
+      <div style="position: absolute; left: -5000px;" aria-hidden="true">
+        <input type="text" name="b_2df44e8960266388bff165fa6_ee2f2a3737" tabindex="-1" value="">
+      </div>
+      <div class="subscribe__section">
+        <input type="email" value="" id="mce-EMAIL" class="subscribe__input" name="EMAIL" placeholder="you@greatemail.com" aria-label="Email Address">
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe__submit">
+      </div>
+      <small>Note: I will <em>never</em> give out your email nor spam you. Unsubscribe at any time.</small>
+    </form>
+    <p>
+      <small>(or subscribe to the <a href="/atom.xml" class="subscribe__link">atom</a> or <a class="subscribe__link" href="/rss.xml">rss</a> feeds)</small>
+    </p>
+  </div>
+</section>
+
+</footer>
+
+    <script async src="/js/dist/index.js"></script>
+  </body>
+</html>
