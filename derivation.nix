@@ -9,6 +9,7 @@ in pkgs.stdenv.mkDerivation {
     pkgs.nodejs-14_x
   ];
   src = ./src;
+  LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
   LANG = "en_US.UTF-8";
   buildPhase = ''
     hakyll-site --verbose build
@@ -18,5 +19,3 @@ in pkgs.stdenv.mkDerivation {
     cp -r ../dist/* "$out"
   '';
 }
-#npm install --prefix js
-#npm run build --prefix js
