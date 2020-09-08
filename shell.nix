@@ -5,8 +5,7 @@ in
 
   let
     cfg = import ./nix/default.nix { };
-  in pkgs.stdenv.mkDerivation {
-    name = "robertwpearce-com-shell";
+  in pkgs.mkShell {
     buildInputs = cfg.tools;
     shellHook = ''
       ${cfg.ci.pre-commit-check.shellHook}
