@@ -18,7 +18,7 @@ let
              (flip appendConfigureFlags hakyllFlags)
            ];
 
-      robertwpearce-com = hpNew.callCabal2nix "robertwpearce-com" ./. { };
+      robertwpearce-com = hpNew.callCabal2nix "robertwpearce-com" ./.{ };
     };
   };
 in haskellPackages

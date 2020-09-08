@@ -4,16 +4,11 @@ in
   { pkgs ? import sources.nixpkgs { } }:
 
   let
-    haskellPackages = pkgs.callPackage ./generator/hpkgs.nix { };
-    generator = haskellPackages.callPackage ./generator/default.nix { };
+    cfg = import ./nix/default.nix { };
   in pkgs.stdenv.mkDerivation {
-    name = "env";
-    buildInputs = with pkgs; [
-      generator
-      haskellPackages.ghcid
-      haskellPackages.ormolu
-      niv
-      cacert
-      nix
-    ];
+    name = "robertwpearce-com-shell";
+    buildInputs = cfg.tools;
+    shellHook = ''
+      ${cfg.ci.pre-commit-check.shellHook}
+    '';
   }
