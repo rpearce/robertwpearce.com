@@ -1,7 +1,7 @@
 let
   sources = import ./nix/sources.nix;
 in
-  { lib, pkgs ? import sources.nixpkgs { } }:
+  { pkgs ? import sources.nixpkgs { } }:
 
   let
     generator = (import ./nix/default.nix { }).generator;
@@ -15,7 +15,7 @@ in
     # https://github.com/jaspervdj/hakyll/issues/614
     # https://github.com/NixOS/nix/issues/318#issuecomment-52986702
     # https://github.com/MaxDaten/brutal-recipes/blob/source/default.nix#L24
-    LOCALE_ARCHIVE = lib.optionalString (pkgs.buildPlatform.libc == "glibc") "${pkgs.glibcLocales}/lib/locale/locale-archive";
+    LOCALE_ARCHIVE = pkgs.lib.optionalString (pkgs.buildPlatform.libc == "glibc") "${pkgs.glibcLocales}/lib/locale/locale-archive";
     LANG = "en_US.UTF-8";
 
     buildPhase = ''
