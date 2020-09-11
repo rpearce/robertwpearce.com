@@ -1,5 +1,5 @@
-.DS_Store
 .ghc.environment.*
-hakyll-cache/
+dist
+hakyll-cache
 node_modules
 result
