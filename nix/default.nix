@@ -1,17 +1,19 @@
 let
   sources = import ./sources.nix;
+  config = { allowBroken = true; };
 in
-{ pkgs ? import sources.nixpkgs {} }:
+{ pkgs ? import sources.nixpkgs { inherit config; } }:
 
   let
     pre-commit-hooks = import sources."pre-commit-hooks.nix";
     #gitignore = import sources."gitignore.nix" { inherit (pkgs) lib; };
-    #gitignore.gitignoreSource
     haskellPackages = pkgs.callPackage ../generator/hpkgs.nix {};
     generator = haskellPackages.callPackage ../generator/default.nix {};
+    #src = gitignore.gitignoreSource ../src;
+    src = ../src;
   in
     {
-      inherit generator;
+      inherit generator pkgs src;
 
       tools = [
         generator
@@ -27,7 +29,8 @@ in
 
       ci = {
         pre-commit-check = pre-commit-hooks.run {
-          src = ../src;
+          inherit src;
+
           hooks = {
             nix-linter.enable = true;
             nixpkgs-fmt.enable = true;
