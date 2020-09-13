@@ -18,13 +18,13 @@ let
             (flip appendConfigureFlags hakyllFlags)
           ];
 
-      # oh, the things I do to use hakyll + nix...
+      robertwpearce-com = hpNew.callCabal2nix "robertwpearce-com" ./. {};
+
+      # because hakyll is marked as broken in nixpkgs
       hslua = dontCheck (hpNew.callHackage "hslua" "1.0.3.2" {});
       jira-wiki-markup = dontCheck (hpNew.callHackage "jira-wiki-markup" "1.1.4" {});
       pandoc = dontCheck (hpNew.callHackage "pandoc" "2.9.2.1" {});
       pandoc-types = dontCheck (hpNew.callHackage "pandoc-types" "1.20" {});
-
-      robertwpearce-com = hpNew.callCabal2nix "robertwpearce-com" ./. {};
     };
   };
 in
