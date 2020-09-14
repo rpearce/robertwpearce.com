@@ -1,5 +1,7 @@
 # robertwpearce.com
 
+[![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
+
 My personal website: [https://robertwpearce.com](https://robertwpearce.com).
 
 ## Development
@@ -10,6 +12,8 @@ My personal website: [https://robertwpearce.com](https://robertwpearce.com).
    ```sh
    λ ./make help
    ```
+1. or simply `nix-build` to build
+1. or simply `nix-shell` to open the shell with devtools
 
 ### CLI
 
