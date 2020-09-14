@@ -42,7 +42,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: pages
-          path: result/dist
+          path: result
 
       - name: GitHub Pages
         if: success()
@@ -51,6 +51,6 @@ jobs:
           build_dir: result
           target_branch: gh-pages
           keep_history: true
-          fqdn: robertwpearce.com
+          #fqdn: robertwpearce.com
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
