@@ -25,7 +25,6 @@ jobs:
 
     - run: nix-build
     - run: nix-shell --run "echo OK"
-    - run: ls -la
 
     - name: Artifact pages
       uses: actions/upload-artifact@v2
