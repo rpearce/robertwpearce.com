@@ -20,7 +20,7 @@ in
       hakyll-site --verbose build
     '';
     installPhase = ''
-      mkdir -p "$out"
-      cp -r ../dist/* "$out"
+      mkdir -p "$out/dist/"
+      cp -r ../dist/* "$out/dist/"
     '';
   }
