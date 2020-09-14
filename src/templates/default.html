@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>$title$</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="$description$">
+    $if(author)$<meta name="author" content="$author$">$endif$
+    $if(keywords)$<meta name="keywords" content="$keywords$">$endif$
+    <meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU">
+    <meta http-equiv="origin-trial" content="Am4BZ0c7GMyB72dgo/Ny2FfIFscXhYMoN+CVe4jduWh24FvsaCwf7kjZzHzfrJXtIilyZVAEKRxOItGLY7lvkAgAAABSeyJvcmlnaW4iOiJodHRwczovL3JvYmVydHdwZWFyY2UuY29tOjQ0MyIsImZlYXR1cmUiOiJQb3J0YWxzIiwiZXhwaXJ5IjoxNjAzNTQ2NDc3fQ==">
+
+    <meta property="og:site_name" content="$siteName$">
+    <meta property="og:title" content="$title$">
+    <meta property="og:url" content="$root$$url$">
+    <meta property="og:description" content="$description$">
+    <meta property="og:image" content="$root$$image$">
+    $if(type)$
+      <meta property="og:type" content="$type$">
+    $else$
+      <meta property="og:type" content="website">
+    $endif$
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="$siteName$">
+    <meta property="twitter:title" content="$title$">
+    <meta property="twitter:description" content="$description$">
+    <meta property="twitter:image" content="$root$$image$">
+    $if(authorTwitter)$<meta property="twitter:creator" content="$authorTwitter$">$endif$
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="canonical" href="$root$$url$">
+    <link rel="stylesheet" href="/css/default.css" />
+    $if(type)$
+      <link rel="stylesheet" href="/css/$type$.css" />
+    $else$
+      <link rel="stylesheet" href="/css/home.css" />
+    $endif$
+  </head>
+  <body class="light">
+    $body$
+    <script async src="/js/dist/index.js"></script>
+  </body>
+</html>
