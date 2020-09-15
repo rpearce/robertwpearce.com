@@ -50,7 +50,7 @@ jobs:
         with:
           build_dir: result
           target_branch: gh-pages
-          keep_history: true
+          keep_history: false
           #fqdn: robertwpearce.com
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
