@@ -13,11 +13,10 @@ in
     src = ../src;
   in
     {
-      inherit generator pkgs src;
+      inherit generator haskellPackages pkgs src;
 
       tools = [
         generator
-        haskellPackages.ghcid
         pkgs.cacert
         pkgs.niv
         pkgs.nix
