@@ -13,6 +13,7 @@ in
       cabal-install
       ghcid
       hlint
+      hp.robertwpearce-com
       ormolu
     ];
 

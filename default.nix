@@ -17,10 +17,13 @@ in
     LANG = "en_US.UTF-8";
 
     buildPhase = ''
-      hakyll-site --verbose build
+      hakyll-site build
     '';
     installPhase = ''
-      mkdir -p "$out/dist/"
-      cp -r ../dist/* "$out/dist/"
+      mkdir -p "$out/dist"
+      cp -r \
+        ../dist/* \
+        ${cfg.src}/.well-known/ \
+        "$out/dist"
     '';
   }
