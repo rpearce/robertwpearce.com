@@ -6,10 +6,8 @@ in
 
   let
     pre-commit-hooks = import sources."pre-commit-hooks.nix";
-    #gitignore = import sources."gitignore.nix" { inherit (pkgs) lib; };
     haskellPackages = pkgs.callPackage ../generator/hpkgs.nix {};
     generator = haskellPackages.callPackage ../generator/default.nix {};
-    #src = gitignore.gitignoreSource ../src;
     src = ../src;
   in
     {
