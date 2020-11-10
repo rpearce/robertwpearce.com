@@ -63,16 +63,16 @@ main = hakyllWith config $ do
     route $ metadataRoute titleRoute
     compile $
       pandocCompilerCustom
-        >>= loadAndApplyTemplate "templates/post.html" ctx
         >>= saveSnapshot "content"
+        >>= loadAndApplyTemplate "templates/post.html" ctx
         >>= loadAndApplyTemplate "templates/default.html" ctx
   match "new-zealand/**" $ do
     let ctx = constField "type" "article" <> postCtx
     route $ setExtension "html"
     compile $
       pandocCompilerCustom
-        >>= loadAndApplyTemplate "templates/info.html" ctx
         >>= saveSnapshot "content"
+        >>= loadAndApplyTemplate "templates/info.html" ctx
         >>= loadAndApplyTemplate "templates/default.html" ctx
   match "index.html" $ do
     route idRoute
