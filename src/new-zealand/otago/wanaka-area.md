@@ -2,7 +2,7 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 date: "2018-11-08"
-description: "Things to do and see in the Wanaka, Albert Town, Hawea, Glendhu Bay, Cardrona & Cromwell areas."
+desc: "Things to do and see in the Wanaka, Albert Town, Hawea, Glendhu Bay, Cardrona & Cromwell areas."
 image: "/images/lake-wanaka.jpg"
 keywords: "wanaka, albert town, hawea, lake hawea, glendhu bay, cardrona, cromwell, new zealand"
 photoCredit: "emilycouldmakethat"

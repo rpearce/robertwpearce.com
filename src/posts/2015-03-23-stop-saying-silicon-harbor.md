@@ -1,7 +1,7 @@
 ---
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-description: "Charleston, SC techpreneurs need to stop saying Silicon Harbor."
+desc: "Charleston, SC techpreneurs need to stop saying Silicon Harbor."
 image: "/images/morris-island.jpg"
 keywords: "silicon harbor, charleston, charlestontech, charleston tech, south carolina tech"
 title: "Stop Saying Silicon Harbor"

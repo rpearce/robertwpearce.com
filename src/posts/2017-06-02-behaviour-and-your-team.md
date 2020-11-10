@@ -1,7 +1,7 @@
 ---
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-description: "Talk I gave at the New Zealand JavaScript conference on Behaviour & Your Team"
+desc: "Talk I gave at the New Zealand JavaScript conference on Behaviour & Your Team"
 image: "/images/wellington.jpg"
 keywords: "tech teamwork, behaviour and your team, code review, teamwork, nzjscon"
 title: "Behaviour & Your Team"

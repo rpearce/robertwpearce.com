@@ -1,7 +1,7 @@
 ---
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-description: "A quick-dive in to RiotJS, with examples."
+desc: "A quick-dive in to RiotJS, with examples."
 image: "/images/riotjs.jpg"
 keywords: "riotjs, riot.js, riotjs tutorial, tutorial, javascript"
 title: "RiotJS Example"

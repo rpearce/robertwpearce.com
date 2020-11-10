@@ -2,7 +2,7 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 date: "2020-01-05"
-description: "Things to do and see in the Bay of Plenty, New Zealand."
+desc: "Things to do and see in the Bay of Plenty, New Zealand."
 image: "/images/ohope-beach.jpg"
 keywords: "bay of plenty, white island, rotorua, tauranga, ohope beach, whakatane, opotiki, new zealand"
 photoCredit: "emilycouldmakethat"

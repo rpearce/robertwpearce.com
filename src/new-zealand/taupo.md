@@ -2,7 +2,7 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 date: "2020-01-05"
-description: "Things to do and see in Taupō, New Zealand."
+desc: "Things to do and see in Taupō, New Zealand."
 image: "/images/tongariro.jpg"
 keywords: "taupo, lake taupo, taupō, tongariro alpine crossing, new zealand"
 photoCredit: "robertwpearce"

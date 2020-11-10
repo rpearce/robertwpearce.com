@@ -2,7 +2,7 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 date: "2018-11-08"
-description: "Things to do and see in New Zealand"
+desc: "Things to do and see in New Zealand"
 image: "/images/lake-wanaka.jpg"
 keywords: "new zealand, otago, things to do, places to see"
 photoCredit: "emilycouldmakethat"

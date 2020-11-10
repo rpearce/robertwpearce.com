@@ -1,7 +1,7 @@
 ---
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-description: "An update from my experiences in Colorado."
+desc: "An update from my experiences in Colorado."
 image: "/images/colorado.jpg"
 keywords: "colorado, denver, remote work, digital nomad, beer"
 title: "Life in Colorado"

@@ -2,7 +2,7 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 date: "2020-01-01"
-description: "Things to do and see in New Zealand's Auckland region"
+desc: "Things to do and see in New Zealand's Auckland region"
 image: "/images/.jpg"
 keywords: "auckland, new zealand, things to do, hikes, coworking, restaurants"
 photoCredit: ""

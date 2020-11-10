@@ -2,7 +2,7 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 date: "2020-01-04"
-description: "Things to do and see in Piha, Muriwai, Bethells Beach, Mercer Bay, and Karekare Beach, New Zealand"
+desc: "Things to do and see in Piha, Muriwai, Bethells Beach, Mercer Bay, and Karekare Beach, New Zealand"
 image: "/images/piha.jpg"
 keywords: "piha, muriwai, bethells beach, mercer bay, karekare beach, new zealand"
 photoCredit: "emilycouldmakethat"

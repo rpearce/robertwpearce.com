@@ -2,7 +2,7 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 date: "2020-01-04"
-description: "Things to do and see in Hawkes Bay, New Zealand."
+desc: "Things to do and see in Hawkes Bay, New Zealand."
 image: "/images/waimarama-beach.jpg"
 keywords: "hawkes bay, napier, havelock north, ocean beach, cape kidnappers, new zealand"
 photoCredit: "emilycouldmakethat"

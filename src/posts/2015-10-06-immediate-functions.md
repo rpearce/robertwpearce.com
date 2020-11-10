@@ -1,7 +1,7 @@
 ---
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-description: "Beginner-friendly introduction to immediate functions."
+desc: "Beginner-friendly introduction to immediate functions."
 image: "/images/sunrise.jpg"
 keywords: "javascript, javascript tutorial, immediate functions, IIFE, kelvin to fahrenheit"
 title: "Immediate Functions"

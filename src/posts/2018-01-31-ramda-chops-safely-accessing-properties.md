@@ -1,7 +1,7 @@
 ---
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-description: "Get introduced to ramda's prop, propOr, path & pathOr functions."
+desc: "Get introduced to ramda's prop, propOr, path & pathOr functions."
 image: "/images/sheep-countryside.jpg"
 keywords: "ramda, ramda.js, ramdajs, ramda tutorial, ramda prop, ramda propOr, ramda path, ramda pathOr, ramda fp"
 photoCredit: "George Hiles"

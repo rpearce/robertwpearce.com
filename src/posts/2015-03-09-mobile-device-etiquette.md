@@ -1,7 +1,7 @@
 ---
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-description: "Pay less attention to your device and more to those around you."
+desc: "Pay less attention to your device and more to those around you."
 image: "/images/phone-table.jpg"
 keywords: "mobile devices, etiquette, advice, staring at phones"
 title: "Mobile Device Etiquette"

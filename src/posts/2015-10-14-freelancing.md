@@ -1,7 +1,7 @@
 ---
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-description: "Some thoughts on freelancing in the software development business."
+desc: "Some thoughts on freelancing in the software development business."
 image: "/images/mtn.jpeg"
 kewords: "freelancing, digital nomad, toptal"
 title: "Freelancing"

@@ -1,7 +1,7 @@
 ---
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-description: "In Part 2 we will use Elm & the Google Maps API to geocode an address."
+desc: "In Part 2 we will use Elm & the Google Maps API to geocode an address."
 image: "/images/rain-window.jpg"
 keywords: "elm, elm tutorial, elmlang, elm geocoding, elm darksky, elm weather, elm functional programming"
 photoCredit: "Gabriele Diwald"

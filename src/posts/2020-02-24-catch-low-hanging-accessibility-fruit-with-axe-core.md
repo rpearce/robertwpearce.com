@@ -1,7 +1,7 @@
 ---
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-description: "Automate away easy-to-catch accessibility issues"
+desc: "Automate away easy-to-catch accessibility issues"
 image: "/images/near-milford-sound.jpg"
 keywords: "javascript, accessibility, a11y, testing, axe-core"
 photoCredit: "emilycouldmakethat"

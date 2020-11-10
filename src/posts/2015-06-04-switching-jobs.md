@@ -1,7 +1,7 @@
 ---
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-description: "Announcement of switching jobs from Articulate to The Iron Yard."
+desc: "Announcement of switching jobs from Articulate to The Iron Yard."
 image: "/images/edinburgh.jpg"
 keywords: "switching jobs, new job, articulate, the iron yard"
 title: "Switching Jobs"

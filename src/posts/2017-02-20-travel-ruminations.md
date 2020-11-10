@@ -1,7 +1,7 @@
 ---
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-description: "Travel is a way of discarding what you know and embracing that which is strange..."
+desc: "Travel is a way of discarding what you know and embracing that which is strange..."
 image: "/images/from_afar.jpg"
 keywords: "travel, discovery, new places, travel thoughts, bilbo baggins"
 title: "Travel Ruminations"

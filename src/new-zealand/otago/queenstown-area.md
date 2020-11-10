@@ -2,7 +2,7 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 date: "2018-11-08"
-description: "Things to do and see in the Queenstown, Arrowtown & Glenorchy areas."
+desc: "Things to do and see in the Queenstown, Arrowtown & Glenorchy areas."
 image: "/images/lake-wanaka.jpg"
 keywords: "queenstown, arrow town, glenorchy, new zealand"
 photoCredit: "emilycouldmakethat"

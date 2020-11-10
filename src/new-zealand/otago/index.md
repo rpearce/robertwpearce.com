@@ -2,7 +2,7 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 date: "2018-11-08"
-description: "Things to do and see in New Zealand's Otago region"
+desc: "Things to do and see in New Zealand's Otago region"
 image: "/images/lake-wanaka.jpg"
 keywords: "otago, central otago, new zealand, things to do, hikes, coworking, restaurants"
 photoCredit: "emilycouldmakethat"

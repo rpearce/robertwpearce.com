@@ -1,7 +1,7 @@
 ---
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-description: "On being the hinge between someone with a question and someone else with a solution."
+desc: "On being the hinge between someone with a question and someone else with a solution."
 image: "/images/hinge.jpg"
 keywords: "leadership, leadership advice, teamwork, delegate, hinge"
 photoCredit: "Kelly Sikkema"

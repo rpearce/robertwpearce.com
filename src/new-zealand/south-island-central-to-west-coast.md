@@ -2,7 +2,7 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 date: "2019-01-27"
-description: "Things to do and see in the South Island's Central to West Coast."
+desc: "Things to do and see in the South Island's Central to West Coast."
 image: "/images/hokitika-gorge.jpg"
 keywords: "lake tekapo, mount cook national park, arthur's pass, hokitika, franz
 josef glacier, fox glacier, pancake rocks, new zealand"
@@ -45,7 +45,7 @@ Or go back to the [main New Zealand index](/new-zealand/index.html).
 
 ## Franz Josef Glacier
 * https://www.franzjosefglacier.com
-* https://www.doc.govt.nz/parks-and-recreation/places-to-go/west-coast/places/westland-tai-poutini-national-park/things-to-do/tracks/franz-josef-glacier-ka-roimata-o-hine-hukarere-walk/ 
+* https://www.doc.govt.nz/parks-and-recreation/places-to-go/west-coast/places/westland-tai-poutini-national-park/things-to-do/tracks/franz-josef-glacier-ka-roimata-o-hine-hukarere-walk/
 
 ## Fox Glacier
 * https://www.foxguides.co.nz

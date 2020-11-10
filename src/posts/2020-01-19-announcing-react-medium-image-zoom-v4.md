@@ -1,7 +1,7 @@
 ---
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-description: "react-medium-image-zoom is an open source image zooming library based on medium.com's implementation of image zooming"
+desc: "react-medium-image-zoom is an open source image zooming library based on medium.com's implementation of image zooming"
 image: "/images/te-mata-peak.jpg"
 keywords: "react, react-medium-image-zoom, image zoom, image, zoom, reactjs"
 photoCredit: "robertwpearce"

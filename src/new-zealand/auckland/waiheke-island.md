@@ -2,7 +2,7 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 date: "2020-01-01"
-description: "Things to do and see on Waiheke Island"
+desc: "Things to do and see on Waiheke Island"
 image: "/images/waiheke-stony-batter.jpg"
 keywords: "waiheke island, auckland, new zealand"
 photoCredit: "Robert Pearce"

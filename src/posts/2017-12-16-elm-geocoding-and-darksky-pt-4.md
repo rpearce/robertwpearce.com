@@ -1,7 +1,7 @@
 ---
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-description: "In Part 4 we ectract our Elm code for clarity"
+desc: "In Part 4 we ectract our Elm code for clarity"
 image: "/images/field-road-rain.jpg"
 keywords: "elm, elm tutorial, elmlang, elm geocoding, elm darksky, elm weather, elm functional programming"
 photoCredit: "Pop & Zebra"

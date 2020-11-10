@@ -1,7 +1,7 @@
 ---
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-description: "Selling sucks, but you need to get your project out in the real world."
+desc: "Selling sucks, but you need to get your project out in the real world."
 image: "/images/papaya-farm.jpg"
 keywords: "entrepreneur, entrepreneurship, product, getting things done, tech, 1776dc, sales"
 title: "Your product doesn’t judge you; people do."

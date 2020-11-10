@@ -1,7 +1,7 @@
 ---
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
-description: "Learn how to write a generic map function to map Arrays, Objects, and Functors."
+desc: "Learn how to write a generic map function to map Arrays, Objects, and Functors."
 image: "/images/queenstown-wharf.jpg"
 keywords: "javascript, map, map function, functional programming, js, programming"
 photoCredit: "emilycouldmakethat"
