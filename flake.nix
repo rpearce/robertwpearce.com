@@ -38,8 +38,8 @@
             # Helpful tools for `nix develop` shells
             #
             #ghcid                   # https://github.com/ndmitchell/ghcid
-            #haskell-language-server # https://github.com/haskell/haskell-language-server
-            #hlint                   # https://github.com/ndmitchell/hlint
+            haskell-language-server # https://github.com/haskell/haskell-language-server
+            hlint                   # https://github.com/ndmitchell/hlint
             #ormolu                  # https://github.com/tweag/ormolu
           ];
 
