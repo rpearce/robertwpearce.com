@@ -63,10 +63,10 @@ final: prev:
               hakyll-site build --verbose
             '';
 
-                #src/.well-known/ \
             installPhase = ''
               mkdir -p "$out/dist"
               cp -r dist/* \
+                src/.well-known/ \
                 "$out/dist"
             '';
           };

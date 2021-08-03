@@ -53,7 +53,7 @@ main = hakyllWith config $ do
     , "js/dist/*"
     , "images/*"
     , "fonts/*"
-    , ".well-known/*" -- not working
+    --, ".well-known/*" -- not working
     ]
     $ \f -> match f $ do
       route idRoute
@@ -205,11 +205,11 @@ pandocHighlightStyle =
 --------------------------------------------------------------------------------
 -- FEEDS
 
-type FeedRenderer =
-  FeedConfiguration ->
-  Context String ->
-  [Item String] ->
-  Compiler (Item String)
+type FeedRenderer
+  = FeedConfiguration
+  -> Context String
+  -> [Item String]
+  ->  Compiler (Item String)
 
 feedCompiler :: FeedRenderer -> Compiler (Item String)
 feedCompiler renderer =
