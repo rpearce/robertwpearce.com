@@ -1,4 +1,4 @@
-;((): void => {
+((): void => {
   interface State {
     isActive: boolean
   }

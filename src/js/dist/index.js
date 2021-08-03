@@ -1,5 +1,4 @@
 "use strict";
-;
 (function () {
     var state = {
         isActive: false,
