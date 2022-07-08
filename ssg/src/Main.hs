@@ -101,7 +101,7 @@ main = hakyllWith config $ do
   create ["sitemap.xml"] $ do
     route idRoute
     compile $ do
-      posts <- recentFirst =<< loadAll "posts/*"
+      posts   <- recentFirst =<< loadAll "posts/*"
       nzPages <- loadAll "new-zealand/**"
 
       let pages = posts <> nzPages
@@ -114,11 +114,11 @@ main = hakyllWith config $ do
         >>= loadAndApplyTemplate "templates/sitemap.xml" sitemapCtx
 
   create ["rss.xml"] $ do
-    route idRoute
+    route   idRoute
     compile (feedCompiler renderRss)
 
   create ["atom.xml"] $ do
-    route idRoute
+    route   idRoute
     compile (feedCompiler renderAtom)
 
 --------------------------------------------------------------------------------
