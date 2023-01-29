@@ -50,9 +50,10 @@ main = hakyllWith config $ do
     , "favicon.ico"
     , "robots.txt"
     , "_config.yml"
-    , "js/dist/*"
+    , "js/build/*"
     , "images/*"
     , "fonts/*"
+    , "pdfs/*"
     --, ".well-known/*" -- not working
     ]
     $ \f -> match f $ do
