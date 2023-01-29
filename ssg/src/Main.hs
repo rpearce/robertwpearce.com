@@ -53,6 +53,7 @@ main = hakyllWith config $ do
     , "js/dist/*"
     , "images/*"
     , "fonts/*"
+    , "pdfs/*"
     --, ".well-known/*" -- not working
     ]
     $ \f -> match f $ do

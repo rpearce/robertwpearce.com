@@ -127,6 +127,30 @@ iframe {
   border: 2px solid var(--iframeBorderColor);
 }
 
+/* PDF */
+.pdf {
+  margin: 1rem -6rem;
+  height: 30rem;
+  width: calc(100% + 12rem);
+}
+.pdf-link {
+  display: none;
+}
+@media (max-width: 800px) {
+  .pdf {
+    margin: 1rem 0;
+    width: 100%;
+  }
+}
+@media (max-width: 667px) {
+  .pdf {
+    display: none;
+  }
+  .pdf-link {
+    display: inline;
+  }
+}
+
 
 /* CODE */
 
