@@ -2,8 +2,6 @@
 
 My personal website, [https://robertwpearce.com](https://robertwpearce.com)
 
-[![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
-
 ## Development
 
 View [hakyll-nix-template's
