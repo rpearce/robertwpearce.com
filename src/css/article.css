@@ -1,4 +1,5 @@
 body.light {
+  --deepBgColor: #011627;
   --h1Color: currentColor;
   --headerBgColor: #C4DFFF;
 }
