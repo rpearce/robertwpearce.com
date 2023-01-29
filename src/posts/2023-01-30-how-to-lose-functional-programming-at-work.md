@@ -7,7 +7,6 @@ keywords: "functional programming, functional javascript, javascript, ramda, fp 
 photoCredit: ""
 photoWebsite: ""
 title: "How To Lose Functional Programming At Work"
-updated: "2022-01-24T12:00:00Z"
 ---
 
 Hi! If you're looking to lose functional programming at work, here are a bunch
@@ -35,11 +34,7 @@ teammates or using in your own lunch-n-learn tech talk.
   How to Lose Functional Programming at Work - PDF
 </a>
 
-## "Do"s and "Don't"s
-
-These can be read in any order; choose your own adventure.
-
-### Don't have static type checking
+## Don't have static type checking
 
 * No [TypeScript](https://www.typescriptlang.org)
 * No [Flow](https://flow.org)
@@ -78,7 +73,10 @@ const processData = data =>
     .then(() => data)
 ```
 
-### Don't use well-known code documentation tools
+Do keep telling yourself that any of these 3, on their own, are easy for your
+teammates to work with after 3 months.
+
+## Don't use well-known code documentation tools
 
 * No [jsdoc](https://jsdoc.app)
 * …are there any other contenders?
@@ -106,7 +104,7 @@ Deprive your team of this clarity and helpful auto-completion:
 const processData = data => // …
 ```
 
-### Don't properly train new and existing colleagues
+## Don't properly train new and existing colleagues
 
 Truly believe, in your heart, that you can write a pile of blog posts, collect a
 bunch of other great learning resources, hand them all to a new FP learner,
@@ -117,7 +115,7 @@ Conversely, spend all your time and energy on a couple of individuals, neglect
 the others, fail to write any useful learnings down, and forget to encourage
 these initiates to turn around and help teach their other colleagues, in turn.
 
-### Don't bother getting the other engineering teams on board and rowing in the same direction
+## Don't bother getting the other engineering teams on board and rowing in the same direction
 
 * "If I build it, they will notice… right?"
 * _Idea: Lunch 'n learn about FP?_ Me: They'll find out I don't know things.
@@ -129,7 +127,7 @@ these initiates to turn around and help teach their other colleagues, in turn.
 Instead, if you keep it to yourself, other teams won't get to contribute and
 probably improve the state of things.
 
-### Do live by the creed, "Point-free or die"
+## Do live by the creed, "Point-free or die"
 
 Watch the video, ["Point-Free or Die: Tacit Programming in Haskell and
 Beyond"](https://www.youtube.com/watch?v=seVSlKazsNk), by Amar Shah
@@ -175,7 +173,7 @@ const finishItems = compose(
 )
 ```
 
-### Do prefer the wrong abstraction over the right duplication
+## Do prefer the wrong abstraction over the right duplication
 
 I was at Sandi Metz’ RailsConf 2014 Chicago talk, [All the Little
 Things](https://www.youtube.com/watch?v=8bZh5LMaSmE), where she blew my mind
@@ -191,7 +189,7 @@ abstractions work.
 You'll know you've lost people when normally thorough PR reviews now look like,
 "👍".
 
-### Don't refactor old patterns that clearly don't work for the team
+## Don't refactor old patterns that clearly don't work for the team
 
 Make sure that people coming into the project have your old code patterns to
 emulate that you cringe looking at years later but never made the time to
@@ -201,7 +199,7 @@ While you could allocate investment time to this or reading up on how to
 improve your technical leadership skills, spend that time making new features,
 instead.
 
-### Do force functional patterns into a language that wasn't built for them (bonus: cryptic stack traces)
+## Do force functional patterns into a language that wasn't built for them (bonus: cryptic stack traces)
 
 * Lean into recursive functions, realize ES2015 tail call optimization is
   only a thing in Safari nowadays (if that?), and sprinkle a
@@ -223,7 +221,7 @@ instead.
   realize it. Oops.
 * BYO algebraic data type libraries (many of these are awesome, though)
 
-### Do opaquely compose and sequence the entirety of your API endpoints and make them hard to debug
+## Do opaquely compose and sequence the entirety of your API endpoints and make them hard to debug
 
 On the surface, this isn't so difficult to read…
 
@@ -276,7 +274,7 @@ export async function handleCreatePost(metadata, payload) {
 I'm not saying that option #2 is an awesome handler, but if you want to make it
 trickier for people, go with option #1.
 
-### Do recreate imperative, procedural programming while calling it "declarative"
+## Do recreate imperative, procedural programming while calling it "declarative"
 
 ```javascript
 const setBookReadPercentByType = (contentType, statusObject) =>
@@ -339,7 +337,7 @@ const getHighScorers = players =>
 // real-life business logic.
 ```
 
-### Do make yourself one of the few who can debug algebraic data types during midnight incidents
+## Do make yourself one of the few who can debug algebraic data types during midnight incidents
 
 Ensure your team is surprised by all of the following words when debugging or
 altering your code in the pursuit of their own work tasks:
@@ -356,13 +354,13 @@ altering your code in the pursuit of their own work tasks:
 * `map` — and I don't mean `Array.prototype.map`, nor a `new Map()`, nor a
   key/value object
 
-### Don’t have SQL (a declarative language) do data transformations for you — DIWHY??? it yourself
+## Don’t have SQL (a declarative language) do data transformations for you — DIWHY??? it yourself
 
 Instead, and in the name of immutability, use data pipelines in your app to
 apply changes to your data, one transformation at a time, and accidentally do as
 many key/value iterations and memory allocations as possible. 😬
 
-### Do suggest, on PRs, that colleagues completely refactor what they've done to fit <em>your</em> functional style
+## Do suggest, on PRs, that colleagues completely refactor what they've done to fit <em>your</em> functional style
 
 > What you have here works great, but what could this look like if we flipped
 all the function arguments around, removed all these intermediate variables, and
@@ -375,7 +373,7 @@ you were to use &lt;UTILITY-FUNCTION&gt;, you could declare the shape of your
 outputted object and use functions as the values to look up or compute each
 value given some data.
 
-And for some quick final ones:
+## And for some quick final ones…
 
 * Do sow imposter syndrome in others and exclude them by sharing non-beginner FP articles
 * Do keep writing code using FP tools even when nobody else on the team is

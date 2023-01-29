@@ -50,7 +50,7 @@ main = hakyllWith config $ do
     , "favicon.ico"
     , "robots.txt"
     , "_config.yml"
-    , "js/dist/*"
+    , "js/build/*"
     , "images/*"
     , "fonts/*"
     , "pdfs/*"

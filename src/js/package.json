@@ -1,7 +1,7 @@
 {
   "name": "robertwpearce.com",
   "version": "1.0.0",
-  "main": "dist/index.js",
+  "main": "build/index.js",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
