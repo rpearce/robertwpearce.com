@@ -23,12 +23,20 @@ _Note: if sarcasm and self-deprecation aren't your thing, you can skip to the
 Here is the much prettier PDF version that is also useful for sending to your
 teammates or using in your own lunch-n-learn tech talk.
 
-<iframe
+_Thanks to [KronisLV on the orange
+site](https://news.ycombinator.com/item?id=34569625) for helping me fix an issue
+where the PDF was accidentally auto-downloading in Firefox._
+
+<object
   class="pdf"
-  loading="lazy"
-  src="/pdfs/2023-01-24-how-to-lose-fp-at-work.pdf"
+  data="/pdfs/2023-01-24-how-to-lose-fp-at-work.pdf"
   title="How to Lose Functional Programming at Work - PDF"
-></iframe>
+  type="application/pdf"
+>
+  <p>
+    Your browser doesn't support PDF, but you can download the file here: <a href="/pdfs/2023-01-24-how-to-lose-fp-at-work.pdf">How to Lose Functional Programming at Work - PDF</a>
+  </p>
+</object>
 
 <a class="pdf-link" href="/pdfs/2023-01-24-how-to-lose-fp-at-work.pdf">
   How to Lose Functional Programming at Work - PDF
