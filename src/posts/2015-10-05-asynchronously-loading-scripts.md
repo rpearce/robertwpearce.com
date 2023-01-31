@@ -2,7 +2,6 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 desc: "Beginner-friendly introduction to loading scripts on to a web page."
-image: "/images/rock-creek-pk.jpg"
 keywords: "javascript, javascript tutorial, asynchronous scripts, website basics"
 title: "Asynchronously Loading Scripts"
 ---

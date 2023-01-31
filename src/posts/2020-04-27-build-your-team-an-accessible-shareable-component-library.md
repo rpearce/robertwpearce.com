@@ -2,10 +2,7 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 desc: "Use React and TypeScript to build your team an accessible, shareable component library that can be included in as many projects as you can manage."
-image: "/images/mangawhai-heads.jpg"
 keywords: "javascript, react, react library, react component library, component library, storybook, accessibility"
-photoCredit: "emilycouldmakethat"
-photoWebsite: "https://www.instagram.com/emilycouldmakethat"
 title: "Build Your Team an Accessible, Shareable Component Library"
 ---
 

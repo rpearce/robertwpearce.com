@@ -2,7 +2,6 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 desc: "What it's been like working in London for a few days."
-image: "/images/clapham-cafe.jpg"
 keywords: "remote work, remote working, digital nomad, london, articulate, travel"
 title: "Working In London"
 ---

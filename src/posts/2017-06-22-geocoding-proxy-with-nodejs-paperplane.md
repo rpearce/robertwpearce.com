@@ -2,7 +2,6 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 desc: "Tutorial on creating a location geocoding proxy server in Node.js with Paperplane"
-image: "/images/paper-plane.jpg"
 keywords: "node geocoding, nodejs geocoding, nodejs proxy, nodejs geocoding proxy, nodejs paperplane"
 photoCredit: "Ares Nguyen"
 photoWebsite: "https://www.flickr.com/photos/91559340@N05/8478694579"

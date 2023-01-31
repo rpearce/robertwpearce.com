@@ -2,7 +2,6 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 desc: "If you can go on an adventure, then what are you waiting for?"
-image: "/images/london-tree.jpg"
 keywords: "travel, remote work, adventure, london, digital nomad"
 title: "Moving To London"
 ---

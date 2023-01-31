@@ -2,11 +2,9 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 desc: "Tips on how to unsuccessfully introduce and keep functional programming styles and principles in your workplace."
-image: ""
 keywords: "functional programming, functional javascript, javascript, ramda, fp js"
-photoCredit: ""
-photoWebsite: ""
 title: "How To Lose Functional Programming At Work"
+updated: "2023-01-30T23:00:00Z"
 ---
 
 Hi! If you're looking to lose functional programming at work, here are a bunch

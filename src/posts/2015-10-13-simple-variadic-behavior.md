@@ -2,7 +2,6 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 desc: "Beginner-friendly introduction to variadic behavior."
-image: "/images/waterfall.jpg"
 keywords: "javascript, javascript tutorial, variadic behavior, function arguments, variable arguments, function parameters"
 title: "Simple Variadic Behavior"
 ---
