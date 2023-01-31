@@ -2,7 +2,6 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 desc: "Exercising while you travel can be difficult -- let's work through this."
-image: "/images/outdoor-gym.jpg"
 keywords: "exercising, remote work, travel, staying in shape"
 title: "Exercising In Transit"
 ---

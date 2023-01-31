@@ -2,10 +2,7 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 desc: "Automate away easy-to-catch accessibility issues"
-image: "/images/near-milford-sound.jpg"
 keywords: "javascript, accessibility, a11y, testing, axe-core"
-photoCredit: "emilycouldmakethat"
-photoWebsite: "https://www.instagram.com/emilycouldmakethat"
 title: "Catch Low-Hanging Accessibility Fruit with axe-core"
 ---
 

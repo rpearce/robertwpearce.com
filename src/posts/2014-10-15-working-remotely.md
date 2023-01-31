@@ -2,7 +2,6 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 desc: "You can work remotely, too! Here's how."
-image: "/images/lavish-habit.jpg"
 keywords: "remote working, remote work, digital nomad, traveling while working, travel, telecommuting"
 title: "On Working Remotely"
 ---

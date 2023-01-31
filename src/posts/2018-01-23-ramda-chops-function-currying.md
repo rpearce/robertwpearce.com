@@ -2,10 +2,7 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 desc: "How function currying works under the hood."
-image: "/images/shepherd-flock.jpg"
 keywords: "ramda, ramda.js, ramdajs, ramda tutorial, ramda curry, crocks curry, function currying, ramda fp"
-photoCredit: "Biegun Wschodni"
-photoWebsite: "https://unsplash.com/@biegunwschodni"
 title: "Ramda Chops: Function Currying"
 ---
 

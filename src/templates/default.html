@@ -15,18 +15,20 @@
     <meta property="og:title" content="$title$">
     <meta property="og:url" content="$root$$url$">
     <meta property="og:description" content="$desc$">
-    <meta property="og:image" content="$root$$image$">
+    $if(image)$<meta property="og:image" content="$root$$image$">$endif$
     $if(type)$
       <meta property="og:type" content="$type$">
     $else$
       <meta property="og:type" content="website">
     $endif$
 
+    $if(image)$
     <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:image" content="$root$$image$">
+    $endif$
     <meta property="twitter:site" content="$siteName$">
     <meta property="twitter:title" content="$title$">
     <meta property="twitter:description" content="$desc$">
-    <meta property="twitter:image" content="$root$$image$">
     $if(authorTwitter)$<meta property="twitter:creator" content="$authorTwitter$">$endif$
 
     <link rel="shortcut icon" href="/favicon.ico">

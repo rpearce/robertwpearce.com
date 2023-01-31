@@ -2,7 +2,6 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 desc: "Your significant other and you can do long-distance movie night easily. Here's how."
-image: "/images/cary_grant.jpg"
 keywords: "long distance relationships, movie night, skype, dropbox"
 title: "Long-Distance Movie Night"
 ---

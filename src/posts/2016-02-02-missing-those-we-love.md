@@ -2,7 +2,6 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 desc: "Missing people in your life? Ask yourself why, and then go see them or give them a call."
-image: "/images/from_afar.jpg"
 keywords: "missing home, away from home, self help"
 title: "Missing Those We Love"
 ---

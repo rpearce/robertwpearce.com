@@ -2,10 +2,7 @@
 author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 desc: "Write your own implementation of JavaScript's Array.prototype.map method."
-image: "/images/te-mata-hills.jpg"
 keywords: "javascript, map, Array.prototype.map, reimplement map, js, programming"
-photoCredit: "robertwpearce"
-photoWebsite: "https://www.instagram.com/robertwpearce"
 title: "JavaScript: Understand Array.prototype.map by Reimplementing It"
 ---
 
