@@ -1,10 +1,12 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 import Control.Monad (forM_)
+import Data.List (isPrefixOf, isSuffixOf)
 import Data.Maybe (fromMaybe)
 import qualified Data.Text as T
 import qualified Data.Text.Slugger as Slugger
 import Hakyll
+import System.FilePath (takeFileName)
 import Text.Pandoc
   ( Extension (Ext_fenced_code_attributes, Ext_footnotes, Ext_gfm_auto_identifiers, Ext_implicit_header_references, Ext_smart),
     Extensions,
@@ -28,17 +30,27 @@ siteName :: String
 siteName =
   "Robert Pearce | Senior Software Developer"
 
+-- Default configuration: https://github.com/jaspervdj/hakyll/blob/cd74877d41f41c4fba27768f84255e797748a31a/lib/Hakyll/Core/Configuration.hs#L101-L125
 config :: Configuration
 config =
   defaultConfiguration
     { destinationDirectory = "dist"
-    , ignoreFile = const False
+    , ignoreFile = ignoreFile'
     , previewHost = "127.0.0.1"
     , previewPort = 8000
     , providerDirectory = "src"
     , storeDirectory = "ssg/_cache"
     , tmpDirectory = "ssg/_tmp"
     }
+  where
+    ignoreFile' path
+      | "."    `isPrefixOf` fileName = False
+      | "#"    `isPrefixOf` fileName = True
+      | "~"    `isSuffixOf` fileName = True
+      | ".swp" `isSuffixOf` fileName = True
+      | otherwise = False
+      where
+        fileName = takeFileName path
 
 --------------------------------------------------------------------------------
 -- BUILD
@@ -50,11 +62,11 @@ main = hakyllWith config $ do
     , "favicon.ico"
     , "robots.txt"
     , "_config.yml"
+    , ".well-known/*"
     , "js/build/*"
     , "images/*"
     , "fonts/*"
     , "pdfs/*"
-    --, ".well-known/*" -- not working
     ]
     $ \f -> match f $ do
       route idRoute

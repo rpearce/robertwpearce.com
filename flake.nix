@@ -73,9 +73,7 @@
 
           installPhase = ''
             mkdir -p "$out/dist"
-            cp -r dist/* \
-              src/.well-known/ \
-              "$out/dist"
+            cp -a dist/. "$out/dist"
           '';
         };
 
