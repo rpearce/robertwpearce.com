@@ -22,6 +22,7 @@ not required, and out of the two, we'll only use `Maybe`).
 [^1]: https://github.com/hemanth/functional-programming-jargon#algebraic-data-type &ensp;
 
 By the end of this post, you will:
+
 * know how to implement a generic `map` function that includes functions for
   `map`ping `Array`s, `Object`s, and `Functor`s
 * understand how to use `map` in a variety of scenarios
@@ -56,7 +57,9 @@ source](https://github.com/evilsoft/crocks/blob/e4517493079538960d53715ef25d72c2
 1. [`throw`ing Out Bad Data](#throwing-out-bad-data)
 
 ## The Goal: `map` All the Things
+
 Today we are going to write a `map` function that does the following:
+
 * accepts a transformation function that takes in some argument of type `a` and
   transforms it into a value of type `b`; i.e., `(a -> b)`
 * accepts and handles any of the following data types:
@@ -69,7 +72,9 @@ Today we are going to write a `map` function that does the following:
 Sounds easy, right? We'll see!
 
 ## Defining Our `map` Function
+
 There are some things we already know about our `map` function:
+
 * it's called `map` (yay! nailed it!)
 * it takes a function (`fn`) and then some datum (`m`[^2])[^3]
 * it returns the datum as transformed by said function
@@ -197,6 +202,7 @@ and it accepts a function from `a` to `b`, then returns a function that accepts
 `f` of `a`, and then returns `f` of `b`."
 
 ## `map` an `Array`
+
 Let's `map` an `Array`!
 
 Remember our `Functor` class constraint?
@@ -308,6 +314,7 @@ Well done! What else can you `map`? We're now going to leave charted waters and
 venture into the unknown.
 
 ## `map` an `Object`
+
 Let's say we have an `i18n` (short for "internationalization") object that we've
 been given that has a terribly annoying issue: every translation is prefixed and
 suffixed with an underscore (`_`)!
@@ -452,6 +459,7 @@ inside an `Object`. We pass a nested `map`ping function, and our little
 underscore problem is gone!
 
 ## `map` a `Function`
+
 Remember our functions `mult2` and `add10` from before?
 
 ```javascript
@@ -506,6 +514,7 @@ two functions, and calling that result with a primitive value (`12`) gives us
 back our result, `44`.
 
 ## `map` a `Functor`
+
 When we learned about `map`ping `Array`s before, we learned that `Array`s are
 `Functor`s because they adhere to the laws of _identity_ and _composition_;
 i.e., they are `map`pable.
@@ -655,6 +664,7 @@ Once we have access to the `locations`, we then use `map` again to uppercase
 each location.
 
 ## `throw`ing Out Bad Data
+
 What happens if the arguments passed to `map` aren't a `Function` and a
 `Functor`?
 
@@ -687,6 +697,7 @@ map(null)(null)       // TypeError: map: Please provide a Function for the first
 Now, when we provide bad arguments, we're told exactly what we need to do.
 
 ## Wrapping Up
+
 Congratulations and thank you for making it to the end! If you want to play
 around with what we created, check out this CodeSandbox:
 https://codesandbox.io/s/bitter-grass-tknwb.

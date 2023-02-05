@@ -4,9 +4,15 @@ authorTwitter: "@RobertWPearce"
 desc: "Beginner-friendly introduction to loading scripts on to a web page."
 keywords: "javascript, javascript tutorial, asynchronous scripts, website basics"
 title: "Asynchronously Loading Scripts"
+updated: "2023-02-04T18:00:00Z"
 ---
 
 _This article is intended for HTML & JavaScript beginners._
+
+_2023 update: This article, while still good, doesn't take into account the
+[defer](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#attr-defer),
+attribute. [Here is a great javascript.info article on async vs.
+defer](https://javascript.info/script-async-defer)._
 
 * * *
 
@@ -19,7 +25,10 @@ want to consider whether or not this is the best option for you.
 So long as HTTP/1.1 is what your website is accessed via (which it will be
 a long while), `<script>` tags will be used to fetch external JavaScript
 files whose contents will be included on the page. These typically look
-like `<script src="app.js"></script>`. `<script>` tags are by default "blocking," meaning that the web page has to pause its download & render cycle, fetch and load the JavaScript and then continue on. Here is what this looks like:
+like `<script src="app.js"></script>`. `<script>` tags are by default
+"blocking," meaning that the web page has to pause its download & render cycle,
+fetch and load the JavaScript and then continue on. Here is what this looks
+like:
 
 ```html
 <html>
@@ -32,8 +41,7 @@ like `<script src="app.js"></script>`. `<script>` tags are by default "blocking,
 </html>
 ```
 
-The worst thing you can do is load multiple scripts in this blocking
-fashion:
+The worst thing you can do is load multiple scripts in this blocking fashion:
 
 ```html
 <html>
@@ -49,11 +57,13 @@ fashion:
 </html>
 ```
 
-so make sure you combine (concatenate) all your JavaScript files in to
-one file. But this is still not ideal, for you have a blocking script
-that will have to download before anything else happens.
+so make sure you combine (concatenate) all your JavaScript files in to one file.
+But this is still not ideal, for you have a blocking script that will have to
+download before anything else happens.
 
-When we throw `<script>` tags at the end of the `<body>`, we allow for the page to paint and then go and fetch the JS synchronously (this lets the user see and utilize the page, but the scripts still haven't finished loading).
+When we throw `<script>` tags at the end of the `<body>`, we allow for the page
+to paint and then go and fetch the JS synchronously (this lets the user see and
+utilize the page, but the scripts still haven't finished loading).
 
 ```html
 <html>
@@ -71,6 +81,7 @@ asynchronously fetch the JavaScript _after_ the page is finished
 loading.
 
 ## Fetching JavaScript Asynchronously
+
 There are two popular methods for fetch JavaScript in an asynchronous
 manner.
 
@@ -80,7 +91,9 @@ The first is to simply include the HTML5 `async` property:
 <script src="app.js" async></script>
 ```
 
-Or, if you need to support older browsers, add an event listener to the window's `load` function to dynamically build a script tag and append it to the page (note how I do not use `window.onload =`):
+Or, if you need to support older browsers, add an event listener to the window's
+`load` function to dynamically build a script tag and append it to the page
+(note how I do not use `window.onload =`):
 
 ```html
 <script>
@@ -93,9 +106,12 @@ Or, if you need to support older browsers, add an event listener to the window's
 </script>
 ```
 
-Why didn't I use `window.onload =` here? When you assign a browser callback trigger a value, it can only have one value! When you add an event listener, you allow the window's load functionality to have more values in the future.
+Why didn't I use `window.onload =` here? When you assign a browser callback
+trigger a value, it can only have one value! When you add an event listener, you
+allow the window's load functionality to have more values in the future.
 
 ## Conclusion
+
 If your app/website is architected to rely on JavaScript before it
 renders anything, then you can utilize this asynchronous
 technique with a "Loading..." graphic that is removed when the
