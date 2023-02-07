@@ -20,15 +20,31 @@ import Text.Pandoc
 import Text.Pandoc.Highlighting (Style, breezeDark, styleToCss)
 
 --------------------------------------------------------------------------------
+-- PERSONALIZATION
+
+mySiteName :: String
+mySiteName = "Robert Pearce | Software Engineer"
+
+mySiteRoot :: String
+mySiteRoot = "https://robertwpearce.com"
+
+myFeedTitle :: String
+myFeedTitle = "Robert Pearce's blog"
+
+myFeedDescription :: String
+myFeedDescription = "Posts on JavaScript, Node.js, Haskell, Elm, Ruby and more."
+
+myFeedAuthorName :: String
+myFeedAuthorName = "Robert Pearce"
+
+myFeedAuthorEmail :: String
+myFeedAuthorEmail = "me@robertwpearce.com"
+
+myFeedRoot :: String
+myFeedRoot = mySiteRoot
+
+--------------------------------------------------------------------------------
 -- CONFIG
-
-root :: String
-root =
-  "https://robertwpearce.com"
-
-siteName :: String
-siteName =
-  "Robert Pearce | Senior Software Developer"
 
 -- Default configuration: https://github.com/jaspervdj/hakyll/blob/cd74877d41f41c4fba27768f84255e797748a31a/lib/Hakyll/Core/Configuration.hs#L101-L125
 config :: Configuration
@@ -44,6 +60,7 @@ config =
     }
   where
     ignoreFile' path
+      | ".DS_Store" == fileName = True
       | "."    `isPrefixOf` fileName = False
       | "#"    `isPrefixOf` fileName = True
       | "~"    `isSuffixOf` fileName = True
@@ -101,8 +118,8 @@ main = hakyllWith config $ do
 
       let indexCtx =
             listField "posts" postCtx (return posts)
-              <> constField "root" root
-              <> constField "siteName" siteName
+              <> constField "root" mySiteRoot
+              <> constField "siteName" mySiteName
               <> defaultContext
 
       getResourceBody
@@ -119,8 +136,8 @@ main = hakyllWith config $ do
 
       let pages = posts <> nzPages
           sitemapCtx =
-            constField "root" root
-              <> constField "siteName" siteName
+            constField "root" mySiteRoot
+              <> constField "siteName" mySiteName
               <> listField "pages" postCtx (return pages)
 
       makeItem ("" :: String)
@@ -152,8 +169,8 @@ feedCtx =
 
 postCtx :: Context String
 postCtx =
-  constField "root" root
-    <> constField "siteName" siteName
+  constField "root" mySiteRoot
+    <> constField "siteName" mySiteName
     <> dateField "date" "%Y-%m-%d"
     <> defaultContext
 
@@ -233,11 +250,11 @@ feedCompiler renderer =
 feedConfiguration :: FeedConfiguration
 feedConfiguration =
   FeedConfiguration
-    { feedTitle = "Robert Pearce's blog"
-    , feedDescription = "Posts on JavaScript, Node.js, Haskell, Elm, Ruby and more."
-    , feedAuthorName = "Robert Pearce"
-    , feedAuthorEmail = "me@robertwpearce.com"
-    , feedRoot = root
+    { feedTitle = myFeedTitle
+    , feedDescription = myFeedDescription
+    , feedAuthorName = myFeedAuthorName
+    , feedAuthorEmail = myFeedAuthorEmail
+    , feedRoot = myFeedRoot
     }
 
 --------------------------------------------------------------------------------

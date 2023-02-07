@@ -14,15 +14,19 @@ If you'd prefer to see a ~5 minute recording of what we'll do in this post, you
 can watch the video below; otherwise, carry on!
 
 <iframe
-  width="560"
-  height="315"
-  src="https://www.youtube-nocookie.com/embed/n_VTQJARW-o"
-  frameborder="0"
-  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
   allowfullscreen
+  frameborder="0"
+  height="315"
+  loading="lazy"
+  src="https://www.youtube.com/embed/kaqu-e3Q7IY"
+  style="margin-top:2rem;"
+  title="JavaScript Implement Your Own map method, mappy, on Array prototype"
+  width="560"
 ></iframe>
 
 ## Initial Example: Use `map` to Convert Film Data to HTML Strings
+
 First, we will start with some code that will demonstrate _one_ way to take an
 array of films and output certain HTML strings.
 
@@ -98,6 +102,7 @@ So what is going on here?
 
 The `map` method iterates over each film and calls `filmToHtml` with a few
 arguments:
+
 1. the film object
 1. the film's index in the array
 1. the `films` array
@@ -109,6 +114,7 @@ receives some data points and ultimately returns to us the `<li>...</li>` HTML
 for each film.
 
 ## Defining Our Own `map` Method, `mappy`
+
 If we want to write a new method that can be called on our `films` `Array`
 instance, we add it to the `Array.prototype` like this:
 
@@ -134,6 +140,7 @@ we can see that we need:
 1. an optional value to use as `this` when calling the callback
 
 ## Filling In The Argument Blanks
+
 Let's give our `mappy` method a `callback` parameter, as well as an optional
 `thisArg`, which we'll simply name `_this`.
 
@@ -172,6 +179,7 @@ console.log(
 ```
 
 ## The Implementation
+
 Now that we have a `newArray`, know we can work with `this`, have a `callback`
 to call and a `_this` scope to call the `callback` with, we can populate the
 `newArray` with the result of calling the `callback` function with each item in
@@ -216,6 +224,7 @@ console.log(
 ```
 
 ## Providing Useful Error Messaging
+
 What happens if someone tries to use our `mappy` method but doesn't provide a
 callback function? For example:
 
@@ -265,6 +274,7 @@ films.mappy({ foo: 'bar' })
 ```
 
 ## Wrapping Up
+
 I hope this post has helped de-mystify how `Array.prototype.map` conceptually
 works under the hood! Next time, we'll look at how to implement `map` without
 polluting the `Array.prototype`, and we might even be able to use `map` on more

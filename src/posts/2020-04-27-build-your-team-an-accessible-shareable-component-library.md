@@ -19,6 +19,7 @@ If you'd like to skip to the code, here is the example component library we're
 going to make: https://github.com/rpearce/example-component-library.
 
 ## Overview
+
 This is a big post that covers a lot of ground, so buckle up.
 
 1. [When Should I Make a Component Library and Why?](#when-should-i-make-a-component-library-and-why)
@@ -41,6 +42,7 @@ This is a big post that covers a lot of ground, so buckle up.
 ## When Should I Make a Component Library and Why?
 
 ### Scenario 1: Component Entropy
+
 Components make up large parts of our applications. As projects age, components
 can become increasingly coupled with other components, business logic, and
 application state management tools like [redux](https://github.com/reduxjs/redux).
@@ -61,11 +63,16 @@ components and set up a tool like storybook to house the individual examples and
 compositions of them.
 
 ### Scenario 2: Multiple Projects (or The Possibility of Multiple Projects)
+
 Consider this exchange:
 
-> **Them**: You know that spinner/widget/dropdown/search thing we have over here? It looks and works great! We want the same thing over here and over here. How difficult is that?
+> **Them**: You know that spinner/widget/dropdown/search thing we have over
+> here? It looks and works great! We want the same thing over here and over
+> here. How difficult is that?
 >
-> **Me**: Those are different projects, and that is really more like 4 different components working together, so a) hard to do cleanly but good for the long-term or b) easy (for now) if I copy and paste.
+> **Me**: Those are different projects, and that is really more like 4 different
+> components working together, so a) hard to do cleanly but good for the
+> long-term or b) easy (for now) if I copy and paste.
 >
 > **Them**: We need to ship.
 >
@@ -90,9 +97,11 @@ an accompanying component library! For existing projects, we can begin moving
 them in that direction.
 
 ## Project API (Usage)
+
 Let's first define how we are going to include our components in our project.
 
 ### JS Imports
+
 Component JavaScript can be imported in a few different ways:
 
 ```javascript
@@ -111,6 +120,7 @@ import Circle from 'mylib/dist/umd/Circle'
 ```
 
 ### CSS Imports
+
 Component CSS can be imported like this:
 
 ```javascript
@@ -155,7 +165,7 @@ It's time to build the project! Here are the main tools we will use:
 
 ## Project Structure
 
-```bash
+```default
 .
 ├── .storybook            (1)
 │   └── ...
@@ -200,7 +210,7 @@ It's time to build the project! Here are the main tools we will use:
 
 ## Component Structure
 
-```bash
+```default
 .
 └── source
     └── ComponentA
@@ -234,10 +244,11 @@ Each component is then exported from the main `index.ts` file.
 It's now time to start the project from scratch and make this outline a reality!
 
 ## Creating the Project
+
 To begin, let's create the project and a `package.json` file with some
 project-related information:
 
-```bash
+```default
 $ mkdir example-component-library && cd $_
 $ touch package.json
 ```
@@ -275,7 +286,7 @@ And in `package.json`:
 
 Once you save that, run your build tool to make sure everything is ok:
 
-```bash
+```default
 $ npm install
 ```
 
@@ -300,12 +311,13 @@ as a `peerDependency` (it's up to you to decide what versions of React you'll
 support).
 
 ## TypeScript Setup
+
 We can now add TypeScript to our project with some compiler and project-related
 options. We'll also add some type definition libraries that we'll use later, as
 well as a dependency on [`tslib`](https://www.npmjs.com/package/tslib) to make
 compiling our code to ES5 seamless.
 
-```bash
+```default
 $ npm install --save-dev --save-exact \
   @types/node \
   @types/react \
@@ -356,10 +368,11 @@ need them, and we'll add more TypeScript build configurations in the section on
 [building our typescript](#building-our-typescript).
 
 ## Linting Setup
+
 Linting is a great way to have everyone adhere to the same set of rules for code
 style. For our project, we're going to install a few tools to help us out.
 
-```bash
+```default
 $ npm install --save-dev --save-exact \
   @typescript-eslint/eslint-plugin \
   @typescript-eslint/parser \
@@ -385,7 +398,7 @@ The `.eslintignore` file will make sure we include files and folders that are
 ignored by default (using the `!`) and exclude files and folders that we don't
 care about linting.
 
-```bash
+```default
 !.eslintrc.js
 !.prettierrc.js
 !.storybook/
@@ -490,17 +503,18 @@ Now that we've got this all in place, we can update our `package.json`'s
 
 You can test this by running:
 
-```bash
+```default
 $ npm run lint
 ```
 
 ## Testing Setup
+
 We're going to use Jest and [`@testing-library/react`](https://testing-library.com/react)
 to handle running our tests and testing our component code, so let's install
 those tools and their companion TypeScript libraries. We'll also install
 axe-core to handle some automated accessibility testing.
 
-```bash
+```default
 $ npm install --save-dev --save-exact \
   @testing-library/jest-dom \
   @testing-library/react \
@@ -556,11 +570,12 @@ While we're on the testing subject, we should also update our `package.json`'s
 We don't have any test files yet, but you can confirm everything is set up
 correctly by running
 
-```bash
+```default
 $ npm run test
 ```
 
 ## Storybook Setup
+
 Storybook is a great way to not only share examples of your components but also
 get instant feedback while developing them, as well. It also comes with [a great
 set of official addons](https://storybook.js.org/addons/).
@@ -568,7 +583,7 @@ set of official addons](https://storybook.js.org/addons/).
 Let's install Storybook for React with TypeScript, and let's also add the addons
 for accessibility and knobs:
 
-```bash
+```default
 $ npm install --save-dev --save-exact \
   @storybook/addon-a11y \
   @storybook/addon-knobs \
@@ -594,6 +609,7 @@ module.exports = {
 ```
 
 ## An Example Component
+
 For our example component, we are going to make a circle with SVG. With only
 this simple component, we will cover the following aspects of component
 development:
@@ -604,7 +620,7 @@ development:
 
 Let's create the files we know we're going to need:
 
-```bash
+```default
 $ mkdir source/Circle
 $ touch source/Circle/index.tsx \
   source/Circle/stories.tsx \
@@ -661,6 +677,7 @@ component.
 This file should be pretty straightforward, so let's move on to the CSS!
 
 ### Component CSS
+
 This is a real easy one.
 
 ```css
@@ -672,6 +689,7 @@ creating needs to be made unique, and prefixing your classes is the simplest way
 of doing that.
 
 ### Component Tests
+
 It's time to write some tests! We're going to make explicit expectations and
 do some snapshot tests so that everybody is happy.
 
@@ -767,6 +785,7 @@ Testing is easy if you keep things simple, and automated accessibility testing
 is even easier than that, for all you need to do is provide DOM elements.
 
 ### Component Stories
+
 I find it very difficult to do test driven development when developing
 components, for it is an exploratory, creative experience for me. Instant
 feedback makes it easy to run through all my bad ideas (there are many!) and
@@ -815,12 +834,13 @@ library. Add as many different stories for your components as you like! Our
 Storybook config will collect them all for you into a single place.
 
 ## Building Our TypeScript
+
 We've already created a `tsconfig.base.json` and `tsconfig.json` file, and now
 it's time to add ones for CommonJS (CJS), ESModules (ESM), and Universal Module
 Definitions (UMD). We will then add some NPM scripts to build out TypeScript for
 us.
 
-```bash
+```default
 $ touch tsconfig.cjs.json tsconfig.esm.json tsconfig.umd.json
 ```
 
@@ -891,7 +911,7 @@ Our first attempt:
 Not bad, but we can use the [`npm-run-all`](https://www.npmjs.com/package/npm-run-all)
 tool to not only write a more succinct script but also run these in parallel!
 
-```bash
+```default
 $ npm install --save-dev --save-exact npm-run-all
 ```
 
@@ -939,13 +959,13 @@ script that we can continue adding build steps to as we go:
 
 Give it all whirl, if you like:
 
-```bash
+```default
 $ npm run build
 ```
 
 You should see the following tree structure for your `dist/` folder:
 
-```bash
+```default
 .
 └── dist
     └── cjs
@@ -971,6 +991,7 @@ You should see the following tree structure for your `dist/` folder:
 We're getting places! We have JS, and now we need our CSS.
 
 ## Building Our CSS
+
 For our styles, we have two goals:
 1. output each component's styles in a component CSS folder like `dist/css/Circle/styles.css`
 1. output a combination of each component's styles in a single file in `dist/css/styles.css`
@@ -978,7 +999,7 @@ For our styles, we have two goals:
 To achieve this, we're going to write a short bash script, and we're going to
 place it in `scripts/buildCSS`.
 
-```bash
+```default
 $ mkdir scripts
 $ touch scripts/buildCSS
 $ chmod +x scripts/buildCSS
@@ -1055,7 +1076,7 @@ Similarly to our `build:js:esm:watch` command, how might we watch for CSS
 changes and run our script in a `build:css:watch` command? Luckily, there's a
 tool that can help us with that: [`chokidar`](https://www.npmjs.com/package/chokidar).
 
-```bash
+```default
 $ npm install --save-dev --save-exact chokidar
 ```
 
@@ -1068,6 +1089,7 @@ $ npm install --save-dev --save-exact chokidar
 ```
 
 ## Building Our Stories
+
 To develop our components and get instant feedback in our Storybook examples,
 we're going to need to run a few things at once to get it all to work together.
 
@@ -1116,7 +1138,7 @@ here's a way to do that:
 You can then run this from the command line, and it should automatically open
 your web browser and take you to http://localhost:6006.
 
-```bash
+```default
 $ npm run start
 ```
 
@@ -1146,7 +1168,7 @@ to the `docs/` folder and for cleaning the `docs/` folder, as well.
 The `clean:docs` script, if ran first, will guarantee that we have fresh output
 in our `docs/` folder. Let's give it a go:
 
-```bash
+```default
 $ npm run clean:docs && npm run build:docs
 ```
 
@@ -1163,6 +1185,7 @@ and `clean` scripts accordingly:
 ```
 
 ## Continuous Integration Notes
+
 When you set up a continuous integration (CI) tool for this project, it will be
 tempting to tell it to simply run `$ npm run build`; however, this will not
 include your linting and testing scripts, and you could potentially have a green
@@ -1183,6 +1206,7 @@ instead add another script named `ci` to handle this for us:
 No worries! Now we can use `$ npm run ci` in our CI configuration.
 
 ## Publishing Notes
+
 I recommend adding a `prepublishOnly` script that ensures your linter and tests
 pass before trying to build your component output:
 
@@ -1198,6 +1222,7 @@ Also, if you want this to be a private repository, make sure you add
 `"private": true` to your `package.json` before publishing.
 
 ## Wrapping Up
+
 Thank you for reading this, and I hope this helps you create an awesome,
 accessible component library.
 

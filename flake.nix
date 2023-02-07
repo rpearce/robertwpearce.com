@@ -26,6 +26,7 @@
             bobProject = final.haskell-nix.project' {
               src = ./ssg;
               compiler-nix-name = "ghc925";
+              modules = [{ doHaddock = false; }];
               shell.buildInputs = [
                 hakyll-site
               ];
