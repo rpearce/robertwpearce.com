@@ -30,6 +30,7 @@ all the features that are provided.
 * [Deploying to your domain](#deploying-to-your-domain)
 * [TODOs for hakyll-nix-template](#todos-for-hakyll-nix-template)
   * [TODO: Caching and hashing](#todo-caching-and-hashing)
+  * [TODO: Use pygments for syntax highlighting](#todo-use-pygments-for-syntax-highlighting)
 * [Other hakyll posts](#other-hakyll-posts)
 
 ## Prerequisites
