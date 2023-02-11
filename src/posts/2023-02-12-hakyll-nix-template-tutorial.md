@@ -64,7 +64,6 @@ the popover menu.
 <img
   alt="GitHub's 'Use this template' menu"
   decoding="async"
-  height="246"
   loading="lazy"
   src="/images/hnt-copy.webp"
 />
@@ -75,7 +74,6 @@ for the repo.
 <img
   alt="GitHub form for creating a new repository from a template"
   decoding="async"
-  height="500"
   loading="lazy"
   src="/images/hnt-create.webp"
 />
@@ -86,7 +84,6 @@ your method of cloning the repository.
 <img
   alt="GitHub's code cloning menu"
   decoding="async"
-  height="400"
   loading="lazy"
   src="/images/hnt-clone.webp"
 />
@@ -97,7 +94,6 @@ Once you've chosen your preferred cloning command and ran that in your terminal,
 <img
   alt="Terminal that has cloned the repository and cd'd into the directory"
   decoding="async"
-  height="300"
   loading="lazy"
   src="/images/hnt-clone-result.webp"
 />
@@ -445,7 +441,6 @@ make sure the directory for that branch is `/ (root)`.
 <img
   alt="The GitHub Pages setup for this website"
   decoding="async"
-  height="517"
   loading="lazy"
   src="/images/hnt-gh-pages.webp"
 />
