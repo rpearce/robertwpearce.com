@@ -1,10 +1,14 @@
 body.light {
   --deepBgColor: #011627;
+  --footerBgColor: #f5f5f5;
+  --footerLinkColor: #2676ac;
   --h1Color: currentColor;
   --headerBgColor: #C4DFFF;
 }
 body.dark {
   --deepBgColor: #011627;
+  --footerBgColor: #373c49;
+  --footerLinkColor: #ffa7c4;
   --h1Color: var(--textColor);
   --headerBgColor: var(--deepBgColor);
 }
@@ -113,6 +117,22 @@ article > header small {
   }
 }
 
+/* FOOTER */
+
+footer {
+  background-color: var(--footerBgColor);
+}
+footer ul {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+}
+footer li {
+  margin: 0 0.75em;
+}
+footer a[href] {
+  color: var(--footerLinkColor);
+}
 
 /* IFRAME*/
 
