@@ -12,6 +12,7 @@ updated: "2023-02-04T18:00:00Z"
   decoding="async"
   height="300"
   src="/images/movie-night-cary-grant.webp"
+  width="615"
 />
 
 In a long-distance relationship? I currently am, and it sucks, but that will

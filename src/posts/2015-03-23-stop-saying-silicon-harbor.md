@@ -4,6 +4,7 @@ authorTwitter: "@RobertWPearce"
 desc: "Charleston, SC techpreneurs need to stop saying Silicon Harbor."
 keywords: "silicon harbor, charleston, charlestontech, charleston tech, south carolina tech"
 title: "Stop Saying Silicon Harbor"
+updated: "2023-02-12T18:00:00Z"
 ---
 
 Ever since [Nate DaPore](https://twitter.com/natedapore) allegedly coined the
@@ -16,6 +17,15 @@ to use the phrase "Silicon Harbor" _[ad](http://www.fastcompany.com/1839445/intr
 If Charleston tech companies would like to move forward and be taken seriously
 by other cities and players in this game, they need to stop emulating and start
 innovating. This begins with a proper name.
+
+<img
+  alt="Sandy path with Morris Island lighthouse and ocean in the background"
+  decoding="async"
+  height="393"
+  loading="lazy"
+  src="./images/stop-saying-sh-morris-island.webp"
+  width="600"
+/>
 
 "Silicon Valley," the name that was copied and applied to Charleston as "Silicon
 Harbor," got its nickname from the concentration of companies who specialized in

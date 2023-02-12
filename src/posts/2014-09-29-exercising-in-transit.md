@@ -26,7 +26,8 @@ but this is the only one of which I know.
   decoding="async"
   height="450"
   loading="lazy"
-  src="/images/exercising-outdoor-gym.webp"
+  src="./images/exercising-outdoor-gym.webp"
+  width="600"
 />
 
 The gyms sport everything from pullup &amp; parallel bars to vertical presses to

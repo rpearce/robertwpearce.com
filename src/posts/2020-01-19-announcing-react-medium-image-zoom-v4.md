@@ -4,8 +4,11 @@ authorTwitter: "@RobertWPearce"
 desc: "react-medium-image-zoom is an open source image zooming library based on medium.com's implementation of image zooming"
 keywords: "react, react-medium-image-zoom, image zoom, image, zoom, reactjs"
 title: "Announcing react-medium-image-zoom v4"
-updated: "2020-01-20T00:00:00Z"
+updated: "2023-02-12T00:00:00Z"
 ---
+
+_2023-02-12 update: this article's content is valid for the v4, but it isn't
+really for the v5 version._
 
 _tl;dr => I've release v4 of [react-medium-image-zoom](https://www.npmjs.com/package/react-medium-image-zoom),
 and you should consider using it for zooming images. Check out [the Storybook

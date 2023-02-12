@@ -64,8 +64,10 @@ the popover menu.
 <img
   alt="GitHub's 'Use this template' menu"
   decoding="async"
+  height="246"
   loading="lazy"
-  src="/images/hnt-copy.webp"
+  src="./images/hnt-copy.webp"
+  width="422"
 />
 
 Next, create a new repository from the template, filling in the details you want
@@ -74,8 +76,10 @@ for the repo.
 <img
   alt="GitHub form for creating a new repository from a template"
   decoding="async"
+  height="600"
   loading="lazy"
-  src="/images/hnt-create.webp"
+  src="./images/hnt-create.webp"
+  width="801"
 />
 
 After creating the repository, click the "&lt;&gt; Code" button, then choose
@@ -84,8 +88,10 @@ your method of cloning the repository.
 <img
   alt="GitHub's code cloning menu"
   decoding="async"
+  height="500"
   loading="lazy"
-  src="/images/hnt-clone.webp"
+  src="./images/hnt-clone.webp"
+  width="547"
 />
 
 Once you've chosen your preferred cloning command and ran that in your terminal,
@@ -94,8 +100,10 @@ Once you've chosen your preferred cloning command and ran that in your terminal,
 <img
   alt="Terminal that has cloned the repository and cd'd into the directory"
   decoding="async"
+  height="520"
   loading="lazy"
-  src="/images/hnt-clone-result.webp"
+  src="./images/hnt-clone-result.webp"
+  width="968"
 />
 
 Alright! We're ready to build and personalize our project.
@@ -441,8 +449,10 @@ make sure the directory for that branch is `/ (root)`.
 <img
   alt="The GitHub Pages setup for this website"
   decoding="async"
+  height="517"
   loading="lazy"
-  src="/images/hnt-gh-pages.webp"
+  src="./images/hnt-gh-pages.webp"
+  width="600"
 />
 
 ## Deploying to your domain

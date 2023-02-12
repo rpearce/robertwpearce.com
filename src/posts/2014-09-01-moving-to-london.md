@@ -12,8 +12,9 @@ updated: "2023-02-04T13:00:00Z"
 <img
   alt="Willow tree near water in London"
   decoding="async"
-  src="/images/london-tree.webp"
-  height="300"
+  src="./images/london-tree.webp"
+  width="680"
+  height="510"
 />
 
 There were no external driving factors behind this decision; no significant
@@ -74,9 +75,10 @@ on a run and get lost._ Here is my fitbit from that day:
 <img
   alt="My first day in London fitbit data"
   decoding="async"
-  height="532"
+  height="710"
   loading="lazy"
-  src="/images/london-fitbit.jpg"
+  src="./images/london-fitbit.webp"
+  width="400"
 />
 
 You could say I got lost. I like to think I was &quot;exploring.&quot;

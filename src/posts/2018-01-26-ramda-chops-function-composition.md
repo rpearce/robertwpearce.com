@@ -4,6 +4,7 @@ authorTwitter: "@RobertWPearce"
 desc: "Learn about function composition with ramda's compose function."
 keywords: "ramda, ramda.js, ramdajs, ramda tutorial, ramda compose, function composition, ramda fp"
 title: "Ramda Chops: Function Composition"
+updated: "2023-02-12T18:00:00Z"
 ---
 
 _Thanks to [@evilsoft](https://twitter.com/evilsoft) and
@@ -196,7 +197,14 @@ break our functions or function compositions out into tiny little pieces that we
 chain together like water pipes or guitar pedals.
 
 <figure>
-  <img src="/images/guitar-pedals.jpg" alt="guitar pedals" />
+  <img
+    alt="Guitar pedals lined up side-by-side"
+    decoding="async"
+    height="800"
+    loading="lazy"
+    src="./images/rcfc-guitar-pedals.webp"
+    width="600"
+  />
   <figcaption>
     _Guitar pedals by [Henrik Hjortshøj](https://unsplash.com/@hfranke)_
   </figcaption>

@@ -71,7 +71,8 @@ have wall-mounted unicorn decor:
   decoding="async"
   height="533"
   loading="lazy"
-  src="/images/life-in-co-unicorn.webp"
+  src="./images/life-in-co-unicorn.webp"
+  width="400"
 />
 
 There are heaps of unique and delicious coffee shops to work from, as well. My
@@ -88,7 +89,8 @@ and ripe for adventure. I'll let the pictures speak for themselves.
   decoding="async"
   height="667"
   loading="lazy"
-  src="/images/life-in-co-breck-tippy-top.webp"
+  src="./images/life-in-co-breck-tippy-top.webp"
+  width="500"
 />
 
 <img
@@ -96,7 +98,8 @@ and ripe for adventure. I'll let the pictures speak for themselves.
   decoding="async"
   height="667"
   loading="lazy"
-  src="/images/life-in-co-breck-america.webp"
+  src="./images/life-in-co-breck-america.webp"
+  width="500"
 />
 
 <img
@@ -104,7 +107,8 @@ and ripe for adventure. I'll let the pictures speak for themselves.
   decoding="async"
   height="375"
   loading="lazy"
-  src="/images/life-in-co-breck-edge.webp"
+  src="./images/life-in-co-breck-edge.webp"
+  width="500"
 />
 
 ## Wrap up

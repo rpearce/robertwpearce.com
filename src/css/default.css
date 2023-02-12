@@ -34,6 +34,7 @@ body.light {
   --textLinkBorderColor: #287cb4;
   --textLinkColor: #287cb4;
   --textLinkHoverColor: #206592;
+  --textSubscribeLinkColor: #2676ac;
 }
 body.dark {
   --separatorColor: #424857;
@@ -58,6 +59,7 @@ body.dark {
   --textLinkBorderColor: #ffa7c4;
   --textLinkColor: rgb(255, 167, 196);
   --textLinkHoverColor: rgba(255, 167, 196, 0.75);
+  --textSubscribeLinkColor: #ffa7c4;
 }
 body {
   font-family: Verdana, Helvetica, Arial, sans-serif;
@@ -100,11 +102,12 @@ a[href].footnote-ref {
   box-shadow: none;
 }
 img {
-  display: block;
   border: 0;
-  max-width: 100%;
+  display: block;
+  height: auto;
   margin-left: auto;
   margin-right: auto;
+  max-width: 100%;
 }
 figcaption {
   font-size: 0.813rem;
@@ -162,6 +165,9 @@ figcaption {
 }
 .subscribe__input:focus {
   border-color: var(--inputBorderColorFocus);
+}
+a[href].subscribe__link {
+  color: var(--textSubscribeLinkColor);
 }
 .subscribe__submit {
   -webkit-appearance: none;
