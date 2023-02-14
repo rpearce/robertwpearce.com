@@ -25,15 +25,17 @@
           (final: prev: {
             bobProject = final.haskell-nix.project' {
               src = ./ssg;
-              compiler-nix-name = "ghc925";
+              compiler-nix-name = "ghc944";
               modules = [{ doHaddock = false; }];
               shell.buildInputs = [
                 hakyll-site
+                pkgs.chroma
+                #pkgs.python310Packages.pygments
               ];
               shell.tools = {
                 cabal = "latest";
-                hlint = "latest";
-                haskell-language-server = "latest";
+                #hlint = "latest";
+                #haskell-language-server = "latest";
               };
             };
           })
@@ -52,7 +54,10 @@
 
         website = pkgs.stdenv.mkDerivation {
           name = "website";
-          buildInputs = [];
+          buildInputs = [
+            pkgs.chroma
+            #pkgs.python310Packages.pygments
+          ];
           src = pkgs.nix-gitignore.gitignoreSourcePure [
             ./.gitignore
             ".git"
@@ -88,6 +93,7 @@
 
         packages = {
           inherit hakyll-site website;
+          chroma = pkgs.chroma;
           default = website;
         };
       }

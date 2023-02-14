@@ -1,0 +1,55 @@
+/*
+ * Theme: clean
+ * Page:  /
+ */
+
+main {
+  display: grid;
+  grid-row-gap: var(--gutter);
+  grid-template-areas:
+    "intro"
+    "info"
+    "contact"
+    "notes";
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  padding: var(--gutter) var(--padding-container);
+}
+
+[data-area="intro"] { grid-area: intro; }
+[data-area="info"] { grid-area: info; }
+[data-area="contact"] { grid-area: contact; }
+[data-area="notes"] { grid-area: notes; }
+
+main > header,
+main > section {
+  background-color: rgb(var(--color-bg-content));
+  border: 1px solid rgb(var(--color-border-content));
+  padding: var(--gutter);
+}
+
+h1 {
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 480px) {
+  h1 {
+    font-size: var(--type-xxx-large);
+    margin-bottom: 2rem;
+  }
+}
+
+@media (min-width: 1100px) {
+  main {
+    grid-template-areas:
+      "intro notes"
+      "info notes"
+      "contact notes"
+      ". notes";
+    grid-template-columns: 0.75fr minmax(0, 1fr);
+  }
+
+  [data-area="notes"] > h2 {
+    margin-top: 1.2rem;
+    margin-bottom: 1rem;
+  }
+}

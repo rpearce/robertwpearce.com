@@ -4,7 +4,8 @@
     <title>$title$</title>
 
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
     <meta name="description" content="$desc$">
     $if(author)$<meta name="author" content="$author$">$endif$
     $if(keywords)$<meta name="keywords" content="$keywords$">$endif$
@@ -17,9 +18,9 @@
     <meta property="og:description" content="$desc$">
     $if(image)$<meta property="og:image" content="$root$$image$">$endif$
     $if(type)$
-      <meta property="og:type" content="$type$">
+    <meta property="og:type" content="$type$">
     $else$
-      <meta property="og:type" content="website">
+    <meta property="og:type" content="website">
     $endif$
 
     $if(image)$
@@ -31,17 +32,115 @@
     <meta property="twitter:description" content="$desc$">
     $if(authorTwitter)$<meta property="twitter:creator" content="$authorTwitter$">$endif$
 
-    <link rel="icon" href='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💾</text></svg>'>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>💾</text></svg>">
     <link rel="canonical" href="$root$$url$">
-    <link rel="stylesheet" href="/css/default.css" />
+    <link rel="alternate" href="./atom.xml" title="$feedTitle$" type="application/atom+xml">
+    <link rel="alternate" href="./rss.xml" title="$feedTitle$" type="application/rss+xml">
+
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/t-clean.css">
     $if(type)$
-      <link rel="stylesheet" href="/css/$type$.css" />
+    <link rel="stylesheet" href="./css/t-clean-note.css">
+    <link rel="stylesheet" href="./css/t-code-dracula.css">
+    <link rel="prefetch" href="./css/t-clean-note.css">
     $else$
-      <link rel="stylesheet" href="/css/home.css" />
+    <link rel="stylesheet" href="./css/t-clean-home.css">
+    <link rel="prefetch" href="./css/t-clean-note.css">
+    <link rel="prefetch" href="./css/t-code-dracula.css">
     $endif$
+
   </head>
-  <body class="light">
+  <body data-theme="clean-night">
+    <script>
+      (() => {
+        window.site = {
+          prefFont: localStorage.getItem('prefFont') || 'monospace',
+          setFont: (family) => {
+            localStorage.setItem('prefFont', family);
+            document.querySelector(':root').style.setProperty('--type-family-body', family+',monospace');
+            return window.site._fetchFont(family);
+          },
+          prefTheme: localStorage.getItem('prefTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'clean-night' : 'clean-day'),
+          setTheme: (name) => {
+            const rootStyle = document.querySelector(':root').style;
+
+            if (name === 'clean-night') {
+              rootStyle.removeProperty('color-scheme');
+            } else {
+              rootStyle.setProperty('color-scheme', 'light');
+            }
+
+            document.body.setAttribute('data-theme', name);
+            localStorage.setItem('prefTheme', name);
+          },
+          _fetchFont: (family) => {
+            if (family === 'monospace') {
+              return Promise.resolve();
+            }
+
+            const familyNoSpaces = family.replace(' ', '');
+
+            const fontz = [
+              new FontFace(family, 'url("./fonts/'+familyNoSpaces+'-Regular.woff2") format("woff2")', { display: 'swap', weight: 400 }),
+              new FontFace(family, 'url("./fonts/'+familyNoSpaces+'-Bold.woff2") format("woff2")', { display: 'swap', weight: 700 }),
+            ];
+
+            if (family !== 'Fira Code') {
+              fontz.push(
+                new FontFace(family, 'url("./fonts/'+familyNoSpaces+'-Italic.woff2") format("woff2")', { display: 'swap', style: 'italic', weight: 400 }),
+                new FontFace(family, 'url("./fonts/'+familyNoSpaces+'-BoldItalic.woff2") format("woff2")', { display: 'swap', style: 'italic', weight: 700 })
+              );
+            }
+
+            for (const f of fontz) {
+              document.fonts.add(f);
+            }
+
+            return Promise.allSettled(fontz).then(results => {
+              results.forEach((res, i) => {
+                if (res.status === 'rejected') {
+                  console.log('site failed to load font: ' + fontz[i]?.family ?? 'unknown');
+                }
+              });
+            });
+          }
+        };
+
+        window.site.setTheme(window.site.prefTheme);
+        window.site.setFont(window.site.prefFont);
+      })();
+    </script>
+
     $body$
-    <script async src="/js/build/index.js"></script>
+
+    <footer>
+      <span aria-hidden="true" class="heart">♥</span>
+      <span aria-hidden="true">&rarr;</span>
+      <a href="https://github.com/sponsors/rpearce/">Sponsor my work</a>
+      <span aria-hidden="true">&larr;</span>
+      <span aria-hidden="true" class="heart">♥</span>
+    </footer>
+
+    <script async>
+      (() => {
+        const themeEl = document.querySelector('[data-select-theme]');
+
+        if (themeEl) {
+          themeEl.querySelector('[value="'+window.site.prefTheme+'"]').selected = 'selected';
+          themeEl.addEventListener('change', e => {
+            window.site.setTheme(e.target.value);
+          });
+        }
+
+        const fontEl = document.querySelector('[data-select-font]');
+
+        if (fontEl) {
+          fontEl.querySelector('[value="'+window.site.prefFont+'"]').selected = 'selected';
+          fontEl.addEventListener('change', e => {
+            window.site.setFont(e.target.value);
+          })
+        }
+      })();
+     </script>
   </body>
 </html>

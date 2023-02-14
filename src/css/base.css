@@ -1,0 +1,118 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  hyphens: auto;
+  line-height: calc(1em + 0.9rem);
+  margin: 0;
+  overflow-wrap: break-word;
+}
+
+:root {
+  font-size: 10px;
+  -webkit-text-size-adjust: 100%;
+  /*--type-base: calc(1.6em + 0.5vw);*/
+  --type-base: 1.6em;
+  --type-small: 80%;
+  --type-medium: 100%;
+  --type-large: 120%;
+  --type-x-large: 160%;
+  --type-xx-large: 200%;
+  --type-xxx-large: 300%;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  background-color: rgb(var(--color-bg-body));
+  color: rgb(var(--color-text));
+  font-family: var(--type-family-body);
+  font-size: var(--type-base);
+  min-height: 100vh;
+  min-height: 100dvh;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+img {
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+pre {
+  max-width: 100%;
+  overflow: auto;
+}
+
+a:not([class]),
+abbr:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Screen readers only */
+.sr-only {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+/* Screen readers and keyboards only */
+.sr-kb-only:not(:focus) {
+  opacity: 0;
+  position: absolute;
+}
+
+/*
+ * Set a definite minimum width to
+ * prevent grid area overflow.
+ *
+ * https://css-tricks.com/preventing-a-grid-blowout/
+ */
+[data-area] {
+  min-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

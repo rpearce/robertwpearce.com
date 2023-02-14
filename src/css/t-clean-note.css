@@ -1,0 +1,147 @@
+/*
+ * Theme: clean
+ * Page:  /:post
+ */
+
+main {
+  display: grid;
+  grid-row-gap: var(--gutter);
+  grid-template-areas:
+    "heading"
+    "meta"
+    "note";
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  padding: var(--gutter) var(--padding-container);
+}
+
+[data-area="heading"] { grid-area: heading; }
+[data-area="meta"] { grid-area: meta; }
+[data-area="note"] { grid-area: note; }
+
+main > header,
+main > section {
+  background-color: rgb(var(--color-bg-content));
+  border: 1px solid rgb(var(--color-border-content));
+  padding: var(--gutter);
+}
+
+[data-area="note"] > h2,
+[data-area="note"] > h3 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+[data-area="note"] > h3 {
+  font-size: var(--type-large);
+  font-style: italic;
+  font-weight: bold;
+}
+
+/* Vertically separate content by a reasonable amount */
+/* NOTE: This got out of hand... */
+p + pre,
+pre + p,
+ul + p,
+ul + pre,
+pre + ul,
+pre + ol,
+ol + pre,
+p + ol,
+ol + p,
+p + blockquote,
+blockquote + p,
+pre + pre {
+  margin-top: 2rem;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid rgba(var(--color-hr));
+  margin: 2rem 0;
+}
+
+blockquote {
+  border-left: 0.2rem solid;
+  padding-left: 1rem;
+}
+
+/*
+ * Code
+ */
+
+code,
+pre.chroma {
+  font-feature-settings: normal;
+}
+
+/* Inline code */
+:not(pre) > code {
+  border-radius: 3px;
+  background-color: rgba(var(--color-bg-code));
+  color: rgba(var(--color-text-code));
+  padding: 0.15em 0.2em;
+}
+
+/* Replace with pre:has(code) {} when supported in FF */
+pre.chroma {
+  border-radius: 1rem;
+  padding: 2rem;
+  tab-size: 2;
+}
+
+pre.chroma,
+pre.chroma * {
+  hyphens: none;
+}
+
+pre.chroma > code {
+  counter-reset: source-line 0; 
+}
+
+pre.chroma > code > .line {
+  counter-increment: source-line;
+}
+
+pre.chroma > code > .line::before {
+  color: #6272a4;
+  content: counter(source-line) "|";
+  display: inline-block;
+  flex-shrink: 0;
+  left: -1rem;
+  position: relative;
+  text-align: right;
+  user-select: none;
+  vertical-align: baseline;
+  width: 2em;
+}
+
+.pdf {
+  height: 50rem;
+  margin: 2rem 0;
+  width: 100%;
+}
+
+@media (min-width: 480px) {
+  [data-area="note"] > h2 {
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+  }
+
+  h1 {
+    font-size: var(--type-xx-large);
+  }
+
+  h3 {
+    font-size: var(--type-x-large);
+  }
+}
+
+@media (min-width: 1100px) {
+  main {
+    grid-template-areas:
+      "heading note"
+      "meta note"
+      ". note";
+    grid-template-columns: 0.75fr 1fr;
+  }
+}
