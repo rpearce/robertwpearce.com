@@ -1,15 +1,12 @@
-{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 import Control.Monad (forM_)
 import Data.List (isPrefixOf, isSuffixOf)
 import Data.Maybe (fromMaybe)
-import qualified Data.Set as S
 import qualified Data.Text as T
 import qualified Data.Text.Slugger as Slugger
 import Hakyll
 import System.FilePath (takeFileName)
-import qualified Text.HTML.TagSoup as TS
 import Text.Pandoc
   ( Extension (Ext_fenced_code_attributes, Ext_footnotes, Ext_gfm_auto_identifiers, Ext_implicit_header_references, Ext_smart),
     Extensions,
@@ -20,7 +17,7 @@ import Text.Pandoc
     readerExtensions,
     writerExtensions,
   )
-import Text.Pandoc.Highlighting (Style, breezeDark)
+import Text.Pandoc.Highlighting (Style, breezeDark, styleToCss)
 
 --------------------------------------------------------------------------------
 -- PERSONALIZATION
@@ -103,7 +100,6 @@ main = hakyllWith config $ do
         >>= saveSnapshot "content"
         >>= loadAndApplyTemplate "templates/post.html" ctx
         >>= loadAndApplyTemplate "templates/default.html" ctx
-        >>= compressHtmlCompiler
 
   match "new-zealand/**" $ do
     let ctx = constField "type" "article" <> postCtx
@@ -113,7 +109,6 @@ main = hakyllWith config $ do
         >>= saveSnapshot "content"
         >>= loadAndApplyTemplate "templates/info.html" ctx
         >>= loadAndApplyTemplate "templates/default.html" ctx
-        >>= compressHtmlCompiler
 
   match "index.html" $ do
     route idRoute
@@ -129,7 +124,6 @@ main = hakyllWith config $ do
       getResourceBody
         >>= applyAsTemplate indexCtx
         >>= loadAndApplyTemplate "templates/default.html" indexCtx
-        >>= compressHtmlCompiler
 
   match "templates/*" $ compile templateBodyCompiler
 
@@ -159,44 +153,9 @@ main = hakyllWith config $ do
 --------------------------------------------------------------------------------
 -- COMPILER HELPERS
 
-compressHtmlCompiler :: Item String -> Compiler (Item String)
-compressHtmlCompiler = pure . fmap compressHtml
-
-compressHtml :: String -> String
-compressHtml = withTagList compressTags
-
-compressTags :: [TS.Tag String] -> [TS.Tag String]
-compressTags = go S.empty
-  where
-    go :: S.Set String -> [TS.Tag String] -> [TS.Tag String]
-    go stack =
-      \case [] -> []
-            ((TS.TagComment _):rest) -> go stack rest
-            (tag@(TS.TagOpen name _):rest) -> tag : go (S.insert name stack) rest
-            (tag@(TS.TagClose name):rest) -> tag : go (S.delete name stack) rest
-            (tag@(TS.TagText _):rest)
-              | stackHasExclusion stack -> tag : go stack rest
-              | otherwise -> fmap cleanTag tag : go stack rest
-            (tag:rest) -> tag : go stack rest
-
-    stackHasExclusion :: S.Set String -> Bool
-    stackHasExclusion stack =
-      any (`S.member` stack) ["pre", "style", "textarea"]
-
-    replaceTab :: Char -> Char
-    replaceTab '\t' = ' '
-    replaceTab s    = s
-
-    isNewLineIsh :: Char -> Bool
-    isNewLineIsh = (`elem` ("\f\n\r\v" :: String))
-
-    cleanTag :: String -> String
-    cleanTag = filter (not . isNewLineIsh) . fmap replaceTab . trim
-
--- https://rebeccaskinner.net/posts/2021-01-31-hakyll-syntax-highlighting.html
---makeStyle :: Style -> Compiler (Item String)
---makeStyle =
---  makeItem . compressCss . styleToCss
+makeStyle :: Style -> Compiler (Item String)
+makeStyle =
+  makeItem . compressCss . styleToCss
 
 --------------------------------------------------------------------------------
 -- CONTEXT
