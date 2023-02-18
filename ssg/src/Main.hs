@@ -1,12 +1,15 @@
+{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 import Control.Monad (forM_)
 import Data.List (isPrefixOf, isSuffixOf)
 import Data.Maybe (fromMaybe)
+import qualified Data.Set as S
 import qualified Data.Text as T
 import qualified Data.Text.Slugger as Slugger
 import Hakyll
 import System.FilePath (takeFileName)
+import qualified Text.HTML.TagSoup as TS
 import Text.Pandoc
   ( Extension (Ext_fenced_code_attributes, Ext_footnotes, Ext_gfm_auto_identifiers, Ext_implicit_header_references, Ext_smart),
     Extensions,
@@ -100,6 +103,7 @@ main = hakyllWith config $ do
         >>= saveSnapshot "content"
         >>= loadAndApplyTemplate "templates/post.html" ctx
         >>= loadAndApplyTemplate "templates/default.html" ctx
+        >>= compressHtmlCompiler
 
   match "new-zealand/**" $ do
     let ctx = constField "type" "article" <> postCtx
@@ -109,6 +113,7 @@ main = hakyllWith config $ do
         >>= saveSnapshot "content"
         >>= loadAndApplyTemplate "templates/info.html" ctx
         >>= loadAndApplyTemplate "templates/default.html" ctx
+        >>= compressHtmlCompiler
 
   match "index.html" $ do
     route idRoute
@@ -124,6 +129,7 @@ main = hakyllWith config $ do
       getResourceBody
         >>= applyAsTemplate indexCtx
         >>= loadAndApplyTemplate "templates/default.html" indexCtx
+        >>= compressHtmlCompiler
 
   match "templates/*" $ compile templateBodyCompiler
 
