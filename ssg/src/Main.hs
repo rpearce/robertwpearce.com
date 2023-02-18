@@ -175,23 +175,55 @@ compressTags = go S.empty
             (tag@(TS.TagOpen name _):rest) -> tag : go (S.insert name stack) rest
             (tag@(TS.TagClose name):rest) -> tag : go (S.delete name stack) rest
             (tag@(TS.TagText _):rest)
-              | stackHasExclusion stack -> tag : go stack rest
-              | otherwise -> fmap cleanTag tag : go stack rest
+              | hasSignificantWhitespace stack -> tag : go stack rest
+              | hasTextContent stack -> fmap cleanTabsNewLines tag : go stack rest
+              | otherwise -> fmap cleanAll tag : go stack rest
             (tag:rest) -> tag : go stack rest
 
-    stackHasExclusion :: S.Set String -> Bool
-    stackHasExclusion stack =
-      any (`S.member` stack) ["pre", "style", "textarea"]
+    -- Whitespace-sensitive content that shouldn't be compressed
+    hasSignificantWhitespace :: S.Set String -> Bool
+    hasSignificantWhitespace stack =
+      any (`S.member` stack) content
+      where
+        content = [ "pre", "script", "textarea" ]
 
+    -- Elements that can hold text content and should
+    -- hold on to leading and trailing whitespace
+    hasTextContent :: S.Set String -> Bool
+    hasTextContent stack = any (`S.member` stack) content
+      where
+        content =
+          [ "a", "abbr", "b", "bdi", "bdo", "blockquote", "button", "cite"
+          , "code", "del", "dfn", "em", "figcaption", "i", "img", "input", "ins"
+          , "kbd", "label", "li", "mark", "math", "noscript", "object", "p"
+          , "picture", "q", "rp", "rt", "ruby", "s", "samp", "select", "small"
+          , "span", "strong", "sub", "sup", "svg", "td", "textarea", "time"
+          , "var", "wbr"
+          ]
+
+    -- Replace tab characters with spaces
     replaceTab :: Char -> Char
     replaceTab '\t' = ' '
     replaceTab s    = s
 
-    isNewLineIsh :: Char -> Bool
-    isNewLineIsh = (`elem` ("\f\n\r\v" :: String))
+    -- Replace newline characters with spaces
+    replaceNewLine :: Char -> Char
+    replaceNewLine '\n' = ' '
+    replaceNewLine s    = s
 
-    cleanTag :: String -> String
-    cleanTag = filter (not . isNewLineIsh) . fmap replaceTab . trim
+    -- Remove the following:
+    --   '\f' (form feed)
+    --   '\n' (newline [line feed])
+    --   '\r' (carriage return)
+    --   '\v' (vertical tab)
+    rmNewLines :: String -> String
+    rmNewLines = filter (not . (`elem` ("\f\n\r\v" :: String)))
+
+    cleanTabsNewLines :: String -> String
+    cleanTabsNewLines = fmap (replaceNewLine . replaceTab)
+
+    cleanAll :: String -> String
+    cleanAll = rmNewLines . fmap replaceTab . trim
 
 -- https://rebeccaskinner.net/posts/2021-01-31-hakyll-syntax-highlighting.html
 --makeStyle :: Style -> Compiler (Item String)
