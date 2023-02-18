@@ -223,7 +223,7 @@ compressTags = go S.empty
     cleanTabsNewLines = fmap (replaceNewLine . replaceTab)
 
     cleanAll :: String -> String
-    cleanAll = rmNewLines . fmap replaceTab . trim
+    cleanAll = rmNewLines . trim . fmap replaceTab
 
 -- https://rebeccaskinner.net/posts/2021-01-31-hakyll-syntax-highlighting.html
 --makeStyle :: Style -> Compiler (Item String)
