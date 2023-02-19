@@ -194,11 +194,11 @@ compressTags = go S.empty
       where
         content =
           [ "a", "abbr", "b", "bdi", "bdo", "blockquote", "button", "cite"
-          , "code", "del", "dfn", "em", "figcaption", "i", "img", "input", "ins"
-          , "kbd", "label", "li", "mark", "math", "noscript", "object", "p"
-          , "picture", "q", "rp", "rt", "ruby", "s", "samp", "select", "small"
-          , "span", "strong", "sub", "sup", "svg", "td", "textarea", "time"
-          , "var", "wbr"
+          , "code", "del", "dfn", "em", "figcaption", "h1", "h2", "h3", "h4"
+          , "h5", "h6", "i", "img", "input", "ins", "kbd", "label", "li", "mark"
+          , "math", "noscript", "object", "p", "picture", "q", "rp"
+          , "rt", "ruby", "s", "samp", "select", "small", "span", "strong"
+          , "sub", "sup", "svg", "td", "textarea", "time", "var", "wbr"
           ]
 
     -- Replace tab characters with spaces
