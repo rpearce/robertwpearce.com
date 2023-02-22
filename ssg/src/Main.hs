@@ -2,6 +2,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 import Control.Monad (forM_)
+import Data.Char (isSpace)
 import Data.List (isPrefixOf, isSuffixOf)
 import Data.Maybe (fromMaybe)
 import qualified Data.Set as S
@@ -171,59 +172,71 @@ compressTags = go S.empty
     go :: S.Set String -> [TS.Tag String] -> [TS.Tag String]
     go stack =
       \case [] -> []
-            ((TS.TagComment _):rest) -> go stack rest
-            (tag@(TS.TagOpen name _):rest) -> tag : go (S.insert name stack) rest
-            (tag@(TS.TagClose name):rest) -> tag : go (S.delete name stack) rest
-            (tag@(TS.TagText _):rest)
+            -- Removes comments by not prepending the tag
+            -- and, instead, continuing on with the other tags
+            ((TS.TagComment _str):rest) ->
+              go stack rest
+
+            -- When we find an open tag, like `<div>`, prepend it
+            -- and continue through the rest of the tags while
+            -- keeping a separate stack of what elements a given
+            -- tag is currently "inside"
+            (tag@(TS.TagOpen name _attrs):rest) ->
+              tag : go (S.insert name stack) rest
+
+            -- When we find a closing tag, like `</div>`, prepend it
+            -- it and continue through the rest of the tags, making
+            -- sure to remove it from our stack of currently opened
+            -- elements
+            (tag@(TS.TagClose name):rest) ->
+              tag : go (S.delete name stack) rest
+
+            -- When a text/string tag is encountered, if it has
+            -- significant whitespace that should be preserved,
+            -- then prepend it without change; otherwise, clean up
+            -- the whitespace, and prepend it
+            (tag@(TS.TagText _str):rest)
               | hasSignificantWhitespace stack -> tag : go stack rest
-              | hasTextContent stack -> fmap cleanTabsNewLines tag : go stack rest
-              | otherwise -> fmap cleanAll tag : go stack rest
-            (tag:rest) -> tag : go stack rest
+              | otherwise -> fmap cleanWhitespace tag : go stack rest
+
+            -- If none of the above match, then this is unexpected,
+            -- so we should prepend the tag without change
+            (tag:rest) ->
+              tag : go stack rest
 
     -- Whitespace-sensitive content that shouldn't be compressed
     hasSignificantWhitespace :: S.Set String -> Bool
     hasSignificantWhitespace stack =
       any (`S.member` stack) content
       where
-        content = [ "pre", "script", "textarea" ]
+        content = [ "pre", "textarea" ]
 
-    -- Elements that can hold text content and should
-    -- hold on to leading and trailing whitespace
-    hasTextContent :: S.Set String -> Bool
-    hasTextContent stack = any (`S.member` stack) content
+    cleanWhitespace :: String -> String
+    cleanWhitespace " " = " "
+    cleanWhitespace str = cleanWS str (clean str)
       where
-        content =
-          [ "a", "abbr", "b", "bdi", "bdo", "blockquote", "button", "cite"
-          , "code", "del", "dfn", "em", "figcaption", "h1", "h2", "h3", "h4"
-          , "h5", "h6", "i", "img", "input", "ins", "kbd", "label", "li", "mark"
-          , "math", "noscript", "object", "p", "picture", "q", "rp"
-          , "rt", "ruby", "s", "samp", "select", "small", "span", "strong"
-          , "sub", "sup", "svg", "td", "textarea", "time", "var", "wbr"
-          ]
+        -- Strips out newlines, spaces, etc
+        clean :: String -> String
+        clean = unwords . words
 
-    -- Replace tab characters with spaces
-    replaceTab :: Char -> Char
-    replaceTab '\t' = ' '
-    replaceTab s    = s
+        -- Clean the whitespace while preserving
+        -- single leading and trailing whitespace
+        -- characters when it makes sense
+        cleanWS :: String -> String -> String
+        cleanWS _originalStr "" = ""
+        cleanWS originalStr trimmedStr =
+          keepSpaceWhen head originalStr ++
+            trimmedStr ++
+            keepSpaceWhen last originalStr
 
-    -- Replace newline characters with spaces
-    replaceNewLine :: Char -> Char
-    replaceNewLine '\n' = ' '
-    replaceNewLine s    = s
-
-    -- Remove the following:
-    --   '\f' (form feed)
-    --   '\n' (newline [line feed])
-    --   '\r' (carriage return)
-    --   '\v' (vertical tab)
-    rmNewLines :: String -> String
-    rmNewLines = filter (not . (`elem` ("\f\n\r\v" :: String)))
-
-    cleanTabsNewLines :: String -> String
-    cleanTabsNewLines = fmap (replaceNewLine . replaceTab)
-
-    cleanAll :: String -> String
-    cleanAll = rmNewLines . trim . fmap replaceTab
+        -- Determine when to keep a space based on a
+        -- string and a function that returns a character
+        -- within that string
+        keepSpaceWhen :: ([Char] -> Char) -> String -> String
+        keepSpaceWhen _fn ""  = ""
+        keepSpaceWhen fn originalStr
+          | (isSpace . fn) originalStr = " "
+          | otherwise = ""
 
 -- https://rebeccaskinner.net/posts/2021-01-31-hakyll-syntax-highlighting.html
 --makeStyle :: Style -> Compiler (Item String)
