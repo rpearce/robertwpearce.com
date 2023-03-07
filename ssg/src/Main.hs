@@ -1,33 +1,27 @@
-{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE BlockArguments    #-}
+{-# LANGUAGE LambdaCase        #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE ViewPatterns      #-}
 
-import Control.Monad (forM_)
-import Data.Char (isSpace)
-import Data.List (isPrefixOf, isSuffixOf)
-import Data.Maybe (fromMaybe)
-import qualified Data.Set as S
+-- import Debug.Trace as D
+import qualified Control.Monad as Monad
+import qualified Data.List as List
+import qualified Data.Maybe as Maybe
+import qualified Data.Set as Set
 import qualified Data.Text as T
 import qualified Data.Text.Slugger as Slugger
 import Hakyll
-import System.FilePath (takeFileName)
+import qualified System.FilePath as FilePath
 import qualified Text.HTML.TagSoup as TS
-import Text.Pandoc
-  ( Extension (Ext_fenced_code_attributes, Ext_footnotes, Ext_gfm_auto_identifiers, Ext_implicit_header_references, Ext_smart),
-    Extensions,
-    ReaderOptions,
-    WriterOptions (writerHighlightStyle),
-    extensionsFromList,
-    githubMarkdownExtensions,
-    readerExtensions,
-    writerExtensions,
-  )
-import Text.Pandoc.Highlighting (Style, breezeDark)
+import qualified Text.Pandoc as Pandoc
+import qualified Text.Pandoc.Definition as PandocDef
+import qualified Text.Pandoc.Walk as PandocWalk
 
 --------------------------------------------------------------------------------
 -- PERSONALIZATION
 
 mySiteName :: String
-mySiteName = "Robert Pearce | Software Engineer"
+mySiteName = "Robert Pearce"
 
 mySiteRoot :: String
 mySiteRoot = "https://robertwpearce.com"
@@ -65,25 +59,24 @@ config =
   where
     ignoreFile' path
       | ".DS_Store" == fileName = True
-      | "."    `isPrefixOf` fileName = False
-      | "#"    `isPrefixOf` fileName = True
-      | "~"    `isSuffixOf` fileName = True
-      | ".swp" `isSuffixOf` fileName = True
+      | "."    `List.isPrefixOf` fileName = False
+      | "#"    `List.isPrefixOf` fileName = True
+      | "~"    `List.isSuffixOf` fileName = True
+      | ".swp" `List.isSuffixOf` fileName = True
       | otherwise = False
       where
-        fileName = takeFileName path
+        fileName = FilePath.takeFileName path
 
 --------------------------------------------------------------------------------
 -- BUILD
 
 main :: IO ()
 main = hakyllWith config $ do
-  forM_
+  Monad.forM_
     [ "CNAME"
     , "robots.txt"
     , "_config.yml"
     , ".well-known/*"
-    , "js/build/*"
     , "images/*"
     , "fonts/*"
     , "pdfs/*"
@@ -96,13 +89,13 @@ main = hakyllWith config $ do
     route idRoute
     compile compressCssCompiler
 
-  match "posts/*" $ do
+  match "notes/*" $ do
     let ctx = constField "type" "article" <> postCtx
     route $ metadataRoute titleRoute
     compile $
       pandocCompilerCustom
+        >>= loadAndApplyTemplate "templates/note.html" ctx
         >>= saveSnapshot "content"
-        >>= loadAndApplyTemplate "templates/post.html" ctx
         >>= loadAndApplyTemplate "templates/default.html" ctx
         >>= compressHtmlCompiler
 
@@ -112,18 +105,18 @@ main = hakyllWith config $ do
     compile $
       pandocCompilerCustom
         >>= saveSnapshot "content"
-        >>= loadAndApplyTemplate "templates/info.html" ctx
         >>= loadAndApplyTemplate "templates/default.html" ctx
         >>= compressHtmlCompiler
 
   match "index.html" $ do
     route idRoute
     compile $ do
-      posts <- recentFirst =<< loadAll "posts/*"
+      posts <- recentFirst =<< loadAll "notes/*"
 
       let indexCtx =
             listField "posts" postCtx (return posts)
               <> constField "root" mySiteRoot
+              <> constField "feedTitle" myFeedTitle
               <> constField "siteName" mySiteName
               <> defaultContext
 
@@ -137,7 +130,7 @@ main = hakyllWith config $ do
   create ["sitemap.xml"] $ do
     route idRoute
     compile $ do
-      posts   <- recentFirst =<< loadAll "posts/*"
+      posts   <- recentFirst =<< loadAll "notes/*"
       nzPages <- loadAll "new-zealand/**"
 
       let pages = posts <> nzPages
@@ -167,9 +160,9 @@ compressHtml :: String -> String
 compressHtml = withTagList compressTags
 
 compressTags :: [TS.Tag String] -> [TS.Tag String]
-compressTags = go S.empty
+compressTags = go Set.empty
   where
-    go :: S.Set String -> [TS.Tag String] -> [TS.Tag String]
+    go :: Set.Set String -> [TS.Tag String] -> [TS.Tag String]
     go stack =
       \case [] -> []
             -- Removes comments by not prepending the tag
@@ -182,14 +175,14 @@ compressTags = go S.empty
             -- keeping a separate stack of what elements a given
             -- tag is currently "inside"
             (tag@(TS.TagOpen name _attrs):rest) ->
-              tag : go (S.insert name stack) rest
+              tag : go (Set.insert name stack) rest
 
             -- When we find a closing tag, like `</div>`, prepend it
             -- it and continue through the rest of the tags, making
             -- sure to remove it from our stack of currently opened
             -- elements
             (tag@(TS.TagClose name):rest) ->
-              tag : go (S.delete name stack) rest
+              tag : go (Set.delete name stack) rest
 
             -- When a text/string tag is encountered, if it has
             -- significant whitespace that should be preserved,
@@ -205,29 +198,51 @@ compressTags = go S.empty
               tag : go stack rest
 
     -- Whitespace-sensitive content that shouldn't be compressed
-    hasSignificantWhitespace :: S.Set String -> Bool
+    hasSignificantWhitespace :: Set.Set String -> Bool
     hasSignificantWhitespace stack =
-      any (`S.member` stack) content
+      any (`Set.member` stack) content
       where
         content = [ "pre", "textarea" ]
+        --content = [ "pre", "script", "textarea" ] -- @TODO: make `script` optional
 
     cleanWhitespace :: String -> String
     cleanWhitespace " " = " "
-    cleanWhitespace str = cleanWS str (clean str)
+    cleanWhitespace str = cleanSurroundingWhitespace str (cleanHtmlWhitespace str)
       where
+        -- Tests for the following:
+        --   ' '  (space)
+        --   '\f' (form feed)
+        --   '\n' (newline [line feed])
+        --   '\r' (carriage return)
+        --   '\v' (vertical tab)
+        isSpaceOrNewLineIsh :: Char -> Bool
+        isSpaceOrNewLineIsh = (`elem` (" \f\n\r\v" :: String))
+
         -- Strips out newlines, spaces, etc
-        clean :: String -> String
-        clean = unwords . words
+        cleanHtmlWhitespace :: String -> String
+        cleanHtmlWhitespace = unwords . words'
+          where
+            -- Alternate `words` function that uses a different
+            -- predicate than `isSpace` in order to avoid dropping
+            -- certain types of spaces.
+            -- https://hackage.haskell.org/package/base-4.17.0.0/docs/src/Data.OldList.html#words
+            words' :: String -> [String]
+            words' s = case dropWhile isSpaceOrNewLineIsh s of
+              "" -> []
+              s' -> w : words' s''
+                    where (w, s'') =
+                           break isSpaceOrNewLineIsh s'
 
         -- Clean the whitespace while preserving
         -- single leading and trailing whitespace
         -- characters when it makes sense
-        cleanWS :: String -> String -> String
-        cleanWS _originalStr "" = ""
-        cleanWS originalStr trimmedStr =
-          keepSpaceWhen head originalStr ++
-            trimmedStr ++
-            keepSpaceWhen last originalStr
+        cleanSurroundingWhitespace :: String -> String -> String
+        cleanSurroundingWhitespace _originalStr "" = ""
+        cleanSurroundingWhitespace originalStr trimmedStr =
+          leadingStr ++ trimmedStr ++ trailingStr
+          where
+            leadingStr  = keepSpaceWhen head originalStr
+            trailingStr = keepSpaceWhen last originalStr
 
         -- Determine when to keep a space based on a
         -- string and a function that returns a character
@@ -235,13 +250,8 @@ compressTags = go S.empty
         keepSpaceWhen :: ([Char] -> Char) -> String -> String
         keepSpaceWhen _fn ""  = ""
         keepSpaceWhen fn originalStr
-          | (isSpace . fn) originalStr = " "
+          | (isSpaceOrNewLineIsh . fn) originalStr = " "
           | otherwise = ""
-
--- https://rebeccaskinner.net/posts/2021-01-31-hakyll-syntax-highlighting.html
---makeStyle :: Style -> Compiler (Item String)
---makeStyle =
---  makeItem . compressCss . styleToCss
 
 --------------------------------------------------------------------------------
 -- CONTEXT
@@ -255,6 +265,7 @@ feedCtx =
 postCtx :: Context String
 postCtx =
   constField "root" mySiteRoot
+    <> constField "feedTitle" myFeedTitle
     <> constField "siteName" mySiteName
     <> dateField "date" "%Y-%m-%d"
     <> defaultContext
@@ -276,7 +287,7 @@ replaceTitleAmp =
 
 safeTitle :: Metadata -> String
 safeTitle =
-  fromMaybe "no title" . lookupString "title"
+  Maybe.fromMaybe "no title" . lookupString "title"
 
 updatedTitle :: Item a -> Compiler String
 updatedTitle =
@@ -287,35 +298,56 @@ updatedTitle =
 
 pandocCompilerCustom :: Compiler (Item String)
 pandocCompilerCustom =
-  pandocCompilerWith pandocReaderOpts pandocWriterOpts
+  pandocCompilerWithTransformM
+    pandocReaderOpts
+    pandocWriterOpts
+    customHighlight
 
-pandocExtensionsCustom :: Extensions
+-- https://tony-zorman.com/posts/pygmentising-hakyll.html
+customHighlight :: PandocDef.Pandoc -> Compiler PandocDef.Pandoc
+customHighlight =
+  PandocWalk.walkM \case
+    PandocDef.CodeBlock (_, Maybe.listToMaybe -> mbLang, _) (T.unpack -> body) -> do
+      let lang = T.unpack (Maybe.fromMaybe "text" mbLang)
+      PandocDef.RawBlock "html" . T.pack <$> callHighlighter lang body
+    block -> pure block
+  where
+    -- https://github.com/alecthomas/chroma
+    callHighlighter :: String -> String -> Compiler String
+    callHighlighter lang =
+      unixFilter "chroma"
+        [ "--html"
+        , "--html-only"
+        , "--lexer=" ++ lang
+        ]
+
+pandocExtensionsCustom :: Pandoc.Extensions
 pandocExtensionsCustom =
-  githubMarkdownExtensions
-    <> extensionsFromList
-      [ Ext_fenced_code_attributes
-      , Ext_gfm_auto_identifiers
-      , Ext_implicit_header_references
-      , Ext_smart
-      , Ext_footnotes
+  Pandoc.githubMarkdownExtensions
+    <> Pandoc.extensionsFromList
+      [ Pandoc.Ext_fenced_code_attributes
+      , Pandoc.Ext_gfm_auto_identifiers
+      , Pandoc.Ext_implicit_header_references
+      , Pandoc.Ext_smart
+      , Pandoc.Ext_footnotes
       ]
 
-pandocReaderOpts :: ReaderOptions
+pandocReaderOpts :: Pandoc.ReaderOptions
 pandocReaderOpts =
   defaultHakyllReaderOptions
-    { readerExtensions = pandocExtensionsCustom
+    { Pandoc.readerExtensions = pandocExtensionsCustom
     }
 
-pandocWriterOpts :: WriterOptions
+pandocWriterOpts :: Pandoc.WriterOptions
 pandocWriterOpts =
   defaultHakyllWriterOptions
-    { writerExtensions = pandocExtensionsCustom
-    , writerHighlightStyle = Just pandocHighlightStyle
+    { Pandoc.writerExtensions = pandocExtensionsCustom
+    --, writerHighlightStyle = Just pandocHighlightStyle
     }
 
-pandocHighlightStyle :: Style
-pandocHighlightStyle =
-  breezeDark -- https://hackage.haskell.org/package/pandoc/docs/Text-Pandoc-Highlighting.html
+--pandocHighlightStyle :: Style
+--pandocHighlightStyle =
+--  pygments -- https://hackage.haskell.org/package/pandoc/docs/Text-Pandoc-Highlighting.html
 
 --------------------------------------------------------------------------------
 -- FEEDS
@@ -330,7 +362,7 @@ feedCompiler :: FeedRenderer -> Compiler (Item String)
 feedCompiler renderer =
   renderer feedConfiguration feedCtx
     =<< recentFirst
-    =<< loadAllSnapshots "posts/*" "content"
+    =<< loadAllSnapshots "notes/*" "content"
 
 feedConfiguration :: FeedConfiguration
 feedConfiguration =
@@ -347,7 +379,7 @@ feedConfiguration =
 
 getTitleFromMeta :: Metadata -> String
 getTitleFromMeta =
-  fromMaybe "no title" . lookupString "title"
+  Maybe.fromMaybe "no title" . lookupString "title"
 
 fileNameFromTitle :: Metadata -> FilePath
 fileNameFromTitle =

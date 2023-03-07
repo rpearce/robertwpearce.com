@@ -1,0 +1,66 @@
+<header>
+
+  <nav>
+    <div class="nav-skip">
+      <a href="#content">Skip to content</a>
+    </div>
+    <a aria-label="Home" class="nav-home" href="./">~</a>
+    <span>/</span>
+    <!--<span class="nav-subitem">$title$</span>-->
+    <!--<label for="path-level-1">
+      <span class="sr-only">File or folder path</span>
+      <span>~</span>
+      <span>/</span>
+    </label>
+    <select data-select-nav="" id="path-level-1">
+      <option value="./">(home)</option>
+      <option value="./notes/index.html">Notes</option>
+      <option value="./new-zealand/index.html">New Zealand</option>
+    </select>-->
+  </nav>
+
+  $partial("templates/header_extra.html")$
+
+</header>
+
+<main id="content">
+
+  <header data-area="heading">
+    <h1>$title$</h1>
+  </header>
+
+  <section data-area="meta">
+    <h2>Info</h2>
+    <table data-type="cols-y">
+      <tbody>
+
+        $if(desc)$
+        <tr>
+          <th>Summary</th>
+          <td>$desc$</td>
+        </tr>
+        $endif$
+
+        $if(date)$
+        <tr>
+          <th>Shared</th>
+          <td>$date$</td>
+        </tr>
+        $endif$
+
+        $if(updated)$
+        <tr>
+          <th>Revised</th>
+          <td>$updated$</td>
+        </tr>
+        $endif$
+
+      </tbody>
+    </table>
+  </section>
+
+  <section data-area="note">
+    $body$
+  </section>
+
+</main>
