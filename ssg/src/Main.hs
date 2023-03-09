@@ -9,7 +9,7 @@ import qualified Data.List as List
 import qualified Data.Maybe as Maybe
 import qualified Data.Text as T
 import qualified Data.Text.Slugger as Slugger
-import Hakyll
+import qualified Hakyll as H
 import qualified System.FilePath as FilePath
 import qualified Text.HTML.TagSoup.Compressor as TSCompressor
 import qualified Text.Pandoc as Pandoc
@@ -44,16 +44,16 @@ myFeedRoot = mySiteRoot
 -- CONFIG
 
 -- Default configuration: https://github.com/jaspervdj/hakyll/blob/cd74877d41f41c4fba27768f84255e797748a31a/lib/Hakyll/Core/Configuration.hs#L101-L125
-config :: Configuration
+config :: H.Configuration
 config =
-  defaultConfiguration
-    { destinationDirectory = "dist"
-    , ignoreFile = ignoreFile'
-    , previewHost = "127.0.0.1"
-    , previewPort = 8000
-    , providerDirectory = "src"
-    , storeDirectory = "ssg/_cache"
-    , tmpDirectory = "ssg/_tmp"
+  H.defaultConfiguration
+    { H.destinationDirectory = "dist"
+    , H.ignoreFile = ignoreFile'
+    , H.previewHost = "127.0.0.1"
+    , H.previewPort = 8000
+    , H.providerDirectory = "src"
+    , H.storeDirectory = "ssg/_cache"
+    , H.tmpDirectory = "ssg/_tmp"
     }
   where
     ignoreFile' path
@@ -70,7 +70,7 @@ config =
 -- BUILD
 
 main :: IO ()
-main = hakyllWith config $ do
+main = H.hakyllWith config $ do
   Monad.forM_
     [ "CNAME"
     , "robots.txt"
@@ -80,136 +80,136 @@ main = hakyllWith config $ do
     , "fonts/*"
     , "pdfs/*"
     ]
-    $ \f -> match f $ do
-      route idRoute
-      compile copyFileCompiler
+    $ \f -> H.match f $ do
+      H.route H.idRoute
+      H.compile H.copyFileCompiler
 
-  match "css/*" $ do
-    route idRoute
-    compile compressCssCompiler
+  H.match "css/*" $ do
+    H.route H.idRoute
+    H.compile H.compressCssCompiler
 
-  match "notes/*" $ do
-    let ctx = constField "type" "article" <> postCtx
-    route $ metadataRoute titleRoute
-    compile $
+  H.match "notes/*" $ do
+    let ctx = H.constField "type" "article" <> postCtx
+    H.route $ H.metadataRoute titleRoute
+    H.compile $
       pandocCompilerCustom
-        >>= loadAndApplyTemplate "templates/note.html" ctx
-        >>= saveSnapshot "content"
-        >>= loadAndApplyTemplate "templates/default.html" ctx
+        >>= H.loadAndApplyTemplate "templates/note.html" ctx
+        >>= H.saveSnapshot "content"
+        >>= H.loadAndApplyTemplate "templates/default.html" ctx
         >>= compressHtmlCompiler
 
-  match "new-zealand/**" $ do
-    let ctx = constField "type" "article" <> postCtx
-    route $ setExtension "html"
-    compile $
+  H.match "new-zealand/**" $ do
+    let ctx = H.constField "type" "article" <> postCtx
+    H.route $ H.setExtension "html"
+    H.compile $
       pandocCompilerCustom
-        >>= saveSnapshot "content"
-        >>= loadAndApplyTemplate "templates/default.html" ctx
+        >>= H.saveSnapshot "content"
+        >>= H.loadAndApplyTemplate "templates/default.html" ctx
         >>= compressHtmlCompiler
 
-  match "index.html" $ do
-    route idRoute
-    compile $ do
-      posts <- recentFirst =<< loadAll "notes/*"
+  H.match "index.html" $ do
+    H.route H.idRoute
+    H.compile $ do
+      posts <- H.recentFirst =<< H.loadAll "notes/*"
 
       let indexCtx =
-            listField "posts" postCtx (return posts)
-              <> constField "root" mySiteRoot
-              <> constField "feedTitle" myFeedTitle
-              <> constField "siteName" mySiteName
-              <> defaultContext
+            H.listField "posts" postCtx (return posts)
+              <> H.constField "root" mySiteRoot
+              <> H.constField "feedTitle" myFeedTitle
+              <> H.constField "siteName" mySiteName
+              <> H.defaultContext
 
-      getResourceBody
-        >>= applyAsTemplate indexCtx
-        >>= loadAndApplyTemplate "templates/default.html" indexCtx
+      H.getResourceBody
+        >>= H.applyAsTemplate indexCtx
+        >>= H.loadAndApplyTemplate "templates/default.html" indexCtx
         >>= compressHtmlCompiler
 
-  match "templates/*" $ compile templateBodyCompiler
+  H.match "templates/*" $ H.compile H.templateBodyCompiler
 
-  create ["sitemap.xml"] $ do
-    route idRoute
-    compile $ do
-      posts   <- recentFirst =<< loadAll "notes/*"
-      nzPages <- loadAll "new-zealand/**"
+  H.create ["sitemap.xml"] $ do
+    H.route H.idRoute
+    H.compile $ do
+      posts   <- H.recentFirst =<< H.loadAll "notes/*"
+      nzPages <- H.loadAll "new-zealand/**"
 
       let pages = posts <> nzPages
           sitemapCtx =
-            constField "root" mySiteRoot
-              <> constField "siteName" mySiteName
-              <> listField "pages" postCtx (return pages)
+            H.constField "root" mySiteRoot
+              <> H.constField "siteName" mySiteName
+              <> H.listField "pages" postCtx (return pages)
 
-      makeItem ("" :: String)
-        >>= loadAndApplyTemplate "templates/sitemap.xml" sitemapCtx
+      H.makeItem ("" :: String)
+        >>= H.loadAndApplyTemplate "templates/sitemap.xml" sitemapCtx
 
-  create ["rss.xml"] $ do
-    route   idRoute
-    compile (feedCompiler renderRss)
+  H.create ["rss.xml"] $ do
+    H.route   H.idRoute
+    H.compile (feedCompiler H.renderRss)
 
-  create ["atom.xml"] $ do
-    route   idRoute
-    compile (feedCompiler renderAtom)
+  H.create ["atom.xml"] $ do
+    H.route   H.idRoute
+    H.compile (feedCompiler H.renderAtom)
 
 --------------------------------------------------------------------------------
 -- COMPILER HELPERS
 
-compressHtmlCompiler :: Item String -> Compiler (Item String)
+compressHtmlCompiler :: H.Item String -> H.Compiler (H.Item String)
 compressHtmlCompiler = pure . fmap compressHtml
 
 compressHtml :: String -> String
-compressHtml = withTagList TSCompressor.compress
+compressHtml = H.withTagList TSCompressor.compress
 
 --------------------------------------------------------------------------------
 -- CONTEXT
 
-feedCtx :: Context String
+feedCtx :: H.Context String
 feedCtx =
   titleCtx
     <> postCtx
-    <> bodyField "description"
+    <> H.bodyField "description"
 
-postCtx :: Context String
+postCtx :: H.Context String
 postCtx =
-  constField "root" mySiteRoot
-    <> constField "feedTitle" myFeedTitle
-    <> constField "siteName" mySiteName
-    <> dateField "date" "%Y-%m-%d"
-    <> defaultContext
+  H.constField "root" mySiteRoot
+    <> H.constField "feedTitle" myFeedTitle
+    <> H.constField "siteName" mySiteName
+    <> H.dateField "date" "%Y-%m-%d"
+    <> H.defaultContext
 
-titleCtx :: Context String
+titleCtx :: H.Context String
 titleCtx =
-  field "title" updatedTitle
+  H.field "title" updatedTitle
 
 --------------------------------------------------------------------------------
 -- TITLE HELPERS
 
 replaceAmp :: String -> String
 replaceAmp =
-  replaceAll "&" (const "&amp;")
+  H.replaceAll "&" (const "&amp;")
 
-replaceTitleAmp :: Metadata -> String
+replaceTitleAmp :: H.Metadata -> String
 replaceTitleAmp =
   replaceAmp . safeTitle
 
-safeTitle :: Metadata -> String
+safeTitle :: H.Metadata -> String
 safeTitle =
-  Maybe.fromMaybe "no title" . lookupString "title"
+  Maybe.fromMaybe "no title" . H.lookupString "title"
 
-updatedTitle :: Item a -> Compiler String
+updatedTitle :: H.Item a -> H.Compiler String
 updatedTitle =
-  fmap replaceTitleAmp . getMetadata . itemIdentifier
+  fmap replaceTitleAmp . H.getMetadata . H.itemIdentifier
 
 --------------------------------------------------------------------------------
 -- PANDOC
 
-pandocCompilerCustom :: Compiler (Item String)
+pandocCompilerCustom :: H.Compiler (H.Item String)
 pandocCompilerCustom =
-  pandocCompilerWithTransformM
+  H.pandocCompilerWithTransformM
     pandocReaderOpts
     pandocWriterOpts
     customHighlight
 
 -- https://tony-zorman.com/posts/pygmentising-hakyll.html
-customHighlight :: PandocDef.Pandoc -> Compiler PandocDef.Pandoc
+customHighlight :: PandocDef.Pandoc -> H.Compiler PandocDef.Pandoc
 customHighlight =
   PandocWalk.walkM \case
     PandocDef.CodeBlock (_, Maybe.listToMaybe -> mbLang, _) (T.unpack -> body) -> do
@@ -218,9 +218,9 @@ customHighlight =
     block -> pure block
   where
     -- https://github.com/alecthomas/chroma
-    callHighlighter :: String -> String -> Compiler String
+    callHighlighter :: String -> String -> H.Compiler String
     callHighlighter lang =
-      unixFilter "chroma"
+      H.unixFilter "chroma"
         [ "--html"
         , "--html-only"
         , "--lexer=" ++ lang
@@ -239,13 +239,13 @@ pandocExtensionsCustom =
 
 pandocReaderOpts :: Pandoc.ReaderOptions
 pandocReaderOpts =
-  defaultHakyllReaderOptions
+  H.defaultHakyllReaderOptions
     { Pandoc.readerExtensions = pandocExtensionsCustom
     }
 
 pandocWriterOpts :: Pandoc.WriterOptions
 pandocWriterOpts =
-  defaultHakyllWriterOptions
+  H.defaultHakyllWriterOptions
     { Pandoc.writerExtensions = pandocExtensionsCustom
     --, writerHighlightStyle = Just pandocHighlightStyle
     }
@@ -258,38 +258,38 @@ pandocWriterOpts =
 -- FEEDS
 
 type FeedRenderer
-  = FeedConfiguration
-  -> Context String
-  -> [Item String]
-  ->  Compiler (Item String)
+  = H.FeedConfiguration
+  -> H.Context String
+  -> [H.Item String]
+  ->  H.Compiler (H.Item String)
 
-feedCompiler :: FeedRenderer -> Compiler (Item String)
+feedCompiler :: FeedRenderer -> H.Compiler (H.Item String)
 feedCompiler renderer =
   renderer feedConfiguration feedCtx
-    =<< recentFirst
-    =<< loadAllSnapshots "notes/*" "content"
+    =<< H.recentFirst
+    =<< H.loadAllSnapshots "notes/*" "content"
 
-feedConfiguration :: FeedConfiguration
+feedConfiguration :: H.FeedConfiguration
 feedConfiguration =
-  FeedConfiguration
-    { feedTitle = myFeedTitle
-    , feedDescription = myFeedDescription
-    , feedAuthorName = myFeedAuthorName
-    , feedAuthorEmail = myFeedAuthorEmail
-    , feedRoot = myFeedRoot
+  H.FeedConfiguration
+    { H.feedTitle = myFeedTitle
+    , H.feedDescription = myFeedDescription
+    , H.feedAuthorName = myFeedAuthorName
+    , H.feedAuthorEmail = myFeedAuthorEmail
+    , H.feedRoot = myFeedRoot
     }
 
 --------------------------------------------------------------------------------
 -- CUSTOM ROUTE
 
-getTitleFromMeta :: Metadata -> String
+getTitleFromMeta :: H.Metadata -> String
 getTitleFromMeta =
-  Maybe.fromMaybe "no title" . lookupString "title"
+  Maybe.fromMaybe "no title" . H.lookupString "title"
 
-fileNameFromTitle :: Metadata -> FilePath
+fileNameFromTitle :: H.Metadata -> FilePath
 fileNameFromTitle =
   T.unpack . (`T.append` ".html") . Slugger.toSlug . T.pack . getTitleFromMeta
 
-titleRoute :: Metadata -> Routes
+titleRoute :: H.Metadata -> H.Routes
 titleRoute =
-  constRoute . fileNameFromTitle
+  H.constRoute . fileNameFromTitle
