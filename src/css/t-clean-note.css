@@ -69,6 +69,10 @@ blockquote {
  * Code
  */
 
+code {
+  font-family: var(--type-family-body);
+}
+
 code,
 pre.chroma {
   font-feature-settings: normal;
