@@ -57,7 +57,17 @@
           prefFont: localStorage.getItem('prefFont') || 'monospace',
           setFont: (family) => {
             localStorage.setItem('prefFont', family);
-            document.querySelector(':root').style.setProperty('--type-family-body', family+',monospace');
+
+            const rootStyle = document.querySelector(':root').style;
+            rootStyle.setProperty('--type-family-body', family+',monospace');
+
+            /* Remove when https://github.com/googlefonts/spacemono/pull/2 is resolved */
+            if (family === 'Space Mono') {
+              rootStyle.setProperty('font-feature-settings', '"liga" 0');
+            } else {
+              rootStyle.removeProperty('font-feature-settings');
+            }
+
             return window.site._fetchFont(family);
           },
           prefTheme: localStorage.getItem('prefTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'clean-night' : 'clean-day'),
