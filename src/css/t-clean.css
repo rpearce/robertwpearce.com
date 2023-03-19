@@ -57,6 +57,11 @@ body[data-theme="clean-day"] {
   --icon-select: var(--icon-select-day);
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+}
+
 /* role="banner" */
 body > header {
   align-items: center;
@@ -76,6 +81,7 @@ body > footer {
   background-color: rgb(var(--color-bg-content));
   border-top: 1px solid rgb(var(--color-border-content));
   display: flex;
+  margin-top: auto;
   padding: 2rem var(--padding-container);
   justify-content: center;
 }

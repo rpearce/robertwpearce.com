@@ -214,7 +214,7 @@ customHighlight =
   PandocWalk.walkM \case
     PandocDef.CodeBlock (_, Maybe.listToMaybe -> mbLang, _) (T.unpack -> body) -> do
       let lang = T.unpack (Maybe.fromMaybe "text" mbLang)
-      PandocDef.RawBlock "html" . T.pack <$> callHighlighter lang body
+      PandocDef.RawBlock "html" . T.pack . withWrapElement <$> callHighlighter lang body
     block -> pure block
   where
     -- https://github.com/alecthomas/chroma
@@ -223,8 +223,14 @@ customHighlight =
       H.unixFilter "chroma"
         [ "--html"
         , "--html-only"
+        , "--html-prefix=pl-"
         , "--lexer=" ++ lang
         ]
+
+    -- Turning withWrapElement effectively into `id` until
+    -- I need to wrap `<pre>`s in another element
+    withWrapElement :: String -> String
+    withWrapElement html = html -- "<div class=\"code-block\">" ++ html ++ "</div>"
 
 pandocExtensionsCustom :: Pandoc.Extensions
 pandocExtensionsCustom =
