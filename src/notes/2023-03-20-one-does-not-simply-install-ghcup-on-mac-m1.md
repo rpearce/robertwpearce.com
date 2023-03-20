@@ -33,9 +33,9 @@ While I will use it for something else later in this guide, I could not get
 GHCup through its interface conflicted with the Homebrew install. Instead, I
 will use the installer found on [the GHCup page](https://www.haskell.org/ghcup/).
 
-## The library I'll try to build
+## The library I tried to build
 
-The example library I'll try building today is my URI slug library,
+The example library I tried building was my URI slug library,
 [slugger](https://github.com/rpearce/slugger).
 
 ## Installing GHCup
