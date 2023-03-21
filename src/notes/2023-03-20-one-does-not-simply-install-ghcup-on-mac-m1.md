@@ -4,7 +4,7 @@ authorTwitter: "@RobertWPearce"
 desc: "Using Haskell through Nix or Docker might be easier paths on macOS, but this article should help if those options aren't available."
 keywords: "haskell, ghcup, macos m1"
 title: "One does not simply use GHCup on macOS M1"
-updated: "2023-03-22T00:25:00Z"
+updated: "2023-03-22T11:51:00Z"
 ---
 
 ## Intro
@@ -159,6 +159,10 @@ I tried `llvm@10`, `llvm@11`, and `llvm@12`.
 None of those worked, either! Would `llvm@13` work? Maybe, maybe, maybe...
 
 ## Building slugger: failure #5 (GHC and LLVM)
+
+_Update: This section may not be necessary. I went back, disabled this option,
+and I'm able still able to build the library. I don't recall this being my
+experience the first time around, though._
 
 It seems none of these will work if `ghc` doesn't know to use LLVM.
 
