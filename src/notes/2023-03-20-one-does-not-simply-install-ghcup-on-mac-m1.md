@@ -4,6 +4,7 @@ authorTwitter: "@RobertWPearce"
 desc: "Using Haskell through Nix or Docker might be easier paths on macOS, but this article should help if those options aren't available."
 keywords: "haskell, ghcup, macos m1"
 title: "One does not simply use GHCup on macOS M1"
+updated: "2023-03-22T00:25:00Z"
 ---
 
 ## Intro
@@ -142,6 +143,9 @@ didn't.
 
 > On Darwin M1 you might also need a working llvm installed (e.g. via brew) and
 > have the toolchain exposed in the PATH.
+
+_Update: User bgamari on lobste.rs had a valuable insight into [why installing
+LLVM is recommended by GHCup](https://lobste.rs/s/cbl1yc/one_does_not_simply_use_ghcup_on_macos_m1#c_lcaxqm)._
 
 ## Building slugger: failures #2-4 (also LLVM)
 
