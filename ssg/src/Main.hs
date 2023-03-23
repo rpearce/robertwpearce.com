@@ -93,8 +93,8 @@ main = H.hakyllWith config $ do
     H.route $ H.metadataRoute titleRoute
     H.compile $
       pandocCompilerCustom
-        >>= H.loadAndApplyTemplate "templates/note.html" ctx
         >>= H.saveSnapshot "content"
+        >>= H.loadAndApplyTemplate "templates/note.html" ctx
         >>= H.loadAndApplyTemplate "templates/default.html" ctx
         >>= compressHtmlCompiler
 
