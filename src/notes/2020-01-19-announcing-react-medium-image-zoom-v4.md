@@ -4,7 +4,6 @@ authorTwitter: "@RobertWPearce"
 desc: "react-medium-image-zoom is an open source image zooming library based on medium.com's implementation of image zooming"
 keywords: "react, react-medium-image-zoom, image zoom, image, zoom, reactjs"
 title: "Announcing react-medium-image-zoom v4"
-updated: "2023-02-12T00:00:00Z"
 ---
 
 _2023-02-12 update: this article's content is valid for the v4, but it isn't

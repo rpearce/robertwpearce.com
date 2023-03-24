@@ -4,7 +4,6 @@ authorTwitter: "@RobertWPearce"
 desc: "Charleston, SC techpreneurs need to stop saying Silicon Harbor."
 keywords: "silicon harbor, charleston, charlestontech, charleston tech, south carolina tech"
 title: "Stop Saying Silicon Harbor"
-updated: "2023-02-12T18:00:00Z"
 ---
 
 Ever since [Nate DaPore](https://twitter.com/natedapore) allegedly coined the

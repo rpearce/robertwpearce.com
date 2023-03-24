@@ -89,7 +89,8 @@ main = H.hakyllWith config $ do
     H.compile H.compressCssCompiler
 
   H.match "notes/*" $ do
-    let ctx = H.constField "type" "article" <> postCtx
+    let ctx = H.constField "type" "article" <> H.modificationTimeField "updated" "%Y-%m-%d @ %H:%M %Z" <> postCtx
+
     H.route $ H.metadataRoute titleRoute
     H.compile $
       pandocCompilerCustom
@@ -164,6 +165,7 @@ compressHtml = H.withTagList TSCompressor.compress
 feedCtx :: H.Context String
 feedCtx =
   titleCtx
+    <> H.modificationTimeField "updated" "%Y-%m-%dT%H:%M:%SZ"
     <> postCtx
     <> H.bodyField "description"
 

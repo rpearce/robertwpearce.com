@@ -4,7 +4,6 @@ authorTwitter: "@RobertWPearce"
 desc: "Pay less attention to your device and more to those around you."
 keywords: "mobile devices, etiquette, advice, staring at phones"
 title: "Mobile Device Etiquette"
-updated: "2023-02-04T18:00:00Z"
 ---
 
 A friend and colleague of mine, [Jason

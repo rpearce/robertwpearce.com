@@ -8,7 +8,6 @@ keywords: "wanaka, albert town, hawea, lake hawea, glendhu bay, cardrona, cromwe
 photoCredit: "emilycouldmakethat"
 photoWebsite: "https://www.instagram.com/emilycouldmakethat"
 title: "Wanaka, Albert Town, Hawea, Glendhu Bay, Cardrona & Cromwell"
-updated: "2020-01-04T00:00:00Z"
 ---
 
 Things to do and see in and around Wanaka, Albert Town, Hawea, Glendhu Bay,

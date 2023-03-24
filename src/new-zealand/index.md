@@ -8,7 +8,6 @@ keywords: "new zealand, otago, things to do, places to see"
 photoCredit: "emilycouldmakethat"
 photoWebsite: "https://www.instagram.com/emilycouldmakethat"
 title: "New Zealand Information Index"
-updated: "2020-01-04T00:00:00Z"
 ---
 
 Things to do and see in New Zealand.

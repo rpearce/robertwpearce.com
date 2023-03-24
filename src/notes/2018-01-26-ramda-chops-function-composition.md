@@ -4,7 +4,6 @@ authorTwitter: "@RobertWPearce"
 desc: "Learn about function composition with ramda's compose function."
 keywords: "ramda, ramda.js, ramdajs, ramda tutorial, ramda compose, function composition, ramda fp"
 title: "Ramda Chops: Function Composition"
-updated: "2023-02-12T18:00:00Z"
 ---
 
 _Thanks to [@evilsoft](https://twitter.com/evilsoft) and

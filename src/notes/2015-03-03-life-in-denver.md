@@ -4,7 +4,6 @@ authorTwitter: "@RobertWPearce"
 desc: "An update from my experiences in Colorado."
 keywords: "colorado, denver, remote work, digital nomad, beer"
 title: "Life in Colorado"
-updated: "2023-02-04T18:00:00Z"
 ---
 
 One month ago, with an entire world to travel at my fingertips, I chose to

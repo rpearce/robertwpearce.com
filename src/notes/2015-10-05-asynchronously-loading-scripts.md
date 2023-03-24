@@ -4,7 +4,6 @@ authorTwitter: "@RobertWPearce"
 desc: "Beginner-friendly introduction to loading scripts on to a web page."
 keywords: "javascript, javascript tutorial, asynchronous scripts, website basics"
 title: "Asynchronously Loading Scripts"
-updated: "2023-02-04T18:00:00Z"
 ---
 
 _This article is intended for HTML & JavaScript beginners._
