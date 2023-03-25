@@ -4,6 +4,7 @@ authorTwitter: "@RobertWPearce"
 desc: "Using Haskell through Nix or Docker might be easier paths on macOS, but this article should help if those options aren't available."
 keywords: "haskell, ghcup, macos m1"
 title: "One does not simply use GHCup on macOS M1"
+updated: "2023-03-22T11:51:00Z"
 ---
 
 ## Intro

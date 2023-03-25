@@ -8,6 +8,7 @@ keywords: "dunedin, oamaru, the catlins, moeraki boulders, new zealand"
 photoCredit: "emilycouldmakethat"
 photoWebsite: "https://www.instagram.com/emilycouldmakethat"
 title: "Dunedin, Oamaru, The Catlins"
+updated: "2020-01-04T00:00:00Z"
 ---
 
 Things to do and see in and around Dunedin, New Zealand.

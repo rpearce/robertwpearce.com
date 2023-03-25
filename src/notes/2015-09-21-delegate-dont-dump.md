@@ -4,6 +4,7 @@ authorTwitter: "@RobertWPearce"
 desc: "On being the hinge between someone with a question and someone else with a solution."
 keywords: "leadership, leadership advice, teamwork, delegate, hinge"
 title: "Delegate; Don't Dump"
+updated: "2023-02-04T18:00:00Z"
 ---
 
 A fellow employee, Margaret, contacts you and asks, &quot;Do you know anything

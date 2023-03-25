@@ -8,6 +8,7 @@ keywords: "auckland, new zealand, things to do, hikes, coworking, restaurants"
 photoCredit: ""
 photoWebsite: ""
 title: "Auckland, New Zealand"
+updated: "2020-01-04T00:00:00Z"
 ---
 
 Things to do and see in New Zealand's Auckland region.

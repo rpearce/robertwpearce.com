@@ -4,6 +4,7 @@ authorTwitter: "@RobertWPearce"
 desc: "A quick-dive in to RiotJS, with examples."
 keywords: "riotjs, riot.js, riotjs tutorial, tutorial, javascript"
 title: "RiotJS Example"
+updated: "2023-02-04T18:00:00Z"
 ---
 
 When I look at any of the myriad JavaScript UI libraries out there, I now ask

@@ -4,6 +4,7 @@ authorTwitter: "@RobertWPearce"
 desc: "Selling sucks, but you need to get your project out in the real world."
 keywords: "entrepreneur, entrepreneurship, product, getting things done, tech, 1776dc, sales"
 title: "Your product doesn’t judge you; people do."
+updated: "2023-02-04T13:00:00Z"
 ---
 
 I ran in to [Doug](http://www.infieldhealth.com/about-us/), a fellow

@@ -4,6 +4,7 @@ authorTwitter: "@RobertWPearce"
 desc: "Exercising while you travel can be difficult -- let's work through this."
 keywords: "exercising, remote work, travel, staying in shape"
 title: "Exercising In Transit"
+updated: "2023-02-04T18:00:00Z"
 ---
 
 Many folks who travel are no strangers to a general decline in health (and bank

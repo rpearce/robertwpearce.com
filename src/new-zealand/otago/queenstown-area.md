@@ -8,6 +8,7 @@ keywords: "queenstown, arrow town, glenorchy, new zealand"
 photoCredit: "emilycouldmakethat"
 photoWebsite: "https://www.instagram.com/emilycouldmakethat"
 title: "Queenstown, Arrowtown & Glenorchy"
+updated: "2020-01-04T00:00:00Z"
 ---
 
 Things to do and see in and around Queenstown, Arrowtown & Glenorchy in New

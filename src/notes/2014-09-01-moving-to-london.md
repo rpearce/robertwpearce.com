@@ -4,6 +4,7 @@ authorTwitter: "@RobertWPearce"
 desc: "If you can go on an adventure, then what are you waiting for?"
 keywords: "travel, remote work, adventure, london, digital nomad"
 title: "Moving To London"
+updated: "2023-02-04T13:00:00Z"
 ---
 
 2 months ago I decided I wanted to go to London for an indefinite amount of time.
