@@ -71,7 +71,7 @@ blockquote {
 
 code {
   font-family: var(--type-family-body);
-  font-size: 1.4rem;
+  font-size: max(85%, 1.6rem);
 }
 
 code,
@@ -143,10 +143,6 @@ pre.pl-chroma {
 
   h3 {
     font-size: var(--type-x-large);
-  }
-
-  code {
-    font-size: 1.6rem;
   }
 }
 
