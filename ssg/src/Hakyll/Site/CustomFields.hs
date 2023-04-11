@@ -33,6 +33,7 @@ getUpdatedUTC locale id' = do
     parseTime' = DTF.parseTimeM True locale
     formats    =
       [ "%Y-%m-%d"
-      , "%Y-%m-%dT%H:%M:%SZ" -- feed-friendly
-      , "%Y-%m-%d @ %H:%M %Z" -- custom for notes
+      , "%Y-%m-%dT%H:%M:%SZ"       -- Atom feed-friendly
+      , "%a, %d %b %Y %H:%M:%S UT" -- RSS feed-friendly (RFC-822)
+      , "%Y-%m-%d @ %H:%M %Z"      -- custom for notes
       ]
