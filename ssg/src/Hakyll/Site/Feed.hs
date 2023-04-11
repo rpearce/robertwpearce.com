@@ -14,42 +14,47 @@ import qualified Hakyll.Site.Post as HSPost
 
 --------------------------------------------------------------------------------
 
--- H.renderRss: https://github.com/jaspervdj/hakyll/blob/66ace430f90ec97cbb9cf278ec46aec3b457fc56/lib/Hakyll/Web/Feed.hs#L163
 createRss :: H.Rules ()
 createRss = do
   H.route   H.idRoute
-  H.compile $ feedCompiler H.renderRss
+  H.compile $ compileRss
 
--- H.renderAtom: https://github.com/jaspervdj/hakyll/blob/66ace430f90ec97cbb9cf278ec46aec3b457fc56/lib/Hakyll/Web/Feed.hs#L172
 createAtom :: H.Rules ()
 createAtom = do
   H.route   H.idRoute
-  H.compile $ feedCompiler H.renderAtom
+  H.compile $ compileAtom
 
 --------------------------------------------------------------------------------
 
-type FeedRenderer =
-     H.FeedConfiguration
-  -> H.Context String
-  -> [H.Item String]
-  ->  H.Compiler (H.Item String)
-
-feedCompiler :: FeedRenderer -> H.Compiler (H.Item String)
-feedCompiler renderer =
-  renderer HSConfig.feedConfiguration feedCtx
+-- H.renderRss: https://github.com/jaspervdj/hakyll/blob/66ace430f90ec97cbb9cf278ec46aec3b457fc56/lib/Hakyll/Web/Feed.hs#L163
+compileRss :: H.Compiler (H.Item String)
+compileRss =
+  H.renderRss HSConfig.feedConfiguration rssCtx
     =<< H.recentFirst
     =<< H.loadAllSnapshots "posts/*" "content"
 
-feedCtx :: H.Context String
-feedCtx =
-  titleCtx
-    <> HSCustomFields.updatedField "updated" "%Y-%m-%dT%H:%M:%SZ"
+-- H.renderAtom: https://github.com/jaspervdj/hakyll/blob/66ace430f90ec97cbb9cf278ec46aec3b457fc56/lib/Hakyll/Web/Feed.hs#L172
+compileAtom :: H.Compiler (H.Item String)
+compileAtom =
+  H.renderAtom HSConfig.feedConfiguration atomCtx
+    =<< H.recentFirst
+    =<< H.loadAllSnapshots "posts/*" "content"
+
+--------------------------------------------------------------------------------
+
+rssCtx :: H.Context String
+rssCtx =
+  HSCustomFields.updatedField "updated" "%a, %d %b %Y %H:%M:%S UT"
+    <> H.field "title" updatedTitle
     <> HSPost.postCtx
     <> H.bodyField "description"
 
-titleCtx :: H.Context String
-titleCtx =
-  H.field "title" updatedTitle
+atomCtx :: H.Context String
+atomCtx =
+  HSCustomFields.updatedField "updated" "%Y-%m-%dT%H:%M:%SZ"
+    <> H.field "title" updatedTitle
+    <> HSPost.postCtx
+    <> H.bodyField "description"
 
 --------------------------------------------------------------------------------
 -- TITLE HELPERS
