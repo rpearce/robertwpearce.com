@@ -6,6 +6,13 @@ keywords: "people are not cogs, people are not machines, life lessons"
 title: "People are so much more than cogs"
 ---
 
+I'm re-reading the _Dune_ series for the nth time, and this time, I'm doing it
+with a group via the excellent [Gom Jabbar
+podcast](https://www.loreparty.com/show/gom-jabbar/). There are some seriously
+problematic themes in God Emperor of Dune, but the quote below has stuck with me
+for weeks and has illuminated life for me in a way I haven't experienced in
+years.
+
 <figure>
   <blockquote>
     "I point out to you […] a lesson learned from past over-machined societies
@@ -16,13 +23,6 @@ title: "People are so much more than cogs"
     — Leto II, <i>God Emperor of Dune</i>
   </figcaption>
 </figure>
-
-I'm re-reading the _Dune_ series for the nth time, and this time, I'm doing it
-with a group via the excellent [Gom Jabbar
-podcast](https://www.loreparty.com/show/gom-jabbar/). There are some seriously
-problematic themes in God Emperor of Dune, but the quote above has stuck with me
-for weeks and has illuminated life for me in a way I haven't experienced in
-years.
 
 This quote helped me wrap my head around ways we might inadvertantly dehumanize
 one another by assigning those around us rigid roles in the context of our daily
