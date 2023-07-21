@@ -50,6 +50,8 @@ p + ol,
 ol + p,
 p + blockquote,
 blockquote + p,
+p + figure,
+figure + p,
 pre + pre {
   margin-top: 2rem;
 }
