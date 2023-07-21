@@ -4,12 +4,13 @@ authorTwitter: "@RobertWPearce"
 desc: "People are amazing, so let's not let our over-machined society cause us to treat them like machines."
 keywords: "people are not cogs, people are not machines, life lessons"
 title: "People are so much more than cogs"
+updated: "2023-07-21T16:14:00Z"
 ---
 
 I'm re-reading the _Dune_ series for the nth time, and this time, I'm doing it
 with a group via the excellent [Gom Jabbar
 podcast](https://www.loreparty.com/show/gom-jabbar/). There are some seriously
-problematic themes in God Emperor of Dune, but the quote below has stuck with me
+problematic themes in <i>God Emperor of Dune</i>, but the quote below has stuck with me
 for weeks and has illuminated life for me in a way I haven't experienced in
 years.
 
@@ -20,7 +21,7 @@ years.
     users to employ each other the way they employ machines."
   </blockquote>
   <figcaption>
-    — Leto II, <i>God Emperor of Dune</i>
+    — Leto II, <cite>God Emperor of Dune</cite>
   </figcaption>
 </figure>
 
