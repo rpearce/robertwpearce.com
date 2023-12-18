@@ -482,7 +482,7 @@ at least allow people to work with whatever they want.
 
 ## Other hakyll posts
 
-* [Pt. 1 – Setup & Initial Customization](/hakyll-pt-1-setup-and-initial-customization.html)
+* [Pt. 1 – Setup & Initial Customization](/hakyll-pt-1-setup-initial-customization.html)
 * [Pt. 2 – Generating a Sitemap XML File](/hakyll-pt-2-generating-a-sitemap-xml-file.html)
 * [Pt. 3 – Generating RSS and Atom XML Feeds](/hakyll-pt-3-generating-rss-and-atom-xml-feeds.html)
 * [Pt. 4 – Copying Static Files For Your Build](/hakyll-pt-4-copying-static-files-for-your-build.html)
