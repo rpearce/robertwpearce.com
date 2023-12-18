@@ -1,0 +1,15 @@
+[package]
+name = "robertwpearce_com"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+askama = { version = "0.12.1", features = ["markdown"] }
+axum = { version = "0.6.20", features = [] }
+chrono = "0.4"
+serde = { version = "1.0.188", features = ["derive"] }
+serde_json = "1.0"
+serde_yaml = "0.9"
+tokio = { version = "1.32.0", features = ["macros", "rt-multi-thread"] }
+tracing = "0.1.37"
+tracing-subscriber = "0.3.17"
