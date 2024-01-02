@@ -35,7 +35,6 @@ apps (SPAs) nor server-side rendered web apps.
 
 * Provide readers with different theme options
 * Support readers' light/dark mode system preferences
-* Still look great if readers have disabled JS
 * Use patterns that can be extended to providing preferences for font families,
   text styling, animations, and anything you can imagine someone might want to
   customize for your site. Note: always respect user system settings first, then
