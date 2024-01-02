@@ -4,6 +4,7 @@ authorTwitter: "@RobertWPearce"
 desc: "Allowing readers to choose themes on your static site is a way to respect their system preferences and give them viewing choices without requiring an account nor cookies."
 keywords: "static site theme, css theming, css themes, dark mode, light mode, javascript, prefers-color-scheme"
 title: "Theming static sites"
+updated: "2024-01-02T00:05:00Z"
 ---
 
 In this post, we're going to dive into some useful patterns for theming static
@@ -100,7 +101,7 @@ Let's sketch out some markup we'll need to accomplish our goal:
     <main>
       <h1>Static site theming example</h1>
       <!--
-      This is where our <select> elements
+      This is where our <select> element
       for changing the theme will go.
       -->
     </main>
