@@ -4,7 +4,7 @@ authorTwitter: "@RobertWPearce"
 desc: "Allowing readers to choose themes on your static site is a way to respect their system preferences and give them viewing choices without requiring an account nor cookies."
 keywords: "static site theme, css theming, css themes, dark mode, light mode, javascript, prefers-color-scheme"
 title: "Theming static sites"
-updated: "2024-01-02T00:05:00Z"
+updated: "2024-01-02T12:00:00Z"
 ---
 
 In this post, we're going to dive into some useful patterns for theming static
@@ -174,7 +174,7 @@ element:
 ```javascript
 (() => {
   window.site = {
-    setTheme: () => {
+    setTheme: (name) => {
      // Our theme-setting code will go here
     },
   };
@@ -190,7 +190,7 @@ do:
 
 ```javascript
 window.site = {
-  setTheme: () => {
+  setTheme: (name) => {
     document.body.setAttribute('data-theme', name);
     localStorage.setItem('prefTheme', name);
   },
@@ -210,8 +210,8 @@ whatever the value was set to in the `<select>`.
 ## A note about the CSS
 
 Feel free to poke around [the example's
-CSS](./examples/theming-static-sites/css/styles.css) to see this in full, but
-here's the gist.
+CSS](https://github.com/rpearce/robertwpearce.com/blob/main/src/examples/theming-static-sites/css/styles.css)
+to see this in full, but here's the gist.
 
 For our CSS, all we need to do is have our styles use CSS variables for the
 things that can change, and then those CSS variables are defined like this:
@@ -340,7 +340,7 @@ did, and if you want to see it in action, be sure to check out the code used in
     (() => {
       window.site = {
         prefTheme: getPrefTheme();
-        setTheme: () => {
+        setTheme: (name) => {
           document.body.setAttribute('data-theme', name);
           localStorage.setItem('prefTheme', name);
         },
