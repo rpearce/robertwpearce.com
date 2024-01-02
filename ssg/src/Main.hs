@@ -16,10 +16,13 @@ main = H.hakyllWith HSConfig.hakyllConfiguration $ do
   H.match ".well-known/*" HSRules.copy
   H.match "CNAME" HSRules.copy
   H.match "_config.yml" HSRules.copy
+  H.match "examples/**" HSRules.copy
   H.match "fonts/*" HSRules.copy
   H.match "images/*" HSRules.copy
   H.match "pdfs/*" HSRules.copy
   H.match "robots.txt" HSRules.copy
+
+  -- BUILD CSS
   H.match "css/*" HSRules.css
 
   -- BUILD PAGES

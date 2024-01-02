@@ -62,7 +62,7 @@
             rootStyle.setProperty('--type-family-body', family+',monospace');
 
             /* Remove when https://github.com/googlefonts/spacemono/pull/2 is resolved */
-            if (family === 'Space Mono') {
+            if (family === 'Liga Space Mono') {
               rootStyle.setProperty('font-feature-settings', '"liga" 0');
             } else {
               rootStyle.removeProperty('font-feature-settings');
@@ -88,7 +88,7 @@
               return Promise.resolve();
             }
 
-            const familyNoSpaces = family.replace(' ', '');
+            const familyNoSpaces = family.replaceAll(' ', '');
 
             const fontz = [
               new FontFace(family, 'url("./fonts/'+familyNoSpaces+'-Regular.woff2") format("woff2")', { display: 'swap', weight: 400 }),
@@ -109,7 +109,7 @@
             return Promise.allSettled(fontz).then(results => {
               results.forEach((res, i) => {
                 if (res.status === 'rejected') {
-                  console.log('site failed to load font: ' + fontz[i]?.family ?? 'unknown');
+                  console.error('site failed to load font: ' + fontz[i]?.family ?? 'unknown');
                 }
               });
             });

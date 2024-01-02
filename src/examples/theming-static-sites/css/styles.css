@@ -1,0 +1,244 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  line-height: calc(1em + 0.9rem);
+  margin: 0;
+}
+
+:root {
+  font-size: 10px;
+  -webkit-text-size-adjust: 100%;
+  --type-base: 1.6em;
+  --type-large: 200%;
+  --type-family-body: monospace;
+  --icon-select-moon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="rgb(206,206,206)" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');
+  --icon-select-forest: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="rgb(255,255,255)" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');
+  --icon-select-ocean: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="rgb(0,43,77)" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');
+  color-scheme: light dark;
+}
+
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  background-color: rgb(var(--color-bg-body));
+  color: rgb(var(--color-text));
+  display: flex;
+  flex-direction: column;
+  font-family: var(--type-family-body);
+  font-size: var(--type-base);
+  min-height: 100vh;
+  min-height: 100dvh;
+  text-rendering: optimizeLegibility;
+}
+
+body,
+body[data-theme="moon"] {
+  --alpha-link-visited: 0.85;
+  --color-bg-body: 21, 21, 21;
+  --color-bg-select: 21, 21, 21;
+  --color-border-select: 206, 206, 206;
+  --color-link: 246, 241, 213;
+  --color-sponsor-hearts: 206, 206, 206,
+  --color-text: 206, 206, 206;
+  --icon-select: var(--icon-select-moon);
+  --link-underline-offset: 0.2rem;
+  --link-underline-thickness: max(0.1rem, 1px);
+  --link-weight: bold;
+}
+
+body[data-theme="forest"] {
+  --alpha-link-visited: 0.9;
+  --color-bg-body: 57, 76, 66;
+  --color-bg-select: 57, 76, 66;
+  --color-border-select: 255, 255, 255;
+  --color-link: 238, 213, 174;
+  --color-sponsor-hearts: 153, 117, 90;
+  --color-text: 255, 255, 255;
+  --icon-select: var(--icon-select-forest);
+  --link-underline-offset: 0.2rem;
+  --link-underline-thickness: max(0.1rem, 1px);
+}
+
+body[data-theme="ocean"] {
+  --alpha-link-visited: 0.85;
+  --color-bg-body: 82, 179, 201;
+  --color-bg-select: 123, 203, 222;
+  --color-border-select: 0, 43, 77;
+  --color-link: 0, 43, 77;
+  --color-sponsor-hearts: 0, 43, 77;
+  --color-text: 0, 43, 77;
+  --icon-select: var(--icon-select-ocean);
+  --link-underline-offset: 0.3rem;
+  --link-underline-thickness: 0.2rem;
+}
+
+body[data-font="Victor Mono"] {
+  --font-style-h1: italic;
+}
+
+main {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+form {
+  align-items: center;
+  display: flex;
+  margin-top: 3rem;
+}
+
+form > span[aria-hidden="true"] {
+  margin: 0 1rem;
+}
+
+label[for^="select-"] {
+  align-items: center;
+  background-color: rgba(var(--color-bg-select));
+  border-radius: 0;
+  border: 1px solid rgba(var(--color-border-select));
+  border-right: none;
+  display: flex;
+  font-size: 1.4rem;
+  height: 3.5rem;
+  padding: 0.4rem 1rem 0.4rem 1rem;
+}
+
+select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: rgba(var(--color-bg-select));
+  background-image: var(--icon-select);
+  background-position: right 1rem center;
+  background-repeat: no-repeat;
+  border: 1px solid rgba(var(--color-border-select));
+  border-radius: 0;
+  color: inherit;
+  font: inherit;
+  font-size: 1.4rem;
+  padding: 0 3rem 0 1rem;
+  height: 3.5rem;
+  text-overflow: ellipsis;
+}
+
+h1 {
+  font-style: var(--font-style-h1, normal);
+  font-size: var(--type-large);
+  margin: 0;
+  text-align: center;
+}
+
+a[href] {
+  color: rgb(var(--color-link));
+  font-weight: var(--link-weight);
+  text-underline-offset: var(--link-underline-offset);
+  text-decoration-thickness: var(--link-underline-thickness);
+}
+
+a[href]:hover,
+a[href]:visited {
+  color: rgba(var(--color-link), var(--alpha-link-visited));
+}
+
+.sponsor {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.sponsor > a,
+.sponsor > span[aria-hidden="true"] {
+  margin: 0 0.5rem;
+}
+
+.sponsor > .heart {
+  color: rgba(var(--color-sponsor-hearts));
+}
+
+body[data-theme="moon"] .cool-shape {
+  background-image:
+    radial-gradient(#333 10%, transparent 10%),
+    radial-gradient(rgb(206, 206, 206) 15%, transparent 15%);
+  background-position: 0 0, 25px 25px;
+  background-size: 50px 50px;
+  border-radius: 50%;
+  border: 1px solid;
+  float: left;
+  height: 200px;
+  margin: 0 0 3rem;
+  shape-outside: circle(45%);
+  transform: rotate(22deg);
+  width: 200px;
+}
+
+body[data-theme="forest"] .cool-shape {
+  background-image: linear-gradient(
+    43deg, rgb(65, 88, 208) 0%,
+    rgb(200, 80, 192) 46%,
+    rgb(255, 204, 112) 100%
+  );
+  border-radius: 0.8rem;
+  height: 3rem;
+  margin-bottom: 3rem;
+  width: 50%;
+}
+
+body[data-theme="ocean"] .cool-shape {
+  background-image: linear-gradient(
+    45deg, rgb(251, 218, 97) 0%,
+    rgb(255, 90, 205) 100%
+  );
+  border-radius: 50%;
+  margin-top: -10rem;
+  bottom: -3rem;
+  clip-path: polygon(
+    50% 0%,
+    90% 20%,
+    100% 60%,
+    85% 80%,
+    15% 80%,
+    0% 60%,
+    10% 20%
+  );
+  height: 30rem;
+  position: relative;
+  width: 30rem;
+  z-index: -1;
+}
+
+body[data-theme="ocean"] .cool-shape::before {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(var(--color-bg-body), 0),
+    rgba(var(--color-bg-body), 0) 0.8rem,
+    rgba(var(--color-bg-body), 1) 0,
+    rgba(var(--color-bg-body), 1) 1rem
+  );
+  content: "";
+  height: 2rem;
+  inset: calc(80% - 2rem) auto auto 0;
+  position: absolute;
+  width: 50%;
+  z-index: 1;
+}
+
+body[data-theme="ocean"] .cool-shape::after {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(var(--color-bg-body), 0),
+    rgba(var(--color-bg-body), 0) 0.8rem,
+    rgba(var(--color-bg-body), 1) 0,
+    rgba(var(--color-bg-body), 1) 1rem
+  );
+  content: "";
+  height: 2rem;
+  inset: calc(80% - 2rem) 0 auto auto;
+  position: absolute;
+  width: 50%;
+  z-index: 1;
+}

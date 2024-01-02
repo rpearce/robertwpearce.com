@@ -52,7 +52,9 @@ p + blockquote,
 blockquote + p,
 p + figure,
 figure + p,
-pre + pre {
+pre + pre,
+p + aside,
+aside + p {
   margin-top: 2rem;
 }
 
