@@ -4,7 +4,7 @@ authorTwitter: "@RobertWPearce"
 desc: "Allowing readers to choose themes on your static site is a way to respect their system preferences and give them viewing choices without requiring an account nor cookies."
 keywords: "static site theme, css theming, css themes, dark mode, light mode, javascript, prefers-color-scheme"
 title: "Theming static sites"
-updated: "2024-01-02T12:00:00Z"
+updated: "2024-01-10T12:00:00Z"
 ---
 
 In this post, we're going to dive into some useful patterns for theming static
@@ -359,7 +359,7 @@ did, and if you want to see it in action, be sure to check out the code used in
       }
 
       window.site.setTheme(window.site.prefTheme);
-    });
+    })();
   </script>
 
   <main>
@@ -387,7 +387,7 @@ did, and if you want to see it in action, be sure to check out the code used in
           window.site.setTheme(e.target.value);
         });
       }
-    });
+    })();
   </script>
 </body>
 ```
