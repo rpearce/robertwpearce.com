@@ -23,7 +23,7 @@
           (final: prev: {
             bobProject = final.haskell-nix.project' {
               src = ./ssg;
-              compiler-nix-name = "ghc944";
+              compiler-nix-name = "ghc948";
               modules = [{ doHaddock = false; }];
               shell.buildInputs = [
                 hakyll-site
