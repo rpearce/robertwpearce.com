@@ -4,6 +4,7 @@ authorTwitter: "@RobertWPearce"
 desc: "Join me as I (over-)engineer implementing cache-busting for static assets on a simple website!"
 keywords: "bash, md5, md5sum, content hashing, static assets, static site"
 title: "Content hashing static assets to break caches with md5sum and bash"
+updated: "2024-01-31T01:00:00Z"
 ---
 
 ## The Problem
@@ -126,7 +127,7 @@ handle that:
 
 ```
 λ md5sum *.{avif,css,js}
-dadb0e162005e9b241a13ca5f871e250  gj.avif
+dadb0e162005e9b241a13ca5f871e250  cool-image.avif
 e6dd05b39c5fb97218130638c0a374de  styles.css
 78f7f2c2d416e59525938565dd6dd565  bingo.js
 ```
@@ -157,7 +158,7 @@ Let's run it with some options and then break down what we did:
   -exec md5sum '{}' +
 
 e6dd05b39c5fb97218130638c0a374de  ./styles.css
-dadb0e162005e9b241a13ca5f871e250  ./gj.avif
+dadb0e162005e9b241a13ca5f871e250  ./cool-image.avif
 78f7f2c2d416e59525938565dd6dd565  ./bingo.js
 ```
 
@@ -167,7 +168,7 @@ handful of extensions of likely static assets, and then we tell it to execute
 `md5sum` on each one. At the bottom, we see the results!
 
 Next, we want to take that MD5 hash on the left and output a new file where the
-filename hash the hash just before the extension. For that, we're going to want
+filename has the hash just before the extension. For that, we're going to want
 to start putting this into a `build` script.
 
 ## Starting our build script
