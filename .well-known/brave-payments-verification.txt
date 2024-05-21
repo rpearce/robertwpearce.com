@@ -1,0 +1,4 @@
+This is a Brave Payments publisher verification file.
+
+Domain: robertwpearce.com
+Token: 4655e1db9dacad6cbef5a569444ce1902ada259cccc487c830e1a0acaeb2fde8
