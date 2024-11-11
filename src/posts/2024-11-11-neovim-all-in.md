@@ -4,7 +4,7 @@ authorTwitter: "@RobertWPearce"
 desc: "I went all-in on neovim tooling, and it went very well (includes screenshots)."
 keywords: "neovim, lua, lazy.nvim, config, nvim"
 title: "Neovim: All In"
-updated: "2024-11-11T12:00:00Z"
+updated: "2024-11-11T12:01:00Z"
 ---
 
 This is an accounting of how I recently went all-in on
