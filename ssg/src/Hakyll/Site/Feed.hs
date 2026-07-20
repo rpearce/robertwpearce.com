@@ -59,13 +59,19 @@ atomCtx =
 --------------------------------------------------------------------------------
 -- TITLE HELPERS
 
-replaceAmp :: String -> String
-replaceAmp =
-  H.replaceAll "&" (const "&amp;")
+-- | Escape the XML metacharacters that would otherwise produce invalid
+-- RSS/Atom feeds. The @&@ pass must run first so it does not re-escape the
+-- ampersands introduced by the other entities.
+escapeXml :: String -> String
+escapeXml =
+  H.replaceAll "\"" (const "&quot;")
+    . H.replaceAll ">" (const "&gt;")
+    . H.replaceAll "<" (const "&lt;")
+    . H.replaceAll "&" (const "&amp;")
 
-replaceTitleAmp :: H.Metadata -> String
-replaceTitleAmp =
-  replaceAmp . safeTitle
+escapedTitle :: H.Metadata -> String
+escapedTitle =
+  escapeXml . safeTitle
 
 safeTitle :: H.Metadata -> String
 safeTitle =
@@ -73,4 +79,4 @@ safeTitle =
 
 updatedTitle :: H.Item a -> H.Compiler String
 updatedTitle =
-  fmap replaceTitleAmp . H.getMetadata . H.itemIdentifier
+  fmap escapedTitle . H.getMetadata . H.itemIdentifier
