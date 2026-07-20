@@ -2,60 +2,39 @@
   description = "robertwpearce.com";
 
   nixConfig = {
-    allow-import-from-derivation = "true";
     bash-prompt = "[hakyll-nix]λ ";
-    extra-substituters = [
-      "https://cache.iog.io"
-    ];
-    extra-trusted-public-keys = [
-      "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
-    ];
   };
 
-  inputs.haskellNix.url = "github:input-output-hk/haskell.nix";
-  inputs.nixpkgs.follows = "haskellNix/nixpkgs-unstable";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
   inputs.flake-utils.url = "github:numtide/flake-utils";
 
-  outputs = { self, nixpkgs, flake-utils, haskellNix }:
+  # Used only by ./shell.nix, to reuse the flake's devShell from non-flake
+  # tooling (the VS Code "Nix Env Selector" extension, or a bare `nix-shell`).
+  inputs.flake-compat = {
+    url = "github:edolstra/flake-compat";
+    flake = false;
+  };
+
+  outputs = { self, nixpkgs, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        overlays = [ haskellNix.overlay
-          (final: prev: {
-            bobProject = final.haskell-nix.project' {
-              src = ./ssg;
-              compiler-nix-name = "ghc948";
-              modules = [{ doHaddock = false; }];
-              shell.buildInputs = [
-                hakyll-site
-                pkgs.chroma
-                #pkgs.python310Packages.pygments
-              ];
-              shell.tools = {
-                cabal = "latest";
-                #hlint = "latest";
-                #haskell-language-server = "latest";
-              };
-            };
-          })
-        ];
+        pkgs = import nixpkgs { inherit system; };
 
-        pkgs = import nixpkgs {
-          inherit overlays system;
-          inherit (haskellNix) config;
-        };
-
-        flake = pkgs.bobProject.flake {};
-
-        executable = "ssg:exe:hakyll-site";
-
-        hakyll-site = flake.packages.${executable};
+        # The Hakyll site generator, built from ./ssg against the Haskell
+        # package set that ships with the pinned nixpkgs.
+        #
+        # NOTE: we deliberately avoid `haskell.lib.justStaticExecutables` here.
+        # On aarch64-darwin the resulting binary still references GHC, which
+        # trips that helper's disallowed-references check and fails the build.
+        ssg = pkgs.haskellPackages.callPackage ./ssg { };
+        hakyll-site = ssg;
 
         website = pkgs.stdenv.mkDerivation {
           name = "website";
-          buildInputs = [
-            pkgs.chroma
-            #pkgs.python310Packages.pygments
-          ];
+
+          # `chroma` (Go syntax highlighter) is invoked during the Hakyll build.
+          buildInputs = [ pkgs.chroma ];
+
           src = pkgs.nix-gitignore.gitignoreSourcePure [
             ./.gitignore
             ".git"
@@ -68,11 +47,11 @@
           #   https://github.com/MaxDaten/brutal-recipes/blob/source/default.nix#L24
           LANG = "en_US.UTF-8";
           LOCALE_ARCHIVE = pkgs.lib.optionalString
-            (pkgs.buildPlatform.libc == "glibc")
+            (pkgs.stdenv.buildPlatform.libc == "glibc")
             "${pkgs.glibcLocales}/lib/locale/locale-archive";
 
           buildPhase = ''
-            ${flake.packages.${executable}}/bin/hakyll-site build --verbose
+            ${hakyll-site}/bin/hakyll-site build --verbose
           '';
 
           installPhase = ''
@@ -80,13 +59,11 @@
             cp -a dist/. "$out/dist"
           '';
         };
-
-      in flake // rec {
-        apps = {
-          default = flake-utils.lib.mkApp {
-            drv = hakyll-site;
-            exePath = "/bin/hakyll-site";
-          };
+      in
+      {
+        apps.default = flake-utils.lib.mkApp {
+          drv = hakyll-site;
+          exePath = "/bin/hakyll-site";
         };
 
         packages = {
@@ -94,6 +71,26 @@
           chroma = pkgs.chroma;
           default = website;
         };
+
+        # `nix develop` drops you into a shell with a GHC that has the site's
+        # dependencies available (so `ghci`/`.ghci` can load ssg/src/Main.hs),
+        # the built `hakyll-site` and `chroma` on PATH, and the usual tooling.
+        devShells.default = pkgs.haskellPackages.shellFor {
+          packages = _: [ ssg ];
+          withHoogle = false;
+          nativeBuildInputs = [ hakyll-site pkgs.chroma ] ++ (with pkgs.haskellPackages; [
+            cabal-install
+            haskell-language-server
+            hlint
+            ormolu
+          ]);
+        };
+
+        # `nix fmt` formats the Nix files in this repo.
+        formatter = pkgs.nixpkgs-fmt;
+
+        # `nix flake check` builds the site.
+        checks = { inherit website; };
       }
     );
 }
