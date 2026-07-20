@@ -14,8 +14,6 @@ main :: IO ()
 main = H.hakyllWith HSConfig.hakyllConfiguration $ do
   -- COPY FILES
   H.match ".well-known/*" HSRules.copy
-  H.match "CNAME" HSRules.copy
-  H.match "_config.yml" HSRules.copy
   H.match "examples/**" HSRules.copy
   H.match "fonts/*" HSRules.copy
   H.match "images/*" HSRules.copy
