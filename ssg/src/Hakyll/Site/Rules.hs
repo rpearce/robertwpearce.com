@@ -20,6 +20,7 @@ module Hakyll.Site.Rules
 import qualified Data.Maybe as Maybe
 import qualified Data.Text as T
 import qualified Hakyll as H
+import qualified Hakyll.Site.Assets as HSAssets
 import qualified Hakyll.Site.Configuration as HSConfig
 import qualified Hakyll.Site.Post as HSPost
 import qualified Text.HTML.TagSoup.Compressor as TSCompressor
@@ -46,8 +47,8 @@ templates =
 --------------------------------------------------------------------------------
 -- INDEX PAGE
 
-index :: H.Rules ()
-index = do
+index :: HSAssets.Manifest -> H.Rules ()
+index manifest = do
   H.route H.idRoute
   H.compile $ do
     loadedPosts <- H.recentFirst =<< H.loadAll "posts/*"
@@ -61,13 +62,14 @@ index = do
     H.getResourceBody
       >>= H.applyAsTemplate indexCtx
       >>= H.loadAndApplyTemplate "templates/default.html" indexCtx
+      >>= HSAssets.versionAssetsCompiler HSConfig.mySiteRoot manifest
       >>= compressHtmlCompiler
 
 --------------------------------------------------------------------------------
 -- POSTS
 
-posts :: H.Rules ()
-posts = do
+posts :: HSAssets.Manifest -> H.Rules ()
+posts manifest = do
   let ctx = H.constField "type" "article" <> HSPost.postCtx
   H.route $ H.metadataRoute HSPost.titleRoute
   H.compile $
@@ -75,19 +77,21 @@ posts = do
       >>= H.saveSnapshot "content"
       >>= H.loadAndApplyTemplate "templates/note.html" ctx
       >>= H.loadAndApplyTemplate "templates/default.html" ctx
+      >>= HSAssets.versionAssetsCompiler HSConfig.mySiteRoot manifest
       >>= compressHtmlCompiler
 
 -------------------------------------------------------------------------------
 -- NZ
 
-nz :: H.Rules ()
-nz = do
+nz :: HSAssets.Manifest -> H.Rules ()
+nz manifest = do
   let ctx = H.constField "type" "article" <> HSPost.postCtx
   H.route $ H.setExtension "html"
   H.compile $
     pandocCompilerCustom
       >>= H.saveSnapshot "content"
       >>= H.loadAndApplyTemplate "templates/default_nz.html" ctx
+      >>= HSAssets.versionAssetsCompiler HSConfig.mySiteRoot manifest
       >>= compressHtmlCompiler
 
 --------------------------------------------------------------------------------
