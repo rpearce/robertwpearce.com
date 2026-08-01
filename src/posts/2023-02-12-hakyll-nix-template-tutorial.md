@@ -524,8 +524,14 @@ deployment`, set the `Source` to `GitHub Actions`. That's the whole thing —
 there's no branch or directory to pick anymore, since the workflow hands your
 built site to GitHub directly.
 
-<!-- TODO(rpearce): reshoot ./images/hnt-gh-pages.webp showing
-     Source = "GitHub Actions" and re-add the screenshot here -->
+<img
+  alt="The GitHub Pages 'Build and deployment' source dropdown, open, with 'GitHub Actions' selected and 'Deploy from a branch' beneath it"
+  decoding="async"
+  height="526"
+  loading="lazy"
+  src="./images/hnt-gh-pages.webp"
+  width="684"
+/>
 
 Don't skip this one! Until you flip that setting, your `deploy` job will fail,
 because your repository isn't expecting deploys from Actions yet.
