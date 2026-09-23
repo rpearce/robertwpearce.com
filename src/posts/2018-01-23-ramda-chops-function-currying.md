@@ -37,7 +37,7 @@ _Other ramda posts:_
 
 * [Ramda Chops: Function Composition](/ramda-chops-function-composition.html)
 * [Ramda Chops: Safely Accessing Properties](/ramda-chops-safely-accessing-properties.html)
-* [Ramda Chops: Map, Filter & Reduce](/ramda-chops-map-filter-and-reduce.html)
+* [Ramda Chops: Map, Filter & Reduce](/ramda-chops-map-filter-reduce.html)
 
 ## Rudimentary Currying
 Many articles already cover this, so I'll keep it short.

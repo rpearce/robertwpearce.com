@@ -41,7 +41,7 @@ _Other ramda posts:_
 
 * [Ramda Chops: Function Currying](/ramda-chops-function-currying.html)
 * [Ramda Chops: Safely Accessing Properties](/ramda-chops-safely-accessing-properties.html)
-* [Ramda Chops: Map, Filter & Reduce](/ramda-chops-map-filter-and-reduce.html)
+* [Ramda Chops: Map, Filter & Reduce](/ramda-chops-map-filter-reduce.html)
 
 ## First Approach
 
