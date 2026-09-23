@@ -32,7 +32,7 @@ _Other ramda posts:_
 
 * [Ramda Chops: Function Currying](/ramda-chops-function-currying.html)
 * [Ramda Chops: Function Composition](/ramda-chops-function-composition.html)
-* [Ramda Chops: Map, Filter & Reduce](/ramda-chops-map-filter-and-reduce.html)
+* [Ramda Chops: Map, Filter & Reduce](/ramda-chops-map-filter-reduce.html)
 
 ## `prop` & `propOr`
 What happens normally if you expect an array, try to access the third item
