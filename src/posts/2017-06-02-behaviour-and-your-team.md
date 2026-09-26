@@ -11,10 +11,10 @@ Conference](http://conference.javascript.org.nz/) on _Behaviour & Your Team_.
 
 <iframe
   allowfullscreen
+  class="video"
   frameborder="0"
   height="315"
   loading="lazy"
   src="https://www.youtube.com/embed/tkdT41EMzbc"
   width="560"
-  style="margin-top:2rem;"
 ></iframe>
