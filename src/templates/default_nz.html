@@ -1,39 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>$title$</title>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-
-    <meta name="description" content="$desc$">
-    $if(author)$<meta name="author" content="$author$">$endif$
-    $if(keywords)$<meta name="keywords" content="$keywords$">$endif$
-
-    <meta property="og:site_name" content="$siteName$">
-    <meta property="og:title" content="$title$">
-    <meta property="og:url" content="$root$$url$">
-    <meta property="og:description" content="$desc$">
-    $if(image)$<meta property="og:image" content="$root$$image$">$endif$
-    $if(type)$
-    <meta property="og:type" content="$type$">
-    $else$
-    <meta property="og:type" content="website">
-    $endif$
-
-    $if(image)$
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:image" content="$root$$image$">
-    $endif$
-    <meta property="twitter:site" content="$siteName$">
-    <meta property="twitter:title" content="$title$">
-    <meta property="twitter:description" content="$desc$">
-    $if(authorTwitter)$<meta property="twitter:creator" content="$authorTwitter$">$endif$
-
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>💾</text></svg>">
-    <link rel="canonical" href="$root$$url$">
+    $partial("templates/head.html")$
   </head>
   <body>
+    <!--
+      Banner photo with its credit. Every NZ banner is 1600x500. The inline
+      style is the one exception to these pages being unstyled: it keeps the
+      banner inside narrow screens instead of forcing sideways scrolling.
+      imageAlt is required whenever image is set, so the build fails
+      without alt text.
+    -->
+    $if(image)$
+    <figure>
+      <img alt="$imageAlt$" height="500" src="$image$" style="height:auto;max-width:100%" width="1600">
+      $if(photoCredit)$<figcaption>Photo: <a href="$photoWebsite$">$photoCredit$</a></figcaption>$endif$
+    </figure>
+    $endif$
+
     $body$
   </body>
 </html>

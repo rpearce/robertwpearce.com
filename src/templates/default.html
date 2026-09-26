@@ -1,125 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>$title$</title>
+    $partial("templates/head.html")$
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-
-    <meta name="description" content="$desc$">
-    $if(author)$<meta name="author" content="$author$">$endif$
-    $if(keywords)$<meta name="keywords" content="$keywords$">$endif$
-    <meta name="google-site-verification" content="QX4bn65yOXBfgnwxlO09yIBc1H8blur-Erx3lmsDVhU">
-    <meta http-equiv="origin-trial" content="Am4BZ0c7GMyB72dgo/Ny2FfIFscXhYMoN+CVe4jduWh24FvsaCwf7kjZzHzfrJXtIilyZVAEKRxOItGLY7lvkAgAAABSeyJvcmlnaW4iOiJodHRwczovL3JvYmVydHdwZWFyY2UuY29tOjQ0MyIsImZlYXR1cmUiOiJQb3J0YWxzIiwiZXhwaXJ5IjoxNjAzNTQ2NDc3fQ==">
-
-    <meta property="og:site_name" content="$siteName$">
-    <meta property="og:title" content="$title$">
-    <meta property="og:url" content="$root$$url$">
-    <meta property="og:description" content="$desc$">
-    $if(image)$<meta property="og:image" content="$root$$image$">$endif$
-    $if(type)$
-    <meta property="og:type" content="$type$">
-    $else$
-    <meta property="og:type" content="website">
-    $endif$
-
-    $if(image)$
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:image" content="$root$$image$">
-    $endif$
-    <meta property="twitter:site" content="$siteName$">
-    <meta property="twitter:title" content="$title$">
-    <meta property="twitter:description" content="$desc$">
-    $if(authorTwitter)$<meta property="twitter:creator" content="$authorTwitter$">$endif$
-
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>💾</text></svg>">
-    <link rel="canonical" href="$root$$url$">
     <link rel="alternate" href="./atom.xml" title="$feedTitle$" type="application/atom+xml">
     <link rel="alternate" href="./rss.xml" title="$feedTitle$" type="application/rss+xml">
 
-    <link rel="stylesheet" href="./css/base.css">
-    <link rel="stylesheet" href="./css/t-clean.css">
-    $if(type)$
-    <link rel="stylesheet" href="./css/t-clean-note.css">
-    <link rel="stylesheet" href="./css/t-code-dracula.css">
-    <link rel="prefetch" href="./css/t-clean-note.css">
-    $else$
-    <link rel="stylesheet" href="./css/t-clean-home.css">
-    <link rel="prefetch" href="./css/t-clean-note.css">
-    <link rel="prefetch" href="./css/t-code-dracula.css">
-    $endif$
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/tokens.css">
+    <link rel="stylesheet" href="./css/site.css">
 
-  </head>
-  <body data-theme="clean-night">
     <script>
       (() => {
-        window.site = {
-          prefFont: localStorage.getItem('prefFont') || 'monospace',
-          setFont: (family) => {
-            localStorage.setItem('prefFont', family);
+        const root = document.documentElement;
 
-            const rootStyle = document.querySelector(':root').style;
-            rootStyle.setProperty('--type-family-body', family+',monospace');
+        /* localStorage can throw (private windows, blocked storage). Treat
+         * that as "nothing saved". */
+        const storage = {
+          get: (key) => { try { return localStorage.getItem(key); } catch { return null; } },
+          set: (key, value) => { try { localStorage.setItem(key, value); } catch {} },
+          remove: (key) => { try { localStorage.removeItem(key); } catch {} },
+        };
 
-            /* Remove when https://github.com/googlefonts/spacemono/pull/2 is resolved */
-            if (family === 'Liga Space Mono') {
-              rootStyle.setProperty('font-feature-settings', '"liga" 0');
-            } else {
-              rootStyle.removeProperty('font-feature-settings');
-            }
+        /*
+         * Theme. "system" follows prefers-color-scheme through
+         * `color-scheme: light dark` in tokens.css; "light" and "dark" pin
+         * the scheme via data-theme on <html>.
+         */
+        const themes = ['system', 'light', 'dark'];
 
-            return window.site._fetchFont(family);
-          },
-          prefTheme: localStorage.getItem('prefTheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'clean-night' : 'clean-day'),
-          setTheme: (name) => {
-            const rootStyle = document.querySelector(':root').style;
-
-            if (name === 'clean-night') {
-              rootStyle.removeProperty('color-scheme');
-            } else {
-              rootStyle.setProperty('color-scheme', 'light');
-            }
-
-            document.body.setAttribute('data-theme', name);
-            localStorage.setItem('prefTheme', name);
-          },
-          _fetchFont: (family) => {
-            if (family === 'monospace') {
-              return Promise.resolve();
-            }
-
-            const familyNoSpaces = family.replaceAll(' ', '');
-
-            const fontz = [
-              new FontFace(family, 'url("./fonts/'+familyNoSpaces+'-Regular.woff2") format("woff2")', { display: 'swap', weight: 400 }),
-              new FontFace(family, 'url("./fonts/'+familyNoSpaces+'-Bold.woff2") format("woff2")', { display: 'swap', weight: 700 }),
-            ];
-
-            if (family !== 'Fira Code') {
-              fontz.push(
-                new FontFace(family, 'url("./fonts/'+familyNoSpaces+'-Italic.woff2") format("woff2")', { display: 'swap', style: 'italic', weight: 400 }),
-                new FontFace(family, 'url("./fonts/'+familyNoSpaces+'-BoldItalic.woff2") format("woff2")', { display: 'swap', style: 'italic', weight: 700 })
-              );
-            }
-
-            for (const f of fontz) {
-              document.fonts.add(f);
-            }
-
-            return Promise.allSettled(fontz).then(results => {
-              results.forEach((res, i) => {
-                if (res.status === 'rejected') {
-                  console.error('site failed to load font: ' + fontz[i]?.family ?? 'unknown');
-                }
-              });
-            });
+        const setTheme = (name) => {
+          if (name === 'system' || !themes.includes(name)) {
+            delete root.dataset.theme;
+            storage.remove('prefTheme');
+          } else {
+            root.dataset.theme = name;
+            storage.set('prefTheme', name);
           }
         };
 
-        window.site.setTheme(window.site.prefTheme);
-        window.site.setFont(window.site.prefFont);
+        /*
+         * Fonts. Files live at ./fonts/<FamilyWithoutSpaces>-<Face>.woff2 and
+         * are only fetched once chosen. Anything not listed here means the
+         * browser's own monospace, which needs nothing loaded.
+         */
+        const fonts = new Map([
+          /* Ligatures off until https://github.com/googlefonts/spacemono/pull/2 is resolved */
+          ['Liga Space Mono', { ligatures: false }],
+          ['Victor Mono', {}],
+          ['Fira Code', { italic: false }],
+          ['JetBrains Mono', {}],
+        ]);
+
+        const loadFont = (family, { italic }) => {
+          const base = './fonts/' + family.replaceAll(' ', '');
+          const face = (name, descriptors) =>
+            new FontFace(family, 'url("' + base + '-' + name + '.woff2") format("woff2")', { display: 'swap', ...descriptors });
+
+          const faces = [face('Regular', { weight: 400 }), face('Bold', { weight: 700 })];
+
+          if (italic !== false) {
+            faces.push(face('Italic', { style: 'italic', weight: 400 }), face('BoldItalic', { style: 'italic', weight: 700 }));
+          }
+
+          for (const f of faces) {
+            document.fonts.add(f);
+          }
+
+          return Promise.allSettled(faces.map((f) => f.load())).then((results) => {
+            results.forEach((res, i) => {
+              if (res.status === 'rejected') {
+                console.error('site failed to load font: ' + faces[i].family);
+              }
+            });
+          });
+        };
+
+        const setFont = (family) => {
+          const font = fonts.get(family);
+
+          if (!font) {
+            root.style.removeProperty('--type-family-body');
+            root.style.removeProperty('font-feature-settings');
+            storage.remove('prefFont');
+            return Promise.resolve();
+          }
+
+          root.style.setProperty('--type-family-body', family + ',monospace');
+
+          if (font.ligatures === false) {
+            root.style.setProperty('font-feature-settings', '"liga" 0');
+          } else {
+            root.style.removeProperty('font-feature-settings');
+          }
+
+          storage.set('prefFont', family);
+          return loadFont(family, font);
+        };
+
+        const savedTheme = storage.get('prefTheme');
+        /* Anything else counts as unset, including the old "clean-day" and
+         * "clean-night": the previous script saved those on every visit, so
+         * they can't be told apart from a reader's real choice. */
+        const theme = themes.includes(savedTheme) ? savedTheme : 'system';
+        const savedFont = storage.get('prefFont');
+        const font = fonts.has(savedFont) ? savedFont : 'monospace';
+
+        /* Apply before first paint */
+        setTheme(theme);
+        setFont(font);
+
+        /* The selects live in the body, so wire them once it has parsed */
+        document.addEventListener('DOMContentLoaded', () => {
+          const wire = (el, value, set) => {
+            el.value = value;
+            el.addEventListener('change', (e) => set(e.target.value));
+          };
+
+          wire(document.querySelector('#select-theme'), theme, setTheme);
+          wire(document.querySelector('#select-font'), font, setFont);
+        });
       })();
     </script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="nav-skip">
+          <a href="#content">Skip to content</a>
+        </div>
+        <a$if(isHome)$ aria-current="page"$endif$ aria-label="Home" class="nav-home" href="./">~</a>
+        <span aria-hidden="true">/</span>
+      </nav>
+
+      <div class="header-extra">
+        <a href="./atom.xml">RSS</a>
+        <span aria-hidden="true">&compfn;</span>
+        <noscript>(requires JS &rarr;)</noscript>
+        <label class="sr-only" for="select-theme">Theme</label>
+        <select id="select-theme">
+          <option value="system">System</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+        <span aria-hidden="true">&compfn;</span>
+        <label class="sr-only" for="select-font">Font</label>
+        <select id="select-font">
+          <option value="monospace">monospace</option>
+          <option value="Liga Space Mono">Space Mono</option>
+          <option value="Victor Mono">Victor Mono</option>
+          <option value="Fira Code">Fira Code</option>
+          <option value="JetBrains Mono">JetBrains Mono</option>
+        </select>
+      </div>
+    </header>
 
     $body$
 
@@ -130,27 +164,5 @@
       <span aria-hidden="true">&larr;</span>
       <span aria-hidden="true" class="heart">♥</span>
     </footer>
-
-    <script async>
-      (() => {
-        const themeEl = document.querySelector('[data-select-theme]');
-
-        if (themeEl) {
-          themeEl.querySelector('[value="'+window.site.prefTheme+'"]').selected = 'selected';
-          themeEl.addEventListener('change', e => {
-            window.site.setTheme(e.target.value);
-          });
-        }
-
-        const fontEl = document.querySelector('[data-select-font]');
-
-        if (fontEl) {
-          fontEl.querySelector('[value="'+window.site.prefFont+'"]').selected = 'selected';
-          fontEl.addEventListener('change', e => {
-            window.site.setFont(e.target.value);
-          })
-        }
-      })();
-     </script>
   </body>
 </html>

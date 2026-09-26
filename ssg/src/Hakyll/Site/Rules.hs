@@ -54,6 +54,8 @@ index manifest = do
     loadedPosts <- H.recentFirst =<< H.loadAll "posts/*"
 
     let indexCtx = H.listField "posts" HSPost.postCtx (return loadedPosts)
+                <> H.constField "type" "website"
+                <> H.boolField "isHome" (const True)
                 <> H.constField "root" HSConfig.mySiteRoot
                 <> H.constField "feedTitle" HSConfig.myFeedTitle
                 <> H.constField "siteName" HSConfig.mySiteName

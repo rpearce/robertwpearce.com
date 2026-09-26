@@ -1,0 +1,517 @@
+/*
+ * Site
+ *
+ * Layout, page chrome, article typography, and code blocks for every page.
+ * Page layouts differ only in their grid areas, chosen by main[data-layout].
+ */
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--type-family-body);
+  font-size: 1.6rem;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-link);
+  outline-offset: 2px;
+}
+
+/*
+ * Header and footer
+ */
+
+/* role="banner" */
+body > header {
+  align-items: center;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  padding: 1.2rem var(--padding-container);
+}
+
+/* role="contentinfo" */
+body > footer {
+  align-items: center;
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+  padding: 2rem var(--padding-container);
+}
+
+body > footer > a,
+body > footer > span[aria-hidden="true"] {
+  margin: 0 0.5rem;
+}
+
+body > footer > .heart {
+  color: var(--color-accent);
+}
+
+.nav-skip {
+  background-color: var(--color-bg);
+  border: 1px dashed var(--color-border);
+  border-left: none;
+  border-top: none;
+  inset: 0 auto auto 0;
+  opacity: 0;
+  padding: 2rem;
+  pointer-events: none;
+  position: absolute;
+}
+
+.nav-skip:focus-within {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.nav-home {
+  display: inline-flex;
+  height: 2.4rem;
+  justify-content: center;
+  margin-left: -0.7rem;
+  margin-right: 0.2rem;
+  text-underline-offset: 0;
+  width: 2.4rem;
+}
+
+.header-extra {
+  align-items: center;
+  display: flex;
+  margin-left: auto;
+}
+
+.header-extra > span[aria-hidden="true"] {
+  margin: 0 1rem;
+}
+
+.header-extra > select {
+  max-width: 10rem;
+}
+
+/*
+ * Form controls
+ */
+
+select {
+  appearance: none;
+  background-color: var(--color-bg);
+  /* Chevron drawn in currentColor, so it follows the scheme for free */
+  background-image:
+    linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.5rem) center,
+    calc(100% - 1rem) center;
+  background-repeat: no-repeat;
+  background-size: 0.5rem 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0;
+  color: var(--color-text);
+  /* Anything under 16px makes iOS Safari zoom the page on focus. */
+  font-size: 1.6rem;
+  height: 3.5rem;
+  padding: 0 3rem 0 1rem;
+  text-overflow: ellipsis;
+}
+
+/*
+ * Main grid and cards
+ */
+
+main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  padding: var(--gutter) var(--padding-container);
+  row-gap: var(--gutter);
+}
+
+main[data-layout="home"] {
+  grid-template-areas:
+    "intro"
+    "info"
+    "contact"
+    "notes";
+}
+
+main[data-layout="note"] {
+  grid-template-areas:
+    "heading"
+    "meta"
+    "article";
+}
+
+[data-area="intro"] { grid-area: intro; }
+[data-area="info"] { grid-area: info; }
+[data-area="contact"] { grid-area: contact; }
+[data-area="notes"] { grid-area: notes; }
+[data-area="heading"] { grid-area: heading; }
+[data-area="meta"] { grid-area: meta; }
+[data-area="article"] { grid-area: article; }
+
+main > header,
+main > section {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: var(--gutter);
+}
+
+/*
+ * Vertical rhythm: every block inside a card sits 2rem below the last. List
+ * items that hold whole paragraphs or code blocks (loose lists) space those
+ * blocks the same way.
+ */
+main > header > * + *,
+main > section > * + *,
+li > :is(p, pre) + * {
+  margin-top: 2rem;
+}
+
+/*
+ * Headings
+ */
+
+h1,
+h2 {
+  font-style: italic;
+  font-weight: normal;
+}
+
+h1 {
+  font-size: var(--type-xx-large);
+}
+
+h2 {
+  font-size: var(--type-x-large);
+}
+
+h3 {
+  font-size: var(--type-large);
+  font-style: italic;
+  font-weight: bold;
+}
+
+/*
+ * Tables
+ */
+
+table {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  vertical-align: top;
+}
+
+th {
+  font-weight: normal;
+  text-align: left;
+}
+
+td {
+  text-align: left;
+}
+
+table[data-type="cols-x"] th,
+table[data-type="cols-x"] td {
+  border-bottom: 1px dashed var(--color-rule);
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}
+
+table[data-type="cols-x"] > tbody > tr:last-child > th,
+table[data-type="cols-x"] > tbody > tr:last-child > td {
+  border-bottom: none;
+}
+
+table[data-type="cols-x"] th + th,
+table[data-type="cols-x"] td + td {
+  padding-left: 1rem;
+}
+
+table[data-type="cols-y"] td {
+  padding-left: 1rem;
+}
+
+/*
+ * Inline text
+ */
+
+a[href],
+abbr {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2rem;
+}
+
+a[href] {
+  color: var(--color-link);
+}
+
+a[href]:hover,
+a[href]:visited {
+  color: var(--color-link-visited);
+}
+
+p + p {
+  margin-top: 2rem;
+}
+
+mark {
+  background: linear-gradient(to left, var(--color-mark-1), var(--color-mark-2));
+  border-radius: 3px;
+  box-decoration-break: clone;
+  color: var(--color-mark-text);
+  padding: 0 0.2em;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/*
+ * Article content
+ */
+
+hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 2rem 0;
+}
+
+blockquote {
+  border-left: 0.2rem solid;
+  padding-left: 1rem;
+}
+
+pre,
+code {
+  font-family: var(--type-family-body);
+  hyphens: none;
+}
+
+code {
+  font-size: max(85%, 1.6rem);
+}
+
+/* Inline code */
+:not(pre) > code {
+  background-color: var(--color-code-bg);
+  border-radius: 3px;
+  padding: 0.15em 0.4em;
+}
+
+pre {
+  border-radius: 1rem;
+  max-width: 100%;
+  overflow: auto;
+  padding: 2rem;
+  tab-size: 2;
+}
+
+.pdf {
+  height: 50rem;
+  width: 100%;
+}
+
+.video {
+  aspect-ratio: 16 / 9;
+  height: auto;
+  max-width: 100%;
+}
+
+/*
+ * Code blocks: Dracula palette for chroma's `pl-` classes.
+ *
+ * Hand-maintained rather than generated (`chroma --html-styles` mangles
+ * numeric values when given a prefix). Classes chroma emits that Dracula
+ * gives no color, such as punctuation (pl-p) and plain names (pl-n),
+ * inherit the block foreground.
+ *
+ * Blocks stay dark in both schemes; the color-scheme keeps the scrollbar
+ * matching them in the light theme.
+ */
+
+.pl-chroma {
+  background-color: #282a36;
+  color: #f8f8f2;
+  color-scheme: dark;
+}
+
+.pl-line {
+  display: flex;
+}
+
+/* Keywords, tags, operators, preprocessor */
+.pl-k,
+.pl-kc,
+.pl-kn,
+.pl-kp,
+.pl-kr,
+.pl-nt,
+.pl-o,
+.pl-ow,
+.pl-cp,
+.pl-cpf {
+  color: #ff79c6;
+}
+
+/* Declarations, types, builtins, variables */
+.pl-kd,
+.pl-kt,
+.pl-nb,
+.pl-nl,
+.pl-nv,
+.pl-vc,
+.pl-vg,
+.pl-vi {
+  color: #8be9fd;
+}
+
+/* Attributes, classes, functions */
+.pl-na,
+.pl-nc,
+.pl-nf {
+  color: #50fa7b;
+}
+
+/* Strings */
+.pl-s,
+.pl-sa,
+.pl-sb,
+.pl-sc,
+.pl-dl,
+.pl-sd,
+.pl-s2,
+.pl-se,
+.pl-sh,
+.pl-si,
+.pl-sx,
+.pl-sr,
+.pl-s1,
+.pl-ss {
+  color: #f1fa8c;
+}
+
+/* Numbers */
+.pl-m,
+.pl-mb,
+.pl-mf,
+.pl-mh,
+.pl-mi,
+.pl-il,
+.pl-mo {
+  color: #bd93f9;
+}
+
+/*
+ * Comments and command output. Dracula's own #6272a4 is only 3:1 on this
+ * background; this lighter tint of the same hue passes WCAG AA at 4.9:1.
+ */
+.pl-c,
+.pl-ch,
+.pl-cm,
+.pl-c1,
+.pl-cs,
+.pl-go {
+  color: #8b97bc;
+}
+
+/* Diffs, emphasis, and headings */
+.pl-gd {
+  color: #ff5555;
+}
+
+.pl-gi {
+  color: #50fa7b;
+  font-weight: bold;
+}
+
+.pl-ge,
+.pl-gl {
+  text-decoration: underline;
+}
+
+.pl-gh,
+.pl-gu {
+  font-weight: bold;
+}
+
+/*
+ * Responsive
+ */
+
+@media (width >= 480px) {
+  main {
+    font-size: 1.8rem;
+  }
+
+  main[data-layout="home"] h1 {
+    font-size: var(--type-xxx-large);
+  }
+
+  h2 {
+    font-size: var(--type-xx-large);
+  }
+
+  h3 {
+    font-size: var(--type-x-large);
+  }
+
+  /* A new section in an article gets more room above it than other blocks. */
+  [data-area="article"] > h2:not(:first-child) {
+    margin-top: 4rem;
+  }
+
+  table[data-type="cols-x"] th,
+  table[data-type="cols-x"] td {
+    padding-bottom: 2rem;
+    padding-top: 2rem;
+  }
+
+  table[data-type="cols-x"] th + th,
+  table[data-type="cols-x"] td + td {
+    padding-left: 2rem;
+  }
+
+  table[data-type="cols-y"] td {
+    padding-left: 2rem;
+  }
+
+  .header-extra > select {
+    max-width: none;
+  }
+}
+
+@media (width >= 1100px) {
+  main {
+    column-gap: var(--gutter);
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1fr);
+  }
+
+  main[data-layout="home"] {
+    grid-template-areas:
+      "intro notes"
+      "info notes"
+      "contact notes"
+      ". notes";
+  }
+
+  main[data-layout="note"] {
+    grid-template-areas:
+      "heading article"
+      "meta article"
+      ". article";
+  }
+
+  /* Line the notes heading up with the taller intro heading beside it. */
+  main[data-layout="home"] [data-area="notes"] > h2 {
+    margin-top: 1.2rem;
+  }
+}

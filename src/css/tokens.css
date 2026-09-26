@@ -1,0 +1,61 @@
+/*
+ * Tokens
+ *
+ * Every custom property lives here. Colors are real values written with
+ * light-dark(); the `color-scheme` on :root decides which side is used.
+ *
+ * With no data-theme on <html> the scheme follows the reader's OS, which is
+ * also what readers without JavaScript get. The theme switch in
+ * templates/default.html sets data-theme="light" or "dark" to override it.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* Type */
+  --type-family-body: monospace;
+  --type-large: 120%;
+  --type-x-large: 160%;
+  --type-xx-large: 200%;
+  --type-xxx-large: 300%;
+
+  /* Layout */
+  --gutter: 1rem;
+  --max-width: 200rem;
+  --padding-container: max(var(--gutter), 50dvw - var(--max-width) / 2);
+
+  /* Color: light-dark(light, dark). The dark side is Dracula. */
+  --color-bg: light-dark(#fff, #282a36);
+  --color-surface: light-dark(#fff, #44475a);
+  --color-border: light-dark(#000, #6272a4);
+  --color-rule: light-dark(rgb(0 0 0 / 40%), rgb(248 248 242 / 40%));
+  --color-text: light-dark(#000, #f8f8f2);
+  --color-link: light-dark(#000, #8be9fd);
+  --color-link-visited: light-dark(#000, rgb(139 233 253 / 80%));
+  --color-accent: light-dark(#000, #ff79c6);
+  --color-code-bg: light-dark(rgb(0 0 0 / 8%), #282a36);
+  --color-mark-text: light-dark(#000, #282a36);
+  /* Gradient stops for <mark>. Equal in light, so it reads as a flat tint. */
+  --color-mark-1: light-dark(rgb(189 147 249 / 30%), #ff79c6);
+  --color-mark-2: light-dark(rgb(189 147 249 / 30%), #bd93f9);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+@media (width >= 480px) {
+  :root {
+    --gutter: 2rem;
+  }
+}
+
+@media (width >= 1280px) {
+  :root {
+    --gutter: 4rem;
+  }
+}

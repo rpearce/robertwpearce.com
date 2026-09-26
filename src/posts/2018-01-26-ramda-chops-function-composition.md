@@ -206,7 +206,7 @@ chain together like water pipes or guitar pedals.
     width="600"
   />
   <figcaption>
-    _Guitar pedals by [Henrik Hjortshøj](https://unsplash.com/@hfranke)_
+    <em>Guitar pedals by <a href="https://unsplash.com/@hfranke">Henrik Hjortshøj</a></em>
   </figcaption>
 </figure>
 

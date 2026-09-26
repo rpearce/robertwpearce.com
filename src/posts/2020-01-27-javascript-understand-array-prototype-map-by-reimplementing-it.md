@@ -16,11 +16,11 @@ can watch the video below; otherwise, carry on!
 <iframe
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
   allowfullscreen
+  class="video"
   frameborder="0"
   height="315"
   loading="lazy"
   src="https://www.youtube.com/embed/kaqu-e3Q7IY"
-  style="margin-top:2rem;"
   title="JavaScript Implement Your Own map method, mappy, on Array prototype"
   width="560"
 ></iframe>
