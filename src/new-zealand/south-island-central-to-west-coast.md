@@ -3,7 +3,6 @@ author: "Robert Pearce"
 authorTwitter: "@RobertWPearce"
 date: "2019-01-27"
 desc: "Things to do and see in the South Island's Central to West Coast."
-image: "/images/hokitika-gorge.jpg"
 keywords: "lake tekapo, mount cook national park, arthur's pass, hokitika, franz
 josef glacier, fox glacier, pancake rocks, new zealand"
 photoCredit: "emilycouldmakethat"
