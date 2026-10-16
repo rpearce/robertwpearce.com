@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Fitness</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>💾</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+:root {
+  --bg: #EEF0EC;
+  --surface: #FFFFFF;
+  --fg: #171A1E;
+  --muted: #586067;
+  --line: #D1D5CF;
+  --accent: #B42E1A;
+  --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
+  --body: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111316; --surface: #1A1D21; --fg: #E7E9E5; --muted: #9DA4AB; --line: #2E3338;
+    --accent: #FF735C;
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.45; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+
+.wrap { max-width: 720px; margin: 0 auto; padding-inline: 16px; padding-block: max(16px, env(safe-area-inset-top)) 56px; }
+h1 { font-family: var(--display); font-weight: 700; font-size: 2.1rem; line-height: 1.05; letter-spacing: 0.01em; margin: 8px 0 16px; text-transform: uppercase; }
+
+.links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.links a { display: block; text-decoration: none; color: inherit; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.links a:hover { border-color: var(--accent); }
+.links h2 { margin: 0; font-family: var(--display); font-weight: 700; font-size: 1.35rem; letter-spacing: 0.03em; text-transform: uppercase; color: var(--accent); }
+.links p { margin: 2px 0 0; color: var(--muted); font-size: 0.92rem; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .links a { transition: border-color 0.15s; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Fitness</h1>
+  <ul class="links">
+    <li>
+      <a href="eric-leija-8-week-single-bell-guide/">
+        <h2>8-Week Single Bell Guide</h2>
+        <p>Eric Leija's single kettlebell program, with demos and a schedule.</p>
+      </a>
+    </li>
+  </ul>
+</div>
+</body>
+</html>
