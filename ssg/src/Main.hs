@@ -25,6 +25,7 @@ main = do
     -- COPY FILES
     H.match ".well-known/*" HSRules.copy
     H.match "examples/**" HSRules.copy
+    H.match "fitness/**" HSRules.copy
     H.match "fonts/*" HSRules.copy
     H.match "images/*" HSRules.copy
     H.match "pdfs/*" HSRules.copy

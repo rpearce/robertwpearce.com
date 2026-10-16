@@ -1,0 +1,721 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+</style>
+<title>8-Week Single Bell Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: one phone-width column; sticky tab bar; a 10-button workout picker; each workout is a list of timed blocks with move rows. */
+:root {
+  --bg: #EEF0EC;
+  --surface: #FFFFFF;
+  --sunk: #E3E6E1;
+  --fg: #171A1E;
+  --muted: #586067;
+  --line: #D1D5CF;
+  --accent: #B42E1A;
+  --on-accent: #FFFFFF;
+  /* competition kettlebell colour code: 12 kg blue, 16 kg yellow, 24 kg green */
+  --b25: #2560C6; --b25-fg: #FFFFFF;
+  --b35: #E7B416; --b35-fg: #1C1600;
+  --b54: #1E8649; --b54-fg: #FFFFFF;
+  --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
+  --body: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111316; --surface: #1A1D21; --sunk: #23272C; --fg: #E7E9E5; --muted: #9DA4AB; --line: #2E3338;
+    --accent: #FF735C; --on-accent: #1A0A06;
+    --b25: #5C93EF; --b25-fg: #07132C; --b35: #F3C93B; --b35-fg: #1C1600; --b54: #45B974; --b54-fg: #04200E;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111316; --surface: #1A1D21; --sunk: #23272C; --fg: #E7E9E5; --muted: #9DA4AB; --line: #2E3338;
+  --accent: #FF735C; --on-accent: #1A0A06;
+  --b25: #5C93EF; --b25-fg: #07132C; --b35: #F3C93B; --b35-fg: #1C1600; --b54: #45B974; --b54-fg: #04200E;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.45; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+
+.wrap { max-width: 720px; margin: 0 auto; padding-inline: 16px; padding-block: 16px 56px; }
+
+.top { display: flex; flex-direction: column; gap: 4px; padding-block: 8px 12px; }
+.top h1 { font-family: var(--display); font-weight: 700; font-size: 2.1rem; line-height: 1.05; letter-spacing: 0.01em; margin: 0; text-transform: uppercase; text-wrap: balance; }
+.top p { margin: 0; color: var(--muted); font-size: 0.95rem; max-width: 60ch; }
+.wake { align-self: flex-start; margin-top: 6px; display: inline-flex; align-items: center; gap: 8px; background: none; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: 0.85rem; color: var(--muted); cursor: pointer; }
+.wake[aria-pressed="true"] { color: var(--fg); border-color: var(--fg); }
+.wake .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+.wake[aria-pressed="true"] .dot { background: var(--b54); }
+
+.tabs { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--line); margin-inline: -16px; padding-inline: 16px; }
+.tabs button { background: none; border: 0; border-bottom: 3px solid transparent; padding: 10px 4px 8px; font-family: var(--display); font-weight: 600; font-size: 1.15rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); cursor: pointer; }
+.tabs button[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--accent); }
+
+.view { padding-top: 16px; display: flex; flex-direction: column; gap: 20px; }
+
+/* workout picker */
+.picker { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+@media (min-width: 620px) { .picker { grid-template-columns: repeat(10, 1fr); } }
+.picker button { display: flex; flex-direction: column; align-items: center; gap: 0; padding: 6px 2px 7px; border: 1px solid var(--line); background: var(--surface); border-radius: 8px; cursor: pointer; min-width: 0; }
+.picker .n { font-family: var(--display); font-weight: 700; font-size: 1.6rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.picker .l { font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.picker button[aria-pressed="true"] { background: var(--fg); border-color: var(--fg); color: var(--bg); }
+.picker button[aria-pressed="true"] .l { color: var(--bg); opacity: 0.8; }
+
+/* workout */
+.whead { display: flex; align-items: flex-end; gap: 14px; }
+.whead .big { font-family: var(--display); font-weight: 700; font-size: 4rem; line-height: 0.8; color: var(--accent); font-variant-numeric: tabular-nums; }
+.whead h2 { font-family: var(--display); font-weight: 700; font-size: 1.75rem; line-height: 1.05; margin: 0; text-transform: uppercase; letter-spacing: 0.01em; text-wrap: balance; }
+.whead .kind { margin: 2px 0 0; color: var(--muted); font-size: 0.9rem; }
+.play { display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--accent); color: var(--on-accent); text-decoration: none; border-radius: 10px; padding: 12px 16px; font-family: var(--display); font-weight: 700; font-size: 1.25rem; letter-spacing: 0.05em; text-transform: uppercase; }
+.play small { font-family: var(--body); font-weight: 500; font-size: 0.85rem; letter-spacing: 0; text-transform: none; opacity: 0.85; }
+.pdfonly { background: var(--sunk); border-radius: 10px; padding: 12px 14px; margin: 0; font-size: 0.92rem; }
+.fixes { background: var(--sunk); border-radius: 10px; padding: 12px 14px; font-size: 0.92rem; }
+.fixes h3 { margin: 0 0 4px; font-family: var(--display); font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.fixes ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 2px; }
+
+.block { border-top: 2px solid var(--fg); padding-top: 8px; }
+.bh { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.bh h3 { margin: 0; font-family: var(--display); font-weight: 700; font-size: 1.3rem; letter-spacing: 0.05em; text-transform: uppercase; }
+.bh .spec { color: var(--muted); font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+.bh .ts { margin-left: auto; }
+.moves { list-style: none; margin: 4px 0 0; padding: 0; }
+.move { padding-block: 10px; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 5px; }
+.mtop { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.mname { font-weight: 600; font-size: 1.05rem; line-height: 1.3; min-width: 0; }
+.mmeta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 0.88rem; }
+.dur { color: var(--muted); font-variant-numeric: tabular-nums; }
+.tag { font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; }
+.invideo { color: var(--muted); font-style: italic; }
+
+.demo, .ts { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: var(--accent); border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 3px 11px 3px 9px; font-size: 0.85rem; line-height: 1.3; }
+.demo:hover, .ts:hover { border-color: var(--accent); }
+.demo .tri, .ts .tri { width: 0; height: 0; border-left: 7px solid currentColor; border-top: 4.5px solid transparent; border-bottom: 4.5px solid transparent; flex-shrink: 0; }
+.demo .src { color: var(--fg); }
+.demo .where { color: var(--muted); }
+.demo .approx { color: var(--muted); font-size: 0.78rem; }
+
+.bells { display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0; }
+.chip { display: inline-flex; align-items: center; justify-content: center; min-width: 34px; height: 26px; padding: 0 6px; border-radius: 6px; font-family: var(--display); font-weight: 700; font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+.c25 { background: var(--b25); color: var(--b25-fg); }
+.c35 { background: var(--b35); color: var(--b35-fg); }
+.c54 { background: var(--b54); color: var(--b54-fg); }
+.cbw { border: 1px solid var(--line); color: var(--muted); font-size: 0.8rem; letter-spacing: 0.06em; }
+.arrow { color: var(--muted); font-size: 0.85rem; }
+
+.rest { margin: 8px 0 0; font-size: 0.88rem; color: var(--muted); display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.rest b { color: var(--fg); font-weight: 600; }
+
+/* schedule */
+.seg { display: inline-grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line); border-radius: 10px; padding: 3px; gap: 3px; background: var(--surface); align-self: flex-start; }
+.seg button { border: 0; background: none; border-radius: 7px; padding: 6px 12px; font-size: 0.9rem; cursor: pointer; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.scroll { overflow-x: auto; }
+table.cal { border-collapse: separate; border-spacing: 4px; margin-inline: -4px; font-variant-numeric: tabular-nums; }
+table.cal th { font-family: var(--display); font-weight: 600; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 0 2px 2px; text-align: center; }
+table.cal th.wk, table.cal td.wk { text-align: left; font-family: var(--display); font-weight: 700; font-size: 1rem; color: var(--fg); padding-right: 6px; white-space: nowrap; }
+table.cal td { text-align: center; padding: 0; }
+.day { width: 42px; height: 40px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); font-family: var(--display); font-weight: 700; font-size: 1.25rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+.day.vid { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.day.mob { border-style: dashed; color: var(--muted); }
+.off { display: inline-block; width: 42px; color: var(--muted); }
+.note { font-size: 0.78rem; color: var(--muted); text-align: left !important; white-space: nowrap; padding-left: 4px !important; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 0.85rem; color: var(--muted); align-items: center; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend .day { width: 28px; height: 26px; font-size: 0.95rem; cursor: default; }
+.prose { display: flex; flex-direction: column; gap: 8px; max-width: 62ch; }
+.prose p { margin: 0; }
+.prose h3 { margin: 6px 0 0; font-family: var(--display); font-weight: 700; font-size: 1.3rem; letter-spacing: 0.04em; text-transform: uppercase; }
+
+/* bells view */
+.bellrow { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; align-items: start; padding-block: 12px; border-bottom: 1px solid var(--line); }
+.bellrow .chip { min-width: 52px; height: 34px; font-size: 1.35rem; }
+.bellrow h3 { margin: 0; font-family: var(--display); font-size: 1.15rem; letter-spacing: 0.04em; text-transform: uppercase; }
+.bellrow p { margin: 0; font-size: 0.95rem; }
+.bellrow .kg { color: var(--muted); font-size: 0.85rem; }
+ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
+.foot { margin-top: 8px; font-size: 0.82rem; color: var(--muted); max-width: 62ch; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .demo, .ts, .picker button, .day { transition: border-color 0.15s, background-color 0.15s; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <h1>8-Week Single Bell Guide</h1>
+    <p>Eric Leija's 8-week single kettlebell program, set up for your 25, 35 and 54&nbsp;lb bells. Tap ▶ on any move for a demo.</p>
+    <button class="wake" id="wake" type="button" aria-pressed="false" hidden><span class="dot"></span><span id="wakeLabel">Keep screen on</span></button>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button type="button" role="tab" id="tab-workouts" aria-selected="true" data-tab="workouts">Workouts</button>
+    <button type="button" role="tab" id="tab-schedule" aria-selected="false" data-tab="schedule">Schedule</button>
+    <button type="button" role="tab" id="tab-bells" aria-selected="false" data-tab="bells">Bells</button>
+  </nav>
+
+  <main>
+    <section class="view" id="view-workouts" role="tabpanel" aria-labelledby="tab-workouts">
+      <div class="picker" id="picker" aria-label="Choose a workout"></div>
+      <article id="workout" style="display:flex;flex-direction:column;gap:16px"></article>
+    </section>
+
+    <section class="view" id="view-schedule" role="tabpanel" aria-labelledby="tab-schedule" hidden>
+      <div class="seg" role="group" aria-label="Schedule version">
+        <button type="button" id="seg-written" aria-pressed="true" data-plan="written">As written · 6 days</button>
+        <button type="button" id="seg-three" aria-pressed="false" data-plan="three">3 days a week</button>
+      </div>
+      <div id="schedText" class="prose"></div>
+      <div class="scroll"><table class="cal" id="cal"></table></div>
+      <div class="legend">
+        <span><span class="day vid">4</span> has a follow-along video</span>
+        <span><span class="day">2</span> run from the PDF</span>
+        <span><span class="day mob">9</span> mobility day</span>
+        <span><span class="off" style="width:auto">·</span> active recovery</span>
+      </div>
+      <p class="foot">Tap a workout number to open it.</p>
+    </section>
+
+    <section class="view" id="view-bells" role="tabpanel" aria-labelledby="tab-bells" hidden>
+      <div class="prose">
+        <p>The PDF never says what weight to use. These are suggestions for your set. A chip pair like <span class="chip c25">25</span> <span class="arrow">→</span> <span class="chip c35">35</span> means start with the first bell and move up when it feels solid. Colors follow the competition kettlebell code (12&nbsp;kg blue, 16&nbsp;kg yellow, 24&nbsp;kg green).</p>
+      </div>
+      <div>
+        <div class="bellrow"><span class="chip c54">54</span><div><h3>Heavy <span class="kg">≈ 24.5 kg</span></h3><p>Two-hand deadlifts (Workout 2) and the deep squat hold (Workout 10). Not much else, at least at first.</p></div></div>
+        <div class="bellrow"><span class="chip c35">35</span><div><h3>Main bell <span class="kg">≈ 16 kg</span></h3><p>Rows, cleans, alternating swings, racked split squats, single-leg deadlifts and explosive deadlifts. Start the explosive deadlifts here, not with the 54, since you land jumps holding the bell.</p></div></div>
+        <div class="bellrow"><span class="chip c25">25</span><div><h3>Light <span class="kg">≈ 11.3 kg</span></h3><p>Anything overhead: presses, arm bars, windmills, half get-ups, overhead sit-ups, tripod presses, snatches and halos. Also the curl and triceps finisher in Workout 5.</p></div></div>
+        <div class="bellrow"><span class="chip cbw">BW</span><div><h3>Bodyweight</h3><p>Everything else. "On bell" means the bell lies on its side as a push-up handle; "target" means it's only something to reach for.</p></div></div>
+      </div>
+      <div class="prose">
+        <h3>Set up before each circuit</h3>
+        <p>There's only about 10 seconds between moves, so put both bells you need within reach before the circuit starts.</p>
+        <h3>No room to jump?</h3>
+        <ul class="plain">
+          <li>Explosive deadlift or hinge jump → two-hand swing</li>
+          <li>Plyo lunges → reverse lunges</li>
+          <li>Squat or chamber jumps → fast bodyweight squats</li>
+          <li>Lateral jumps → lateral lunges</li>
+          <li>10-yard sprints → fast high knees in place</li>
+        </ul>
+        <h3>Where the demos come from</h3>
+        <p>Most demos are Eric Leija's own, from his YouTube channel and the short clips on ericleija.com. Gaps are filled from Onnit Academy, Kettlebell Athletes, StrongFirst, NASM and a few other coaches; each ▶ names its source. Times like "2:01" jump to the moment the move starts, taken from the video's own description. A ≈ marks a close match rather than the exact move.</p>
+        <p>Standing lateral reach (a rest move in Workout 5) is the only move without a demo.</p>
+      </div>
+      <p class="foot">A personal reference, not affiliated with Eric Leija. The PDF has the full exercise descriptions. Workout names are shorthand; the PDF only numbers them.</p>
+    </section>
+  </main>
+</div>
+
+<script>
+(function () {
+  const Y = (id, t) => "https://www.youtube.com/watch?v=" + id + (t ? "&t=" + t + "s" : "");
+  const V = id => "https://vimeo.com/" + id;
+  const SH = id => "https://www.youtube.com/shorts/" + id;
+  // demo: [url, source, where, close-match]
+  const D = {
+    spineWave: [[Y("9TWbwBTUgyk"), "Leija", "how-to"]],
+    floorScorpion: [[Y("Ru68HqoB_5o", 121), "Leija", "2:01"]],
+    needle: [[Y("_zyb0mF3YBA", 2878), "Leija", "47:58"]],
+    thoracic: [[Y("nQhhC3Jg_rQ", 2286), "Leija", "38:06"]],
+    latRoll: [[Y("n3TPyZ5S4Uo", 1105), "Leija", "18:25"]],
+    spineRoll: [[Y("n3TPyZ5S4Uo", 157), "Leija", "2:37"]],
+    shoulderDrop: [[V("329157051"), "Leija", "clip"]],
+    shinboxTwist: [[Y("Ru68HqoB_5o", 178), "Leija", "2:58"]],
+    shinbox: [[Y("n3TPyZ5S4Uo", 1009), "Leija", "shinbox 16:49"]],
+    childMC: [[Y("nQhhC3Jg_rQ", 21), "Leija", "0:21"]],
+    hipFlexor: [[V("385316466"), "Leija", "hip flexor clip"]],
+    crab: [[Y("APf56fiBs18"), "Leija", "move 4 of 10"]],
+    sprawl: [[Y("APf56fiBs18"), "Leija", "move 9 of 10"]],
+    sideKick: [[Y("APf56fiBs18"), "Leija", "move 3 of 10"]],
+    frontStep: [[Y("APf56fiBs18"), "Leija", "move 1 of 10"]],
+    beastWave: [[Y("et4h7TfBDPw"), "Leija", "Workout 5 warm-up"]],
+    explDL: [[Y("_zyb0mF3YBA", 2268), "Leija", "37:48"]],
+    gunslinger: [[Y("jvH_gc9c1g8", 1071), "Leija", "17:51"]],
+    armScrew: [[Y("n3TPyZ5S4Uo", 1877), "Leija", "31:17"]],
+    halo: [[Y("e8Es4w513Aw"), "Leija", "halo how-to"]],
+    cossack: [[Y("YvxmS5BIPi8"), "Onnit Academy", ""]],
+    armBar: [[Y("iPaxBYZBdl8"), "Leija", "arm bar to windmill"]],
+    lsit: [[Y("nQhhC3Jg_rQ", 1348), "Leija", "22:28"]],
+    kickBridge: [[Y("8W0jCt_jDN4"), "Leija", "Workout 1, 2nd set"]],
+    kneePull: [[Y("WPvTjSlxSRU", 9), "Leija", "0:09"]],
+    forearm: [[Y("8rJMIgTCJRc"), "Leija", "1st move"]],
+    press: [[Y("He8TyCcK0sc"), "Leija", "press how-to"]],
+    tgu: [[Y("jgKFttG0Z7I"), "Leija", "get-up how-to"]],
+    clean: [[Y("qlrfpQEiBy8"), "Leija", "clean how-to"]],
+    snatch: [[Y("E5CUdkcNT98"), "Leija", "snatch how-to"]],
+    bootstrapper: [[Y("P5BrY-rOqCc"), "Dan John", ""]],
+    squatJump: [[Y("JwCaCql7VpQ"), "Onnit Academy", ""]],
+    rackSplit: [[Y("-Z8NXAi59SE"), "Functional Bodybuilding", ""]],
+    deadlift: [[Y("8s_XD8Fdec4"), "Kettlebell Athletes", ""]],
+    hingeJump: [[Y("_OCVsViJwZU"), "Core Principles PT", ""]],
+    splitRow: [[Y("roqSrLGZhpQ"), "Onnit", ""]],
+    altSwing: [[V("325549539"), "Leija", "clip"]],
+    sldl: [[V("325549517"), "Leija", "single-leg deadlift clip"]],
+    explSnatch: [[Y("SHrYmk_K1nk", 1379), "Leija", "Workout 8, 22:59"]],
+    rollBridge: [[Y("AHOEHFTZFkg"), "Onnit Academy", "", true]],
+    bretzel: [[Y("wSwt48ltwgk"), "Kettlebell Athletes", ""]],
+    gorilla: [[V("386265660"), "Leija", "gorilla row clip"]],
+    drcsp: [[Y("Ln8_tKTdf88"), "Leija", ""]],
+    dropLunge: [[Y("nQhhC3Jg_rQ", 1434), "Leija", "drop lunge 23:54"]],
+    bearSquat: [[Y("Z2d9_D4raCU"), "Onnit Academy", "then add a push-up"]],
+    kneelClean: [[Y("SHrYmk_K1nk", 466), "Leija", "Workout 8, 7:46"]],
+    ballRow: [[V("379812858"), "Leija", "ballistic row clip"]],
+    slowPush: [[Y("K1quBsi1b_o"), "Leija", "2nd move"]],
+    plyo: [[Y("K1quBsi1b_o"), "Leija", "3rd move"]],
+    offset: [[V("372433696"), "Leija", "offset push-up clip"]],
+    cleanCossack: [[SH("pi5oDX7I3q4"), "Leija", "clean to Cossack"]],
+    offsetClose: [[V("372433715"), "Leija", "clip"]],
+    vup: [[Y("Lk2p1gg-n0c"), "Onnit Academy", ""]],
+    squatPress: [[Y("Ln8_tKTdf88"), "Leija", "ends in squat and press"]],
+    sidePlank: [[Y("tFQ4cKF2lI8"), "Kettlebell Athletes", ""]],
+    frontKick: [[Y("iPaxBYZBdl8"), "Leija", "last move"]],
+    hingeCleanLunge: [[Y("VgOkKcLBlP0"), "Leija", "Workout 4, 2nd set"]],
+    lungeSumo: [[Y("xUlKkWcuv_I"), "Onnit Academy", ""]],
+    kneelWindmill: [[Y("pkHo4WPDe8Y"), "Leija", "3rd move"]],
+    birdDog: [[Y("ZdAHe9_HeEw"), "NASM", ""]],
+    shinboxHalo: [[Y("et4h7TfBDPw"), "Leija", "Workout 5, 1st move"]],
+    hipRoot: [[Y("aRF9rXR2TeA"), "Leija", "1st move"]],
+    hornSquat: [[Y("jvH_gc9c1g8", 625), "Leija", "10:25, hold the bottom"]],
+    windmill: [[Y("ITSmgn_BQgY"), "Onnit", "tutorial"]],
+    underswitch: [[Y("h-5jG9WDse4"), "Leija", "3rd move"]],
+    cossackHalo: [[Y("J_tHd2BIjaU"), "Matheus Frugeri", ""]],
+    childKick: [[Y("SnLWqrvbgHk"), "Chas Makk", "then add the bridge", true]],
+    tripod: [[SH("6NtQca52fm8"), "Leija", ""]],
+    sumoKnee: [[Y("85ER28zsZwo"), "Onnit Academy", ""]],
+    taiChi: [[Y("PBFbY5Mqb4c"), "Ross Eathorne", ""]],
+    fastLoose: [[Y("UTd2e_9JaZE"), "StrongFirst SA", ""]],
+  };
+  const both = (...lists) => [].concat(...lists);
+
+  // move: name, duration, bells ([] = bodyweight, "on" = on bell, "target"), demos, active-rest flag
+  const m = (n, d, b, x, a) => ({ n, d, b, x: x || null, a: !!a });
+  const BW = [];
+
+  const W = [
+    { n: 1, short: "Upper", title: "Upper body", video: [Y("8W0jCt_jDN4"), "52 min"],
+      fixes: ["The kneeling press is 30 seconds on each side."],
+      blocks: [
+        { h: "Warm-up", s: "3 rounds · 10 s between moves", moves: [
+          m("Shoulder drop / roll", "30 s", BW, D.shoulderDrop),
+          m("Kettlebell arm bar", "30 s each side", [25]),
+          m("Knee pull plank to push-up", "30 s", BW) ] },
+        { h: "Main set", s: "5 sets · 10 s between moves", moves: [
+          m("Kneeling press", "30 s each side", [25, 35], D.press),
+          m("L-sit to table top", "30 s", BW),
+          m("Close-grip push-up on the bell", "30 s", "on") ] },
+        { h: "Second set", s: "5 sets · 10 s between moves", moves: [
+          m("Floor press to half get-up", "30 s each side", [25], D.tgu),
+          m("Side kick through to hip bridge", "30 s", BW) ] },
+        { h: "Finisher", s: "5 sets · 10 s between moves", moves: [
+          m("Plank taps", "30 s each side", "target"),
+          m("Reverse lunge to halo", "30 s", [25], D.halo) ] },
+        { h: "Cool-down", s: "1 round, back to back", moves: [
+          m("Kneeling spine wave", "1 min", BW), m("Floor scorpion", "1 min", BW),
+          m("Needle arm thread", "1 min", BW), m("Standing gunslinger", "1 min", BW) ] },
+      ] },
+    { n: 2, short: "Legs", title: "Legs and jumps", video: null,
+      fixes: ["The finisher is 8 sets with 30 s rest. The PDF heading says 5.", "The split squat is 30 seconds on each leg."],
+      blocks: [
+        { h: "Warm-up", s: "3 rounds · 10 s between moves", moves: [
+          m("Child's pose to mountain climber, knee off the floor", "30 s", BW, D.childMC),
+          m("Bootstrapper squat", "30 s", BW, D.bootstrapper),
+          m("Squat jump", "30 s", BW, D.squatJump) ] },
+        { h: "Main set", s: "5 sets · 15 s between moves", moves: [
+          m("Racked split-stance squat", "30 s each leg", [35], D.rackSplit),
+          m("Squat sprawl", "30 s", BW, D.sprawl),
+          m("Crab reach", "30 s", BW, D.crab) ] },
+        { h: "Second set", s: "5 sets · 15 s between moves", moves: [
+          m("Two-hand deadlift", "30 s", [54], D.deadlift),
+          m("Hinge jump", "30 s", BW, D.hingeJump),
+          m("Loaded beast spine waves", "1 min", BW, D.beastWave, true) ] },
+        { h: "Finisher", s: "8 sets · 30 s rest", moves: [
+          m("Loaded beast to explosive deadlift", "30 s", [35], both(D.beastWave, D.explDL)) ] },
+        { h: "Cool-down", s: "1 round, back to back", moves: [
+          m("Kneeling spine wave", "1 min", BW, D.spineWave),
+          m("Shin box switch to tall kneeling hip flexor stretch", "1 min", BW, both(D.shinbox, D.hipFlexor)),
+          m("Standing lateral spine roll", "1 min", BW, D.latRoll) ] },
+      ] },
+    { n: 3, short: "Pull", title: "Pull, hinge and snatch", video: null, fixes: [],
+      blocks: [
+        { h: "Warm-up", s: "3 rounds · 10 s between moves", moves: [
+          m("Floor scorpion", "30 s", BW, D.floorScorpion),
+          m("Split-stance scap row (arm stays straight)", "30 s each side", [35], D.splitRow),
+          m("Knee pull plank to push-up", "30 s", BW, D.kneePull) ] },
+        { h: "Main set", s: "5 sets · the spine wave is your rest", moves: [
+          m("Split-stance row", "30 s each side", [35], D.splitRow),
+          m("Alternating swing", "30 s", [35], D.altSwing),
+          m("Kneeling spine wave", "1 min", BW, D.spineWave, true) ] },
+        { h: "Second set", s: "5 sets · the bridge is your rest", moves: [
+          m("Single-leg deadlift to staggered-stance clean", "30 s each side", [25, 35], both(D.sldl, D.clean)),
+          m("Thoracic bridge", "30 s", BW, D.thoracic, true) ] },
+        { h: "Finisher", s: "5 sets · the bridge is your rest", moves: [
+          m("Explosive deadlift to snatch", "30 s", [25], D.explSnatch),
+          m("Shoulder roll bridge", "30 s", BW, D.rollBridge, true) ] },
+        { h: "Cool-down", s: "1 round, back to back", moves: [
+          m("Kneeling spine wave", "1 min", BW, D.spineWave),
+          m("Needle arm thread", "1 min", BW, D.needle),
+          m("Bretzel", "1 min each side", BW, D.bretzel) ] },
+      ] },
+    { n: 4, short: "Crush", title: "Full-body crusher", video: [Y("VgOkKcLBlP0"), "37 min"],
+      fixes: ["The main set is 4 sets. The PDF heading says 3.", "The PDF's finisher table is mislabeled. The finisher is deadlift → row → clean → squat → press."],
+      blocks: [
+        { h: "Warm-up", s: "3 rounds · 10 s between moves", moves: [
+          m("Halo to squat", "30 s", [25], D.halo),
+          m("Dynamic mountain climber switches", "30 s", BW),
+          m("Child's pose to tall kneeling hip flexor stretch", "30 s", BW) ] },
+        { h: "Main set", s: "4 sets · the kick through is your rest", moves: [
+          m("Gorilla row to clean and kneeling press", "1 min", [25, 35], both(D.gorilla, D.clean)),
+          m("Side kick through", "30 s", BW, null, true) ] },
+        { h: "Second set", s: "4 sets · the Cossack is your rest", moves: [
+          m("Two-hand high-hinge clean to reverse lunge", "30 s each side", [35]),
+          m("Squat to alternating Cossack squat", "30 s", BW, null, true) ] },
+        { h: "Third set", s: "4 sets · the shoulder drop is your rest", moves: [
+          m("Bridge floor press to sit-up and straddle press", "30 s, switch sides each round", [25]),
+          m("Shoulder drop / roll", "30 s", BW, null, true) ] },
+        { h: "Finisher", s: "5 sets · 20 s rest", moves: [
+          m("Deadlift → row → clean → squat → press", "40 s", [25, 35], D.drcsp) ] },
+        { h: "Cool-down", s: "1 round, back to back", moves: [
+          m("Child's pose to mountain climber", "1 min", BW), m("Floor scorpion", "1 min", BW), m("Thoracic bridge", "1 min", BW) ] },
+      ] },
+    { n: 5, short: "Blitz", title: "Full-body blitz", video: [Y("et4h7TfBDPw"), "45 min"], fixes: [],
+      blocks: [
+        { h: "Warm-up", s: "3 rounds · 10 s between moves", moves: [
+          m("Shinbox switch with extension and halo", "30 s", [25]),
+          m("Loaded beast spine wave", "30 s", BW),
+          m("Scorpion push-up", "30 s", BW) ] },
+        { h: "Circuit 1", s: "4 rounds", moves: [
+          m("Explosive deadlift", "30 s", [35], D.explDL),
+          m("Superman hold, hands over the bell", "30 s", "target"),
+          m("Single-arm overhead sit-up, down slowly", "30 s, switch sides each round", [25]) ],
+          rest: ["90 s between rounds, keep moving:", [["Tai chi twist", "30 s", D.taiChi], ["Standing arm screw", "30 s", D.armScrew], ["Fast & loose shake", "30 s", D.fastLoose]]] },
+        { h: "Circuit 2", s: "4 rounds", moves: [
+          m("Drop lunge to squat and press", "30 s each side", [25]),
+          m("Push-up to side kick through", "30 s", BW),
+          m("Triple-extension knees", "30 s", BW) ],
+          rest: ["90 s between rounds, keep moving:", [["Kneeling spine wave", "45 s", D.spineWave], ["Standing lateral reach", "45 s", null]]] },
+        { h: "Finisher", s: "6 rounds · 45 s on, 15 s off", moves: [
+          m("Clean → squat → curl → triceps press", "45 s", [25]) ] },
+        { h: "Cool-down", s: "1 round, back to back", moves: [
+          m("Kneeling forearm stretch", "1 min", BW), m("Floor scorpion", "1 min", BW),
+          m("Thoracic bridge", "1 min", BW), m("Standing lateral spine roll", "1 min", BW) ] },
+      ] },
+    { n: 6, short: "Power", title: "Full-body power", video: null, fixes: [],
+      blocks: [
+        { h: "Warm-up", s: "3 rounds · 10 s between moves", moves: [
+          m("Crab reach", "30 s", BW, D.crab),
+          m("Drop lunge to halo", "30 s", [25], both(D.dropLunge, D.halo)),
+          m("Bear squat to push-up", "30 s", BW, D.bearSquat) ] },
+        { h: "Circuit 1", s: "4 rounds", moves: [
+          m("Kneeling clean", "30 s, switch sides each round", [25, 35], D.kneelClean),
+          m("Squat sprawl", "30 s", BW, D.sprawl),
+          m("Side kick through", "30 s", BW, D.sideKick) ],
+          rest: ["90 s between rounds, keep moving:", [["Standing spine roll", "30 s", D.spineRoll], ["Gunslingers", "30 s", D.gunslinger], ["Fast & loose shake", "30 s", D.fastLoose]]] },
+        { h: "Circuit 2", s: "4 rounds", moves: [
+          m("Ballistic row to snatch", "30 s", [25], both(D.ballRow, D.snatch)),
+          m("Push-ups, as slow as you can", "30 s", BW, D.slowPush),
+          m("Plyo lunges", "30 s", BW, D.plyo) ],
+          rest: ["90 s between rounds, keep moving:", [["Floor scorpion", "30 s", D.floorScorpion], ["Standing arm screw", "30 s", D.armScrew]]] },
+        { h: "Finisher", s: "6 rounds · 45 s on, 15 s off", moves: [
+          m("Offset push-up to clean and Cossack", "45 s", [25, 35], both(D.offset, D.cleanCossack)) ] },
+        { h: "Cool-down", s: "1 round, back to back", moves: [
+          m("Kneeling forearm stretch", "1 min", BW, D.forearm),
+          m("Floor scorpion", "1 min", BW, D.floorScorpion),
+          m("Bretzel", "1 min each side", BW, D.bretzel) ] },
+      ] },
+    { n: 7, short: "Push", title: "Push and core", video: null, fixes: [],
+      blocks: [
+        { h: "Warm-up", s: "3 rounds · 10 s between moves", moves: [
+          m("Kettlebell arm bar", "30 s each side", [25], D.armBar),
+          m("Side kick through to bridge", "30 s", BW, D.kickBridge),
+          m("Low Cossack squat switch, bell as counterweight", "30 s", [25], D.cossack) ] },
+        { h: "Circuit 1", s: "4 rounds", moves: [
+          m("Offset push-up to close-grip push-up", "30 s", "on", D.offsetClose),
+          m("Loaded beast to front step", "30 s", BW, D.frontStep),
+          m("V-ups", "30 s", BW, D.vup) ],
+          rest: ["90 s between rounds, keep moving:", [["Floor scorpion", "45 s", D.floorScorpion], ["Needle arm thread", "45 s", D.needle]]] },
+        { h: "Circuit 2", s: "4 rounds", moves: [
+          m("Squat to press", "30 s, switch sides each round", [25, 35], D.squatPress),
+          m("Side plank", "30 s, switch sides each round", BW, D.sidePlank),
+          m("Front kick throughs", "30 s", BW, D.frontKick) ],
+          rest: ["90 s between rounds, keep moving:", [["Shoulder rolls", "30 s", D.shoulderDrop], ["Kneeling spine wave", "30 s", D.spineWave]]] },
+        { h: "Finisher", s: "8 rounds · 30 s on, 30 s rest", moves: [
+          m("Explosive deadlift to horn clean and lunge", "30 s", [35], both(D.explDL, D.hingeCleanLunge)) ],
+          rest: ["During the 30 s rest:", [["Tai chi twist", "", D.taiChi]]] },
+        { h: "Cool-down", s: "1 round, back to back", moves: [
+          m("Needle arm thread", "1 min", BW, D.needle),
+          m("Thoracic bridge", "1 min", BW, D.thoracic),
+          m("Shinbox switch with spine twist", "1 min", BW, D.shinboxTwist),
+          m("Standing lateral spine roll", "1 min each side", BW, D.latRoll) ] },
+      ] },
+    { n: 8, short: "Speed", title: "Speed and power", video: [Y("SHrYmk_K1nk"), "55 min"],
+      fixes: ["Circuit 2 is deadlift to alternating snatch, so use the 25.", "The sprints need about 10 yards of space."],
+      blocks: [
+        { h: "Warm-up", s: "3 rounds · 10 s between moves", at: [Y("SHrYmk_K1nk"), "0:00"], moves: [
+          m("Child's pose to mountain climber", "30 s", BW), m("Floor scorpion", "30 s", BW), m("Chamber jumps", "30 s", BW) ] },
+        { h: "Circuit 1", s: "4 rounds", at: [Y("SHrYmk_K1nk", 466), "7:46"], moves: [
+          m("Drop push-ups", "30 s", BW),
+          m("Kneeling clean", "30 s, switch sides each round", [25, 35]),
+          m("Sprinter's lunge", "30 s, switch sides each round", BW) ],
+          rest: ["90 s between rounds, keep moving:", [["Floor scorpion", "45 s", null], ["Needle arm thread", "45 s", null]]] },
+        { h: "Circuit 2", s: "4 sets", at: [Y("SHrYmk_K1nk", 1379), "22:59"], moves: [
+          m("Explosive two-hand deadlift to alternating snatch", "30 s", [25]),
+          m("Lateral jumps", "30 s", BW) ],
+          rest: ["1 min between sets, keep moving:", [["Shoulder drops", "30 s", null], ["Kneeling spine wave", "30 s", null]]] },
+        { h: "Finisher", s: "8 sets · 30 s rest", at: [Y("SHrYmk_K1nk", 2089), "34:49"], moves: [
+          m("Push-up to 10-yard sprint", "2 reps", BW),
+          m("Ballistic row", "30 s", [35]) ] },
+        { h: "Cool-down", s: "1 round, back to back", at: [Y("SHrYmk_K1nk", 2995), "49:55"], moves: [
+          m("Needle arm thread", "1 min", BW), m("Shinbox switch with spine twist", "1 min", BW), m("Pigeon stretch", "1 min each side", BW) ] },
+      ] },
+    { n: 9, short: "Mobility", title: "Mobility A", video: null, fixes: [],
+      blocks: [
+        { h: "Warm-up", s: "3 rounds · 10 s between moves", moves: [
+          m("Gunslingers", "1 min", BW, D.gunslinger),
+          m("Standing lateral spine roll", "1 min", BW, D.latRoll),
+          m("Thoracic bridge", "1 min", BW, D.thoracic) ] },
+        { h: "Circuit 1", s: "4 sets · 10 s rest", moves: [
+          m("Kettlebell arm bar", "30 s each side", [25], D.armBar),
+          m("Reverse lunge to sumo squat", "1 min", BW, D.lungeSumo),
+          m("Kneeling spine wave", "1 min", BW, D.spineWave) ] },
+        { h: "Circuit 2", s: "4 sets · 10 s rest", moves: [
+          m("Kneeling windmill", "30 s each side", [25], D.kneelWindmill),
+          m("Floor scorpion", "1 min", BW, D.floorScorpion),
+          m("Bird dog", "1 min", BW, D.birdDog) ] },
+        { h: "Circuit 3", s: "4 sets · 10 s rest", moves: [
+          m("Shin box switch to extension and halo", "1 min", [25], D.shinboxHalo),
+          m("L-sit to table top", "1 min", BW, D.lsit) ] },
+        { h: "Cool-down", s: "1 round, back to back", moves: [
+          m("Needle arm thread", "1 min", BW, D.needle),
+          m("Child's pose to hip flexor stretch", "1 min", BW, D.hipFlexor),
+          m("Standing arm screw", "1 min", BW, D.armScrew) ] },
+      ] },
+    { n: 10, short: "Mobility", title: "Mobility B", video: null, fixes: [],
+      blocks: [
+        { h: "Warm-up", s: "3 rounds · 10 s between moves", moves: [
+          m("Hip root to reach", "1 min", BW, D.hipRoot),
+          m("Side kick through to bridge", "1 min", BW, D.kickBridge),
+          m("Horn deep squat hold", "1 min", [35, 54], D.hornSquat) ] },
+        { h: "Circuit 1", s: "4 sets · 10 s rest", moves: [
+          m("Kettlebell windmill", "1 min, switch sides each round", [25], D.windmill),
+          m("Beast underswitch to crab", "1 min", BW, D.underswitch),
+          m("Child's pose to mountain climber", "1 min", BW, D.childMC) ] },
+        { h: "Circuit 2", s: "4 sets · 10 s rest", moves: [
+          m("Cossack squat to halo", "1 min", [25], D.cossackHalo),
+          m("Child's pose to front kick through and bridge", "1 min", BW, D.childKick),
+          m("Crab reach", "1 min", BW, D.crab) ] },
+        { h: "Circuit 3", s: "4 sets · 10 s rest", moves: [
+          m("Tripod press", "1 min, switch sides each round", [25], D.tripod),
+          m("Sumo knee drops", "1 min", BW, D.sumoKnee),
+          m("Loaded beast spine waves", "1 min", BW, D.beastWave) ] },
+        { h: "Cool-down", s: "1 round, back to back", moves: [
+          m("Thoracic bridge", "1 min", BW, D.thoracic),
+          m("Kneeling spine wave", "1 min", BW, D.spineWave),
+          m("Standing lateral spine roll", "1 min", BW, D.latRoll) ] },
+      ] },
+  ];
+
+  const R = "R";
+  const WRITTEN = [
+    [4, 8, R, 1, 5, 9, R], [4, 8, R, 1, 5, 9, R],
+    [3, 6, R, 2, 7, 10, R], [3, 6, R, 2, 7, 10, R],
+    [1, 8, 4, R, 1, 3, 9], [2, 5, 4, R, 1, 2, 10],
+    [3, 6, 9, 4, R, 7, 10], [3, R, 8, 9, 1, R, 2],
+  ];
+  // his hard workouts in calendar order, three a week; mobility alternates on Saturday
+  const THREE = [
+    [4, 8, 1, 9, ""], [5, 4, 8, 10, ""], [1, 5, 3, 9, ""], [6, 2, 7, 10, "Deload"],
+    [3, 6, 2, 9, ""], [7, 1, 8, 10, ""], [4, 1, 3, 9, ""], [2, 5, 4, 10, "Deload"],
+    [1, 2, 3, 9, ""], [6, 4, 7, 10, ""], [3, 8, 1, 9, ""], [2, 4, 8, 10, "Retest 4, 8"],
+  ];
+
+  const $ = s => document.querySelector(s);
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const store = {
+    get(k) { try { return localStorage.getItem("sbg:" + k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem("sbg:" + k, v); } catch (e) {} },
+  };
+
+  function tri() { return el("span", "tri"); }
+  function demoLink([url, src, where, close]) {
+    const a = el("a", "demo"); a.href = url; a.target = "_blank"; a.rel = "noopener";
+    a.append(tri(), el("span", "src", src));
+    if (where) a.append(el("span", "where", "· " + where));
+    if (close) a.append(el("span", "approx", "≈ close match"));
+    return a;
+  }
+  function bellChips(b) {
+    const wrap = el("span", "bells");
+    if (b === "on") { wrap.append(el("span", "chip cbw", "ON BELL")); return wrap; }
+    if (b === "target") { wrap.append(el("span", "chip cbw", "TARGET")); return wrap; }
+    if (!b.length) { wrap.append(el("span", "chip cbw", "BW")); return wrap; }
+    b.forEach((w, i) => {
+      if (i) wrap.append(el("span", "arrow", "→"));
+      const c = el("span", "chip c" + w, String(w)); c.title = w + " lb"; wrap.append(c);
+    });
+    wrap.setAttribute("aria-label", b.length > 1 ? "Start with " + b[0] + " lb, move up to " + b[1] + " lb" : b[0] + " lb");
+    return wrap;
+  }
+
+  function renderPicker(cur) {
+    const p = $("#picker"); p.textContent = "";
+    W.forEach(w => {
+      const b = el("button"); b.type = "button"; b.id = "pick-" + w.n;
+      b.setAttribute("aria-pressed", String(w.n === cur));
+      b.setAttribute("aria-label", "Workout " + w.n + ", " + w.title + (w.video ? ", has video" : ""));
+      b.append(el("span", "n", String(w.n)), el("span", "l", (w.video ? "▶ " : "") + w.short));
+      b.addEventListener("click", () => showWorkout(w.n, true));
+      p.append(b);
+    });
+  }
+
+  function renderWorkout(n) {
+    const w = W.find(x => x.n === n), art = $("#workout");
+    art.textContent = "";
+    const head = el("header", "whead");
+    const t = el("div");
+    t.append(el("h2", null, w.title), el("p", "kind", w.video ? "Follow-along video · " + w.video[1] : "PDF only · no video"));
+    head.append(el("div", "big", String(w.n).padStart(2, "0")), t);
+    art.append(head);
+
+    if (w.video) {
+      const a = el("a", "play"); a.href = w.video[0]; a.target = "_blank"; a.rel = "noopener";
+      a.append(tri(), document.createTextNode("Play the follow-along"), el("small", null, w.video[1]));
+      art.append(a);
+    } else {
+      art.append(el("p", "pdfonly", "No follow-along video for this one. Run it from the PDF with an interval timer, and tap ▶ on a move to see it done."));
+    }
+    if (w.fixes.length) {
+      const f = el("div", "fixes"); f.append(el("h3", null, "PDF fixes"));
+      const ul = el("ul"); w.fixes.forEach(x => ul.append(el("li", null, x))); f.append(ul); art.append(f);
+    }
+
+    w.blocks.forEach(bl => {
+      const s = el("section", "block");
+      const bh = el("div", "bh"); bh.append(el("h3", null, bl.h), el("span", "spec", bl.s));
+      if (bl.at) { const a = el("a", "ts"); a.href = bl.at[0]; a.target = "_blank"; a.rel = "noopener"; a.append(tri(), document.createTextNode(bl.at[1])); a.setAttribute("aria-label", "Jump to " + bl.at[1] + " in the video"); bh.append(a); }
+      s.append(bh);
+      const ul = el("ul", "moves");
+      bl.moves.forEach(mv => {
+        const li = el("li", "move");
+        const top = el("div", "mtop"); top.append(el("span", "mname", mv.n), bellChips(mv.b));
+        const meta = el("div", "mmeta"); meta.append(el("span", "dur", mv.d));
+        if (mv.a) meta.append(el("span", "tag", "active rest"));
+        if (mv.x) mv.x.forEach(d => meta.append(demoLink(d)));
+        else if (w.video) meta.append(el("span", "invideo", "shown in the video"));
+        li.append(top, meta); ul.append(li);
+      });
+      s.append(ul);
+      if (bl.rest) {
+        const p = el("p", "rest"); p.append(el("b", null, bl.rest[0]));
+        bl.rest[1].forEach(([name, dur, demo]) => {
+          const span = el("span", null, name + (dur ? " " + dur : ""));
+          p.append(span);
+          if (demo) demo.forEach(d => p.append(demoLink(d)));
+        });
+        s.append(p);
+      }
+      art.append(s);
+    });
+  }
+
+  function showWorkout(n, scroll) {
+    store.set("workout", String(n));
+    renderPicker(n); renderWorkout(n);
+    if (scroll) $("#picker").scrollIntoView({ block: "start", behavior: "auto" });
+  }
+
+  function hasVideo(n) { return !!W.find(x => x.n === n).video; }
+  function dayCell(v) {
+    const td = el("td");
+    if (v === R || v === "") { const s = el("span", "off", "·"); s.title = "Active recovery"; td.append(s); return td; }
+    const b = el("button", "day" + (hasVideo(v) ? " vid" : "") + (v >= 9 ? " mob" : ""), String(v));
+    b.type = "button"; b.setAttribute("aria-label", "Open workout " + v);
+    b.addEventListener("click", () => { setTab("workouts"); showWorkout(v, true); });
+    td.append(b); return td;
+  }
+  function renderSchedule(plan) {
+    store.set("plan", plan);
+    $("#seg-written").setAttribute("aria-pressed", String(plan === "written"));
+    $("#seg-three").setAttribute("aria-pressed", String(plan === "three"));
+    const txt = $("#schedText"); txt.textContent = "";
+    const cal = $("#cal"); cal.textContent = "";
+    const thead = el("thead"), hr = el("tr"); thead.append(hr);
+    const tbody = el("tbody");
+    if (plan === "written") {
+      txt.append(el("p", null, "His 8-week calendar from the PDF. Weeks 5 and 6 have three hard days in a row and only one rest day."));
+      ["Wk", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].forEach((h, i) => hr.append(el("th", i ? null : "wk", h)));
+      WRITTEN.forEach((wk, i) => { const tr = el("tr"); tr.append(el("td", "wk", String(i + 1))); wk.forEach(v => tr.append(dayCell(v))); tbody.append(tr); });
+    } else {
+      txt.append(el("p", null, "My adaptation, not from the PDF: his hard workouts in his order, three a week, with a mobility workout on Saturday. It takes 12 weeks to get through them."));
+      txt.append(el("p", null, "Deload weeks: use one bell lighter for every move, or ease the pace on bodyweight moves. Jot down your reps for Workouts 4 and 8 in week 1, then repeat both in week 12 and compare."));
+      ["Wk", "Mon", "Wed", "Fri", "Sat", ""].forEach((h, i) => hr.append(el("th", i ? null : "wk", h)));
+      THREE.forEach((wk, i) => {
+        const tr = el("tr"); tr.append(el("td", "wk", String(i + 1)));
+        wk.slice(0, 4).forEach(v => tr.append(dayCell(v)));
+        tr.append(el("td", "note", wk[4])); tbody.append(tr);
+      });
+    }
+    cal.append(thead, tbody);
+  }
+
+  function setTab(t) {
+    store.set("tab", t);
+    ["workouts", "schedule", "bells"].forEach(k => {
+      $("#tab-" + k).setAttribute("aria-selected", String(k === t));
+      $("#view-" + k).hidden = k !== t;
+    });
+  }
+  document.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click", () => setTab(b.dataset.tab)));
+  document.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => renderSchedule(b.dataset.plan)));
+
+  // screen wake lock for mid-workout use
+  const wakeBtn = $("#wake"); let lock = null, wantLock = false;
+  async function acquire() {
+    try { lock = await navigator.wakeLock.request("screen"); lock.addEventListener("release", () => { lock = null; sync(); }); }
+    catch (e) { lock = null; wantLock = false; $("#wakeLabel").textContent = "Screen lock not available here"; }
+    sync();
+  }
+  function sync() { wakeBtn.setAttribute("aria-pressed", String(!!lock)); if (lock) $("#wakeLabel").textContent = "Screen stays on"; else if (!wantLock) $("#wakeLabel").textContent = "Keep screen on"; }
+  if ("wakeLock" in navigator) {
+    wakeBtn.hidden = false;
+    wakeBtn.addEventListener("click", () => { if (lock) { wantLock = false; lock.release(); } else { wantLock = true; acquire(); } });
+    document.addEventListener("visibilitychange", () => { if (wantLock && !lock && document.visibilityState === "visible") acquire(); });
+  }
+
+  // initial state: #w4, #schedule, #bells deep links, else the last place you were
+  const hash = (location.hash || "").slice(1);
+  let start = parseInt(store.get("workout"), 10); if (!(start >= 1 && start <= 10)) start = 1;
+  let tab = store.get("tab") || "workouts";
+  const hw = /^w(\d{1,2})$/.exec(hash);
+  if (hw && +hw[1] >= 1 && +hw[1] <= 10) { start = +hw[1]; tab = "workouts"; }
+  else if (hash === "schedule" || hash === "bells" || hash === "workouts") tab = hash;
+  showWorkout(start, false);
+  renderSchedule(store.get("plan") === "three" ? "three" : "written");
+  setTab(["workouts", "schedule", "bells"].includes(tab) ? tab : "workouts");
+
+  window.addEventListener("hashchange", () => {
+    const h = location.hash.slice(1), hm = /^w(\d{1,2})$/.exec(h);
+    if (hm && +hm[1] >= 1 && +hm[1] <= 10) { setTab("workouts"); showWorkout(+hm[1], true); }
+    else if (["workouts", "schedule", "bells"].includes(h)) setTab(h);
+  });
+})();
+</script>
+</body>
+</html>
