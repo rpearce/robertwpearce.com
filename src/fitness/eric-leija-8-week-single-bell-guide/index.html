@@ -161,7 +161,7 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
 <div class="wrap">
   <header class="top">
     <h1>8-Week Single Bell Guide</h1>
-    <p>Eric Leija's 8-week single kettlebell program, set up for your 25, 35 and 54&nbsp;lb bells. Tap ▶ on any move for a demo.</p>
+    <p>Eric Leija's 8-week single kettlebell program (<a href="8-Week-Single-Kettlebell-and-Bodyweight-Program-Full-Draft-1.pdf" target="_blank" rel="noopener">PDF</a>), set up for your 25, 35 and 54&nbsp;lb bells. Tap ▶ on any move for a demo.</p>
     <button class="wake" id="wake" type="button" aria-pressed="false" hidden><span class="dot"></span><span id="wakeLabel">Keep screen on</span></button>
   </header>
 
@@ -218,7 +218,7 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
         <p>Most demos are Eric Leija's own, from his YouTube channel and the short clips on ericleija.com. Gaps are filled from Onnit Academy, Kettlebell Athletes, StrongFirst, NASM and a few other coaches; each ▶ names its source. Times like "2:01" jump to the moment the move starts, taken from the video's own description. A ≈ marks a close match rather than the exact move.</p>
         <p>Standing lateral reach (a rest move in Workout 5) is the only move without a demo.</p>
       </div>
-      <p class="foot">A personal reference, not affiliated with Eric Leija. The PDF has the full exercise descriptions. Workout names are shorthand; the PDF only numbers them.</p>
+      <p class="foot">A personal reference, not affiliated with Eric Leija. <a href="8-Week-Single-Kettlebell-and-Bodyweight-Program-Full-Draft-1.pdf" target="_blank" rel="noopener">The PDF</a> has the full exercise descriptions. Workout names are shorthand; the PDF only numbers them.</p>
     </section>
   </main>
 </div>
@@ -545,6 +545,11 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
     [1, 2, 3, 9, ""], [6, 4, 7, 10, ""], [3, 8, 1, 9, ""], [2, 4, 8, 10, "Retest 4, 8"],
   ];
 
+  const PDF = "8-Week-Single-Kettlebell-and-Bodyweight-Program-Full-Draft-1.pdf";
+  const PDF_CAL = 7;
+  // first PDF page of each workout; the last entry is one past the final page
+  const PDF_START = [8, 14, 20, 26, 33, 39, 45, 51, 57, 63, 69];
+
   const $ = s => document.querySelector(s);
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
   const store = {
@@ -553,6 +558,10 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
   };
 
   function tri() { return el("span", "tri"); }
+  function pdfLink(page, text) {
+    const a = el("a", null, text); a.href = PDF + "#page=" + page; a.target = "_blank"; a.rel = "noopener";
+    return a;
+  }
   function demoLink([url, src, where, close]) {
     const a = el("a", "demo"); a.href = url; a.target = "_blank"; a.rel = "noopener";
     a.append(tri(), el("span", "src", src));
@@ -590,7 +599,10 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
     art.textContent = "";
     const head = el("header", "whead");
     const t = el("div");
-    t.append(el("h2", null, w.title), el("p", "kind", w.video ? "Follow-along video · " + w.video[1] : "PDF only · no video"));
+    const page = PDF_START[w.n - 1];
+    const kind = el("p", "kind", w.video ? "Follow-along video · " + w.video[1] + " · " : "No video · ");
+    kind.append(pdfLink(page, "PDF pp. " + page + "–" + (PDF_START[w.n] - 1)));
+    t.append(el("h2", null, w.title), kind);
     head.append(el("div", "big", String(w.n).padStart(2, "0")), t);
     art.append(head);
 
@@ -599,7 +611,9 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
       a.append(tri(), document.createTextNode("Play the follow-along"), el("small", null, w.video[1]));
       art.append(a);
     } else {
-      art.append(el("p", "pdfonly", "No follow-along video for this one. Run it from the PDF with an interval timer, and tap ▶ on a move to see it done."));
+      const p = el("p", "pdfonly", "No follow-along video for this one. Run it from ");
+      p.append(pdfLink(page, "the PDF"), document.createTextNode(" with an interval timer, and tap ▶ on a move to see it done."));
+      art.append(p);
     }
     if (w.fixes.length) {
       const f = el("div", "fixes"); f.append(el("h3", null, "PDF fixes"));
@@ -659,7 +673,9 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
     const thead = el("thead"), hr = el("tr"); thead.append(hr);
     const tbody = el("tbody");
     if (plan === "written") {
-      txt.append(el("p", null, "His 8-week calendar from the PDF. Weeks 5 and 6 have three hard days in a row and only one rest day."));
+      const p = el("p", null, "His 8-week calendar from ");
+      p.append(pdfLink(PDF_CAL, "the PDF"), document.createTextNode(". Weeks 5 and 6 have three hard days in a row and only one rest day."));
+      txt.append(p);
       ["Wk", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].forEach((h, i) => hr.append(el("th", i ? null : "wk", h)));
       WRITTEN.forEach((wk, i) => { const tr = el("tr"); tr.append(el("td", "wk", String(i + 1))); wk.forEach(v => tr.append(dayCell(v))); tbody.append(tr); });
     } else {
