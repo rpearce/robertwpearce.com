@@ -192,8 +192,12 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
 .dwhere { opacity: 0.85; overflow: hidden; text-overflow: ellipsis; }
 .dbells { margin-left: auto; flex-shrink: 0; display: inline-flex; padding-right: 2px; }
 .dname { font-family: var(--display); font-weight: 700; font-size: 1.5rem; line-height: 1.05; letter-spacing: 0.01em; text-transform: uppercase; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
-.dsub { font-size: 0.88rem; }
-.dsub:empty, .dnext:empty { display: none; }
+.dsub { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: 0.88rem; }
+.dsub > :empty, .dsub:not(:has(> :not(:empty))), .dnext:empty { display: none; }
+.ddemo { display: inline-flex; flex-wrap: wrap; gap: 4px 6px; }
+.dock .demo { color: inherit; background: none; border-color: color-mix(in srgb, currentColor 45%, transparent); padding-block: 1px; }
+.dock .demo:hover { border-color: currentColor; }
+.dock .demo :is(.src, .where, .approx) { color: inherit; }
 .dnext { font-size: 0.85rem; opacity: 0.85; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .dock .chip { height: 22px; min-width: 30px; font-size: 0.95rem; box-shadow: 0 0 0 2px var(--dk-fg); }
 .dock .cbw { color: var(--dk-fg); border-color: transparent; }
@@ -307,7 +311,7 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
     <div class="dtext">
       <div class="dtop"><span class="dphase" id="dPhase"></span><span class="dwhere" id="dWhere"></span><span class="dbells" id="dBells"></span></div>
       <div class="dname" id="dName"></div>
-      <div class="dsub" id="dSub"></div>
+      <div class="dsub"><span id="dSub"></span><span class="ddemo" id="dDemo"></span></div>
       <div class="dnext" id="dNext"></div>
     </div>
   </div>
@@ -838,7 +842,7 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
         if (last && r === rounds) return;
         if (last && between) {
           let left = between;
-          (bl.rest ? bl.rest[1] : []).forEach(([n, d], i) => { const x = Math.min(secsOf(d) || left, left); if (x > 0) { out.push(at(nr, { kind: "easy", secs: x, n, k: bi + ".r" + i })); left -= x; } });
+          (bl.rest ? bl.rest[1] : []).forEach(([n, d, demo], i) => { const x = Math.min(secsOf(d) || left, left); if (x > 0) { out.push(at(nr, { kind: "easy", secs: x, n, demo, k: bi + ".r" + i })); left -= x; } });
           if (left > 0) out.push(at(nr, { kind: "rest", secs: left }));
         } else if (gap && !mv.a) out.push(at(nr, { kind: "rest", secs: gap })); // an active-rest move is the rest
       });
@@ -859,8 +863,10 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
   const remain = () => T.run ? T.end - now() : T.left; // ms; goes below zero (counting up) on an untimed rep set
   function nextDo(i) { for (let j = i + 1; j < T.steps.length; j++) if (!/^(rest|ready)$/.test(T.steps[j].kind)) return T.steps[j]; return null; }
 
-  // sound mode: 0 voice and beeps, 1 beeps, 2 muted
-  let mode = +store.get("sound") || 0, ac = null, out = null, bufs = null, queued = [], gen = 0, sayT = 0;
+  // sound mode: 0 voice and beeps, 1 beeps, 2 muted. No voice in Firefox on macOS: its speech ends
+  // every line with a loud thump (https://bugzilla.mozilla.org/show_bug.cgi?id=2076248)
+  const canSpeak = "speechSynthesis" in window && !/Macintosh.*Firefox\//.test(navigator.userAgent);
+  let mode = Math.max(+store.get("sound") || 0, canSpeak ? 0 : 1), ac = null, out = null, bufs = null, queued = [], gen = 0, sayT = 0;
   // beeps cut from "Short beep countdown" by gurie (Freesound, via Pixabay): sounds/tick, work, rest, side, done
   const SFX = ["tick", "work", "rest", "side", "done"], VOLUME = 0.35;
   function audio() {
@@ -989,7 +995,7 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
     btn.innerHTML = (reps ? ICON.done : T.run ? ICON.pause : ICON.play) + '<span class="lbl">' + (!T.on ? "Start" : T.done ? "Again" : "") + "</span>";
     btn.setAttribute("aria-label", !T.on ? "Start the workout timer" : T.done ? "Run it again" : reps ? "Done, next move" : T.run ? "Pause" : "Resume");
     dock.toggleAttribute("data-paused", T.on && !T.run && !T.done);
-    $("#dNext").textContent = ""; $("#dBells").textContent = "";
+    $("#dNext").textContent = ""; $("#dBells").textContent = ""; $("#dDemo").textContent = "";
     if (!T.on) { // idle: what the open workout will take
       const w = W.find(x => x.n === viewing);
       dock.dataset.phase = "idle";
@@ -1011,6 +1017,11 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
         : st.kind === "reps" ? st.mv.d + ", tap ✓ when done" : !st.mv ? "Between rounds"
         : /switch sides each round/.test(st.mv.d) ? "Switch sides each round" : "";
       if (shown && shown.mv) $("#dBells").append(bellChips(shown.mv.b));
+      // the shown move's demo, else its spot in the follow-along video
+      const demos = shown && (shown.mv ? shown.mv.x : shown.demo), bl = shown && T.w.blocks[shown.bi];
+      if (demos) demos.forEach(d => $("#dDemo").append(demoLink(d)));
+      else if (bl && bl.at) $("#dDemo").append(demoLink([bl.at[0], "Follow-along", bl.at[1]]));
+      else if (T.w.video) $("#dDemo").append(demoLink([T.w.video[0], "Follow-along", "video"]));
       if (doing && nx) $("#dNext").textContent = "Next: " + nameOf(nx);
     }
     $("#dHalf").hidden = !(T.on && !T.done && T.steps[T.i].half);
@@ -1060,7 +1071,7 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
   $("#dSkip").addEventListener("click", () => jump(1));
   $("#dEnd").addEventListener("click", end);
   $("#dSnd").addEventListener("click", () => {
-    mode = (mode + 1) % 3; store.set("sound", String(mode)); paintSound();
+    mode = mode === 2 ? (canSpeak ? 0 : 1) : mode + 1; store.set("sound", String(mode)); paintSound();
     if (mode) quiet();
     if (mode < 2 && T.run) { audio(); schedule(); }
   });
