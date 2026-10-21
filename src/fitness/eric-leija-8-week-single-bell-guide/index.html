@@ -3,330 +3,546 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<style>
-:root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
-body { margin: 0; }
-img { max-width: 100%; }
-[hidden] { display: none !important; }
-</style>
 <title>8-Week Single Bell Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Public+Sans:wght@400;500;600&display=swap">
 <style>
-/* Layout: one phone-width column; sticky tab bar; a 10-button workout picker; each workout is a list of timed blocks with move rows. */
+/*
+ * Layout: one phone-width column; sticky tab bar; a workout picker; each workout is a list of
+ * timed blocks with move rows; a timer dock fixed to the bottom.
+ *
+ * Sizes follow the reader's default font size: no root font-size, rem for type and layout, em
+ * for boxes around text, ch for measure, px only for hairlines, rings and shadows. State lives
+ * in ARIA and data attributes (aria-selected, aria-pressed, aria-current="step", data-next,
+ * data-phase, data-kind, data-lb). Colors use light-dark(); data-theme on <html> overrides the OS.
+ */
 :root {
-  --bg: #EEF0EC;
-  --surface: #FFFFFF;
-  --sunk: #E3E6E1;
-  --fg: #171A1E;
-  --muted: #586067;
-  --line: #D1D5CF;
-  --accent: #B42E1A;
-  --on-accent: #FFFFFF;
+  color-scheme: light dark;
+  -webkit-text-size-adjust: 100%;
+  padding-block: env(safe-area-inset-top, 0px) env(safe-area-inset-bottom, 0px);
+  scroll-padding-block: calc(env(safe-area-inset-top, 0px) + var(--tabs, 3rem) + 0.5rem) calc(var(--dock, 0px) + 0.5rem);
+  --bg: light-dark(#EEF0EC, #111316);
+  --surface: light-dark(#FFFFFF, #1A1D21);
+  --sunk: light-dark(#E3E6E1, #23272C);
+  --fg: light-dark(#171A1E, #E7E9E5);
+  --muted: light-dark(#586067, #9DA4AB);
+  --line: light-dark(#D1D5CF, #2E3338);
+  --accent: light-dark(#B42E1A, #FF735C);
+  --on-accent: light-dark(#FFFFFF, #1A0A06);
   /* competition kettlebell colour code: 12 kg blue, 16 kg yellow, 24 kg green */
-  --b25: #2560C6; --b25-fg: #FFFFFF;
-  --b35: #E7B416; --b35-fg: #1C1600;
-  --b54: #1E8649; --b54-fg: #FFFFFF;
+  --b25: light-dark(#2560C6, #5C93EF); --b25-fg: light-dark(#FFFFFF, #07132C);
+  --b35: light-dark(#E7B416, #F3C93B); --b35-fg: #1C1600;
+  --b54: light-dark(#1E8649, #45B974); --b54-fg: light-dark(#FFFFFF, #04200E);
   /* timer phases: work uses the accent, get ready the 35's yellow */
-  --rest: #1F3B57; --on-rest: #F2F4F0;
-  --easy: #17663F; --on-easy: #FFFFFF;
+  --rest: light-dark(#1F3B57, #29435F); --on-rest: light-dark(#F2F4F0, #E7E9E5);
+  --easy: light-dark(#17663F, #1D6A43); --on-easy: light-dark(#FFFFFF, #E9F6EE);
+  --easy-text: light-dark(#17663F, #45B974);
+  --done: light-dark(#17663F, #45B974); --on-done: light-dark(#FFFFFF, #04200E);
   --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
   --body: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #111316; --surface: #1A1D21; --sunk: #23272C; --fg: #E7E9E5; --muted: #9DA4AB; --line: #2E3338;
-    --accent: #FF735C; --on-accent: #1A0A06;
-    --b25: #5C93EF; --b25-fg: #07132C; --b35: #F3C93B; --b35-fg: #1C1600; --b54: #45B974; --b54-fg: #04200E;
-    --rest: #29435F; --on-rest: #E7E9E5; --easy: #1D6A43; --on-easy: #E9F6EE;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #111316; --surface: #1A1D21; --sunk: #23272C; --fg: #E7E9E5; --muted: #9DA4AB; --line: #2E3338;
-  --accent: #FF735C; --on-accent: #1A0A06;
-  --b25: #5C93EF; --b25-fg: #07132C; --b35: #F3C93B; --b35-fg: #1C1600; --b54: #45B974; --b54-fg: #04200E;
-  --rest: #29435F; --on-rest: #E7E9E5; --easy: #1D6A43; --on-easy: #E9F6EE;
-  color-scheme: dark;
-}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
 
 * { box-sizing: border-box; }
-body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.45; }
+[hidden] { display: none !important; }
+body {
+  max-inline-size: 45rem;
+  margin: 0 auto;
+  padding: 1rem 1rem calc(3.5rem + var(--dock, 0px));
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  font-size: 1rem;
+  line-height: 1.45;
+}
 a { color: inherit; }
 button { font: inherit; color: inherit; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+.sr-only { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
-.wrap { max-width: 720px; margin: 0 auto; padding-inline: 16px; padding-block: 16px calc(56px + var(--dock, 0px)); }
+/* skip link: shown only while focused, and only while the timer dock is on screen */
+body > a:first-child {
+  position: fixed; z-index: 20; inset-block-start: 0.5rem; inset-inline-start: 0.5rem;
+  padding: 0.5rem 0.75rem; border: 1px solid var(--line); border-radius: 0.5rem;
+  background: var(--surface); color: var(--fg);
+  &:not(:focus) { inline-size: 1px; block-size: 1px; padding: 0; border: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
+body:has(> .dock[hidden]) > a:first-child { display: none; }
 
-.top { display: flex; flex-direction: column; gap: 4px; padding-block: 8px 12px; }
-.top h1 { font-family: var(--display); font-weight: 700; font-size: 2.1rem; line-height: 1.05; letter-spacing: 0.01em; margin: 0; text-transform: uppercase; text-wrap: balance; }
-.top p { margin: 0; color: var(--muted); font-size: 0.95rem; max-width: 60ch; }
-.wake { align-self: flex-start; margin-top: 6px; display: inline-flex; align-items: center; gap: 8px; background: none; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: 0.85rem; color: var(--muted); cursor: pointer; }
-.wake[aria-pressed="true"] { color: var(--fg); border-color: var(--fg); }
-.wake .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
-.wake[aria-pressed="true"] .dot { background: var(--b54); }
+body > header {
+  display: flex; flex-direction: column; gap: 0.25rem; padding-block: 0.5rem 0.75rem;
+  > h1 { font-family: var(--display); font-weight: 700; font-size: 2.1rem; line-height: 1.05; letter-spacing: 0.01em; margin: 0; text-transform: uppercase; text-wrap: balance; }
+  > p { margin: 0; color: var(--muted); font-size: 0.95rem; max-inline-size: 60ch; }
+  /* screen wake lock toggle */
+  > button {
+    align-self: flex-start; margin-block-start: 0.375rem; display: inline-flex; align-items: center; gap: 0.5rem;
+    background: none; border: 1px solid var(--line); border-radius: 999px; padding: 0.25rem 0.75rem;
+    font-size: 0.85rem; color: var(--muted); cursor: pointer;
+    &::before { content: ""; inline-size: 0.5rem; block-size: 0.5rem; border-radius: 50%; background: var(--line); }
+    &[aria-pressed="true"] { color: var(--fg); border-color: var(--fg); &::before { background: var(--b54); } }
+    &:disabled { cursor: default; }
+  }
+}
 
-.tabs { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--line); margin-inline: -16px; padding-inline: 16px; }
-.tabs button { background: none; border: 0; border-bottom: 3px solid transparent; padding: 10px 4px 8px; font-family: var(--display); font-weight: 600; font-size: 1.15rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); cursor: pointer; }
-.tabs button[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--accent); }
+[role="tablist"] {
+  position: sticky; inset-block-start: env(safe-area-inset-top, 0px); z-index: 5;
+  display: flex; flex-wrap: wrap; margin-inline: -1rem; padding-inline: 1rem;
+  background: var(--bg); border-block-end: 1px solid var(--line);
+}
+[role="tab"] {
+  flex: 1 1 0; min-inline-size: fit-content;
+  background: none; border: 0; border-block-end: 3px solid transparent; padding: 0.625rem 0.25rem 0.5rem;
+  font-family: var(--display); font-weight: 600; font-size: 1.15rem; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); cursor: pointer;
+  &[aria-selected="true"] { color: var(--fg); border-block-end-color: var(--accent); }
+}
+[role="tabpanel"] { container-type: inline-size; padding-block-start: 1rem; display: flex; flex-direction: column; gap: 1.25rem; }
 
-.view { padding-top: 16px; display: flex; flex-direction: column; gap: 20px; }
+/* workout picker: 5 across, 10 across when there's room, fewer when the text is large */
+.picker {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(3.75rem, 1fr)); gap: 0.375rem;
+  @container (width >= 20.25rem) { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  @container (width >= 40.875rem) { grid-template-columns: repeat(10, minmax(0, 1fr)); }
+  button {
+    display: flex; flex-direction: column; align-items: center; min-inline-size: 0; padding: 0.375rem 0.125rem 0.4375rem;
+    border: 1px solid var(--line); border-radius: 0.5rem; background: var(--surface); cursor: pointer;
+    > span:first-child { font-family: var(--display); font-weight: 700; font-size: 1.6rem; line-height: 1; font-variant-numeric: tabular-nums; }
+    > span:nth-child(2) { font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); text-align: center; }
+    &[data-video] > span:nth-child(2)::before { content: "▶ "; content: "▶ " / ""; }
+    &[aria-pressed="true"] { background: var(--fg); border-color: var(--fg); color: var(--bg); > span:nth-child(2) { color: var(--bg); opacity: 0.8; } }
+  }
+}
 
-/* workout picker */
-.picker { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
-@media (min-width: 620px) { .picker { grid-template-columns: repeat(10, 1fr); } }
-.picker button { display: flex; flex-direction: column; align-items: center; gap: 0; padding: 6px 2px 7px; border: 1px solid var(--line); background: var(--surface); border-radius: 8px; cursor: pointer; min-width: 0; }
-.picker .n { font-family: var(--display); font-weight: 700; font-size: 1.6rem; line-height: 1; font-variant-numeric: tabular-nums; }
-.picker .l { font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
-.picker button[aria-pressed="true"] { background: var(--fg); border-color: var(--fg); color: var(--bg); }
-.picker button[aria-pressed="true"] .l { color: var(--bg); opacity: 0.8; }
+/* the open workout */
+article {
+  display: flex; flex-direction: column; gap: 1rem;
+  > header {
+    display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0.875rem;
+    > span { font-family: var(--display); font-weight: 700; font-size: 4rem; line-height: 0.8; color: var(--accent); font-variant-numeric: tabular-nums; }
+    > div { flex: 1 1 10rem; min-inline-size: 0; }
+    h2 { font-family: var(--display); font-weight: 700; font-size: 1.75rem; line-height: 1.05; margin: 0; text-transform: uppercase; letter-spacing: 0.01em; text-wrap: balance; }
+    p { margin: 0.125rem 0 0; color: var(--muted); font-size: 0.9rem; }
+  }
+  /* the follow-along video */
+  > a {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.625rem;
+    background: var(--accent); color: var(--on-accent); text-decoration: none; border-radius: 0.625rem; padding: 0.75rem 1rem;
+    font-family: var(--display); font-weight: 700; font-size: 1.25rem; letter-spacing: 0.05em; text-transform: uppercase;
+    small { font-family: var(--body); font-weight: 500; font-size: 0.85rem; letter-spacing: 0; text-transform: none; opacity: 0.85; }
+  }
+  /* no video: run it from the PDF */
+  > p { background: var(--sunk); border-radius: 0.625rem; padding: 0.75rem 0.875rem; margin: 0; font-size: 0.92rem; }
+  /* PDF fixes */
+  > div {
+    background: var(--sunk); border-radius: 0.625rem; padding: 0.75rem 0.875rem; font-size: 0.92rem;
+    h3 { margin: 0 0 0.25rem; font-family: var(--display); font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+    ul { margin: 0; padding-inline-start: 1.125rem; display: flex; flex-direction: column; gap: 0.125rem; }
+  }
+}
 
-/* workout */
-.whead { display: flex; align-items: flex-end; gap: 14px; }
-.whead .big { font-family: var(--display); font-weight: 700; font-size: 4rem; line-height: 0.8; color: var(--accent); font-variant-numeric: tabular-nums; }
-.whead h2 { font-family: var(--display); font-weight: 700; font-size: 1.75rem; line-height: 1.05; margin: 0; text-transform: uppercase; letter-spacing: 0.01em; text-wrap: balance; }
-.whead .kind { margin: 2px 0 0; color: var(--muted); font-size: 0.9rem; }
-.play { display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--accent); color: var(--on-accent); text-decoration: none; border-radius: 10px; padding: 12px 16px; font-family: var(--display); font-weight: 700; font-size: 1.25rem; letter-spacing: 0.05em; text-transform: uppercase; }
-.play small { font-family: var(--body); font-weight: 500; font-size: 0.85rem; letter-spacing: 0; text-transform: none; opacity: 0.85; }
-.pdfonly { background: var(--sunk); border-radius: 10px; padding: 12px 14px; margin: 0; font-size: 0.92rem; }
-.fixes { background: var(--sunk); border-radius: 10px; padding: 12px 14px; font-size: 0.92rem; }
-.fixes h3 { margin: 0 0 4px; font-family: var(--display); font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-.fixes ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 2px; }
+/* a block of moves; while the timer runs, the block you're in, the move you're on, and the one up next */
+article > section {
+  border-block-start: 2px solid var(--fg); padding-block-start: 0.5rem;
+  &:has([aria-current="step"], [data-next]) { border-block-start-color: var(--accent); }
+  > header {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 0.75rem;
+    h3 { margin: 0; font-family: var(--display); font-weight: 700; font-size: 1.3rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    p { margin: 0; color: var(--muted); font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+    > span { font-family: var(--display); font-weight: 700; font-size: 1.05rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); font-variant-numeric: tabular-nums; &:empty { display: none; } }
+    > .demo { margin-inline-start: auto; }
+  }
+  > ul { list-style: none; margin: 0.25rem 0 0; padding: 0; }
+  > ul > li {
+    display: flex; flex-direction: column; gap: 0.3125rem; padding-block: 0.625rem; border-block-end: 1px solid var(--line);
+    /* name and bells */
+    > div:first-child {
+      display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem;
+      > span:first-child {
+        min-inline-size: 0; font-weight: 600; font-size: 1.05rem; line-height: 1.3;
+        &::before { display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+      }
+    }
+    /* duration, tag, demos */
+    > div:last-child {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.375rem 0.625rem; font-size: 0.88rem;
+      > span:first-child { color: var(--muted); font-variant-numeric: tabular-nums; }
+      > small { font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 0.25rem; padding: 0 0.3125rem; }
+      > i { color: var(--muted); }
+    }
+    &:is([aria-current="step"], [data-next]) { margin-inline: -0.625rem; padding-inline: 0.625rem; border-radius: 0.5rem; }
+    &[aria-current="step"] {
+      background: color-mix(in srgb, var(--accent) 12%, var(--surface)); box-shadow: inset 4px 0 0 var(--accent);
+      > div:first-child > span:first-child::before { content: "Now"; color: var(--accent); }
+      &[data-kind="easy"] {
+        background: color-mix(in srgb, var(--b54) 14%, var(--surface)); box-shadow: inset 4px 0 0 var(--b54);
+        > div:first-child > span:first-child::before { content: "Now · active rest"; color: var(--easy-text); }
+      }
+    }
+    &[data-next] {
+      background: var(--sunk);
+      > div:first-child > span:first-child::before { content: "Up next"; color: var(--muted); }
+    }
+  }
+  /* what to do in the rest between rounds */
+  > p {
+    margin: 0.5rem 0 0; font-size: 0.88rem; color: var(--muted); display: flex; flex-wrap: wrap; align-items: center; gap: 0.375rem 0.5rem;
+    b { color: var(--fg); font-weight: 600; }
+    > span[aria-current="step"] { background: color-mix(in srgb, var(--b54) 20%, transparent); color: var(--fg); font-weight: 600; border-radius: 0.25rem; padding: 1px 0.375rem; margin-inline: -0.375rem; }
+  }
+}
 
-.block { border-top: 2px solid var(--fg); padding-top: 8px; }
-.bh { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
-.bh h3 { margin: 0; font-family: var(--display); font-weight: 700; font-size: 1.3rem; letter-spacing: 0.05em; text-transform: uppercase; }
-.bh .spec { color: var(--muted); font-size: 0.9rem; font-variant-numeric: tabular-nums; }
-.bh .ts { margin-left: auto; }
-.moves { list-style: none; margin: 4px 0 0; padding: 0; }
-.move { padding-block: 10px; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 5px; }
-.mtop { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-.mname { font-weight: 600; font-size: 1.05rem; line-height: 1.3; min-width: 0; }
-.mmeta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 0.88rem; }
-.dur { color: var(--muted); font-variant-numeric: tabular-nums; }
-.tag { font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; }
-.invideo { color: var(--muted); font-style: italic; }
+/* demo and timestamp links: a pill with a play triangle */
+.demo {
+  display: inline-flex; align-items: center; gap: 0.375rem; min-block-size: 1.5rem;
+  text-decoration: none; color: var(--accent); border: 1px solid var(--line); background: var(--surface);
+  border-radius: 999px; padding: 0.1875rem 0.6875rem 0.1875rem 0.5625rem; font-size: 0.85rem; line-height: 1.3;
+  &:hover { border-color: var(--accent); }
+  > span:first-child { color: var(--fg); }
+  > span:nth-child(2) { color: var(--muted); }
+  > small { color: var(--muted); font-size: 0.78rem; }
+  &::before {
+    content: ""; flex-shrink: 0; forced-color-adjust: none;
+    border-inline-start: 0.4375rem solid currentColor; border-block: 0.28125rem solid transparent;
+  }
+}
 
-.demo, .ts { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: var(--accent); border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 3px 11px 3px 9px; font-size: 0.85rem; line-height: 1.3; }
-.demo:hover, .ts:hover { border-color: var(--accent); }
-.demo .tri, .ts .tri { width: 0; height: 0; border-left: 7px solid currentColor; border-top: 4.5px solid transparent; border-bottom: 4.5px solid transparent; flex-shrink: 0; }
-.demo .src { color: var(--fg); }
-.demo .where { color: var(--muted); }
-.demo .approx { color: var(--muted); font-size: 0.78rem; }
-
-.bells { display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0; }
-.chip { display: inline-flex; align-items: center; justify-content: center; min-width: 34px; height: 26px; padding: 0 6px; border-radius: 6px; font-family: var(--display); font-weight: 700; font-size: 1.05rem; font-variant-numeric: tabular-nums; }
-.c25 { background: var(--b25); color: var(--b25-fg); }
-.c35 { background: var(--b35); color: var(--b35-fg); }
-.c54 { background: var(--b54); color: var(--b54-fg); }
-.cbw { border: 1px solid var(--line); color: var(--muted); font-size: 0.8rem; letter-spacing: 0.06em; }
-.arrow { color: var(--muted); font-size: 0.85rem; }
-
-.rest { margin: 8px 0 0; font-size: 0.88rem; color: var(--muted); display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
-.rest b { color: var(--fg); font-weight: 600; }
+/* bell chips; data-lb holds the weight, a chip without one is bodyweight, on bell or target */
+.bells { display: inline-flex; align-items: center; gap: 0.25rem; flex-shrink: 0; > :not(.chip) { color: var(--muted); font-size: 0.85rem; } }
+.chip {
+  display: inline-flex; align-items: center; justify-content: center; min-inline-size: 2.025em; min-block-size: 1.55em; padding: 0 0.375rem;
+  border-radius: 0.375rem; font-family: var(--display); font-weight: 700; font-size: 1.05rem; font-variant-numeric: tabular-nums;
+  &[data-lb="25"] { background: var(--b25); color: var(--b25-fg); }
+  &[data-lb="35"] { background: var(--b35); color: var(--b35-fg); }
+  &[data-lb="54"] { background: var(--b54); color: var(--b54-fg); }
+  &:not([data-lb]) { border: 1px solid var(--line); color: var(--muted); font-size: 0.8rem; letter-spacing: 0.06em; min-inline-size: 2.65em; min-block-size: 2.03em; }
+}
 
 /* schedule */
-.seg { display: inline-grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line); border-radius: 10px; padding: 3px; gap: 3px; background: var(--surface); align-self: flex-start; }
-.seg button { border: 0; background: none; border-radius: 7px; padding: 6px 12px; font-size: 0.9rem; cursor: pointer; color: var(--muted); }
-.seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
-.scroll { overflow-x: auto; }
-table.cal { border-collapse: separate; border-spacing: 4px; margin-inline: -4px; font-variant-numeric: tabular-nums; }
-table.cal th { font-family: var(--display); font-weight: 600; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 0 2px 2px; text-align: center; }
-table.cal th.wk, table.cal td.wk { text-align: left; font-family: var(--display); font-weight: 700; font-size: 1rem; color: var(--fg); padding-right: 6px; white-space: nowrap; }
-table.cal td { text-align: center; padding: 0; }
-.day { width: 42px; height: 40px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); font-family: var(--display); font-weight: 700; font-size: 1.25rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
-.day.vid { background: var(--fg); color: var(--bg); border-color: var(--fg); }
-.day.mob { border-style: dashed; color: var(--muted); }
-.off { display: inline-block; width: 42px; color: var(--muted); }
-.note { font-size: 0.78rem; color: var(--muted); text-align: left !important; white-space: nowrap; padding-left: 4px !important; }
-.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 0.85rem; color: var(--muted); align-items: center; }
-.legend span { display: inline-flex; align-items: center; gap: 6px; }
-.legend .day { width: 28px; height: 26px; font-size: 0.95rem; cursor: default; }
-.prose { display: flex; flex-direction: column; gap: 8px; max-width: 62ch; }
-.prose p { margin: 0; }
-.prose h3 { margin: 6px 0 0; font-family: var(--display); font-weight: 700; font-size: 1.3rem; letter-spacing: 0.04em; text-transform: uppercase; }
+.segmented {
+  display: inline-grid; grid-template-columns: 1fr 1fr; gap: 0.1875rem; align-self: flex-start; max-inline-size: 100%;
+  padding: 0.1875rem; border: 1px solid var(--line); border-radius: 0.625rem; background: var(--surface);
+  button {
+    border: 0; background: none; border-radius: 0.4375rem; padding: 0.375rem 0.75rem; font-size: 0.9rem; cursor: pointer; color: var(--muted);
+    &[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+  }
+}
+.prose {
+  display: flex; flex-direction: column; gap: 0.5rem; max-inline-size: 62ch;
+  p { margin: 0; }
+  h3 { margin: 0.375rem 0 0; font-family: var(--display); font-weight: 700; font-size: 1.3rem; letter-spacing: 0.04em; text-transform: uppercase; }
+  ul { margin: 0; padding-inline-start: 1.125rem; display: flex; flex-direction: column; gap: 0.25rem; }
+}
+[role="tabpanel"] > div:has(> table) { overflow-x: auto; padding-block: 0.3125rem; margin-block: -0.3125rem; }
+table {
+  border-collapse: separate; border-spacing: 0.25rem; margin-inline: -0.25rem; font-variant-numeric: tabular-nums;
+  th { font-family: var(--display); font-weight: 600; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 0 0.125rem 0.125rem; text-align: center; }
+  :is(thead th:first-child, tbody th) { text-align: start; font-family: var(--display); font-weight: 700; font-size: 1rem; color: var(--fg); padding-inline-end: 0.375rem; white-space: nowrap; }
+  tbody th { letter-spacing: normal; }
+  td { text-align: center; padding: 0; }
+  td > [aria-hidden="true"] { display: inline-block; inline-size: 2.625em; color: var(--muted); }
+  &[data-plan="three"] td:last-child { font-size: 0.78rem; color: var(--muted); text-align: start; white-space: nowrap; padding-inline-start: 0.25rem; }
+}
+.day {
+  display: inline-flex; align-items: center; justify-content: center; min-inline-size: 2.1em; min-block-size: 2em; padding: 0;
+  border: 1px solid var(--line); border-radius: 0.5rem; background: var(--surface);
+  font-family: var(--display); font-weight: 700; font-size: 1.25rem; cursor: pointer;
+  &[data-kind="video"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  &[data-kind="mobility"] { border-style: dashed; border-color: var(--muted); color: var(--muted); }
+}
+/* legend */
+[role="tabpanel"] > ul {
+  list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; font-size: 0.85rem; color: var(--muted);
+  li { display: inline-flex; align-items: center; gap: 0.375rem; }
+  .day { min-inline-size: 1.85em; min-block-size: 1.71em; font-size: 0.95rem; cursor: default; }
+}
+[role="tabpanel"] > p:last-child { margin: 0.5rem 0 0; font-size: 0.82rem; color: var(--muted); max-inline-size: 62ch; }
 
-/* bells view */
-.bellrow { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; align-items: start; padding-block: 12px; border-bottom: 1px solid var(--line); }
-.bellrow .chip { min-width: 52px; height: 34px; font-size: 1.35rem; }
-.bellrow h3 { margin: 0; font-family: var(--display); font-size: 1.15rem; letter-spacing: 0.04em; text-transform: uppercase; }
-.bellrow p { margin: 0; font-size: 0.95rem; }
-.bellrow .kg { color: var(--muted); font-size: 0.85rem; }
-ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
-.foot { margin-top: 8px; font-size: 0.82rem; color: var(--muted); max-width: 62ch; }
+/* bells */
+[role="tabpanel"] > div > section {
+  display: grid; grid-template-columns: auto 1fr; gap: 0.375rem 0.875rem; align-items: start; padding-block: 0.75rem; border-block-end: 1px solid var(--line);
+  > .chip { min-inline-size: 2.41em; min-block-size: 1.575em; font-size: 1.35rem; }
+  h3 { margin: 0; font-family: var(--display); font-size: 1.15rem; letter-spacing: 0.04em; text-transform: uppercase; > span { color: var(--muted); font-size: 0.85rem; } }
+  p { margin: 0; font-size: 0.95rem; }
+}
 
-/* timer: the move you're on, and the one coming up during a rest */
-.block.cur { border-top-color: var(--accent); }
-.bh .live { font-family: var(--display); font-weight: 700; font-size: 1.05rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); font-variant-numeric: tabular-nums; }
-.bh .live:empty { display: none; }
-.move.on, .move.next { margin-inline: -10px; padding-inline: 10px; border-radius: 8px; }
-.move.on { background: color-mix(in srgb, var(--accent) 12%, var(--surface)); box-shadow: inset 4px 0 0 var(--accent); }
-.move.on.easy { background: color-mix(in srgb, var(--b54) 14%, var(--surface)); box-shadow: inset 4px 0 0 var(--b54); }
-.move.next { background: var(--sunk); }
-.move.on .mname::before, .move.next .mname::before { display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-.move.on .mname::before { content: "Now"; color: var(--accent); }
-.move.on.easy .mname::before { content: "Now · active rest"; color: var(--b54); }
-.move.next .mname::before { content: "Up next"; color: var(--muted); }
-.rest span.on { background: color-mix(in srgb, var(--b54) 20%, transparent); color: var(--fg); font-weight: 600; border-radius: 4px; padding: 1px 6px; margin-inline: -6px; }
-
-/* timer dock: fixed to the bottom, coloured by phase (work, rest, active rest, get ready) */
-.dock { --dk-bg: var(--surface); --dk-fg: var(--fg); position: fixed; z-index: 10; left: 0; right: 0; bottom: 0; max-width: 720px; margin-inline: auto; overflow: hidden; display: grid; gap: 10px; padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)); background: var(--dk-bg); color: var(--dk-fg); border-radius: 16px 16px 0 0; box-shadow: 0 -2px 18px rgb(0 0 0 / 0.16); }
-.dock[data-phase="work"] { --dk-bg: var(--accent); --dk-fg: var(--on-accent); }
-.dock[data-phase="rest"] { --dk-bg: var(--rest); --dk-fg: var(--on-rest); }
-.dock[data-phase="easy"] { --dk-bg: var(--easy); --dk-fg: var(--on-easy); }
-.dock[data-phase="ready"] { --dk-bg: var(--b35); --dk-fg: var(--b35-fg); }
-.dock[data-phase="done"] { --dk-bg: var(--b54); --dk-fg: var(--b54-fg); }
-.dock[data-paused] { --dk-bg: var(--sunk); --dk-fg: var(--fg); }
-.dock > * { position: relative; }
-.dock .dfill, .dock .dhalf, .dock .dall { position: absolute; pointer-events: none; }
-.dfill { inset: 0; background: var(--dk-fg); opacity: 0.13; transform-origin: left; transform: scaleX(0); }
-.dhalf { top: 0; left: calc(50% - 1px); width: 2px; height: 12px; background: var(--dk-fg); opacity: 0.6; }
-.dall { left: 0; right: 0; top: 0; height: 3px; }
-.dall span { display: block; height: 100%; background: var(--dk-fg); opacity: 0.6; transform-origin: left; transform: scaleX(0); }
-.dmain { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: center; }
-.dtime { font-family: var(--display); font-weight: 700; font-size: 4.2rem; line-height: 0.85; font-variant-numeric: tabular-nums; min-width: 2.3ch; }
-.dtext { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.dtop { display: flex; align-items: center; gap: 8px; min-height: 24px; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
-.dphase { font-weight: 700; }
-.dwhere { opacity: 0.85; overflow: hidden; text-overflow: ellipsis; }
-.dbells { margin-left: auto; flex-shrink: 0; display: inline-flex; padding-right: 2px; }
-.dname { font-family: var(--display); font-weight: 700; font-size: 1.5rem; line-height: 1.05; letter-spacing: 0.01em; text-transform: uppercase; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
-.dsub { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: 0.88rem; }
-.dsub > :empty, .dsub:not(:has(> :not(:empty))), .dnext:empty { display: none; }
-.ddemo { display: inline-flex; flex-wrap: wrap; gap: 4px 6px; }
-.dock .demo { color: inherit; background: none; border-color: color-mix(in srgb, currentColor 45%, transparent); padding-block: 1px; }
-.dock .demo:hover { border-color: currentColor; }
-.dock .demo :is(.src, .where, .approx) { color: inherit; }
-.dnext { font-size: 0.85rem; opacity: 0.85; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.dock .chip { height: 22px; min-width: 30px; font-size: 0.95rem; box-shadow: 0 0 0 2px var(--dk-fg); }
-.dock .cbw { color: var(--dk-fg); border-color: transparent; }
-.dock .arrow { color: inherit; opacity: 0.8; }
-.dctl { display: grid; grid-template-columns: 1fr auto auto auto 1fr; align-items: center; gap: 10px; }
-.dctl button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: none; color: inherit; cursor: pointer; }
-.dctl svg { width: 26px; height: 26px; fill: currentColor; flex-shrink: 0; }
-.dctl .dplay { width: 58px; height: 58px; background: var(--dk-fg); color: var(--dk-bg); }
-.dctl .dplay svg { width: 30px; height: 30px; }
-.dctl .dsnd { justify-self: start; width: auto; height: 34px; padding: 0 12px 0 9px; border-radius: 999px; border: 1px solid color-mix(in srgb, currentColor 40%, transparent); font-size: 0.8rem; }
-.dctl .dsnd svg { width: 18px; height: 18px; }
-.dright { justify-self: end; display: flex; align-items: center; }
-.dleft { display: flex; flex-direction: column; align-items: flex-end; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.85; white-space: nowrap; }
-.dleft b { font-family: var(--display); font-size: 1.15rem; letter-spacing: 0.02em; line-height: 1; font-variant-numeric: tabular-nums; }
-.dock:not([data-paused]):not([data-phase="done"]) .dend, .dock:is([data-paused], [data-phase="done"]) .dleft { display: none; }
-.dock[data-phase="done"] :is(#dPrev, #dSkip) { visibility: hidden; }
-.dplay .lbl { display: none; }
-.dock[data-phase="idle"] { grid-template-columns: minmax(0, 1fr) auto; align-items: center; border: 1px solid var(--line); border-bottom: 0; }
-.dock[data-phase="idle"] :is(.dtime, .dfill, .dall, #dPrev, #dSkip, .dright) { display: none; }
-.dock[data-phase="idle"] .dmain { display: block; }
-.dock[data-phase="idle"] .dname { font-size: 1.2rem; }
-.dock[data-phase="idle"] .dctl { display: flex; }
-.dock[data-phase="idle"] .dplay, .dock[data-phase="done"] .dplay { width: auto; height: 44px; padding: 0 18px 0 12px; border-radius: 999px; font-family: var(--display); font-weight: 700; font-size: 1.2rem; letter-spacing: 0.05em; text-transform: uppercase; }
-.dock[data-phase="idle"] .dplay { background: var(--accent); color: var(--on-accent); }
-.dock[data-phase="idle"] .dplay .lbl, .dock[data-phase="done"] .dplay .lbl { display: inline; }
-.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+/* timer dock: fixed to the bottom, coloured by phase (work, rest, active rest, get ready, done) */
+.dock {
+  --dk-bg: var(--surface); --dk-fg: var(--fg);
+  container: dock / inline-size;
+  position: fixed; z-index: 10; inset-inline: 0; inset-block-end: 0; max-inline-size: 45rem; margin-inline: auto;
+  padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  background: var(--dk-bg); color: var(--dk-fg); border-radius: 1rem 1rem 0 0; box-shadow: 0 -2px 18px rgb(0 0 0 / 0.16);
+  &[data-phase="idle"] { border: 1px solid var(--line); border-block-end: 0; }
+  &[data-phase="work"] { --dk-bg: var(--accent); --dk-fg: var(--on-accent); }
+  &[data-phase="rest"] { --dk-bg: var(--rest); --dk-fg: var(--on-rest); }
+  &[data-phase="easy"] { --dk-bg: var(--easy); --dk-fg: var(--on-easy); }
+  &[data-phase="ready"] { --dk-bg: var(--b35); --dk-fg: var(--b35-fg); }
+  &[data-phase="done"] { --dk-bg: var(--done); --dk-fg: var(--on-done); }
+  &[data-paused] { --dk-bg: var(--sunk); --dk-fg: var(--fg); }
+  :focus-visible { outline-color: var(--dk-fg); }
+  .demo {
+    color: inherit; background: none; border-color: color-mix(in srgb, currentColor 45%, transparent); padding-block: 1px;
+    &:hover { border-color: currentColor; }
+    > :is(span, small) { color: inherit; }
+  }
+  .chip { min-inline-size: 1.975em; min-block-size: 1.45em; font-size: 0.95rem; box-shadow: 0 0 0 2px var(--dk-fg); }
+  .chip:not([data-lb]) { color: var(--dk-fg); border-color: transparent; }
+  .bells > :not(.chip) { color: inherit; }
+}
+/* progress: the step fills the dock, a line along the top shows the whole workout, a tick marks the side switch */
+.dock-progress {
+  position: absolute; z-index: -1; inset: 0; border-radius: inherit; overflow: clip; pointer-events: none;
+  > * { position: absolute; }
+}
+.dock-fill { inset: 0; background: var(--dk-fg); opacity: 0.1; transform-origin: left; transform: scaleX(0); }
+.dock-half { inset-block-start: 0; inset-inline-start: calc(50% - 1px); inline-size: 2px; block-size: 0.75rem; background: var(--dk-fg); opacity: 0.6; }
+.dock-total { inset-inline: 0; inset-block-start: 0; block-size: 3px; > span { display: block; block-size: 100%; background: var(--dk-fg); opacity: 0.6; transform-origin: left; transform: scaleX(0); } }
+.dock-body { display: grid; gap: 0.625rem; }
+.dock-main { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.875rem; align-items: center; }
+.dock-time { font-family: var(--display); font-weight: 700; font-size: 4.2rem; line-height: 0.85; font-variant-numeric: tabular-nums; min-inline-size: 2.3ch; }
+.dock-text {
+  min-inline-size: 0; display: flex; flex-direction: column; gap: 0.125rem;
+  > p { margin: 0; }
+}
+.dock-top { display: flex; flex-wrap: wrap; align-items: center; gap: 0.125rem 0.5rem; min-block-size: 1.5rem; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.dock-phase { font-weight: 700; }
+.dock-bells { margin-inline-start: auto; flex-shrink: 0; display: inline-flex; padding-inline-end: 2px; }
+.dock-name { font-family: var(--display); font-weight: 700; font-size: 1.5rem; line-height: 1.05; letter-spacing: 0.01em; text-transform: uppercase; overflow-wrap: break-word; }
+.dock-sub {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.625rem; font-size: 0.88rem;
+  > :empty, &:not(:has(> :not(:empty))) { display: none; }
+}
+.dock-demo { display: inline-flex; flex-wrap: wrap; gap: 0.25rem 0.375rem; }
+.dock-next { font-size: 0.85rem; &:empty { display: none; } }
+.dock-controls {
+  display: grid; grid-template-columns: 1fr auto auto auto 1fr; grid-template-areas: "sound prev play skip right"; align-items: center; gap: 0.625rem;
+  button {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; inline-size: 2.75rem; block-size: 2.75rem;
+    padding: 0; border: 0; border-radius: 50%; background: none; color: inherit; cursor: pointer;
+  }
+  svg { inline-size: 1.625rem; block-size: 1.625rem; fill: currentColor; flex-shrink: 0; }
+  /* the details toggle only shows on short viewports */
+  .dock-more { display: none; }
+}
+.dock-sound { grid-area: sound; } .dock-prev { grid-area: prev; } .dock-play { grid-area: play; } .dock-skip { grid-area: skip; } .dock-right { grid-area: right; }
+.dock-play {
+  .dock-controls & { inline-size: 3.625rem; block-size: 3.625rem; background: var(--dk-fg); color: var(--dk-bg); }
+  svg { inline-size: 1.875rem; block-size: 1.875rem; }
+  > span { display: none; }
+}
+.dock-sound {
+  .dock-controls & {
+    justify-self: start; inline-size: auto; block-size: auto; min-block-size: 2.125rem; padding: 0 0.75rem 0 0.5625rem;
+    border-radius: 999px; border: 1px solid color-mix(in srgb, currentColor 40%, transparent); font-size: 0.8rem;
+  }
+  svg { inline-size: 1.125rem; block-size: 1.125rem; }
+}
+.dock-right { justify-self: end; display: flex; align-items: center; }
+.dock-left {
+  display: flex; flex-direction: column; align-items: flex-end; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap;
+  b { font-family: var(--display); font-size: 1.15rem; letter-spacing: 0.02em; line-height: 1; font-variant-numeric: tabular-nums; }
+}
+.dock[data-expanded] .dock-more svg { transform: rotate(180deg); }
+.dock:not([data-paused], [data-phase="done"]) .dock-end, .dock:is([data-paused], [data-phase="done"]) .dock-left { display: none; }
+.dock[data-phase="done"] :is(.dock-prev, .dock-skip) { display: none; }
+.dock:is([data-phase="idle"], [data-phase="done"]) .dock-play {
+  inline-size: auto; block-size: 2.75rem; padding: 0 1.125rem 0 0.75rem; border-radius: 999px;
+  font-family: var(--display); font-weight: 700; font-size: 1.2rem; letter-spacing: 0.05em; text-transform: uppercase;
+  > span { display: inline; }
+}
+/* idle: what the open workout will take, and a start button; the buttons wrap below when there's no room */
+.dock[data-phase="idle"] {
+  .dock-body { display: flex; flex-wrap: wrap; align-items: center; }
+  :is(.dock-time, .dock-progress, .dock-prev, .dock-skip, .dock-right) { display: none; }
+  .dock-main { display: block; flex: 1 1 7rem; min-inline-size: 0; }
+  .dock-name { font-size: 1.2rem; }
+  .dock-controls { display: flex; flex-wrap: wrap; justify-content: flex-end; flex: 0 1 auto; margin-inline-start: auto; }
+  .dock-play { background: var(--accent); color: var(--on-accent); }
+}
+/* narrow docks (small screens or large text): tighter controls, then the time above the text */
+@container dock (width < 19rem) {
+  .dock-controls { gap: 0.25rem; }
+  .dock-controls :is(.dock-prev, .dock-skip) { inline-size: 2.5rem; }
+  .dock-controls .dock-sound { padding-inline: 0.375rem 0.5rem; }
+}
+@container dock (width < 16rem) {
+  .dock-main { grid-template-columns: minmax(0, 1fr); gap: 0.375rem; }
+  .dock-controls {
+    grid-template-areas: ". prev play skip ." "sound sound . right right"; row-gap: 0.5rem;
+    :is(.dock-prev, .dock-skip) { inline-size: 2rem; }
+    .dock-play { inline-size: 2.75rem; block-size: 2.75rem; }
+  }
+}
+/*
+ * short viewports (a phone on its side, or large text): the tabs scroll away and the dock
+ * collapses to a bar of time, phase, move and play (or start); the toggle opens the rest
+ */
+@media (height < 36em) {
+  :root { scroll-padding-block-start: 0.5rem; }
+  [role="tablist"] { position: static; }
+  .dock { max-block-size: 100dvh; overflow-y: auto; padding-block: 0.5rem calc(0.5rem + env(safe-area-inset-bottom, 0px)); }
+  .dock-body { gap: 0.375rem; }
+  .dock-time { font-size: 2.6rem; }
+  .dock-top { min-block-size: 0; }
+  .dock-name { font-size: 1.15rem; }
+  .dock-controls .dock-play { inline-size: 2.75rem; block-size: 2.75rem; }
+  .dock:not([data-phase="done"]) .dock-more { display: inline-flex; }
+  .dock[data-phase="idle"]:not([data-expanded]) {
+    :is(.dock-top, .dock-sub, .dock-sound) { display: none; }
+    /* without room for one row: the toggle beside the workout, start under them */
+    .dock-body {
+      @container dock (width < 17.5rem) {
+        .dock-controls { display: contents; }
+        .dock-main { flex: 1 0 calc(100% - 3.125rem); }
+        .dock-play { order: 1; margin-inline-start: auto; }
+      }
+    }
+  }
+  .dock[data-expanded] {
+    .dock-more { position: absolute; inset-block-start: 0.25rem; inset-inline-end: 0.25rem; }
+    .dock-text { padding-inline-end: 2.5rem; }
+  }
+  .dock:not([data-phase="idle"], [data-phase="done"], [data-expanded]) .dock-body {
+    grid-template-columns: auto minmax(0, 1fr) auto auto; grid-template-areas: "time text play more"; align-items: center; gap: 0.375rem 0.625rem;
+    /* without room for one row: the move and play on top, the time and the toggle under them */
+    @container dock (width < 18rem) {
+      display: flex; flex-wrap: wrap; column-gap: 0.5rem;
+      .dock-text { order: -2; flex: 1 0 calc(100% - 3.25rem); }
+      .dock-play { order: -1; }
+      .dock-time { margin-inline-end: auto; }
+    }
+    :is(.dock-main, .dock-controls) { display: contents; }
+    :is(.dock-where, .dock-bells, .dock-sub, .dock-next, .dock-sound, .dock-prev, .dock-skip, .dock-right) { display: none; }
+    .dock-time { grid-area: time; font-size: 2.2rem; }
+    .dock-text { grid-area: text; }
+    .dock-more { grid-area: more; inline-size: 2.5rem; }
+    .dock-name { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+  }
+}
 
 @media (prefers-reduced-motion: no-preference) {
-  .demo, .ts, .picker button, .day { transition: border-color 0.15s, background-color 0.15s; }
+  .demo, .picker button, .day { transition: border-color 0.15s, background-color 0.15s; }
   .dock { transition: background-color 0.25s, color 0.25s; }
-  .dfill, .dall span { transition: transform 0.1s linear; }
-  .dock[data-paused] .dtime { animation: dblink 1.4s ease-in-out infinite; }
-  @keyframes dblink { 50% { opacity: 0.35; } }
+  .dock-fill, .dock-total > span { transition: transform 0.1s linear; }
+  .dock[data-paused] .dock-time { animation: dock-blink 1.4s ease-in-out 3; }
+  @keyframes dock-blink { 50% { opacity: 0.55; } }
+}
+
+/* forced colors drop backgrounds and shadows, so mark state with system colours and outlines */
+@media (forced-colors: active) {
+  :is(.picker, .segmented) button[aria-pressed="true"], [role="tab"][aria-selected="true"] { forced-color-adjust: none; background: SelectedItem; color: SelectedItemText; }
+  .picker button[aria-pressed="true"] > span:nth-child(2) { color: inherit; }
+  article li[aria-current="step"], article p > span[aria-current="step"] { outline: 2px solid Highlight; outline-offset: -2px; }
+  article li[data-next] { outline: 1px dashed CanvasText; outline-offset: -1px; }
+  .day[data-kind="video"] { border-width: 3px; }
+  .chip, .dock-play { border: 1px solid; }
+  body > header > button[aria-pressed="true"]::before { forced-color-adjust: none; background: Highlight; }
 }
 </style>
 </head>
 <body>
+<a href="#dock">Skip to timer</a>
 
-<div class="wrap">
-  <header class="top">
-    <h1>8-Week Single Bell Guide</h1>
-    <p>Eric Leija's 8-week single kettlebell program (<a href="8-Week-Single-Kettlebell-and-Bodyweight-Program-Full-Draft-1.pdf" target="_blank" rel="noopener">PDF</a>), set up for your 25, 35 and 54&nbsp;lb bells. Tap ▶ on any move for a demo.</p>
-    <button class="wake" id="wake" type="button" aria-pressed="false" hidden><span class="dot"></span><span id="wakeLabel">Keep screen on</span></button>
-  </header>
+<header>
+  <h1>8-Week Single Bell Guide</h1>
+  <p>Eric Leija's 8-week single kettlebell program (<a href="8-Week-Single-Kettlebell-and-Bodyweight-Program-Full-Draft-1.pdf" target="_blank" rel="noopener">PDF<span class="sr-only"> (opens in new tab)</span></a>), set up for your 25, 35 and 54&nbsp;lb bells. Tap a move's ▶ demo link to see it done.</p>
+  <button id="wake" type="button" aria-pressed="false" hidden>Keep screen on</button>
+</header>
 
-  <nav class="tabs" role="tablist" aria-label="Sections">
-    <button type="button" role="tab" id="tab-workouts" aria-selected="true" data-tab="workouts">Workouts</button>
-    <button type="button" role="tab" id="tab-schedule" aria-selected="false" data-tab="schedule">Schedule</button>
-    <button type="button" role="tab" id="tab-bells" aria-selected="false" data-tab="bells">Bells</button>
-  </nav>
+<main>
+  <div role="tablist" aria-label="Sections">
+    <button type="button" role="tab" id="tab-workouts" aria-controls="view-workouts" aria-selected="true" data-tab="workouts">Workouts</button>
+    <button type="button" role="tab" id="tab-schedule" aria-controls="view-schedule" aria-selected="false" tabindex="-1" data-tab="schedule">Schedule</button>
+    <button type="button" role="tab" id="tab-bells" aria-controls="view-bells" aria-selected="false" tabindex="-1" data-tab="bells">Bells</button>
+  </div>
 
-  <main>
-    <section class="view" id="view-workouts" role="tabpanel" aria-labelledby="tab-workouts">
-      <div class="picker" id="picker" aria-label="Choose a workout"></div>
-      <article id="workout" style="display:flex;flex-direction:column;gap:16px"></article>
-    </section>
+  <section id="view-workouts" role="tabpanel" aria-labelledby="tab-workouts">
+    <div class="picker" id="picker" role="group" aria-label="Choose a workout"></div>
+    <article id="workout"></article>
+  </section>
 
-    <section class="view" id="view-schedule" role="tabpanel" aria-labelledby="tab-schedule" hidden>
-      <div class="seg" role="group" aria-label="Schedule version">
-        <button type="button" id="seg-written" aria-pressed="true" data-plan="written">As written · 6 days</button>
-        <button type="button" id="seg-three" aria-pressed="false" data-plan="three">3 days a week</button>
+  <section id="view-schedule" role="tabpanel" aria-labelledby="tab-schedule" hidden>
+    <h2 class="sr-only">Schedule</h2>
+    <div class="segmented" role="group" aria-label="Schedule version">
+      <button type="button" id="seg-written" aria-pressed="true" data-plan="written">As written · 6 days</button>
+      <button type="button" id="seg-three" aria-pressed="false" data-plan="three">3 days a week</button>
+    </div>
+    <div id="schedText" class="prose"></div>
+    <div><table id="cal"></table></div>
+    <ul>
+      <li><span class="day" data-kind="video" aria-hidden="true">4</span><span class="sr-only">Filled number:</span> has a follow-along video</li>
+      <li><span class="day" aria-hidden="true">2</span><span class="sr-only">Outlined number:</span> run from the PDF</li>
+      <li><span class="day" data-kind="mobility" aria-hidden="true">9</span><span class="sr-only">Dashed number:</span> mobility day</li>
+      <li><span aria-hidden="true">·</span><span class="sr-only">Dot:</span> active recovery</li>
+    </ul>
+    <p>Tap a workout number to open it.</p>
+  </section>
+
+  <section id="view-bells" role="tabpanel" aria-labelledby="tab-bells" tabindex="0" hidden>
+    <h2 class="sr-only">Bells</h2>
+    <div class="prose">
+      <p>The PDF never says what weight to use. These are suggestions for your set. A chip pair like <span class="bells" role="img" aria-label="25 lb, then 35 lb"><span class="chip" data-lb="25">25</span><span>→</span><span class="chip" data-lb="35">35</span></span> means start with the first bell and move up when it feels solid. Colors follow the competition kettlebell code (12&nbsp;kg blue, 16&nbsp;kg yellow, 24&nbsp;kg green).</p>
+    </div>
+    <div>
+      <section><span class="chip" data-lb="54">54<span class="sr-only"> lb</span></span><div><h3>Heavy <span>≈ 24.5 kg</span></h3><p>Two-hand deadlifts (Workout 2) and the deep squat hold (Workout 10). Not much else, at least at first.</p></div></section>
+      <section><span class="chip" data-lb="35">35<span class="sr-only"> lb</span></span><div><h3>Main bell <span>≈ 16 kg</span></h3><p>Rows, cleans, alternating swings, racked split squats, single-leg deadlifts and explosive deadlifts. Start the explosive deadlifts here, not with the 54, since you land jumps holding the bell.</p></div></section>
+      <section><span class="chip" data-lb="25">25<span class="sr-only"> lb</span></span><div><h3>Light <span>≈ 11.3 kg</span></h3><p>Anything overhead: presses, arm bars, windmills, half get-ups, overhead sit-ups, tripod presses, snatches and halos. Also the curl and triceps finisher in Workout 5.</p></div></section>
+      <section><span class="chip" aria-hidden="true">BW</span><div><h3>Bodyweight</h3><p>Everything else. "On bell" means the bell lies on its side as a push-up handle; "target" means it's only something to reach for.</p></div></section>
+    </div>
+    <div class="prose">
+      <h3>Set up before each circuit</h3>
+      <p>There's only about 10 seconds between moves, so put both bells you need within reach before the circuit starts.</p>
+      <h3>No room to jump?</h3>
+      <ul>
+        <li>Explosive deadlift or hinge jump → two-hand swing</li>
+        <li>Plyo lunges → reverse lunges</li>
+        <li>Squat or chamber jumps → fast bodyweight squats</li>
+        <li>Lateral jumps → lateral lunges</li>
+        <li>10-yard sprints → fast high knees in place</li>
+      </ul>
+      <h3>Timer keys</h3>
+      <p>While the timer runs and no button or link has focus, Space pauses or resumes, ← goes back a step and → skips to the next one.</p>
+      <h3>Where the demos come from</h3>
+      <p>Most demos are Eric Leija's own, from his YouTube channel and the short clips on ericleija.com. Gaps are filled from Onnit Academy, Kettlebell Athletes, StrongFirst, NASM and a few other coaches; each ▶ names its source. Times like "2:01" jump to the moment the move starts, taken from the video's own description. A ≈ marks a close match rather than the exact move.</p>
+      <p>Standing lateral reach (a rest move in Workout 5) is the only move without a demo.</p>
+      <p>The timer's beeps are cut from <a href="https://pixabay.com/sound-effects/film-special-effects-short-beep-countdown-81121/" target="_blank" rel="noopener">“Short beep countdown”<span class="sr-only"> (opens in new tab)</span></a> by gurie (Freesound, via Pixabay).</p>
+    </div>
+    <p>A personal reference, not affiliated with Eric Leija. <a href="8-Week-Single-Kettlebell-and-Bodyweight-Program-Full-Draft-1.pdf" target="_blank" rel="noopener">The PDF<span class="sr-only"> (opens in new tab)</span></a> has the full exercise descriptions. Workout names are shorthand; the PDF only numbers them.</p>
+  </section>
+</main>
+
+<section class="dock" id="dock" data-phase="idle" aria-label="Workout timer" hidden>
+  <div class="dock-progress" aria-hidden="true">
+    <div class="dock-fill"></div>
+    <div class="dock-half" hidden></div>
+    <div class="dock-total"><span></span></div>
+  </div>
+  <div class="dock-body">
+    <div class="dock-main">
+      <span class="dock-time" role="timer"><span>0:00</span><span class="sr-only"> left</span></span>
+      <div class="dock-text">
+        <p class="dock-top"><span class="dock-phase"></span> <span class="dock-where"></span> <span class="dock-bells"></span></p>
+        <p class="dock-name"></p>
+        <p class="dock-sub"><span></span> <span class="dock-demo"></span></p>
+        <p class="dock-next"></p>
       </div>
-      <div id="schedText" class="prose"></div>
-      <div class="scroll"><table class="cal" id="cal"></table></div>
-      <div class="legend">
-        <span><span class="day vid">4</span> has a follow-along video</span>
-        <span><span class="day">2</span> run from the PDF</span>
-        <span><span class="day mob">9</span> mobility day</span>
-        <span><span class="off" style="width:auto">·</span> active recovery</span>
+    </div>
+    <div class="dock-controls">
+      <button type="button" class="dock-sound"></button>
+      <button type="button" class="dock-prev" aria-label="Back a step" aria-keyshortcuts="ArrowLeft"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h2v12H6zM9.5 12 18 18V6z"/></svg></button>
+      <button type="button" class="dock-play" aria-keyshortcuts="Space"></button>
+      <button type="button" class="dock-skip" aria-label="Skip to the next step" aria-keyshortcuts="ArrowRight"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg></button>
+      <div class="dock-right">
+        <span class="dock-left"></span>
+        <button type="button" class="dock-end" aria-label="End the timer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10H7z"/></svg></button>
       </div>
-      <p class="foot">Tap a workout number to open it.</p>
-    </section>
-
-    <section class="view" id="view-bells" role="tabpanel" aria-labelledby="tab-bells" hidden>
-      <div class="prose">
-        <p>The PDF never says what weight to use. These are suggestions for your set. A chip pair like <span class="chip c25">25</span> <span class="arrow">→</span> <span class="chip c35">35</span> means start with the first bell and move up when it feels solid. Colors follow the competition kettlebell code (12&nbsp;kg blue, 16&nbsp;kg yellow, 24&nbsp;kg green).</p>
-      </div>
-      <div>
-        <div class="bellrow"><span class="chip c54">54</span><div><h3>Heavy <span class="kg">≈ 24.5 kg</span></h3><p>Two-hand deadlifts (Workout 2) and the deep squat hold (Workout 10). Not much else, at least at first.</p></div></div>
-        <div class="bellrow"><span class="chip c35">35</span><div><h3>Main bell <span class="kg">≈ 16 kg</span></h3><p>Rows, cleans, alternating swings, racked split squats, single-leg deadlifts and explosive deadlifts. Start the explosive deadlifts here, not with the 54, since you land jumps holding the bell.</p></div></div>
-        <div class="bellrow"><span class="chip c25">25</span><div><h3>Light <span class="kg">≈ 11.3 kg</span></h3><p>Anything overhead: presses, arm bars, windmills, half get-ups, overhead sit-ups, tripod presses, snatches and halos. Also the curl and triceps finisher in Workout 5.</p></div></div>
-        <div class="bellrow"><span class="chip cbw">BW</span><div><h3>Bodyweight</h3><p>Everything else. "On bell" means the bell lies on its side as a push-up handle; "target" means it's only something to reach for.</p></div></div>
-      </div>
-      <div class="prose">
-        <h3>Set up before each circuit</h3>
-        <p>There's only about 10 seconds between moves, so put both bells you need within reach before the circuit starts.</p>
-        <h3>No room to jump?</h3>
-        <ul class="plain">
-          <li>Explosive deadlift or hinge jump → two-hand swing</li>
-          <li>Plyo lunges → reverse lunges</li>
-          <li>Squat or chamber jumps → fast bodyweight squats</li>
-          <li>Lateral jumps → lateral lunges</li>
-          <li>10-yard sprints → fast high knees in place</li>
-        </ul>
-        <h3>Where the demos come from</h3>
-        <p>Most demos are Eric Leija's own, from his YouTube channel and the short clips on ericleija.com. Gaps are filled from Onnit Academy, Kettlebell Athletes, StrongFirst, NASM and a few other coaches; each ▶ names its source. Times like "2:01" jump to the moment the move starts, taken from the video's own description. A ≈ marks a close match rather than the exact move.</p>
-        <p>Standing lateral reach (a rest move in Workout 5) is the only move without a demo.</p>
-        <p>The timer's beeps are cut from <a href="https://pixabay.com/sound-effects/film-special-effects-short-beep-countdown-81121/" target="_blank" rel="noopener">“Short beep countdown”</a> by gurie (Freesound, via Pixabay).</p>
-      </div>
-      <p class="foot">A personal reference, not affiliated with Eric Leija. <a href="8-Week-Single-Kettlebell-and-Bodyweight-Program-Full-Draft-1.pdf" target="_blank" rel="noopener">The PDF</a> has the full exercise descriptions. Workout names are shorthand; the PDF only numbers them.</p>
-    </section>
-  </main>
-</div>
-
-<div class="dock" id="dock" data-phase="idle" role="region" aria-label="Workout timer" hidden>
-  <div class="dfill" id="dFill"></div>
-  <i class="dhalf" id="dHalf" hidden></i>
-  <div class="dall"><span id="dAll"></span></div>
-  <div class="dmain">
-    <span class="dtime" id="dTime" aria-hidden="true">0:00</span>
-    <div class="dtext">
-      <div class="dtop"><span class="dphase" id="dPhase"></span><span class="dwhere" id="dWhere"></span><span class="dbells" id="dBells"></span></div>
-      <div class="dname" id="dName"></div>
-      <div class="dsub"><span id="dSub"></span><span class="ddemo" id="dDemo"></span></div>
-      <div class="dnext" id="dNext"></div>
+      <button type="button" class="dock-more" aria-expanded="false" aria-controls="dock" aria-label="All timer controls"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.4 15.4 12 10.8l4.6 4.6L18 14l-6-6-6 6z"/></svg></button>
     </div>
   </div>
-  <div class="dctl">
-    <button type="button" class="dsnd" id="dSnd"></button>
-    <button type="button" id="dPrev" aria-label="Back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h2v12H6zM9.5 12 18 18V6z"/></svg></button>
-    <button type="button" class="dplay" id="dPlay"></button>
-    <button type="button" id="dSkip" aria-label="Skip ahead"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg></button>
-    <div class="dright">
-      <span class="dleft" id="dLeft"></span>
-      <button type="button" class="dend" id="dEnd" aria-label="End the timer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10H7z"/></svg></button>
-    </div>
-  </div>
-  <p class="sr" id="dLive" aria-live="polite"></p>
-</div>
+</section>
+<div class="sr-only" id="dLive" role="status"></div>
 
 <script>
 (function () {
@@ -658,96 +874,103 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
 
   const $ = s => document.querySelector(s);
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const sr = text => el("span", "sr-only", text);
   const store = {
     get(k) { try { return localStorage.getItem("sbg:" + k); } catch (e) { return null; } },
     set(k, v) { try { localStorage.setItem("sbg:" + k, v); } catch (e) {} },
+    del(k) { try { localStorage.removeItem("sbg:" + k); } catch (e) {} },
   };
 
-  function tri() { return el("span", "tri"); }
-  function pdfLink(page, text) {
-    const a = el("a", null, text); a.href = PDF + "#page=" + page; a.target = "_blank"; a.rel = "noopener";
+  // every outside link opens a new tab; the name starts with the visible text and says so
+  function ext(a, href, name) {
+    a.href = href; a.target = "_blank"; a.rel = "noopener";
+    a.setAttribute("aria-label", (name || a.textContent) + " (opens in new tab)");
     return a;
   }
-  function demoLink([url, src, where, close]) {
-    const a = el("a", "demo"); a.href = url; a.target = "_blank"; a.rel = "noopener";
-    a.append(tri(), el("span", "src", src));
-    if (where) a.append(el("span", "where", "· " + where));
-    if (close) a.append(el("span", "approx", "≈ close match"));
-    return a;
+  function pdfLink(page, text) { return ext(el("a", null, text), PDF + "#page=" + page); }
+  // what: the move it shows, so the link makes sense on its own
+  function demoLink([url, src, where, close], what) {
+    const a = el("a", "demo");
+    a.append(el("span", null, src));
+    if (where) a.append(el("span", null, "· " + where));
+    if (close) a.append(el("small", null, "≈ close match"));
+    return ext(a, url, [src, where, close && "close match"].filter(Boolean).join(" · ") + (what ? ": " + what : ""));
   }
+  const CHIP = { on: ["ON BELL", "Bell on its side as a push-up handle"], target: ["TARGET", "Bell as a target to reach for"] };
   function bellChips(b) {
-    const wrap = el("span", "bells");
-    if (b === "on") { wrap.append(el("span", "chip cbw", "ON BELL")); return wrap; }
-    if (b === "target") { wrap.append(el("span", "chip cbw", "TARGET")); return wrap; }
-    if (!b.length) { wrap.append(el("span", "chip cbw", "BW")); return wrap; }
+    const wrap = el("span", "bells"); wrap.setAttribute("role", "img");
+    if (!Array.isArray(b) || !b.length) {
+      const [text, name] = CHIP[b] || ["BW", "Bodyweight"];
+      wrap.append(el("span", "chip", text)); wrap.setAttribute("aria-label", name); return wrap;
+    }
     b.forEach((w, i) => {
-      if (i) wrap.append(el("span", "arrow", "→"));
-      const c = el("span", "chip c" + w, String(w)); c.title = w + " lb"; wrap.append(c);
+      if (i) wrap.append(el("span", null, "→"));
+      const c = el("span", "chip", String(w)); c.dataset.lb = w; wrap.append(c);
     });
     wrap.setAttribute("aria-label", b.length > 1 ? "Start with " + b[0] + " lb, move up to " + b[1] + " lb" : b[0] + " lb");
     return wrap;
   }
 
-  function renderPicker(cur) {
-    const p = $("#picker"); p.textContent = "";
+  // built once, so the button you pressed keeps focus; showWorkout only flips aria-pressed
+  function renderPicker() {
     W.forEach(w => {
       const b = el("button"); b.type = "button"; b.id = "pick-" + w.n;
-      b.setAttribute("aria-pressed", String(w.n === cur));
-      b.setAttribute("aria-label", "Workout " + w.n + ", " + w.title + (w.video ? ", has video" : ""));
-      b.append(el("span", "n", String(w.n)), el("span", "l", (w.video ? "▶ " : "") + w.short));
+      if (w.video) b.dataset.video = "";
+      b.append(el("span", null, String(w.n)), el("span", null, " " + w.short), sr(", " + w.title + (w.video ? ", has a follow-along video" : "")));
       b.addEventListener("click", () => showWorkout(w.n, true));
-      p.append(b);
+      $("#picker").append(b);
     });
   }
 
   function renderWorkout(n) {
     const w = W.find(x => x.n === n), art = $("#workout");
     art.textContent = "";
-    const head = el("header", "whead");
-    const t = el("div");
+    const head = el("header"), t = el("div"), h2 = el("h2"), big = el("span", null, String(w.n).padStart(2, "0"));
     const page = PDF_START[w.n - 1];
-    const kind = el("p", "kind", w.video ? "Follow-along video · " + w.video[1] + " · " : "No video · ");
+    const kind = el("p", null, w.video ? "Follow-along video · " + w.video[1] + " · " : "No video · ");
     kind.append(pdfLink(page, "PDF pp. " + page + "–" + (PDF_START[w.n] - 1)));
-    t.append(el("h2", null, w.title), kind);
-    head.append(el("div", "big", String(w.n).padStart(2, "0")), t);
+    h2.append(sr("Workout " + w.n + ": "), w.title);
+    big.setAttribute("aria-hidden", "true");
+    t.append(h2, kind);
+    head.append(big, t);
     art.append(head);
 
     if (w.video) {
-      const a = el("a", "play"); a.href = w.video[0]; a.target = "_blank"; a.rel = "noopener";
-      a.append(tri(), document.createTextNode("Play the follow-along"), el("small", null, w.video[1]));
-      art.append(a);
+      const a = el("a", null, "Play the follow-along"); a.append(el("small", null, w.video[1]));
+      art.append(ext(a, w.video[0], "Play the follow-along, " + w.video[1]));
     } else {
-      const p = el("p", "pdfonly", "No follow-along video for this one. Run it from ");
-      p.append(pdfLink(page, "the PDF"), document.createTextNode(" with an interval timer, and tap ▶ on a move to see it done."));
+      const p = el("p", null, "No follow-along video for this one. Run it from ");
+      p.append(pdfLink(page, "the PDF"), document.createTextNode(" with an interval timer, and tap a move's ▶ demo link to see it done."));
       art.append(p);
     }
     if (w.fixes.length) {
-      const f = el("div", "fixes"); f.append(el("h3", null, "PDF fixes"));
+      const f = el("div"); f.append(el("h3", null, "PDF fixes"));
       const ul = el("ul"); w.fixes.forEach(x => ul.append(el("li", null, x))); f.append(ul); art.append(f);
     }
 
     w.blocks.forEach((bl, bi) => {
-      const s = el("section", "block"); s.dataset.b = bi;
-      const bh = el("div", "bh"); bh.append(el("h3", null, bl.h), el("span", "spec", bl.s), el("span", "live"));
-      if (bl.at) { const a = el("a", "ts"); a.href = bl.at[0]; a.target = "_blank"; a.rel = "noopener"; a.append(tri(), document.createTextNode(bl.at[1])); a.setAttribute("aria-label", "Jump to " + bl.at[1] + " in the video"); bh.append(a); }
+      const s = el("section"); s.dataset.b = bi;
+      const bh = el("header"); bh.append(el("h3", null, bl.h), el("p", null, bl.s), el("span"));
+      if (bl.at) bh.append(ext(el("a", "demo", bl.at[1]), bl.at[0], "Jump to " + bl.at[1] + " in the video"));
       s.append(bh);
-      const ul = el("ul", "moves");
+      const ul = el("ul");
       bl.moves.forEach((mv, mi) => {
-        const li = el("li", "move"); li.dataset.k = bi + "." + mi;
-        const top = el("div", "mtop"); top.append(el("span", "mname", mv.n), bellChips(mv.b));
-        const meta = el("div", "mmeta"); meta.append(el("span", "dur", mv.d));
-        if (mv.a) meta.append(el("span", "tag", "active rest"));
-        if (mv.x) mv.x.forEach(d => meta.append(demoLink(d)));
-        else if (w.video) meta.append(el("span", "invideo", "shown in the video"));
+        const li = el("li"); li.dataset.k = bi + "." + mi;
+        if (mv.a) li.dataset.kind = "easy";
+        const top = el("div"); top.append(el("span", null, mv.n), bellChips(mv.b));
+        const meta = el("div"); meta.append(el("span", null, mv.d));
+        if (mv.a) meta.append(el("small", null, "active rest"));
+        if (mv.x) mv.x.forEach(d => meta.append(demoLink(d, "demo of " + mv.n)));
+        else if (w.video) meta.append(el("i", null, "shown in the video"));
         li.append(top, meta); ul.append(li);
       });
       s.append(ul);
       if (bl.rest) {
-        const p = el("p", "rest"); p.append(el("b", null, bl.rest[0]));
+        const p = el("p"); p.append(el("b", null, bl.rest[0]));
         bl.rest[1].forEach(([name, dur, demo], i) => {
           const span = el("span", null, name + (dur ? " " + dur : "")); span.dataset.k = bi + ".r" + i;
           p.append(span);
-          if (demo) demo.forEach(d => p.append(demoLink(d)));
+          if (demo) demo.forEach(d => p.append(demoLink(d, "demo of " + name)));
         });
         s.append(p);
       }
@@ -759,18 +982,21 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
   function showWorkout(n, scroll) {
     store.set("workout", String(n));
     viewing = n;
-    renderPicker(n); renderWorkout(n);
+    $("#picker").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.id === "pick-" + n)));
+    renderWorkout(n);
     if (scroll) $("#picker").scrollIntoView({ block: "start", behavior: "auto" });
     timerView();
   }
 
-  function hasVideo(n) { return !!W.find(x => x.n === n).video; }
+  const KIND = { video: "has a follow-along video", pdf: "run from the PDF", mobility: "mobility day" };
   function dayCell(v) {
     const td = el("td");
-    if (v === R || v === "") { const s = el("span", "off", "·"); s.title = "Active recovery"; td.append(s); return td; }
-    const b = el("button", "day" + (hasVideo(v) ? " vid" : "") + (v >= 9 ? " mob" : ""), String(v));
-    b.type = "button"; b.setAttribute("aria-label", "Open workout " + v);
-    b.addEventListener("click", () => { setTab("workouts"); showWorkout(v, true); });
+    if (v === R || v === "") { const dot = el("span", null, "·"); dot.setAttribute("aria-hidden", "true"); td.append(dot, sr("Active recovery")); return td; }
+    const w = W.find(x => x.n === v), kind = v >= 9 ? "mobility" : w.video ? "video" : "pdf";
+    const b = el("button", "day", String(v)); b.type = "button"; b.dataset.kind = kind;
+    b.append(sr(": " + w.title + ", " + KIND[kind]));
+    // the button goes away with its tab, so hand focus to the workout's own picker button
+    b.addEventListener("click", () => { setTab("workouts"); showWorkout(v, true); $("#pick-" + v).focus({ preventScroll: true }); });
     td.append(b); return td;
   }
   function renderSchedule(plan) {
@@ -778,47 +1004,67 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
     $("#seg-written").setAttribute("aria-pressed", String(plan === "written"));
     $("#seg-three").setAttribute("aria-pressed", String(plan === "three"));
     const txt = $("#schedText"); txt.textContent = "";
-    const cal = $("#cal"); cal.textContent = "";
-    const thead = el("thead"), hr = el("tr"); thead.append(hr);
+    const cal = $("#cal"); cal.textContent = ""; cal.dataset.plan = plan;
+    const cap = el("caption"), thead = el("thead"), hr = el("tr"); thead.append(hr);
     const tbody = el("tbody");
+    // a column header, with a fuller name for screen readers when the visible one is short or empty
+    const th = (text, full) => {
+      const c = el("th"); c.scope = "col";
+      if (full) { const v = el("span", null, text); v.setAttribute("aria-hidden", "true"); c.append(v, sr(full)); } else c.textContent = text;
+      return c;
+    };
+    const week = i => { const tr = el("tr"), c = el("th"); c.scope = "row"; c.append(sr("Week "), String(i + 1)); tr.append(c); return tr; };
     if (plan === "written") {
       const p = el("p", null, "His 8-week calendar from ");
       p.append(pdfLink(PDF_CAL, "the PDF"), document.createTextNode(". Weeks 5 and 6 have three hard days in a row and only one rest day."));
       txt.append(p);
-      ["Wk", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].forEach((h, i) => hr.append(el("th", i ? null : "wk", h)));
-      WRITTEN.forEach((wk, i) => { const tr = el("tr"); tr.append(el("td", "wk", String(i + 1))); wk.forEach(v => tr.append(dayCell(v))); tbody.append(tr); });
+      cap.append(sr("The 8-week calendar as written"));
+      hr.append(th("Wk", "Week")); ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].forEach(h => hr.append(th(h)));
+      WRITTEN.forEach((wk, i) => { const tr = week(i); wk.forEach(v => tr.append(dayCell(v))); tbody.append(tr); });
     } else {
       txt.append(el("p", null, "My adaptation, not from the PDF: his hard workouts in his order, three a week, with a mobility workout on Saturday. It takes 12 weeks to get through them."));
       txt.append(el("p", null, "Deload weeks: use one bell lighter for every move, or ease the pace on bodyweight moves. Jot down your reps for Workouts 4 and 8 in week 1, then repeat both in week 12 and compare."));
-      ["Wk", "Mon", "Wed", "Fri", "Sat", ""].forEach((h, i) => hr.append(el("th", i ? null : "wk", h)));
+      cap.append(sr("12 weeks at 3 days a week"));
+      hr.append(th("Wk", "Week")); ["Mon", "Wed", "Fri", "Sat"].forEach(h => hr.append(th(h))); hr.append(th("", "Note"));
       THREE.forEach((wk, i) => {
-        const tr = el("tr"); tr.append(el("td", "wk", String(i + 1)));
+        const tr = week(i);
         wk.slice(0, 4).forEach(v => tr.append(dayCell(v)));
-        tr.append(el("td", "note", wk[4])); tbody.append(tr);
+        tr.append(el("td", null, wk[4])); tbody.append(tr);
       });
     }
-    cal.append(thead, tbody);
+    cal.append(cap, thead, tbody);
   }
 
+  // tabs: arrow keys, Home and End move between them (roving tabindex), and select as they go
+  const TABS = ["workouts", "schedule", "bells"];
   function setTab(t) {
     store.set("tab", t);
-    ["workouts", "schedule", "bells"].forEach(k => {
-      $("#tab-" + k).setAttribute("aria-selected", String(k === t));
+    TABS.forEach(k => {
+      const tab = $("#tab-" + k);
+      tab.setAttribute("aria-selected", String(k === t)); tab.tabIndex = k === t ? 0 : -1;
       $("#view-" + k).hidden = k !== t;
     });
     timerView();
   }
-  document.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click", () => setTab(b.dataset.tab)));
-  document.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => renderSchedule(b.dataset.plan)));
+  document.querySelectorAll('[role="tab"]').forEach(b => b.addEventListener("click", () => setTab(b.dataset.tab)));
+  $('[role="tablist"]').addEventListener("keydown", e => {
+    const i = TABS.indexOf(e.target.dataset.tab), j = { ArrowRight: i + 1, ArrowLeft: i - 1 + TABS.length, Home: 0, End: TABS.length - 1 }[e.key];
+    if (i < 0 || j == null || e.altKey || e.ctrlKey || e.metaKey) return;
+    e.preventDefault();
+    const t = TABS[j % TABS.length]; setTab(t); $("#tab-" + t).focus();
+  });
+  document.querySelectorAll(".segmented button").forEach(b => b.addEventListener("click", () => renderSchedule(b.dataset.plan)));
 
-  // screen wake lock for mid-workout use
+  // screen wake lock for mid-workout use; the label stays put and aria-pressed carries the state
   const wakeBtn = $("#wake"); let lock = null, wantLock = false;
   async function acquire() {
-    try { lock = await navigator.wakeLock.request("screen"); lock.addEventListener("release", () => { lock = null; sync(); }); }
-    catch (e) { lock = null; wantLock = false; $("#wakeLabel").textContent = "Screen lock not available here"; }
+    try {
+      lock = await navigator.wakeLock.request("screen"); lock.addEventListener("release", () => { lock = null; sync(); });
+      wakeBtn.disabled = false; wakeBtn.textContent = "Keep screen on";
+    } catch (e) { lock = null; wantLock = false; wakeBtn.disabled = true; wakeBtn.textContent = "Screen lock not available here"; }
     sync();
   }
-  function sync() { wakeBtn.setAttribute("aria-pressed", String(!!lock)); if (lock) $("#wakeLabel").textContent = "Screen stays on"; else if (!wantLock) $("#wakeLabel").textContent = "Keep screen on"; }
+  function sync() { wakeBtn.setAttribute("aria-pressed", String(!!lock)); }
   if ("wakeLock" in navigator) {
     wakeBtn.hidden = false;
     wakeBtn.addEventListener("click", () => { if (lock) { wantLock = false; lock.release(); } else { wantLock = true; acquire(); } });
@@ -858,7 +1104,7 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
   const reduce = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
   const now = () => performance.now();
 
-  const T = { on: false, run: false, done: false, w: null, steps: [], i: 0, end: 0, left: 0, sec: -1, half: false, ms: 0, since: 0, lock: false, timer: 0, followed: -1 };
+  const T = { on: false, run: false, done: false, w: null, steps: [], i: 0, end: 0, left: 0, sec: -1, half: false, ms: 0, since: 0, lock: false, timer: 0, followed: -1, restored: false, at: 0 };
   const title = document.title;
   const remain = () => T.run ? T.end - now() : T.left; // ms; goes below zero (counting up) on an untimed rep set
   function nextDo(i) { for (let j = i + 1; j < T.steps.length; j++) if (!/^(rest|ready)$/.test(T.steps[j].kind)) return T.steps[j]; return null; }
@@ -900,6 +1146,12 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
   function quiet() {
     hush(); clearTimeout(sayT); if (window.speechSynthesis) speechSynthesis.cancel();
   }
+  // screen reader status line; cleared first so the same words twice are still read
+  let tellT = 0;
+  function tell(text) {
+    const live = $("#dLive"); clearTimeout(tellT); live.textContent = "";
+    tellT = setTimeout(() => { live.textContent = spoken(text); }, 60);
+  }
   function schedule() {
     hush();
     const st = T.steps[T.i]; if (!ac || st.kind === "reps") return;
@@ -915,7 +1167,7 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
       : st.kind === "rest" ? "Rest. Next: " + nameOf(nx)
       : st.kind === "reps" ? nameOf(st) + ", " + st.mv.d + ". Tap done when finished."
       : nameOf(st);
-    $("#dLive").textContent = spoken(text);
+    tell(text);
     say(text, delay == null ? 400 : delay);
   }
 
@@ -927,9 +1179,9 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
       if (T.i + 1 >= T.steps.length) return finish(false);
       enter(T.i + 1, T.end); moved = true; // carry the old deadline so late ticks never drift
     }
-    if (moved) { schedule(); announce(); paintStep(); }
+    if (moved) { schedule(); announce(); paintStep(); saveRun(); }
     const st = T.steps[T.i];
-    if (st.half && !T.half && T.end - now() <= st.half * 1000) { T.half = true; say("Switch sides"); }
+    if (st.half && !T.half && T.end - now() <= st.half * 1000) { T.half = true; say("Switch sides"); tell("Switch sides"); }
     paintClock();
   }
   function play() {
@@ -937,16 +1189,16 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
     if (!T.on || T.done) {
       Object.assign(T, { on: true, w: T.done ? T.w : W.find(x => x.n === viewing), done: false, ms: 0, followed: -1 });
       T.steps = buildSteps(T.w); enter(0, now()); T.left = T.end - now();
-      if ("wakeLock" in navigator && !lock) { wantLock = true; T.lock = true; acquire(); }
-      announce(0);
-    }
-    T.run = true; T.end = now() + T.left; T.since = now(); T.sec = -1;
+      awake(); announce(0);
+    } else if (T.restored) { awake(); announce(0); } // back after a reload: say where you are
+    else tell("Resumed");
+    T.run = true; T.restored = false; T.end = now() + T.left; T.since = now(); T.sec = -1;
     clearInterval(T.timer); T.timer = setInterval(tick, 100);
-    schedule(); paintStep(); paintClock();
+    schedule(); paintStep(); paintClock(); saveRun();
   }
   function pause() {
     T.left = T.end - now(); T.run = false; T.ms += now() - T.since; T.sec = -1;
-    clearInterval(T.timer); quiet(); paintStep(); paintClock();
+    clearInterval(T.timer); quiet(); tell("Paused"); paintStep(); paintClock(); saveRun();
   }
   // back restarts the current step, or goes to the previous one in its first 3 s
   function jump(d) {
@@ -956,21 +1208,42 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
     if (i >= T.steps.length) return finish(true);
     enter(i, now()); T.left = T.end - now();
     if (T.run) { schedule(); announce(); }
-    paintStep(); paintClock();
+    paintStep(); paintClock(); saveRun();
   }
   function finish(early) {
     if (T.run) T.ms += now() - T.since;
     clearInterval(T.timer); T.run = false; T.done = true;
     if (early) { quiet(); if (ac) sfx("done", ac.currentTime); }
     say("Workout complete", early ? 0 : 900);
-    unlock(); paintStep(); paintClock();
+    tell("Workout complete. Total time " + fmt(Math.round(T.ms / 1000)));
+    unlock(); paintStep(); paintClock(); store.del("run");
   }
   function end() {
     clearInterval(T.timer); quiet(); unlock();
-    Object.assign(T, { on: false, run: false, done: false });
-    document.title = title; paintStep();
+    Object.assign(T, { on: false, run: false, done: false, restored: false });
+    document.title = title; paintStep(); store.del("run");
   }
+  function awake() { if ("wakeLock" in navigator && !lock) { wantLock = true; T.lock = true; acquire(); } }
   function unlock() { if (T.lock) { T.lock = false; wantLock = false; if (lock) lock.release(); } }
+
+  // progress is saved so a reload, or a phone dropping the tab, brings the timer back paused where
+  // it was; End, the finish or a long break clears it. A step index only fits the same steps
+  const KEEP = 6 * 3600 * 1000; // ms
+  const sig = steps => steps.length + ":" + totalOf(steps);
+  function saveRun() {
+    if (!T.on || T.done) return; // only End and the finish clear it: an idle tab mustn't wipe another tab's run
+    const ms = T.ms + (T.run ? now() - T.since : 0);
+    if (!T.restored) T.at = Date.now(); // a restored run left alone keeps its age
+    store.set("run", JSON.stringify({ n: T.w.n, sig: sig(T.steps), i: T.i, left: Math.round(remain()), ms: Math.round(ms), at: T.at }));
+  }
+  function loadRun() {
+    let r = null; try { r = JSON.parse(store.get("run")); } catch (e) {}
+    const w = r && W.find(x => x.n === r.n), steps = w && buildSteps(w);
+    if (!steps || sig(steps) !== r.sig || !steps[r.i] || !Number.isFinite(r.left) || !(Date.now() - r.at < KEEP)) return store.del("run");
+    Object.assign(T, { on: true, run: false, done: false, restored: true, w, steps, ms: r.ms || 0, at: r.at, followed: -1 });
+    enter(r.i, now()); T.left = r.left;
+    T.half = !!steps[r.i].half && r.left <= steps[r.i].half * 1000; // already said "switch sides"
+  }
 
   const ICON = {
     play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>',
@@ -980,112 +1253,138 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
     mute: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 4V5L7 9H3z"/><path d="m15 9.5 5 5m0-5-5 5" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>',
   };
   const PHASE = { ready: "Get ready", work: "Work", easy: "Active rest", rest: "Rest", reps: "Work" };
+  const SOUND = ["voice and beeps", "beeps only", "muted"];
   function paintSound() {
-    const b = $("#dSnd");
+    const b = $(".dock-sound");
     b.innerHTML = mode === 2 ? ICON.mute : ICON.sound; b.append(["Voice", "Beeps", "Muted"][mode]);
-    b.setAttribute("aria-label", "Sound: " + ["voice and beeps", "beeps only", "muted"][mode] + ". Tap to change.");
+    b.setAttribute("aria-label", "Sound: " + SOUND[mode]);
   }
   function timerView() {
     T.followed = -1;
     $("#dock").hidden = !T.on && $("#view-workouts").hidden;
     paintStep(); paintClock();
   }
+  // a control that just went away (End, Skip at the finish, a demo link) hands focus on
+  const gone = e => !e.isConnected || !e.getClientRects().length || getComputedStyle(e).visibility === "hidden";
   function paintStep() {
-    const dock = $("#dock"), btn = $("#dPlay"), reps = T.on && !T.done && T.run && T.steps[T.i].kind === "reps";
-    btn.innerHTML = (reps ? ICON.done : T.run ? ICON.pause : ICON.play) + '<span class="lbl">' + (!T.on ? "Start" : T.done ? "Again" : "") + "</span>";
+    const dock = $("#dock"), btn = $(".dock-play"), reps = T.on && !T.done && T.run && T.steps[T.i].kind === "reps";
+    const f = document.activeElement, onDemo = $(".dock-demo").contains(f);
+    btn.innerHTML = (reps ? ICON.done : T.run ? ICON.pause : ICON.play) + "<span>" + (!T.on ? "Start" : T.done ? "Again" : "") + "</span>";
     btn.setAttribute("aria-label", !T.on ? "Start the workout timer" : T.done ? "Run it again" : reps ? "Done, next move" : T.run ? "Pause" : "Resume");
     dock.toggleAttribute("data-paused", T.on && !T.run && !T.done);
-    $("#dNext").textContent = ""; $("#dBells").textContent = ""; $("#dDemo").textContent = "";
+    $(".dock-next").textContent = ""; $(".dock-bells").textContent = ""; $(".dock-demo").textContent = "";
     if (!T.on) { // idle: what the open workout will take
       const w = W.find(x => x.n === viewing);
       dock.dataset.phase = "idle";
-      $("#dPhase").textContent = "Timer"; $("#dWhere").textContent = "Workout " + w.n;
-      $("#dName").textContent = w.title;
-      $("#dSub").textContent = "≈ " + Math.round(totalOf(buildSteps(w)) / 60) + " min with rests";
+      $(".dock-phase").textContent = "Timer"; $(".dock-where").textContent = "Workout " + w.n;
+      $(".dock-name").textContent = w.title;
+      $(".dock-sub > span").textContent = "≈ " + Math.round(totalOf(buildSteps(w)) / 60) + " min with rests";
     } else if (T.done) {
       dock.dataset.phase = "done";
-      $("#dPhase").textContent = "Done"; $("#dWhere").textContent = "Workout " + T.w.n;
-      $("#dName").textContent = T.w.title;
-      $("#dSub").textContent = "Total time, pauses left out";
+      $(".dock-phase").textContent = "Done"; $(".dock-where").textContent = "Workout " + T.w.n;
+      $(".dock-name").textContent = T.w.title;
+      $(".dock-sub > span").textContent = "Total time, pauses left out";
     } else {
       const st = T.steps[T.i], nx = nextDo(T.i), doing = !/^(rest|ready)$/.test(st.kind), shown = doing ? st : nx;
       dock.dataset.phase = st.kind === "reps" ? "work" : st.kind;
-      $("#dPhase").textContent = T.run ? PHASE[st.kind] : "Paused";
-      $("#dWhere").textContent = (T.w.n !== viewing ? "W" + T.w.n + " · " : "") + T.w.blocks[st.bi].h + (st.rounds > 1 ? " · " + st.round + "/" + st.rounds : "");
-      $("#dName").textContent = nameOf(shown);
-      $("#dSub").textContent = st.kind === "ready" ? "Up first" : st.kind === "rest" ? "Up next"
+      $(".dock-phase").textContent = T.run ? PHASE[st.kind] : "Paused";
+      $(".dock-where").textContent = (T.w.n !== viewing ? "W" + T.w.n + " · " : "") + T.w.blocks[st.bi].h + (st.rounds > 1 ? " · " + st.round + "/" + st.rounds : "");
+      $(".dock-name").textContent = nameOf(shown);
+      $(".dock-sub > span").textContent = st.kind === "ready" ? "Up first" : st.kind === "rest" ? "Up next"
         : st.kind === "reps" ? st.mv.d + ", tap ✓ when done" : !st.mv ? "Between rounds"
         : /switch sides each round/.test(st.mv.d) ? "Switch sides each round" : "";
-      if (shown && shown.mv) $("#dBells").append(bellChips(shown.mv.b));
+      if (shown && shown.mv) $(".dock-bells").append(bellChips(shown.mv.b));
       // the shown move's demo, else its spot in the follow-along video
-      const demos = shown && (shown.mv ? shown.mv.x : shown.demo), bl = shown && T.w.blocks[shown.bi];
-      if (demos) demos.forEach(d => $("#dDemo").append(demoLink(d)));
-      else if (bl && bl.at) $("#dDemo").append(demoLink([bl.at[0], "Follow-along", bl.at[1]]));
-      else if (T.w.video) $("#dDemo").append(demoLink([T.w.video[0], "Follow-along", "video"]));
-      if (doing && nx) $("#dNext").textContent = "Next: " + nameOf(nx);
+      const demos = shown && (shown.mv ? shown.mv.x : shown.demo), bl = shown && T.w.blocks[shown.bi], what = nameOf(shown);
+      if (demos) demos.forEach(d => $(".dock-demo").append(demoLink(d, "demo of " + what)));
+      else if (bl && bl.at) $(".dock-demo").append(demoLink([bl.at[0], "Follow-along", bl.at[1]], what + " in the follow-along video"));
+      else if (T.w.video) $(".dock-demo").append(demoLink([T.w.video[0], "Follow-along", "video"], what + " in the follow-along video"));
+      if (doing && nx) $(".dock-next").textContent = "Next: " + nameOf(nx);
     }
-    $("#dHalf").hidden = !(T.on && !T.done && T.steps[T.i].half);
+    $(".dock-half").hidden = !(T.on && !T.done && T.steps[T.i].half);
     paintList();
+    if (onDemo) ($(".dock-demo a") || btn).focus({ preventScroll: true });
+    else if (dock.contains(f) && gone(f)) btn.focus({ preventScroll: true });
   }
   function paintClock() {
     if (!T.on) return;
     const st = T.steps[T.i], rem = T.done ? 0 : remain(), reps = st.kind === "reps";
     const s = T.done ? Math.round(T.ms / 1000) : reps ? Math.floor(-rem / 1000) : Math.max(0, Math.ceil(rem / 1000));
     if (s !== T.sec) {
-      T.sec = s; $("#dTime").textContent = fmt(s);
-      if (T.run && !reps && s > 0 && s <= 3 && !reduce()) $("#dTime").animate([{ transform: "scale(1.2)" }, { transform: "scale(1)" }], { duration: 350, easing: "ease-out" });
-      document.title = T.done ? title : (T.run ? "" : "Paused ") + fmt(s) + " " + nameOf(/^(rest|ready)$/.test(st.kind) ? nextDo(T.i) : st);
+      T.sec = s; $(".dock-time > span").textContent = fmt(s);
+      $(".dock-time > .sr-only").textContent = T.done ? " total" : reps ? " so far" : " left";
+      if (T.run && !reps && s > 0 && s <= 3 && !reduce()) $(".dock-time").animate([{ transform: "scale(1.2)" }, { transform: "scale(1)" }], { duration: 350, easing: "ease-out" });
+      document.title = T.done ? title : (T.run ? "" : "Paused ") + fmt(s) + " " + nameOf(/^(rest|ready)$/.test(st.kind) ? nextDo(T.i) : st) + " · " + title;
     }
     const left = T.done ? 0 : (reps ? Math.max(0, REPS * 1000 + rem) : Math.max(0, rem)) + st.after * 1000;
-    $("#dFill").style.transform = "scaleX(" + (T.done ? 1 : reps ? 0 : 1 - Math.max(0, rem) / (st.secs * 1000)) + ")";
-    $("#dAll").style.transform = "scaleX(" + (1 - left / 1000 / totalOf(T.steps)) + ")";
-    if (!T.done) $("#dLeft").innerHTML = "<b>" + fmt(Math.ceil(left / 1000)) + "</b>left";
-    if (st.half && !T.done) $("#dSub").textContent = rem > st.half * 1000 ? "First side" : rem > st.half * 1000 - 2500 ? "Switch sides!" : "Second side";
+    $(".dock-fill").style.transform = "scaleX(" + (T.done ? 1 : reps ? 0 : 1 - Math.max(0, rem) / (st.secs * 1000)) + ")";
+    $(".dock-total > span").style.transform = "scaleX(" + (1 - left / 1000 / totalOf(T.steps)) + ")";
+    if (!T.done) $(".dock-left").innerHTML = "<b>" + fmt(Math.ceil(left / 1000)) + "</b> left";
+    if (st.half && !T.done) $(".dock-sub > span").textContent = rem > st.half * 1000 ? "First side" : rem > st.half * 1000 - 2500 ? "Switch sides!" : "Second side";
   }
+  // the move you're on is aria-current="step", the one coming up during a rest data-next
   function paintList() {
     const art = $("#workout");
-    art.querySelectorAll(".on, .next, .cur").forEach(e => e.classList.remove("on", "next", "cur", "easy"));
-    art.querySelectorAll(".live").forEach(e => { e.textContent = ""; });
+    art.querySelectorAll("[aria-current]").forEach(e => e.removeAttribute("aria-current"));
+    art.querySelectorAll("[data-next]").forEach(e => e.removeAttribute("data-next"));
+    art.querySelectorAll("section > header > span").forEach(e => { e.textContent = ""; });
     if (!T.on || T.done || T.w.n !== viewing) return;
     const st = T.steps[T.i], nx = nextDo(T.i), q = k => art.querySelector('[data-k="' + k + '"]');
     const sec = art.querySelector('[data-b="' + st.bi + '"]');
-    sec.classList.add("cur");
-    if (st.rounds > 1) sec.querySelector(".live").textContent = "Round " + st.round + "/" + st.rounds;
+    if (st.rounds > 1) sec.querySelector("header > span").textContent = "Round " + st.round + "/" + st.rounds;
     let at = null;
-    if (st.k) { at = q(st.k); at.classList.add("on"); if (st.kind === "easy") at.classList.add("easy"); }
-    else if (nx && nx.k && nx.bi === st.bi) { at = q(nx.k); at.classList.add("next"); }
+    if (st.k) { at = q(st.k); at.setAttribute("aria-current", "step"); }
+    else if (nx && nx.k && nx.bi === st.bi) { at = q(nx.k); at.dataset.next = ""; }
     if (T.followed !== T.i) { T.followed = T.i; follow(st.kind === "ready" ? sec : at, st.kind === "ready"); }
   }
-  // keep the highlighted move in view between the sticky tabs and the dock
+  // keep the highlighted move in view between the sticky tabs and the dock, unless you've just
+  // scrolled away yourself or are working through other moves with the keyboard
+  let scrolledAt = -1e9;
+  ["wheel", "touchmove"].forEach(t => addEventListener(t, () => { scrolledAt = now(); }, { passive: true }));
+  addEventListener("keydown", e => { if (/^(Page(Up|Down)|Arrow(Up|Down)|Home|End)$/.test(e.key) && !e.target.closest("button, a, input, select, textarea")) scrolledAt = now(); });
   function follow(e, top) {
     if (!e || $("#view-workouts").hidden) return;
-    const r = e.getBoundingClientRect(), lo = $(".tabs").getBoundingClientRect().bottom + 8, hi = innerHeight - $("#dock").offsetHeight - 8;
+    const f = document.activeElement;
+    if (now() - scrolledAt < 8000 || (f.matches(":focus-visible") && $("#view-workouts").contains(f) && !e.closest("section").contains(f))) return;
+    const r = e.getBoundingClientRect(), lo = Math.max(0, $('[role="tablist"]').getBoundingClientRect().bottom) + 8, hi = innerHeight - $("#dock").offsetHeight - 8;
     if (!top && r.top >= lo && r.bottom <= hi) return;
     scrollBy({ top: top ? r.top - lo : r.top - lo - (hi - lo - r.height) / 2, behavior: reduce() ? "auto" : "smooth" });
   }
 
   // the big button: start, pause, resume, or "done" on an untimed rep set
   const main = () => T.run && T.steps[T.i].kind === "reps" ? jump(1) : T.run ? pause() : play();
-  $("#dPlay").addEventListener("click", main);
-  $("#dPrev").addEventListener("click", () => jump(-1));
-  $("#dSkip").addEventListener("click", () => jump(1));
-  $("#dEnd").addEventListener("click", end);
-  $("#dSnd").addEventListener("click", () => {
+  $(".dock-play").addEventListener("click", main);
+  $(".dock-prev").addEventListener("click", () => jump(-1));
+  $(".dock-skip").addEventListener("click", () => jump(1));
+  $(".dock-end").addEventListener("click", end);
+  $(".dock-more").addEventListener("click", e => { const x = !$("#dock").hasAttribute("data-expanded"); $("#dock").toggleAttribute("data-expanded", x); e.currentTarget.setAttribute("aria-expanded", String(x)); });
+  $(".dock-sound").addEventListener("click", () => {
     mode = mode === 2 ? (canSpeak ? 0 : 1) : mode + 1; store.set("sound", String(mode)); paintSound();
     if (mode) quiet();
     if (mode < 2 && T.run) { audio(); schedule(); }
+    tell("Sound: " + SOUND[mode]);
   });
+  $('a[href="#dock"]').addEventListener("click", e => { e.preventDefault(); $(".dock-play").focus(); });
+  // Space, ← and → drive the timer while it runs, unless a control has focus; held keys don't repeat
+  const KEYS = { " ": () => main(), ArrowRight: () => jump(1), ArrowLeft: () => jump(-1) };
   document.addEventListener("keydown", e => {
-    if (!T.on || T.done || e.metaKey || e.ctrlKey || e.altKey || e.target.closest("button, a, input, select, textarea")) return;
-    if (e.key === " ") { e.preventDefault(); main(); }
-    else if (e.key === "ArrowRight") jump(1);
-    else if (e.key === "ArrowLeft") jump(-1);
+    if (!T.on || T.done || !KEYS[e.key] || e.metaKey || e.ctrlKey || e.altKey || e.target.closest("button, a, input, select, textarea, summary, [tabindex], [contenteditable]")) return;
+    if (e.key === " ") e.preventDefault();
+    if (!e.repeat) KEYS[e.key]();
   });
-  document.addEventListener("visibilitychange", tick);
-  new ResizeObserver(() => document.documentElement.style.setProperty("--dock", $("#dock").offsetHeight + "px")).observe($("#dock"));
+  document.addEventListener("visibilitychange", () => { tick(); if (document.hidden) saveRun(); });
+  addEventListener("pagehide", saveRun);
+  const sizes = new ResizeObserver(() => {
+    const r = document.documentElement.style;
+    r.setProperty("--dock", $("#dock").offsetHeight + "px");
+    r.setProperty("--tabs", $('[role="tablist"]').offsetHeight + "px");
+  });
+  sizes.observe($("#dock")); sizes.observe($('[role="tablist"]'));
   paintSound();
+  renderPicker();
 
-  // initial state: #w4, #schedule, #bells deep links, else the last place you were
+  // initial state: #w4, #schedule, #bells deep links, else the last place you were, plus any timer
+  // still in progress
   const hash = (location.hash || "").slice(1);
   let start = parseInt(store.get("workout"), 10); if (!(start >= 1 && start <= 10)) start = 1;
   let tab = store.get("tab") || "workouts";
@@ -1094,12 +1393,13 @@ ul.plain { margin: 0; padding-left: 18px; display: flex; flex-direction: column;
   else if (hash === "schedule" || hash === "bells" || hash === "workouts") tab = hash;
   showWorkout(start, false);
   renderSchedule(store.get("plan") === "three" ? "three" : "written");
-  setTab(["workouts", "schedule", "bells"].includes(tab) ? tab : "workouts");
+  loadRun();
+  setTab(TABS.includes(tab) ? tab : "workouts");
 
   window.addEventListener("hashchange", () => {
     const h = location.hash.slice(1), hm = /^w(\d{1,2})$/.exec(h);
     if (hm && +hm[1] >= 1 && +hm[1] <= 10) { setTab("workouts"); showWorkout(+hm[1], true); }
-    else if (["workouts", "schedule", "bells"].includes(h)) setTab(h);
+    else if (TABS.includes(h)) setTab(h);
   });
 })();
 </script>
