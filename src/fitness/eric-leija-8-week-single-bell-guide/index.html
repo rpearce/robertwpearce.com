@@ -7,6 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Public+Sans:wght@400;500;600&display=swap">
+<script>
+  // the site's theme switch (templates/default.html) saves a pinned light or dark scheme here
+  try { const t = localStorage.getItem("prefTheme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
 <style>
 /*
  * Layout: one phone-width column; sticky tab bar; a workout picker; each workout is a list of
@@ -15,13 +19,31 @@
  * Sizes follow the reader's default font size: no root font-size, rem for type and layout, em
  * for boxes around text, ch for measure, px only for hairlines, rings and shadows. State lives
  * in ARIA and data attributes (aria-selected, aria-pressed, aria-current="step", data-next,
- * data-phase, data-kind, data-bell). Colors use light-dark(); data-theme on <html> overrides the OS.
+ * data-phase, data-kind, data-bell). Colors use light-dark(); data-theme on <html>, set from the
+ * site's theme switch, overrides the OS.
  */
 :root {
   color-scheme: light dark;
-  -webkit-text-size-adjust: 100%;
-  padding-block: env(safe-area-inset-top, 0px) env(safe-area-inset-bottom, 0px);
+  -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
+  /* keep clear of notches; the dock's height already covers the bottom inset */
+  padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) 0 env(safe-area-inset-left, 0px);
   scroll-padding-block: calc(env(safe-area-inset-top, 0px) + var(--tabs, 3rem) + 0.5rem) calc(var(--dock, 0px) + 0.5rem);
+  --max-width: 45rem;
+  --gutter: 1rem;
+  --measure: 62ch;
+  --tap: 2.75rem; /* round dock buttons */
+  /* type: small sizes on a scale, display sizes set where they're used */
+  --type-xxx-small: 0.7rem;
+  --type-xx-small: 0.8rem;
+  --type-x-small: 0.875rem;
+  --type-small: 0.925rem;
+  --type-medium: 1rem;
+  --type-large: 1.05rem;
+  --type-x-large: 1.15rem;
+  --type-xx-large: 1.25rem;
+  --tracking-tight: 0.01em;
+  --tracking: 0.05em;
+  --tracking-wide: 0.08em;
   --bg: light-dark(#EEF0EC, #111316);
   --surface: light-dark(#FFFFFF, #1A1D21);
   --sunk: light-dark(#E3E6E1, #23272C);
@@ -38,33 +60,33 @@
   --rest: light-dark(#1F3B57, #29435F); --on-rest: light-dark(#F2F4F0, #E7E9E5);
   --easy: light-dark(#17663F, #1D6A43); --on-easy: light-dark(#FFFFFF, #E9F6EE);
   --easy-text: light-dark(#17663F, #45B974);
-  --done: light-dark(#17663F, #45B974); --on-done: light-dark(#FFFFFF, #04200E);
+  --done: var(--easy-text); --on-done: var(--on-green);
   --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
   --body: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 :root[data-theme="light"] { color-scheme: light; }
 :root[data-theme="dark"] { color-scheme: dark; }
 
-* { box-sizing: border-box; }
+*, ::before, ::after { box-sizing: border-box; }
 [hidden] { display: none !important; }
 body {
-  max-inline-size: 45rem;
+  max-inline-size: var(--max-width);
   margin: 0 auto;
-  padding: 1rem 1rem calc(3.5rem + var(--dock, 0px));
+  padding: 1rem var(--gutter) calc(3.5rem + var(--dock, 0px));
   background: var(--bg);
   color: var(--fg);
   font-family: var(--body);
-  font-size: 1rem;
   line-height: 1.45;
 }
 a { color: inherit; }
 button { font: inherit; color: inherit; }
-:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+/* the ring follows each element's own corners */
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .sr-only { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 /* skip link: shown only while focused, and only while the timer dock is on screen */
 body > a:first-child {
-  position: fixed; z-index: 20; inset-block-start: 0.5rem; inset-inline-start: 0.5rem;
+  position: fixed; z-index: 20; inset-block-start: calc(env(safe-area-inset-top, 0px) + 0.5rem); inset-inline-start: calc(env(safe-area-inset-left, 0px) + 0.5rem);
   padding: 0.5rem 0.75rem; border: 1px solid var(--line); border-radius: 0.5rem;
   background: var(--surface); color: var(--fg);
   &:not(:focus) { inline-size: 1px; block-size: 1px; padding: 0; border: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
@@ -73,13 +95,13 @@ body:has(> .dock[hidden]) > a:first-child { display: none; }
 
 body > header {
   display: flex; flex-direction: column; gap: 0.25rem; padding-block: 0.5rem 0.75rem;
-  > h1 { font-family: var(--display); font-weight: 700; font-size: 2.1rem; line-height: 1.05; letter-spacing: 0.01em; margin: 0; text-transform: uppercase; text-wrap: balance; }
-  > p { margin: 0; color: var(--muted); font-size: 0.95rem; max-inline-size: 60ch; }
+  > h1 { font-family: var(--display); font-weight: 700; font-size: 2.1rem; line-height: 1.05; letter-spacing: var(--tracking-tight); margin: 0; text-transform: uppercase; text-wrap: balance; }
+  > p { margin: 0; color: var(--muted); font-size: var(--type-small); max-inline-size: var(--measure); }
   /* screen wake lock toggle */
   > button {
     align-self: flex-start; margin-block-start: 0.375rem; display: inline-flex; align-items: center; gap: 0.5rem;
     background: none; border: 1px solid var(--line); border-radius: 999px; padding: 0.25rem 0.75rem;
-    font-size: 0.85rem; color: var(--muted); cursor: pointer;
+    font-size: var(--type-x-small); color: var(--muted); cursor: pointer;
     &::before { content: ""; inline-size: 0.5rem; block-size: 0.5rem; border-radius: 50%; background: var(--line); }
     &[aria-pressed="true"] { color: var(--fg); border-color: var(--fg); &::before { background: var(--green); } }
     &:disabled { cursor: default; }
@@ -88,19 +110,22 @@ body > header {
 
 [role="tablist"] {
   position: sticky; inset-block-start: env(safe-area-inset-top, 0px); z-index: 5;
-  display: flex; flex-wrap: wrap; margin-inline: -1rem; padding-inline: 1rem;
+  display: flex; flex-wrap: wrap; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter);
   background: var(--bg); border-block-end: 1px solid var(--line);
 }
 [role="tab"] {
   flex: 1 1 0; min-inline-size: fit-content;
   background: none; border: 0; border-block-end: 3px solid transparent; padding: 0.625rem 0.25rem 0.5rem;
-  font-family: var(--display); font-weight: 600; font-size: 1.15rem; letter-spacing: 0.06em; text-transform: uppercase;
+  font-family: var(--display); font-weight: 600; font-size: var(--type-x-large); letter-spacing: var(--tracking); text-transform: uppercase;
   color: var(--muted); cursor: pointer;
   &[aria-selected="true"] { color: var(--fg); border-block-end-color: var(--accent); }
 }
 [role="tabpanel"] { container-type: inline-size; padding-block-start: 1rem; display: flex; flex-direction: column; gap: 1.25rem; }
 
-/* workout picker: 5 across, 10 across when there's room, fewer when the text is large */
+/*
+ * workout picker: 5 across, 10 across when there's room, fewer when the text is large.
+ * The breakpoints are 5 and 10 of the 3.75rem minimum plus their 0.375rem gaps
+ */
 .picker {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(3.75rem, 1fr)); gap: 0.375rem;
   @container (width >= 20.25rem) { grid-template-columns: repeat(5, minmax(0, 1fr)); }
@@ -109,9 +134,9 @@ body > header {
     display: flex; flex-direction: column; align-items: center; min-inline-size: 0; padding: 0.375rem 0.125rem 0.4375rem;
     border: 1px solid var(--line); border-radius: 0.5rem; background: var(--surface); cursor: pointer;
     > span:first-child { font-family: var(--display); font-weight: 700; font-size: 1.6rem; line-height: 1; font-variant-numeric: tabular-nums; }
-    > span:nth-child(2) { font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); text-align: center; }
+    > span:nth-child(2) { font-size: var(--type-xxx-small); letter-spacing: var(--tracking); text-transform: uppercase; color: var(--muted); text-align: center; }
     &[data-video] > span:nth-child(2)::before { content: "▶ "; content: "▶ " / ""; }
-    &[aria-pressed="true"] { background: var(--fg); border-color: var(--fg); color: var(--bg); > span:nth-child(2) { color: var(--bg); opacity: 0.8; } }
+    &[aria-pressed="true"] { border-color: var(--fg); > span:nth-child(2) { color: var(--bg); opacity: 0.8; } }
   }
 }
 
@@ -122,22 +147,20 @@ article {
     display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0.875rem;
     > span { font-family: var(--display); font-weight: 700; font-size: 4rem; line-height: 0.8; color: var(--accent); font-variant-numeric: tabular-nums; }
     > div { flex: 1 1 10rem; min-inline-size: 0; }
-    h2 { font-family: var(--display); font-weight: 700; font-size: 1.75rem; line-height: 1.05; margin: 0; text-transform: uppercase; letter-spacing: 0.01em; text-wrap: balance; }
-    p { margin: 0.125rem 0 0; color: var(--muted); font-size: 0.9rem; }
+    h2 { font-family: var(--display); font-weight: 700; font-size: 1.75rem; line-height: 1.05; margin: 0; text-transform: uppercase; letter-spacing: var(--tracking-tight); text-wrap: balance; }
+    p { margin: 0.125rem 0 0; color: var(--muted); font-size: var(--type-small); }
   }
   /* the follow-along video */
   > a {
     display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.625rem;
     background: var(--accent); color: var(--on-accent); text-decoration: none; border-radius: 0.625rem; padding: 0.75rem 1rem;
-    font-family: var(--display); font-weight: 700; font-size: 1.25rem; letter-spacing: 0.05em; text-transform: uppercase;
-    small { font-family: var(--body); font-weight: 500; font-size: 0.85rem; letter-spacing: 0; text-transform: none; opacity: 0.85; }
+    font-family: var(--display); font-weight: 700; font-size: var(--type-xx-large); letter-spacing: var(--tracking); text-transform: uppercase;
+    small { font-family: var(--body); font-weight: 500; font-size: var(--type-x-small); letter-spacing: 0; text-transform: none; opacity: 0.85; }
   }
-  /* no video: run it from the PDF */
-  > p { background: var(--sunk); border-radius: 0.625rem; padding: 0.75rem 0.875rem; margin: 0; font-size: 0.92rem; }
-  /* PDF fixes */
+  /* no video: run it from the PDF; and the PDF fixes */
+  > :is(p, div) { background: var(--sunk); border-radius: 0.625rem; padding: 0.75rem 0.875rem; margin: 0; font-size: var(--type-small); }
   > div {
-    background: var(--sunk); border-radius: 0.625rem; padding: 0.75rem 0.875rem; font-size: 0.92rem;
-    h3 { margin: 0 0 0.25rem; font-family: var(--display); font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+    h3 { margin: 0 0 0.25rem; font-family: var(--display); font-size: var(--type-medium); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--muted); }
     ul { margin: 0; padding-inline-start: 1.125rem; display: flex; flex-direction: column; gap: 0.125rem; }
   }
 }
@@ -148,60 +171,62 @@ article > section {
   &:has([aria-current="step"], [data-next]) { border-block-start-color: var(--accent); }
   > header {
     display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 0.75rem;
-    h3 { margin: 0; font-family: var(--display); font-weight: 700; font-size: 1.3rem; letter-spacing: 0.05em; text-transform: uppercase; }
-    p { margin: 0; color: var(--muted); font-size: 0.9rem; font-variant-numeric: tabular-nums; }
-    > span { font-family: var(--display); font-weight: 700; font-size: 1.05rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); font-variant-numeric: tabular-nums; &:empty { display: none; } }
+    h3 { margin: 0; font-family: var(--display); font-weight: 700; font-size: var(--type-xx-large); letter-spacing: var(--tracking); text-transform: uppercase; }
+    p { margin: 0; color: var(--muted); font-size: var(--type-small); font-variant-numeric: tabular-nums; }
+    > span { font-family: var(--display); font-weight: 700; font-size: var(--type-large); letter-spacing: var(--tracking); text-transform: uppercase; color: var(--accent); font-variant-numeric: tabular-nums; &:empty { display: none; } }
     > .demo { margin-inline-start: auto; }
   }
   > ul { list-style: none; margin: 0.25rem 0 0; padding: 0; }
   > ul > li {
     display: flex; flex-direction: column; gap: 0.3125rem; padding-block: 0.625rem; border-block-end: 1px solid var(--line);
-    /* name and bells */
+    /* name and bells; the bells drop under the name when the text is too large for both */
     > div:first-child {
-      display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem;
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 0.3125rem 0.75rem;
       > span:first-child {
-        min-inline-size: 0; font-weight: 600; font-size: 1.05rem; line-height: 1.3;
-        &::before { display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+        flex: 1 1 10ch; font-weight: 600; font-size: var(--type-large); line-height: 1.3;
+        /* the Now / Up next label, set by the row's state */
+        &::before { content: var(--tag, none); display: block; color: var(--tag-color); font-size: var(--type-xxx-small); font-weight: 700; letter-spacing: var(--tracking-wide); text-transform: uppercase; }
       }
+      > .bells { margin-inline-start: auto; }
     }
     /* duration, tag, demos */
     > div:last-child {
-      display: flex; flex-wrap: wrap; align-items: center; gap: 0.375rem 0.625rem; font-size: 0.88rem;
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.375rem 0.625rem; font-size: var(--type-x-small);
       > span:first-child { color: var(--muted); font-variant-numeric: tabular-nums; }
-      > small { font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 0.25rem; padding: 0 0.3125rem; }
+      > small { font-size: var(--type-xxx-small); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 0.25rem; padding: 0 0.3125rem; }
       > i { color: var(--muted); }
     }
     &:is([aria-current="step"], [data-next]) { margin-inline: -0.625rem; padding-inline: 0.625rem; border-radius: 0.5rem; }
     &[aria-current="step"] {
+      --tag: "Now"; --tag-color: var(--accent);
       background: color-mix(in srgb, var(--accent) 12%, var(--surface)); box-shadow: inset 4px 0 0 var(--accent);
-      > div:first-child > span:first-child::before { content: "Now"; color: var(--accent); }
       &[data-kind="easy"] {
+        --tag: "Now · active rest"; --tag-color: var(--easy-text);
         background: color-mix(in srgb, var(--green) 14%, var(--surface)); box-shadow: inset 4px 0 0 var(--green);
-        > div:first-child > span:first-child::before { content: "Now · active rest"; color: var(--easy-text); }
       }
     }
-    &[data-next] {
-      background: var(--sunk);
-      > div:first-child > span:first-child::before { content: "Up next"; color: var(--muted); }
-    }
+    &[data-next] { --tag: "Up next"; --tag-color: var(--muted); background: var(--sunk); }
   }
   /* what to do in the rest between rounds */
   > p {
-    margin: 0.5rem 0 0; font-size: 0.88rem; color: var(--muted); display: flex; flex-wrap: wrap; align-items: center; gap: 0.375rem 0.5rem;
+    margin: 0.5rem 0 0; font-size: var(--type-x-small); color: var(--muted); display: flex; flex-wrap: wrap; align-items: center; gap: 0.375rem 0.5rem;
     b { color: var(--fg); font-weight: 600; }
-    > span[aria-current="step"] { background: color-mix(in srgb, var(--green) 20%, transparent); color: var(--fg); font-weight: 600; border-radius: 0.25rem; padding: 1px 0.375rem; margin-inline: -0.375rem; }
+    > span[aria-current="step"] { background: color-mix(in srgb, var(--green) 20%, transparent); color: var(--fg); font-weight: 600; border-radius: 0.25rem; padding: 0.0625rem 0.375rem; margin-inline: -0.375rem; }
   }
 }
 
-/* demo and timestamp links: a pill with a play triangle */
+/*
+ * demo and timestamp links: a pill with a play triangle. Its parts wrap when the text is large,
+ * and the radius is more than half a line, so a one-line link stays a full pill
+ */
 .demo {
-  display: inline-flex; align-items: center; gap: 0.375rem; min-block-size: 1.5rem;
+  display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0 0.375rem; min-block-size: 1.5rem;
   text-decoration: none; color: var(--accent); border: 1px solid var(--line); background: var(--surface);
-  border-radius: 999px; padding: 0.1875rem 0.6875rem 0.1875rem 0.5625rem; font-size: 0.85rem; line-height: 1.3;
-  &:hover { border-color: var(--accent); }
+  border-radius: 1rem; padding: 0.1875rem 0.6875rem 0.1875rem 0.5625rem; font-size: var(--type-x-small); line-height: 1.3;
+  @media (hover: hover) { &:hover { border-color: var(--accent); } }
   > span:first-child { color: var(--fg); }
   > span:nth-child(2) { color: var(--muted); }
-  > small { color: var(--muted); font-size: 0.78rem; }
+  > small { color: var(--muted); font-size: var(--type-xx-small); }
   &::before {
     content: ""; flex-shrink: 0; forced-color-adjust: none;
     border-inline-start: 0.4375rem solid currentColor; border-block: 0.28125rem solid transparent;
@@ -209,10 +234,10 @@ article > section {
 }
 
 /* bell chips; data-bell holds the size, a chip without one is bodyweight, on bell or target */
-.bells { display: inline-flex; align-items: center; gap: 0.25rem; flex-shrink: 0; > :not(.chip) { color: var(--muted); font-size: 0.85rem; } }
+.bells { display: inline-flex; align-items: center; gap: 0.25rem; flex-shrink: 0; > :not(.chip) { color: var(--muted); font-size: var(--type-x-small); } }
 .chip {
-  display: inline-flex; align-items: center; justify-content: center; min-inline-size: 2.65em; min-block-size: 2.03em; padding: 0 0.375rem;
-  border-radius: 0.375rem; font-family: var(--display); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase;
+  display: inline-flex; align-items: center; justify-content: center; min-inline-size: 2.5em; min-block-size: 2em; padding: 0 0.375rem;
+  border-radius: 0.375rem; font-family: var(--display); font-weight: 700; font-size: var(--type-xx-small); letter-spacing: var(--tracking); text-transform: uppercase;
   &[data-bell="light"] { background: var(--blue); color: var(--on-blue); }
   &[data-bell="medium"] { background: var(--yellow); color: var(--on-yellow); }
   &[data-bell="heavy"] { background: var(--green); color: var(--on-green); }
@@ -224,58 +249,69 @@ article > section {
   display: inline-grid; grid-template-columns: 1fr 1fr; gap: 0.1875rem; align-self: flex-start; max-inline-size: 100%;
   padding: 0.1875rem; border: 1px solid var(--line); border-radius: 0.625rem; background: var(--surface);
   button {
-    border: 0; background: none; border-radius: 0.4375rem; padding: 0.375rem 0.75rem; font-size: 0.9rem; cursor: pointer; color: var(--muted);
-    &[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+    border: 0; background: none; border-radius: 0.4375rem; padding: 0.375rem 0.75rem; font-size: var(--type-small); cursor: pointer; color: var(--muted);
   }
 }
+/* the chosen workout or plan */
+:is(.picker, .segmented) button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
 .prose {
-  display: flex; flex-direction: column; gap: 0.5rem; max-inline-size: 62ch;
+  display: flex; flex-direction: column; gap: 0.5rem; max-inline-size: var(--measure);
   p { margin: 0; }
-  h3 { margin: 0.375rem 0 0; font-family: var(--display); font-weight: 700; font-size: 1.3rem; letter-spacing: 0.04em; text-transform: uppercase; }
+  h3 { margin: 0.375rem 0 0; font-family: var(--display); font-weight: 700; font-size: var(--type-xx-large); letter-spacing: var(--tracking); text-transform: uppercase; }
   ul { margin: 0; padding-inline-start: 1.125rem; display: flex; flex-direction: column; gap: 0.25rem; }
 }
-[role="tabpanel"] > div:has(> table) { overflow-x: auto; padding-block: 0.3125rem; margin-block: -0.3125rem; }
+/* positioned so the cells' screen reader text stays inside the scroll box instead of widening the page */
+[role="tabpanel"] > div:has(> table) { position: relative; overflow-x: auto; padding-block: 0.3125rem; margin-block: -0.3125rem; }
 table {
   border-collapse: separate; border-spacing: 0.25rem; margin-inline: -0.25rem; font-variant-numeric: tabular-nums;
-  th { font-family: var(--display); font-weight: 600; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding: 0 0.125rem 0.125rem; text-align: center; }
-  :is(thead th:first-child, tbody th) { text-align: start; font-family: var(--display); font-weight: 700; font-size: 1rem; color: var(--fg); padding-inline-end: 0.375rem; white-space: nowrap; }
+  th { font-family: var(--display); font-weight: 600; font-size: var(--type-x-small); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--muted); padding: 0 0.125rem 0.125rem; text-align: center; }
+  :is(thead th:first-child, tbody th) { text-align: start; font-family: var(--display); font-weight: 700; font-size: var(--type-medium); color: var(--fg); padding-inline-end: 0.375rem; white-space: nowrap; }
   tbody th { letter-spacing: normal; }
   td { text-align: center; padding: 0; }
-  td > [aria-hidden="true"] { display: inline-block; inline-size: 2.625em; color: var(--muted); }
-  &[data-plan="three"] td:last-child { font-size: 0.78rem; color: var(--muted); text-align: start; white-space: nowrap; padding-inline-start: 0.25rem; }
+  td > [aria-hidden="true"] { display: inline-block; inline-size: 2.625em; color: var(--muted); } /* a .day's 2.1em at 1.25rem */
+  &[data-plan="three"] td:last-child { font-size: var(--type-xx-small); color: var(--muted); text-align: start; white-space: nowrap; padding-inline-start: 0.25rem; }
 }
 .day {
   display: inline-flex; align-items: center; justify-content: center; min-inline-size: 2.1em; min-block-size: 2em; padding: 0;
   border: 1px solid var(--line); border-radius: 0.5rem; background: var(--surface);
-  font-family: var(--display); font-weight: 700; font-size: 1.25rem; cursor: pointer;
+  font-family: var(--display); font-weight: 700; font-size: var(--type-xx-large); cursor: pointer;
   &[data-kind="video"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
   &[data-kind="mobility"] { border-style: dashed; border-color: var(--muted); color: var(--muted); }
 }
 /* legend */
 [role="tabpanel"] > ul {
-  list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; font-size: 0.85rem; color: var(--muted);
+  list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; font-size: var(--type-x-small); color: var(--muted);
   li { display: inline-flex; align-items: center; gap: 0.375rem; }
-  .day { min-inline-size: 1.85em; min-block-size: 1.71em; font-size: 0.95rem; cursor: default; }
+  .day { min-inline-size: 1.85em; min-block-size: 1.71em; font-size: var(--type-small); cursor: default; }
 }
-[role="tabpanel"] > p:last-child { margin: 0.5rem 0 0; font-size: 0.82rem; color: var(--muted); max-inline-size: 62ch; }
+[role="tabpanel"] > p:last-child { margin: 0.5rem 0 0; font-size: var(--type-xx-small); color: var(--muted); max-inline-size: var(--measure); }
 
-/* bells: the sections share one chip column, so the chips match in width and the text lines up */
-[role="tabpanel"] > div:has(> section) { display: grid; grid-template-columns: auto 1fr; column-gap: 0.875rem; }
+/*
+ * bells: the sections share one chip column, so the chips match in width and the text lines up;
+ * with large text on a narrow screen each chip goes above its text instead
+ */
+[role="tabpanel"] > div:has(> section) {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 0.875rem;
+  @container (width < 13rem) { grid-template-columns: minmax(0, 1fr); > section > .chip { justify-self: start; } }
+}
 [role="tabpanel"] > div > section {
-  grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: start; padding-block: 0.75rem; border-block-end: 1px solid var(--line);
-  > .chip { font-size: 0.95rem; }
-  h3 { margin: 0; font-family: var(--display); font-size: 1.15rem; letter-spacing: 0.04em; text-transform: uppercase; > span { color: var(--muted); font-size: 0.85rem; } }
-  p { margin: 0; font-size: 0.95rem; }
+  grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: start; row-gap: 0.375rem; padding-block: 0.75rem; border-block-end: 1px solid var(--line);
+  > .chip { font-size: var(--type-small); }
+  h3 { margin: 0; font-family: var(--display); font-size: var(--type-x-large); letter-spacing: var(--tracking); text-transform: uppercase; hyphens: auto; overflow-wrap: anywhere; }
+  p { margin: 0; font-size: var(--type-small); }
 }
 
 /* timer dock: fixed to the bottom, coloured by phase (work, rest, active rest, get ready, done) */
 .dock {
   --dk-bg: var(--surface); --dk-fg: var(--fg);
   container: dock / inline-size;
-  position: fixed; z-index: 10; inset-inline: 0; inset-block-end: 0; max-inline-size: 45rem; margin-inline: auto;
-  padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  position: fixed; z-index: 10; inset-inline: env(safe-area-inset-left, 0px) env(safe-area-inset-right, 0px); inset-block-end: 0;
+  max-inline-size: var(--max-width); margin-inline: auto;
+  padding: 0.75rem var(--gutter) calc(0.75rem + env(safe-area-inset-bottom, 0px));
   background: var(--dk-bg); color: var(--dk-fg); border-radius: 1rem 1rem 0 0; box-shadow: 0 -2px 18px rgb(0 0 0 / 0.16);
-  &[data-phase="idle"] { border: 1px solid var(--line); border-block-end: 0; }
+  /* the border is always there so the dock doesn't shift between phases; idle shows it */
+  border: 1px solid transparent; border-block-end: 0;
+  &[data-phase="idle"] { border-color: var(--line); }
   &[data-phase="work"] { --dk-bg: var(--accent); --dk-fg: var(--on-accent); }
   &[data-phase="rest"] { --dk-bg: var(--rest); --dk-fg: var(--on-rest); }
   &[data-phase="easy"] { --dk-bg: var(--easy); --dk-fg: var(--on-easy); }
@@ -284,11 +320,11 @@ table {
   &[data-paused] { --dk-bg: var(--sunk); --dk-fg: var(--fg); }
   :focus-visible { outline-color: var(--dk-fg); }
   .demo {
-    color: inherit; background: none; border-color: color-mix(in srgb, currentColor 45%, transparent); padding-block: 1px;
-    &:hover { border-color: currentColor; }
+    color: inherit; background: none; border-color: color-mix(in srgb, currentColor 45%, transparent); padding-block: 0.0625rem;
+    @media (hover: hover) { &:hover { border-color: currentColor; } }
     > :is(span, small) { color: inherit; }
   }
-  .chip { min-block-size: 1.8em; font-size: 0.75rem; box-shadow: 0 0 0 2px var(--dk-fg); }
+  .chip { min-block-size: 1.8em; box-shadow: 0 0 0 2px var(--dk-fg); }
   .chip:not([data-bell]) { color: var(--dk-fg); border-color: transparent; }
   .bells > :not(.chip) { color: inherit; }
 }
@@ -302,25 +338,26 @@ table {
 .dock-total { inset-inline: 0; inset-block-start: 0; block-size: 3px; > span { display: block; block-size: 100%; background: var(--dk-fg); opacity: 0.6; transform-origin: left; transform: scaleX(0); } }
 .dock-body { display: grid; gap: 0.625rem; }
 .dock-main { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.875rem; align-items: center; }
-.dock-time { font-family: var(--display); font-weight: 700; font-size: 4.2rem; line-height: 0.85; font-variant-numeric: tabular-nums; min-inline-size: 2.3ch; }
+.dock-time { font-family: var(--display); font-weight: 700; font-size: 4.2rem; line-height: 0.85; font-variant-numeric: tabular-nums; }
 .dock-text {
   min-inline-size: 0; display: flex; flex-direction: column; gap: 0.125rem;
   > p { margin: 0; }
 }
-.dock-top { display: flex; flex-wrap: wrap; align-items: center; gap: 0.125rem 0.5rem; min-block-size: 1.5rem; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.dock-top { display: flex; flex-wrap: wrap; align-items: center; gap: 0.125rem 0.5rem; min-block-size: 1.5rem; font-size: var(--type-xxx-small); letter-spacing: var(--tracking-wide); text-transform: uppercase; }
 .dock-phase { font-weight: 700; }
 .dock-bells { margin-inline-start: auto; flex-shrink: 0; display: inline-flex; padding-inline-end: 2px; }
-.dock-name { font-family: var(--display); font-weight: 700; font-size: 1.5rem; line-height: 1.05; letter-spacing: 0.01em; text-transform: uppercase; overflow-wrap: break-word; }
+.dock-name { font-family: var(--display); font-weight: 700; font-size: 1.5rem; line-height: 1.05; letter-spacing: var(--tracking-tight); text-transform: uppercase; overflow-wrap: break-word; }
 .dock-sub {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.625rem; font-size: 0.88rem;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.625rem; font-size: var(--type-x-small);
   > :empty, &:not(:has(> :not(:empty))) { display: none; }
 }
 .dock-demo { display: inline-flex; flex-wrap: wrap; gap: 0.25rem 0.375rem; }
-.dock-next { font-size: 0.85rem; &:empty { display: none; } }
+.dock-next { font-size: var(--type-x-small); &:empty { display: none; } }
 .dock-controls {
   display: grid; grid-template-columns: 1fr auto auto auto 1fr; grid-template-areas: "sound prev play skip right"; align-items: center; gap: 0.625rem;
-  button {
-    display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; inline-size: 2.75rem; block-size: 2.75rem;
+  /* :where keeps this at one class, so .dock-play and .dock-sound override it directly */
+  :where(button) {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; inline-size: var(--tap); block-size: var(--tap);
     padding: 0; border: 0; border-radius: 50%; background: none; color: inherit; cursor: pointer;
   }
   svg { inline-size: 1.625rem; block-size: 1.625rem; fill: currentColor; flex-shrink: 0; }
@@ -329,28 +366,26 @@ table {
 }
 .dock-sound { grid-area: sound; } .dock-prev { grid-area: prev; } .dock-play { grid-area: play; } .dock-skip { grid-area: skip; } .dock-right { grid-area: right; }
 .dock-play {
-  .dock-controls & { inline-size: 3.625rem; block-size: 3.625rem; background: var(--dk-fg); color: var(--dk-bg); }
+  inline-size: 3.625rem; block-size: 3.625rem; background: var(--dk-fg); color: var(--dk-bg);
   svg { inline-size: 1.875rem; block-size: 1.875rem; }
   > span { display: none; }
 }
 .dock-sound {
-  .dock-controls & {
-    justify-self: start; inline-size: auto; block-size: auto; min-block-size: 2.125rem; padding: 0 0.75rem 0 0.5625rem;
-    border-radius: 999px; border: 1px solid color-mix(in srgb, currentColor 40%, transparent); font-size: 0.8rem;
-  }
+  justify-self: start; inline-size: auto; block-size: auto; min-block-size: 2.125rem; padding: 0 0.75rem 0 0.5625rem;
+  border-radius: 999px; border: 1px solid color-mix(in srgb, currentColor 40%, transparent); font-size: var(--type-xx-small);
   svg { inline-size: 1.125rem; block-size: 1.125rem; }
 }
 .dock-right { justify-self: end; display: flex; align-items: center; }
-.dock-left {
-  display: flex; flex-direction: column; align-items: flex-end; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap;
-  b { font-family: var(--display); font-size: 1.15rem; letter-spacing: 0.02em; line-height: 1; font-variant-numeric: tabular-nums; }
+.dock-remaining {
+  display: flex; flex-direction: column; align-items: flex-end; font-size: var(--type-xxx-small); letter-spacing: var(--tracking-wide); text-transform: uppercase; white-space: nowrap;
+  b { font-family: var(--display); font-size: var(--type-x-large); letter-spacing: var(--tracking-tight); line-height: 1; font-variant-numeric: tabular-nums; }
 }
 .dock[data-expanded] .dock-more svg { transform: rotate(180deg); }
-.dock:not([data-paused], [data-phase="done"]) .dock-end, .dock:is([data-paused], [data-phase="done"]) .dock-left { display: none; }
+.dock:not([data-paused], [data-phase="done"]) .dock-end, .dock:is([data-paused], [data-phase="done"]) .dock-remaining { display: none; }
 .dock[data-phase="done"] :is(.dock-prev, .dock-skip) { display: none; }
 .dock:is([data-phase="idle"], [data-phase="done"]) .dock-play {
-  inline-size: auto; block-size: 2.75rem; padding: 0 1.125rem 0 0.75rem; border-radius: 999px;
-  font-family: var(--display); font-weight: 700; font-size: 1.2rem; letter-spacing: 0.05em; text-transform: uppercase;
+  inline-size: auto; block-size: var(--tap); padding: 0 1.125rem 0 0.75rem; border-radius: 999px;
+  font-family: var(--display); font-weight: 700; font-size: var(--type-x-large); letter-spacing: var(--tracking); text-transform: uppercase;
   > span { display: inline; }
 }
 /* idle: what the open workout will take, and a start button; the buttons wrap below when there's no room */
@@ -358,7 +393,7 @@ table {
   .dock-body { display: flex; flex-wrap: wrap; align-items: center; }
   :is(.dock-time, .dock-progress, .dock-prev, .dock-skip, .dock-right) { display: none; }
   .dock-main { display: block; flex: 1 1 7rem; min-inline-size: 0; }
-  .dock-name { font-size: 1.2rem; }
+  .dock-name { font-size: var(--type-x-large); }
   .dock-controls { display: flex; flex-wrap: wrap; justify-content: flex-end; flex: 0 1 auto; margin-inline-start: auto; }
   .dock-play { background: var(--accent); color: var(--on-accent); }
 }
@@ -373,7 +408,7 @@ table {
   .dock-controls {
     grid-template-areas: ". prev play skip ." "sound sound . right right"; row-gap: 0.5rem;
     :is(.dock-prev, .dock-skip) { inline-size: 2rem; }
-    .dock-play { inline-size: 2.75rem; block-size: 2.75rem; }
+    .dock-play { inline-size: var(--tap); block-size: var(--tap); }
   }
 }
 /*
@@ -381,14 +416,18 @@ table {
  * collapses to a bar of time, phase, move and play (or start); the toggle opens the rest
  */
 @media (height < 36em) {
-  :root { scroll-padding-block-start: 0.5rem; }
+  :root { scroll-padding-block-start: calc(env(safe-area-inset-top, 0px) + 0.5rem); }
   [role="tablist"] { position: static; }
-  .dock { max-block-size: 100dvh; overflow-y: auto; padding-block: 0.5rem calc(0.5rem + env(safe-area-inset-bottom, 0px)); }
-  .dock-body { gap: 0.375rem; }
+  /*
+   * an expanded dock taller than the screen scrolls its body, so the progress line and the
+   * toggle (positioned against the dock) stay put; the padding keeps focus rings unclipped
+   */
+  .dock { display: flex; flex-direction: column; max-block-size: 100dvh; padding-block: 0.5rem calc(0.5rem + env(safe-area-inset-bottom, 0px)); }
+  .dock-body { gap: 0.375rem; min-block-size: 0; overflow-y: auto; padding: 0.3125rem; margin: -0.3125rem; }
   .dock-time { font-size: 2.6rem; }
   .dock-top { min-block-size: 0; }
-  .dock-name { font-size: 1.15rem; }
-  .dock-controls .dock-play { inline-size: 2.75rem; block-size: 2.75rem; }
+  .dock-name { font-size: var(--type-x-large); }
+  .dock-controls .dock-play { inline-size: var(--tap); block-size: var(--tap); }
   .dock:not([data-phase="done"]) .dock-more { display: inline-flex; }
   .dock[data-phase="idle"]:not([data-expanded]) {
     :is(.dock-top, .dock-sub, .dock-sound) { display: none; }
@@ -396,12 +435,12 @@ table {
     .dock-body {
       @container dock (width < 17.5rem) {
         .dock-controls { display: contents; }
-        .dock-main { flex: 1 0 calc(100% - 3.125rem); }
+        .dock-main { flex: 1 0 calc(100% - var(--tap) - 0.375rem); }
         .dock-play { order: 1; margin-inline-start: auto; }
       }
     }
   }
-  .dock[data-expanded] {
+  .dock[data-expanded]:not([data-phase="done"]) {
     .dock-more { position: absolute; inset-block-start: 0.25rem; inset-inline-end: 0.25rem; }
     .dock-text { padding-inline-end: 2.5rem; }
   }
@@ -410,7 +449,7 @@ table {
     /* without room for one row: the move and play on top, the time and the toggle under them */
     @container dock (width < 18rem) {
       display: flex; flex-wrap: wrap; column-gap: 0.5rem;
-      .dock-text { order: -2; flex: 1 0 calc(100% - 3.25rem); }
+      .dock-text { order: -2; flex: 1 0 calc(100% - var(--tap) - 0.5rem); }
       .dock-play { order: -1; }
       .dock-time { margin-inline-end: auto; }
     }
@@ -425,7 +464,7 @@ table {
 
 @media (prefers-reduced-motion: no-preference) {
   .demo, .picker button, .day { transition: border-color 0.15s, background-color 0.15s; }
-  .dock { transition: background-color 0.25s, color 0.25s; }
+  :is(.dock, .dock-play) { transition: background-color 0.25s, color 0.25s; }
   .dock-fill, .dock-total > span { transition: transform 0.1s linear; }
   .dock[data-paused] .dock-time { animation: dock-blink 1.4s ease-in-out 3; }
   @keyframes dock-blink { 50% { opacity: 0.55; } }
@@ -538,7 +577,7 @@ table {
       <button type="button" class="dock-play" aria-keyshortcuts="Space"></button>
       <button type="button" class="dock-skip" aria-label="Skip to the next step" aria-keyshortcuts="ArrowRight"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg></button>
       <div class="dock-right">
-        <span class="dock-left"></span>
+        <span class="dock-remaining"></span>
         <button type="button" class="dock-end" aria-label="End the timer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10H7z"/></svg></button>
       </div>
       <button type="button" class="dock-more" aria-expanded="false" aria-controls="dock" aria-label="All timer controls"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.4 15.4 12 10.8l4.6 4.6L18 14l-6-6-6 6z"/></svg></button>
@@ -1322,7 +1361,7 @@ table {
     const left = T.done ? 0 : (reps ? Math.max(0, REPS * 1000 + rem) : Math.max(0, rem)) + st.after * 1000;
     $(".dock-fill").style.transform = "scaleX(" + (T.done ? 1 : reps ? 0 : 1 - Math.max(0, rem) / (st.secs * 1000)) + ")";
     $(".dock-total > span").style.transform = "scaleX(" + (1 - left / 1000 / totalOf(T.steps)) + ")";
-    if (!T.done) $(".dock-left").innerHTML = "<b>" + fmt(Math.ceil(left / 1000)) + "</b> left";
+    if (!T.done) $(".dock-remaining").innerHTML = "<b>" + fmt(Math.ceil(left / 1000)) + "</b> left";
     if (st.half && !T.done) $(".dock-sub > span").textContent = rem > st.half * 1000 ? "First side" : rem > st.half * 1000 - 2500 ? "Switch sides!" : "Second side";
   }
   // the move you're on is aria-current="step", the one coming up during a rest data-next
