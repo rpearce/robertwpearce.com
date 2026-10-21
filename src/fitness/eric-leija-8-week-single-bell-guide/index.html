@@ -15,7 +15,7 @@
  * Sizes follow the reader's default font size: no root font-size, rem for type and layout, em
  * for boxes around text, ch for measure, px only for hairlines, rings and shadows. State lives
  * in ARIA and data attributes (aria-selected, aria-pressed, aria-current="step", data-next,
- * data-phase, data-kind, data-lb). Colors use light-dark(); data-theme on <html> overrides the OS.
+ * data-phase, data-kind, data-bell). Colors use light-dark(); data-theme on <html> overrides the OS.
  */
 :root {
   color-scheme: light dark;
@@ -30,11 +30,11 @@
   --line: light-dark(#D1D5CF, #2E3338);
   --accent: light-dark(#B42E1A, #FF735C);
   --on-accent: light-dark(#FFFFFF, #1A0A06);
-  /* competition kettlebell colour code: 12 kg blue, 16 kg yellow, 24 kg green */
-  --b25: light-dark(#2560C6, #5C93EF); --b25-fg: light-dark(#FFFFFF, #07132C);
-  --b35: light-dark(#E7B416, #F3C93B); --b35-fg: #1C1600;
-  --b54: light-dark(#1E8649, #45B974); --b54-fg: light-dark(#FFFFFF, #04200E);
-  /* timer phases: work uses the accent, get ready the 35's yellow */
+  /* light, medium and heavy bells take the competition colours of a 12, 16 and 24 kg set */
+  --blue: light-dark(#2560C6, #5C93EF); --on-blue: light-dark(#FFFFFF, #07132C);
+  --yellow: light-dark(#E7B416, #F3C93B); --on-yellow: #1C1600;
+  --green: light-dark(#1E8649, #45B974); --on-green: light-dark(#FFFFFF, #04200E);
+  /* timer phases: work uses the accent, get ready the medium bell's yellow */
   --rest: light-dark(#1F3B57, #29435F); --on-rest: light-dark(#F2F4F0, #E7E9E5);
   --easy: light-dark(#17663F, #1D6A43); --on-easy: light-dark(#FFFFFF, #E9F6EE);
   --easy-text: light-dark(#17663F, #45B974);
@@ -81,7 +81,7 @@ body > header {
     background: none; border: 1px solid var(--line); border-radius: 999px; padding: 0.25rem 0.75rem;
     font-size: 0.85rem; color: var(--muted); cursor: pointer;
     &::before { content: ""; inline-size: 0.5rem; block-size: 0.5rem; border-radius: 50%; background: var(--line); }
-    &[aria-pressed="true"] { color: var(--fg); border-color: var(--fg); &::before { background: var(--b54); } }
+    &[aria-pressed="true"] { color: var(--fg); border-color: var(--fg); &::before { background: var(--green); } }
     &:disabled { cursor: default; }
   }
 }
@@ -176,7 +176,7 @@ article > section {
       background: color-mix(in srgb, var(--accent) 12%, var(--surface)); box-shadow: inset 4px 0 0 var(--accent);
       > div:first-child > span:first-child::before { content: "Now"; color: var(--accent); }
       &[data-kind="easy"] {
-        background: color-mix(in srgb, var(--b54) 14%, var(--surface)); box-shadow: inset 4px 0 0 var(--b54);
+        background: color-mix(in srgb, var(--green) 14%, var(--surface)); box-shadow: inset 4px 0 0 var(--green);
         > div:first-child > span:first-child::before { content: "Now · active rest"; color: var(--easy-text); }
       }
     }
@@ -189,7 +189,7 @@ article > section {
   > p {
     margin: 0.5rem 0 0; font-size: 0.88rem; color: var(--muted); display: flex; flex-wrap: wrap; align-items: center; gap: 0.375rem 0.5rem;
     b { color: var(--fg); font-weight: 600; }
-    > span[aria-current="step"] { background: color-mix(in srgb, var(--b54) 20%, transparent); color: var(--fg); font-weight: 600; border-radius: 0.25rem; padding: 1px 0.375rem; margin-inline: -0.375rem; }
+    > span[aria-current="step"] { background: color-mix(in srgb, var(--green) 20%, transparent); color: var(--fg); font-weight: 600; border-radius: 0.25rem; padding: 1px 0.375rem; margin-inline: -0.375rem; }
   }
 }
 
@@ -208,15 +208,15 @@ article > section {
   }
 }
 
-/* bell chips; data-lb holds the weight, a chip without one is bodyweight, on bell or target */
+/* bell chips; data-bell holds the size, a chip without one is bodyweight, on bell or target */
 .bells { display: inline-flex; align-items: center; gap: 0.25rem; flex-shrink: 0; > :not(.chip) { color: var(--muted); font-size: 0.85rem; } }
 .chip {
-  display: inline-flex; align-items: center; justify-content: center; min-inline-size: 2.025em; min-block-size: 1.55em; padding: 0 0.375rem;
-  border-radius: 0.375rem; font-family: var(--display); font-weight: 700; font-size: 1.05rem; font-variant-numeric: tabular-nums;
-  &[data-lb="25"] { background: var(--b25); color: var(--b25-fg); }
-  &[data-lb="35"] { background: var(--b35); color: var(--b35-fg); }
-  &[data-lb="54"] { background: var(--b54); color: var(--b54-fg); }
-  &:not([data-lb]) { border: 1px solid var(--line); color: var(--muted); font-size: 0.8rem; letter-spacing: 0.06em; min-inline-size: 2.65em; min-block-size: 2.03em; }
+  display: inline-flex; align-items: center; justify-content: center; min-inline-size: 2.65em; min-block-size: 2.03em; padding: 0 0.375rem;
+  border-radius: 0.375rem; font-family: var(--display); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase;
+  &[data-bell="light"] { background: var(--blue); color: var(--on-blue); }
+  &[data-bell="medium"] { background: var(--yellow); color: var(--on-yellow); }
+  &[data-bell="heavy"] { background: var(--green); color: var(--on-green); }
+  &:not([data-bell]) { border: 1px solid var(--line); color: var(--muted); }
 }
 
 /* schedule */
@@ -259,10 +259,11 @@ table {
 }
 [role="tabpanel"] > p:last-child { margin: 0.5rem 0 0; font-size: 0.82rem; color: var(--muted); max-inline-size: 62ch; }
 
-/* bells */
+/* bells: the sections share one chip column, so the chips match in width and the text lines up */
+[role="tabpanel"] > div:has(> section) { display: grid; grid-template-columns: auto 1fr; column-gap: 0.875rem; }
 [role="tabpanel"] > div > section {
-  display: grid; grid-template-columns: auto 1fr; gap: 0.375rem 0.875rem; align-items: start; padding-block: 0.75rem; border-block-end: 1px solid var(--line);
-  > .chip { min-inline-size: 2.41em; min-block-size: 1.575em; font-size: 1.35rem; }
+  grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: start; padding-block: 0.75rem; border-block-end: 1px solid var(--line);
+  > .chip { font-size: 0.95rem; }
   h3 { margin: 0; font-family: var(--display); font-size: 1.15rem; letter-spacing: 0.04em; text-transform: uppercase; > span { color: var(--muted); font-size: 0.85rem; } }
   p { margin: 0; font-size: 0.95rem; }
 }
@@ -278,7 +279,7 @@ table {
   &[data-phase="work"] { --dk-bg: var(--accent); --dk-fg: var(--on-accent); }
   &[data-phase="rest"] { --dk-bg: var(--rest); --dk-fg: var(--on-rest); }
   &[data-phase="easy"] { --dk-bg: var(--easy); --dk-fg: var(--on-easy); }
-  &[data-phase="ready"] { --dk-bg: var(--b35); --dk-fg: var(--b35-fg); }
+  &[data-phase="ready"] { --dk-bg: var(--yellow); --dk-fg: var(--on-yellow); }
   &[data-phase="done"] { --dk-bg: var(--done); --dk-fg: var(--on-done); }
   &[data-paused] { --dk-bg: var(--sunk); --dk-fg: var(--fg); }
   :focus-visible { outline-color: var(--dk-fg); }
@@ -287,8 +288,8 @@ table {
     &:hover { border-color: currentColor; }
     > :is(span, small) { color: inherit; }
   }
-  .chip { min-inline-size: 1.975em; min-block-size: 1.45em; font-size: 0.95rem; box-shadow: 0 0 0 2px var(--dk-fg); }
-  .chip:not([data-lb]) { color: var(--dk-fg); border-color: transparent; }
+  .chip { min-block-size: 1.8em; font-size: 0.75rem; box-shadow: 0 0 0 2px var(--dk-fg); }
+  .chip:not([data-bell]) { color: var(--dk-fg); border-color: transparent; }
   .bells > :not(.chip) { color: inherit; }
 }
 /* progress: the step fills the dock, a line along the top shows the whole workout, a tick marks the side switch */
@@ -447,7 +448,7 @@ table {
 
 <header>
   <h1>8-Week Single Bell Guide</h1>
-  <p>Eric Leija's 8-week single kettlebell program (<a href="8-Week-Single-Kettlebell-and-Bodyweight-Program-Full-Draft-1.pdf" target="_blank" rel="noopener">PDF<span class="sr-only"> (opens in new tab)</span></a>), set up for your 25, 35 and 54&nbsp;lb bells. Tap a move's ▶ demo link to see it done.</p>
+  <p>Eric Leija's 8-week single kettlebell program (<a href="8-Week-Single-Kettlebell-and-Bodyweight-Program-Full-Draft-1.pdf" target="_blank" rel="noopener">PDF<span class="sr-only"> (opens in new tab)</span></a>), with each move marked for a light, medium or heavy bell. Tap a move's ▶ demo link to see it done.</p>
   <button id="wake" type="button" aria-pressed="false" hidden>Keep screen on</button>
 </header>
 
@@ -483,15 +484,17 @@ table {
   <section id="view-bells" role="tabpanel" aria-labelledby="tab-bells" tabindex="0" hidden>
     <h2 class="sr-only">Bells</h2>
     <div class="prose">
-      <p>The PDF never says what weight to use. These are suggestions for your set. A chip pair like <span class="bells" role="img" aria-label="25 lb, then 35 lb"><span class="chip" data-lb="25">25</span><span>→</span><span class="chip" data-lb="35">35</span></span> means start with the first bell and move up when it feels solid. Colors follow the competition kettlebell code (12&nbsp;kg blue, 16&nbsp;kg yellow, 24&nbsp;kg green).</p>
+      <p>The PDF never says what weight to use, so each move is marked light, medium or heavy for how the bell should feel to you rather than a number. A chip pair like <span class="bells" role="img" aria-label="Start with the light bell, move up to the medium one"><span class="chip" data-bell="light">Light</span><span>→</span><span class="chip" data-bell="medium">Medium</span></span> means start with the lighter bell and move up when it feels solid.</p>
     </div>
     <div>
-      <section><span class="chip" data-lb="54">54<span class="sr-only"> lb</span></span><div><h3>Heavy <span>≈ 24.5 kg</span></h3><p>Two-hand deadlifts (Workout 2) and the deep squat hold (Workout 10). Not much else, at least at first.</p></div></section>
-      <section><span class="chip" data-lb="35">35<span class="sr-only"> lb</span></span><div><h3>Main bell <span>≈ 16 kg</span></h3><p>Rows, cleans, alternating swings, racked split squats, single-leg deadlifts and explosive deadlifts. Start the explosive deadlifts here, not with the 54, since you land jumps holding the bell.</p></div></section>
-      <section><span class="chip" data-lb="25">25<span class="sr-only"> lb</span></span><div><h3>Light <span>≈ 11.3 kg</span></h3><p>Anything overhead: presses, arm bars, windmills, half get-ups, overhead sit-ups, tripod presses, snatches and halos. Also the curl and triceps finisher in Workout 5.</p></div></section>
+      <section><span class="chip" data-bell="heavy" aria-hidden="true">Heavy</span><div><h3><span class="sr-only">Heavy: </span>Slow two-hand lifts</h3><p>Two-hand deadlifts (Workout 2) and the deep squat hold (Workout 10). Not much else, at least at first.</p></div></section>
+      <section><span class="chip" data-bell="medium" aria-hidden="true">Medium</span><div><h3><span class="sr-only">Medium: </span>Your main bell</h3><p>Rows, cleans, alternating swings, racked split squats, single-leg deadlifts and explosive deadlifts. Start the explosive deadlifts here, not with the heavy bell, since you land jumps holding it.</p></div></section>
+      <section><span class="chip" data-bell="light" aria-hidden="true">Light</span><div><h3><span class="sr-only">Light: </span>Anything overhead</h3><p>Presses, arm bars, windmills, half get-ups, overhead sit-ups, tripod presses, snatches and halos. Also the curl and triceps finisher in Workout 5.</p></div></section>
       <section><span class="chip" aria-hidden="true">BW</span><div><h3>Bodyweight</h3><p>Everything else. "On bell" means the bell lies on its side as a push-up handle; "target" means it's only something to reach for.</p></div></section>
     </div>
     <div class="prose">
+      <h3>Picking your bells</h3>
+      <p>Choose each so the last few reps of a set are hard but your form holds, and go lighter when unsure. Overhead work takes the least weight, rows and cleans more, and two-hand deadlifts the most. Beginner guides suggest a first bell of about 8–12&nbsp;kg for women and 12–16&nbsp;kg for men: make that your medium, with a lighter one for overhead work and a heavier one for deadlifts. The colors follow the competition kettlebell code for a common 12, 16 and 24&nbsp;kg set: blue, yellow and green.</p>
       <h3>Set up before each circuit</h3>
       <p>There's only about 10 seconds between moves, so put both bells you need within reach before the circuit starts.</p>
       <h3>No room to jump?</h3>
@@ -636,18 +639,18 @@ table {
       blocks: [
         { h: "Warm-up", s: "3 rounds · 10 s between moves", t: [3, 10], moves: [
           m("Shoulder drop / roll", "30 s", BW, D.shoulderDrop),
-          m("Kettlebell arm bar", "30 s each side", [25]),
+          m("Kettlebell arm bar", "30 s each side", ["light"]),
           m("Knee pull plank to push-up", "30 s", BW) ] },
         { h: "Main set", s: "5 sets · 10 s between moves", t: [5, 10], moves: [
-          m("Kneeling press", "30 s each side", [25, 35], D.press),
+          m("Kneeling press", "30 s each side", ["light", "medium"], D.press),
           m("L-sit to table top", "30 s", BW),
           m("Close-grip push-up on the bell", "30 s", "on") ] },
         { h: "Second set", s: "5 sets · 10 s between moves", t: [5, 10], moves: [
-          m("Floor press to half get-up", "30 s each side", [25], D.tgu),
+          m("Floor press to half get-up", "30 s each side", ["light"], D.tgu),
           m("Side kick through to hip bridge", "30 s", BW) ] },
         { h: "Finisher", s: "5 sets · 10 s between moves", t: [5, 10], moves: [
           m("Plank taps", "30 s each side", "target"),
-          m("Reverse lunge to halo", "30 s", [25], D.halo) ] },
+          m("Reverse lunge to halo", "30 s", ["light"], D.halo) ] },
         { h: "Cool-down", s: "1 round, back to back", t: [1], moves: [
           m("Kneeling spine wave", "1 min", BW), m("Floor scorpion", "1 min", BW),
           m("Needle arm thread", "1 min", BW), m("Standing gunslinger", "1 min", BW) ] },
@@ -660,15 +663,15 @@ table {
           m("Bootstrapper squat", "30 s", BW, D.bootstrapper),
           m("Squat jump", "30 s", BW, D.squatJump) ] },
         { h: "Main set", s: "5 sets · 15 s between moves", t: [5, 15], moves: [
-          m("Racked split-stance squat", "30 s each leg", [35], D.rackSplit),
+          m("Racked split-stance squat", "30 s each leg", ["medium"], D.rackSplit),
           m("Squat sprawl", "30 s", BW, D.sprawl),
           m("Crab reach", "30 s", BW, D.crab) ] },
         { h: "Second set", s: "5 sets · 15 s between moves", t: [5, 15], moves: [
-          m("Two-hand deadlift", "30 s", [54], D.deadlift),
+          m("Two-hand deadlift", "30 s", ["heavy"], D.deadlift),
           m("Hinge jump", "30 s", BW, D.hingeJump),
           m("Loaded beast spine waves", "1 min", BW, D.beastWave, true) ] },
         { h: "Finisher", s: "8 sets · 30 s rest", t: [8, 0, 30], moves: [
-          m("Loaded beast to explosive deadlift", "30 s", [35], both(D.beastWave, D.explDL)) ] },
+          m("Loaded beast to explosive deadlift", "30 s", ["medium"], both(D.beastWave, D.explDL)) ] },
         { h: "Cool-down", s: "1 round, back to back", t: [1], moves: [
           m("Kneeling spine wave", "1 min", BW, D.spineWave),
           m("Shin box switch to tall kneeling hip flexor stretch", "1 min", BW, both(D.shinbox, D.hipFlexor)),
@@ -678,17 +681,17 @@ table {
       blocks: [
         { h: "Warm-up", s: "3 rounds · 10 s between moves", t: [3, 10], moves: [
           m("Floor scorpion", "30 s", BW, D.floorScorpion),
-          m("Split-stance scap row (arm stays straight)", "30 s each side", [35], D.splitRow),
+          m("Split-stance scap row (arm stays straight)", "30 s each side", ["medium"], D.splitRow),
           m("Knee pull plank to push-up", "30 s", BW, D.kneePull) ] },
         { h: "Main set", s: "5 sets · the spine wave is your rest", t: [5], moves: [
-          m("Split-stance row", "30 s each side", [35], D.splitRow),
-          m("Alternating swing", "30 s", [35], D.altSwing),
+          m("Split-stance row", "30 s each side", ["medium"], D.splitRow),
+          m("Alternating swing", "30 s", ["medium"], D.altSwing),
           m("Kneeling spine wave", "1 min", BW, D.spineWave, true) ] },
         { h: "Second set", s: "5 sets · the bridge is your rest", t: [5], moves: [
-          m("Single-leg deadlift to staggered-stance clean", "30 s each side", [25, 35], both(D.sldl, D.clean)),
+          m("Single-leg deadlift to staggered-stance clean", "30 s each side", ["light", "medium"], both(D.sldl, D.clean)),
           m("Thoracic bridge", "30 s", BW, D.thoracic, true) ] },
         { h: "Finisher", s: "5 sets · the bridge is your rest", t: [5], moves: [
-          m("Explosive deadlift to snatch", "30 s", [25], D.explSnatch),
+          m("Explosive deadlift to snatch", "30 s", ["light"], D.explSnatch),
           m("Shoulder roll bridge", "30 s", BW, D.rollBridge, true) ] },
         { h: "Cool-down", s: "1 round, back to back", t: [1], moves: [
           m("Kneeling spine wave", "1 min", BW, D.spineWave),
@@ -699,41 +702,41 @@ table {
       fixes: ["The main set is 4 sets. The PDF heading says 3.", "The PDF's finisher table is mislabeled. The finisher is deadlift → row → clean → squat → press."],
       blocks: [
         { h: "Warm-up", s: "3 rounds · 10 s between moves", t: [3, 10], moves: [
-          m("Halo to squat", "30 s", [25], D.halo),
+          m("Halo to squat", "30 s", ["light"], D.halo),
           m("Dynamic mountain climber switches", "30 s", BW),
           m("Child's pose to tall kneeling hip flexor stretch", "30 s", BW) ] },
         { h: "Main set", s: "4 sets · the kick through is your rest", t: [4], moves: [
-          m("Gorilla row to clean and kneeling press", "1 min", [25, 35], both(D.gorilla, D.clean)),
+          m("Gorilla row to clean and kneeling press", "1 min", ["light", "medium"], both(D.gorilla, D.clean)),
           m("Side kick through", "30 s", BW, null, true) ] },
         { h: "Second set", s: "4 sets · the Cossack is your rest", t: [4], moves: [
-          m("Two-hand high-hinge clean to reverse lunge", "30 s each side", [35]),
+          m("Two-hand high-hinge clean to reverse lunge", "30 s each side", ["medium"]),
           m("Squat to alternating Cossack squat", "30 s", BW, null, true) ] },
         { h: "Third set", s: "4 sets · the shoulder drop is your rest", t: [4], moves: [
-          m("Bridge floor press to sit-up and straddle press", "30 s, switch sides each round", [25]),
+          m("Bridge floor press to sit-up and straddle press", "30 s, switch sides each round", ["light"]),
           m("Shoulder drop / roll", "30 s", BW, null, true) ] },
         { h: "Finisher", s: "5 sets · 20 s rest", t: [5, 0, 20], moves: [
-          m("Deadlift → row → clean → squat → press", "40 s", [25, 35], D.drcsp) ] },
+          m("Deadlift → row → clean → squat → press", "40 s", ["light", "medium"], D.drcsp) ] },
         { h: "Cool-down", s: "1 round, back to back", t: [1], moves: [
           m("Child's pose to mountain climber", "1 min", BW), m("Floor scorpion", "1 min", BW), m("Thoracic bridge", "1 min", BW) ] },
       ] },
     { n: 5, short: "Blitz", title: "Full-body blitz", video: [Y("et4h7TfBDPw"), "45 min"], fixes: [],
       blocks: [
         { h: "Warm-up", s: "3 rounds · 10 s between moves", t: [3, 10], moves: [
-          m("Shinbox switch with extension and halo", "30 s", [25]),
+          m("Shinbox switch with extension and halo", "30 s", ["light"]),
           m("Loaded beast spine wave", "30 s", BW),
           m("Scorpion push-up", "30 s", BW) ] },
         { h: "Circuit 1", s: "4 rounds", t: [4, 0, 90], moves: [
-          m("Explosive deadlift", "30 s", [35], D.explDL),
+          m("Explosive deadlift", "30 s", ["medium"], D.explDL),
           m("Superman hold, hands over the bell", "30 s", "target"),
-          m("Single-arm overhead sit-up, down slowly", "30 s, switch sides each round", [25]) ],
+          m("Single-arm overhead sit-up, down slowly", "30 s, switch sides each round", ["light"]) ],
           rest: ["90 s between rounds, keep moving:", [["Tai chi twist", "30 s", D.taiChi], ["Standing arm screw", "30 s", D.armScrew], ["Fast & loose shake", "30 s", D.fastLoose]]] },
         { h: "Circuit 2", s: "4 rounds", t: [4, 0, 90], moves: [
-          m("Drop lunge to squat and press", "30 s each side", [25]),
+          m("Drop lunge to squat and press", "30 s each side", ["light"]),
           m("Push-up to side kick through", "30 s", BW),
           m("Triple-extension knees", "30 s", BW) ],
           rest: ["90 s between rounds, keep moving:", [["Kneeling spine wave", "45 s", D.spineWave], ["Standing lateral reach", "45 s", null]]] },
         { h: "Finisher", s: "6 rounds · 45 s on, 15 s off", t: [6, 0, 15], moves: [
-          m("Clean → squat → curl → triceps press", "45 s", [25]) ] },
+          m("Clean → squat → curl → triceps press", "45 s", ["light"]) ] },
         { h: "Cool-down", s: "1 round, back to back", t: [1], moves: [
           m("Kneeling forearm stretch", "1 min", BW), m("Floor scorpion", "1 min", BW),
           m("Thoracic bridge", "1 min", BW), m("Standing lateral spine roll", "1 min", BW) ] },
@@ -742,20 +745,20 @@ table {
       blocks: [
         { h: "Warm-up", s: "3 rounds · 10 s between moves", t: [3, 10], moves: [
           m("Crab reach", "30 s", BW, D.crab),
-          m("Drop lunge to halo", "30 s", [25], both(D.dropLunge, D.halo)),
+          m("Drop lunge to halo", "30 s", ["light"], both(D.dropLunge, D.halo)),
           m("Bear squat to push-up", "30 s", BW, D.bearSquat) ] },
         { h: "Circuit 1", s: "4 rounds", t: [4, 0, 90], moves: [
-          m("Kneeling clean", "30 s, switch sides each round", [25, 35], D.kneelClean),
+          m("Kneeling clean", "30 s, switch sides each round", ["light", "medium"], D.kneelClean),
           m("Squat sprawl", "30 s", BW, D.sprawl),
           m("Side kick through", "30 s", BW, D.sideKick) ],
           rest: ["90 s between rounds, keep moving:", [["Standing spine roll", "30 s", D.spineRoll], ["Gunslingers", "30 s", D.gunslinger], ["Fast & loose shake", "30 s", D.fastLoose]]] },
         { h: "Circuit 2", s: "4 rounds", t: [4, 0, 90], moves: [
-          m("Ballistic row to snatch", "30 s", [25], both(D.ballRow, D.snatch)),
+          m("Ballistic row to snatch", "30 s", ["light"], both(D.ballRow, D.snatch)),
           m("Push-ups, as slow as you can", "30 s", BW, D.slowPush),
           m("Plyo lunges", "30 s", BW, D.plyo) ],
           rest: ["90 s between rounds, keep moving:", [["Floor scorpion", "30 s", D.floorScorpion], ["Standing arm screw", "30 s", D.armScrew]]] },
         { h: "Finisher", s: "6 rounds · 45 s on, 15 s off", t: [6, 0, 15], moves: [
-          m("Offset push-up to clean and Cossack", "45 s", [25, 35], both(D.offset, D.cleanCossack)) ] },
+          m("Offset push-up to clean and Cossack", "45 s", ["light", "medium"], both(D.offset, D.cleanCossack)) ] },
         { h: "Cool-down", s: "1 round, back to back", t: [1], moves: [
           m("Kneeling forearm stretch", "1 min", BW, D.forearm),
           m("Floor scorpion", "1 min", BW, D.floorScorpion),
@@ -764,21 +767,21 @@ table {
     { n: 7, short: "Push", title: "Push and core", video: null, fixes: [],
       blocks: [
         { h: "Warm-up", s: "3 rounds · 10 s between moves", t: [3, 10], moves: [
-          m("Kettlebell arm bar", "30 s each side", [25], D.armBar),
+          m("Kettlebell arm bar", "30 s each side", ["light"], D.armBar),
           m("Side kick through to bridge", "30 s", BW, D.kickBridge),
-          m("Low Cossack squat switch, bell as counterweight", "30 s", [25], D.cossack) ] },
+          m("Low Cossack squat switch, bell as counterweight", "30 s", ["light"], D.cossack) ] },
         { h: "Circuit 1", s: "4 rounds", t: [4, 0, 90], moves: [
           m("Offset push-up to close-grip push-up", "30 s", "on", D.offsetClose),
           m("Loaded beast to front step", "30 s", BW, D.frontStep),
           m("V-ups", "30 s", BW, D.vup) ],
           rest: ["90 s between rounds, keep moving:", [["Floor scorpion", "45 s", D.floorScorpion], ["Needle arm thread", "45 s", D.needle]]] },
         { h: "Circuit 2", s: "4 rounds", t: [4, 0, 90], moves: [
-          m("Squat to press", "30 s, switch sides each round", [25, 35], D.squatPress),
+          m("Squat to press", "30 s, switch sides each round", ["light", "medium"], D.squatPress),
           m("Side plank", "30 s, switch sides each round", BW, D.sidePlank),
           m("Front kick throughs", "30 s", BW, D.frontKick) ],
           rest: ["90 s between rounds, keep moving:", [["Shoulder rolls", "30 s", D.shoulderDrop], ["Kneeling spine wave", "30 s", D.spineWave]]] },
         { h: "Finisher", s: "8 rounds · 30 s on, 30 s rest", t: [8, 0, 30], moves: [
-          m("Explosive deadlift to horn clean and lunge", "30 s", [35], both(D.explDL, D.hingeCleanLunge)) ],
+          m("Explosive deadlift to horn clean and lunge", "30 s", ["medium"], both(D.explDL, D.hingeCleanLunge)) ],
           rest: ["During the 30 s rest:", [["Tai chi twist", "", D.taiChi]]] },
         { h: "Cool-down", s: "1 round, back to back", t: [1], moves: [
           m("Needle arm thread", "1 min", BW, D.needle),
@@ -787,22 +790,22 @@ table {
           m("Standing lateral spine roll", "1 min each side", BW, D.latRoll) ] },
       ] },
     { n: 8, short: "Speed", title: "Speed and power", video: [Y("SHrYmk_K1nk"), "55 min"],
-      fixes: ["Circuit 2 is deadlift to alternating snatch, so use the 25.", "The sprints need about 10 yards of space."],
+      fixes: ["Circuit 2 is deadlift to alternating snatch, so use the light bell.", "The sprints need about 10 yards of space."],
       blocks: [
         { h: "Warm-up", s: "3 rounds · 10 s between moves", t: [3, 10], at: [Y("SHrYmk_K1nk"), "0:00"], moves: [
           m("Child's pose to mountain climber", "30 s", BW), m("Floor scorpion", "30 s", BW), m("Chamber jumps", "30 s", BW) ] },
         { h: "Circuit 1", s: "4 rounds", t: [4, 0, 90], at: [Y("SHrYmk_K1nk", 466), "7:46"], moves: [
           m("Drop push-ups", "30 s", BW),
-          m("Kneeling clean", "30 s, switch sides each round", [25, 35]),
+          m("Kneeling clean", "30 s, switch sides each round", ["light", "medium"]),
           m("Sprinter's lunge", "30 s, switch sides each round", BW) ],
           rest: ["90 s between rounds, keep moving:", [["Floor scorpion", "45 s", null], ["Needle arm thread", "45 s", null]]] },
         { h: "Circuit 2", s: "4 sets", t: [4, 0, 60], at: [Y("SHrYmk_K1nk", 1379), "22:59"], moves: [
-          m("Explosive two-hand deadlift to alternating snatch", "30 s", [25]),
+          m("Explosive two-hand deadlift to alternating snatch", "30 s", ["light"]),
           m("Lateral jumps", "30 s", BW) ],
           rest: ["1 min between sets, keep moving:", [["Shoulder drops", "30 s", null], ["Kneeling spine wave", "30 s", null]]] },
         { h: "Finisher", s: "8 sets · 30 s rest", t: [8, 0, 30], at: [Y("SHrYmk_K1nk", 2089), "34:49"], moves: [
           m("Push-up to 10-yard sprint", "2 reps", BW),
-          m("Ballistic row", "30 s", [35]) ] },
+          m("Ballistic row", "30 s", ["medium"]) ] },
         { h: "Cool-down", s: "1 round, back to back", t: [1], at: [Y("SHrYmk_K1nk", 2995), "49:55"], moves: [
           m("Needle arm thread", "1 min", BW), m("Shinbox switch with spine twist", "1 min", BW), m("Pigeon stretch", "1 min each side", BW) ] },
       ] },
@@ -813,15 +816,15 @@ table {
           m("Standing lateral spine roll", "1 min", BW, D.latRoll),
           m("Thoracic bridge", "1 min", BW, D.thoracic) ] },
         { h: "Circuit 1", s: "4 sets · 10 s rest", t: [4, 10], moves: [
-          m("Kettlebell arm bar", "30 s each side", [25], D.armBar),
+          m("Kettlebell arm bar", "30 s each side", ["light"], D.armBar),
           m("Reverse lunge to sumo squat", "1 min", BW, D.lungeSumo),
           m("Kneeling spine wave", "1 min", BW, D.spineWave) ] },
         { h: "Circuit 2", s: "4 sets · 10 s rest", t: [4, 10], moves: [
-          m("Kneeling windmill", "30 s each side", [25], D.kneelWindmill),
+          m("Kneeling windmill", "30 s each side", ["light"], D.kneelWindmill),
           m("Floor scorpion", "1 min", BW, D.floorScorpion),
           m("Bird dog", "1 min", BW, D.birdDog) ] },
         { h: "Circuit 3", s: "4 sets · 10 s rest", t: [4, 10], moves: [
-          m("Shin box switch to extension and halo", "1 min", [25], D.shinboxHalo),
+          m("Shin box switch to extension and halo", "1 min", ["light"], D.shinboxHalo),
           m("L-sit to table top", "1 min", BW, D.lsit) ] },
         { h: "Cool-down", s: "1 round, back to back", t: [1], moves: [
           m("Needle arm thread", "1 min", BW, D.needle),
@@ -833,17 +836,17 @@ table {
         { h: "Warm-up", s: "3 rounds · 10 s between moves", t: [3, 10], moves: [
           m("Hip root to reach", "1 min", BW, D.hipRoot),
           m("Side kick through to bridge", "1 min", BW, D.kickBridge),
-          m("Horn deep squat hold", "1 min", [35, 54], D.hornSquat) ] },
+          m("Horn deep squat hold", "1 min", ["medium", "heavy"], D.hornSquat) ] },
         { h: "Circuit 1", s: "4 sets · 10 s rest", t: [4, 10], moves: [
-          m("Kettlebell windmill", "1 min, switch sides each round", [25], D.windmill),
+          m("Kettlebell windmill", "1 min, switch sides each round", ["light"], D.windmill),
           m("Beast underswitch to crab", "1 min", BW, D.underswitch),
           m("Child's pose to mountain climber", "1 min", BW, D.childMC) ] },
         { h: "Circuit 2", s: "4 sets · 10 s rest", t: [4, 10], moves: [
-          m("Cossack squat to halo", "1 min", [25], D.cossackHalo),
+          m("Cossack squat to halo", "1 min", ["light"], D.cossackHalo),
           m("Child's pose to front kick through and bridge", "1 min", BW, D.childKick),
           m("Crab reach", "1 min", BW, D.crab) ] },
         { h: "Circuit 3", s: "4 sets · 10 s rest", t: [4, 10], moves: [
-          m("Tripod press", "1 min, switch sides each round", [25], D.tripod),
+          m("Tripod press", "1 min, switch sides each round", ["light"], D.tripod),
           m("Sumo knee drops", "1 min", BW, D.sumoKnee),
           m("Loaded beast spine waves", "1 min", BW, D.beastWave) ] },
         { h: "Cool-down", s: "1 round, back to back", t: [1], moves: [
@@ -905,9 +908,9 @@ table {
     }
     b.forEach((w, i) => {
       if (i) wrap.append(el("span", null, "→"));
-      const c = el("span", "chip", String(w)); c.dataset.lb = w; wrap.append(c);
+      const c = el("span", "chip", w); c.dataset.bell = w; wrap.append(c);
     });
-    wrap.setAttribute("aria-label", b.length > 1 ? "Start with " + b[0] + " lb, move up to " + b[1] + " lb" : b[0] + " lb");
+    wrap.setAttribute("aria-label", b.length > 1 ? "Start with the " + b[0] + " bell, move up to the " + b[1] + " one" : b[0][0].toUpperCase() + b[0].slice(1) + " bell");
     return wrap;
   }
 
@@ -1162,7 +1165,7 @@ table {
   }
   function announce(delay) {
     const st = T.steps[T.i], nx = nextDo(T.i);
-    const bell = s => s && s.mv && Array.isArray(s.mv.b) && s.mv.b.length ? ". " + s.mv.b.join(" or ") + " pound bell" : "";
+    const bell = s => s && s.mv && Array.isArray(s.mv.b) && s.mv.b.length ? ". Use the " + s.mv.b.join(" or ") + " bell" : "";
     const text = st.kind === "ready" ? T.w.blocks[st.bi].h + ". First up: " + nameOf(nx) + bell(nx)
       : st.kind === "rest" ? "Rest. Next: " + nameOf(nx)
       : st.kind === "reps" ? nameOf(st) + ", " + st.mv.d + ". Tap done when finished."
