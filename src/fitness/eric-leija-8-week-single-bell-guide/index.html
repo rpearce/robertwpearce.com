@@ -4,9 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>8-Week Single Bell Guide</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Public+Sans:wght@400;500;600&display=swap">
 <script>
   // the site's theme switch (templates/default.html) saves a pinned light or dark scheme here
   try { const t = localStorage.getItem("prefTheme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
@@ -22,6 +19,13 @@
  * data-phase, data-kind, data-bell). Colors use light-dark(); data-theme on <html>, set from the
  * site's theme switch, overrides the OS.
  */
+/*
+ * fonts are self-hosted so the page makes no outside requests and works offline: the Latin
+ * subsets from Google Fonts, under the SIL Open Font License (fonts/OFL-*.txt)
+ */
+@font-face { font-family: "Barlow Condensed"; font-weight: 600; font-display: swap; src: url("fonts/BarlowCondensed-SemiBold.woff2") format("woff2"); }
+@font-face { font-family: "Barlow Condensed"; font-weight: 700; font-display: swap; src: url("fonts/BarlowCondensed-Bold.woff2") format("woff2"); }
+@font-face { font-family: "Public Sans"; font-weight: 400 600; font-display: swap; src: url("fonts/PublicSans-Variable.woff2") format("woff2"); }
 :root {
   color-scheme: light dark;
   -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
